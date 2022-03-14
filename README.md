@@ -1,2 +1,2 @@
-# honely-ios-react-native
+# honely-react-native
 Honely mobile application in react native
