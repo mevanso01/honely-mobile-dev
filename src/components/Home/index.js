@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import { useTheme } from 'styled-components/native'
 import { HButton, HText } from '../Shared'
 
@@ -102,7 +102,8 @@ export const Home = (props) => {
       <HButton
         text='Log In'
         style={styles.button}
-        onClick={() => onNavigationRedirect('Login')}
+        onClick={() => {}}
+        // onClick={() => onNavigationRedirect('Login')}
       />
       <HText
         style={{ fontSize: 16 }}

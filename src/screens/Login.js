@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Login as LoginScreen } from '../components/Login';
-import { useTheme } from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 
 const KeyboardView = styled.KeyboardAvoidingView`
   flex: 1;
