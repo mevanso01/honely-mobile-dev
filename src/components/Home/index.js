@@ -35,13 +35,15 @@ export const Home = ({ navigation, route }) => {
     wrapper: {
       flex: 1,
       alignItems: 'center',
-      paddingVertical: 30
+      paddingTop: 30,
+      paddingBottom: 50
     },
     slide: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingBottom: 80,
+      marginTop: 40,
+      marginBottom: 40
     },
     title: {
       textAlign: 'center',
@@ -60,15 +62,14 @@ export const Home = ({ navigation, route }) => {
       resizeMode: 'contain',
       width: 100
     },
-    image: {
-      flex: 0,
+    slideImage: {
       width: '100%',
-      height: '50%',
+      height: '70%',
       resizeMode: 'cover',
     },
     button: {
       width: 180,
-      marginBottom: 16
+      marginVertical: 16
     }
   })
 
@@ -86,7 +87,7 @@ export const Home = ({ navigation, route }) => {
             key={item.title}
             style={styles.slide}
           >
-            <Image source={item.image} style={styles.image} />
+            <Image source={item.image} style={styles.slideImage} />
             <View style={{ padding: 18 }}>
               <HText style={styles.title}>{item.title}</HText>
               <HText style={styles.description}>{item.text}</HText>
@@ -102,7 +103,7 @@ export const Home = ({ navigation, route }) => {
       <HText
         style={{ fontSize: 16 }}
         color={theme.colors.primary}
-        weight={'bold'}
+        weight='700'
       >
         New to Honely? Sign Up
       </HText>
