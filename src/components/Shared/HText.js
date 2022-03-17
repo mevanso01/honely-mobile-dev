@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components/native';
 
 const SText = styled.Text`
   color: ${props => props.color || '#1A1D1B'};
-  font-family: 'Poppins-Regular';
   font-size: ${props => (props.size ? `${props.size}px` : '14px')};
   flex-wrap: wrap;
   margin-bottom: ${props =>
