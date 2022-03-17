@@ -20,6 +20,13 @@ theme.images = {
   }
 }
 
+theme.icons = {
+  leftArrow: require('./assets/icons/left-arrow.png'),
+  message: require('./assets/icons/message.png'),
+  lock: require('./assets/icons/lock.png'),
+  eye: require('./assets/icons/eye.png')
+}
+
 const HonelyApp = () => {
   useEffect(() => {
     SplashScreen.hide()

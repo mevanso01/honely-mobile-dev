@@ -5,7 +5,11 @@ import { HButton, HText } from '../Shared'
 
 import Swiper from 'react-native-swiper'
 
-export const Home = ({ navigation, route }) => {
+export const Home = (props) => {
+  const {
+    onNavigationRedirect
+  } = props
+
   const theme = useTheme()
 
   const data = [
@@ -98,7 +102,7 @@ export const Home = ({ navigation, route }) => {
       <HButton
         text='Log In'
         style={styles.button}
-        onClick={() => {}}
+        onClick={() => onNavigationRedirect('Login')}
       />
       <HText
         style={{ fontSize: 16 }}
