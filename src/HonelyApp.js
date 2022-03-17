@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
-import { LogBox } from 'react-native'
+import React from 'react'
+import { LogBox, StatusBar } from 'react-native'
 import { ThemeProvider } from './contexts/Theme'
 import theme from './theme.json'
 
-import SplashScreen from 'react-native-splash-screen'
 import AppContainer from './AppContainer'
+import { NativeBaseProvider } from 'native-base'
 
 LogBox.ignoreLogs([
   ''
@@ -13,10 +13,10 @@ LogBox.ignoreLogs([
 theme.images = {
   logo: require('./assets/images/logo.png'),
   intros: {
-    slide1: require('./assets/images/slider-1.png'),
-    slide2: require('./assets/images/slider-2.png'),
-    slide3: require('./assets/images/slider-3.png'),
-    slide4: require('./assets/images/slider-4.png')
+    slider1: require('./assets/images/slider-1.png'),
+    slider2: require('./assets/images/slider-2.png'),
+    slider3: require('./assets/images/slider-3.png'),
+    slider4: require('./assets/images/slider-4.png')
   }
 }
 
@@ -28,14 +28,17 @@ theme.icons = {
 }
 
 const HonelyApp = () => {
-  useEffect(() => {
-    SplashScreen.hide()
-  }, [])
-
   return (
-    <ThemeProvider theme={theme}>
-      <AppContainer />
-    </ThemeProvider>
+    <NativeBaseProvider>
+      <ThemeProvider theme={theme}>
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle='dark-content'
+        />
+        <AppContainer />
+      </ThemeProvider>
+    </NativeBaseProvider>
   )
 }
 

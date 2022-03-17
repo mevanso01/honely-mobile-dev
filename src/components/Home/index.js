@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Image, StyleSheet } from 'react-native'
 import { useTheme } from 'styled-components/native'
-import { HButton, HText } from '../Shared'
-
+import { HText, HButton } from '../Shared'
 import Swiper from 'react-native-swiper'
+import SplashScreen from 'react-native-splash-screen'
 
 export const Home = (props) => {
   const {
@@ -14,22 +14,22 @@ export const Home = (props) => {
 
   const data = [
     {
-      image: theme.images.intros.slide1,
+      image: theme.images.intros.slider1,
       title: 'What do we offer?',
       text: 'Honely uses AI and machine learning to forecast home prices, neighborhood trends and so much more!'
     },
     {
-      image: theme.images.intros.slide2,
+      image: theme.images.intros.slider2,
       title: 'Property Value Forecasts',
       text: 'View the future value of over 100 million properties nationwide from 3 months to 3 years into the future!'
     },
     {
-      image: theme.images.intros.slide3,
+      image: theme.images.intros.slider3,
       title: 'Neighborhood At A Glance',
       text: 'Get equipped with all the predictive informaiton needed to analyze an area like a pro. '
     },
     {
-      image: theme.images.intros.slide4,
+      image: theme.images.intros.slider4,
       title: 'Buyer’s Score',
       text: 'Compare deals using our Buyer’s Score to always make sure you get the best bang for your buck!'
     },
@@ -46,8 +46,7 @@ export const Home = (props) => {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: 40,
-      marginBottom: 40
+      marginVertical: 30
     },
     title: {
       textAlign: 'center',
@@ -73,9 +72,24 @@ export const Home = (props) => {
     },
     button: {
       width: 180,
-      marginVertical: 16
+      height: 50,
+      marginVertical: 16,
+      backgroundColor: theme.colors.primary,
+      borderRadius: 30,
+      alignSelf: 'center'
+    },
+    buttonText:{
+      fontSize: 16,
+      lineHeight: 24,
+      fontWeight: '500',
+      color: '#FFF',
+      alignSelf: 'center',
     }
   })
+
+  useEffect(() => {
+    SplashScreen.hide()
+  }, [])
 
   return (
     <View style={styles.wrapper}>
@@ -99,12 +113,13 @@ export const Home = (props) => {
           </View>
         ))}
       </Swiper>
+
       <HButton
-        text='Log In'
-        style={styles.button}
-        onClick={() => {}}
-        // onClick={() => onNavigationRedirect('Login')}
+        text='Log in'
+        onPress={() => {}}
+        marginVertical={16}
       />
+
       <HText
         style={{ fontSize: 16 }}
         color={theme.colors.primary}
