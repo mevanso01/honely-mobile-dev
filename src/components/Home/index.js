@@ -116,7 +116,7 @@ export const Home = (props) => {
 
       <HButton
         text='Log in'
-        onPress={() => {}}
+        onPress={() => onNavigationRedirect('Login')}
         marginVertical={16}
       />
 

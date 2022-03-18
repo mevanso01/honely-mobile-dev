@@ -1,14 +1,11 @@
 import React, { useState, useRef } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { useTheme } from 'styled-components/native'
-import { HButton, HText, HIconButton, HInput } from '../Shared'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import {
-  HeaderWrapper,
-  ToggleWrapper,
-  InputWrapper,
-  SubmitBtnWrapper
-} from './styles'
+import { View } from 'react-native'
+import { HButton, HText, HSliderButton, HPressableText } from '../Shared'
+import { Box, Input, FormControl, Icon, IconButton } from 'native-base'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { colors } from '../../utils/styleGuide'
+
+import styles from './style'
 
 export const Login = (props) => {
   const {
@@ -16,159 +13,142 @@ export const Login = (props) => {
     onNavigationRedirect
   } = props
 
-  const theme = useTheme()
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [passwordSee, setPasswordSee] = useState(false)
-
   const inputRef = useRef()
-
-  const styles = StyleSheet.create({
-    wrapper: {
-      flex: 1,
-      paddingHorizontal: 18,
-      paddingVertical: 30
-    },
-    leftArrow: {
-      position: 'absolute',
-      left: 0,
-      top: 3,
-      width: 9,
-      height: 16,
-      paddingHorizontal: 0
-    },
-    loginBtn: {
-      width: 120,
-      height: 50
-    },
-    signinBtn: {
-      width: 120,
-      height: 50
-    },
-    btnWrapper: {
-      flexDirection: 'row',
-      width: 240,
-      borderRadius: 25,
-      backgroundColor: theme.colors.primaryContrast
-    },
-    submitBtn: {
-      width: 180
-    }
-  })
 
   return (
     <View style={styles.wrapper}>
-      <HeaderWrapper>
-        <HIconButton
-          icon={theme.icons.leftArrow}
-          borderColor='transparent'
-          iconStyle={{ width: 9, height: 16 }}
-          style={styles.leftArrow}
-          onClick={() => navigation?.canGoBack() && navigation.goBack()}
-        />
-        <HText
-          style={{ fontSize: 16 }}
-          color={theme.colors.text01}
-          weight='500'
-        >
-          Login
-        </HText>
-      </HeaderWrapper>
-      <ToggleWrapper>
-        <View style={styles.btnWrapper}>
-          <HButton
-            text='Log In'
-            style={styles.loginBtn}
-            onClick={() => onNavigationRedirect('Login')}
-          />
-          <HButton
-            text='Sign Up'
-            bgColor='transparent'
-            borderColor='transparent'
-            textStyle={{ color: theme.colors.text03 }}
-            style={styles.signinBtn}
-            onClick={() => onNavigationRedirect('Login')}
+      <View style={styles.header}>
+        <View style={styles.backArrow}>
+          <IconButton
+            borderRadius='full'
+            variant='ghost'
+            size='8'
+            _icon={{
+              as: MaterialIcons,
+              name: 'chevron-left',
+              color: colors.black,
+            }}
+            _pressed={{
+              bg: colors.text05
+            }}
+            onPress={() => navigation.goBack()}
           />
         </View>
-      </ToggleWrapper>
-      <InputWrapper>
-        <HText
-          style={{ fontSize: 16, marginBottom: 5 }}
-          color={theme.colors.headingColor}
-          weight='500'
+        <HText style={styles.title}>Login</HText>
+      </View>
+
+      <HSliderButton
+        onFirstPress={() => {}}
+        onSecondPress={() => {}}
+      />
+  
+      <Box mt={8}>
+        <FormControl
+          mb={4}
         >
-          Email
-        </HText>
-        <HInput
-          placeholder='Enter your email'
-          icon={theme.icons.message}
-          value={email}
-          borderColor={theme.colors.borderColor}
-          onChange={val => setEmail(val)}
-          autoCapitalize='none'
-          autoCorrect={false}
-          autoCompleteType='email'
-          returnKeyType='next'
-          onSubmitEditing={() => inputRef.current?.focus()}
-          blurOnSubmit={false}
-        />
-      </InputWrapper>
-      <InputWrapper>
-        <HText
-          style={{ fontSize: 16, marginBottom: 5 }}
-          color={theme.colors.headingColor}
-          weight='500'
-        >
-          Password
-        </HText>
-        <HInput
-          isSecured={!passwordSee ? true : false}
-          placeholder='Enter your password'
-          icon={theme.icons.lock}
-          iconCustomRight={
-            !passwordSee ?
-              <MaterialCommunityIcons
-                color={theme.colors.text04}
-                name='eye-outline'
-                size={24}
-                onPress={() => setPasswordSee(!passwordSee)}
-              /> :
-              <MaterialCommunityIcons
-                name='eye-off-outline'
-                size={24}
-                color={theme.colors.text04}
+          <FormControl.Label _text={styles.label} mb={1}>Email</FormControl.Label>
+          <Input
+            placeholder='Enter your email or username'
+            placeholderTextColor={colors.text03}
+            keyboardType="email-address"
+            fontSize={14}
+            borderRadius={8}
+            height={50}
+            borderColor={colors.borderColor}
+            autoCapitalize='none'
+            autoCorrect={false}
+            autoCompleteType='email'
+            returnKeyType='next'
+            onSubmitEditing={() => inputRef.current?.focus()}
+            blurOnSubmit={false}
+            InputLeftElement={
+              <Icon
+                as={<MaterialIcons name="email" />}
+                size={5} ml="4"
+                color={colors.text04}
+              />
+            }
+            _invalid={{
+              borderColor: colors.error
+            }}
+            _focus={{
+              borderColor: colors.primary
+            }}
+          />
+          <FormControl.ErrorMessage
+            leftIcon={
+              <MaterialIcons name='warning' color={colors.error} />
+            }
+            mt={1}
+            _text={styles.errorText}
+          >
+            Invalid email 
+          </FormControl.ErrorMessage>
+        </FormControl>
+
+        <FormControl>
+          <FormControl.Label
+            _text={styles.label}
+            mb={1}
+          >Password</FormControl.Label>
+          <Input
+            placeholder='Enter your password'
+            type={passwordSee ? "text" : "password"}
+            fontSize={14}
+            borderRadius={8}
+            height={50}
+            borderColor={colors.borderColor}
+            placeholderTextColor={colors.text03}
+            autoCompleteType='password'
+            ref={inputRef}
+            returnKeyType='done'
+            blurOnSubmit
+            InputLeftElement={
+              <Icon
+                as={<MaterialIcons name="lock" />}
+                size={5} ml="4"
+                color={colors.text04}
+              />
+            }
+            InputRightElement={
+              <Icon
+                as={<MaterialIcons name={passwordSee ? "visibility" : "visibility-off"} />}
+                size={5} mr="4"
+                color={colors.text04}
                 onPress={() => setPasswordSee(!passwordSee)}
               />
-          }
-          value={password}
-          borderColor={theme.colors.borderColor}
-          onChange={val => setPassword(val)}
-          autoCompleteType='password'
-          forwardRef={inputRef}
-          returnKeyType='done'
-          // onSubmitEditing={handleSubmit(onSubmit)}
-          blurOnSubmit
+            }
+            _invalid={{
+              borderColor: colors.error
+            }}
+            _focus={{
+              borderColor: colors.primary
+            }}
+          />
+          <FormControl.ErrorMessage
+            leftIcon={
+              <MaterialIcons name='warning' color={colors.error} />
+            }
+            mt={1}
+            _text={styles.errorText}
+          >
+            Invalid password
+          </FormControl.ErrorMessage>
+        </FormControl>
+      </Box>
+      
+      <View style={styles.forgotLink}>
+        <HPressableText
+          text='Forgot password?'
+          onPress={() => {}}
         />
-      </InputWrapper>
-      <TouchableOpacity>
-        <HText
-          style={{ fontSize: 16, textAlign: 'right' }}
-          color={theme.colors.primary}
-          weight='500'
-        >
-          Forgot password?
-        </HText>
-      </TouchableOpacity>
-
-      <SubmitBtnWrapper>
+      </View>
+      <Box alignItems='center' mt={8}>
         <HButton
-          text='Log In'
-          style={styles.submitBtn}
-          onClick={() => onNavigationRedirect('Login')}
+          text='Log in'
         />
-      </SubmitBtnWrapper>
-
+      </Box>
     </View>
   )
 }
