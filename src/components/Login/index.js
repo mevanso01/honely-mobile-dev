@@ -166,12 +166,6 @@ export const Login = (props) => {
             {errors?.password?.message}
           </FormControl.ErrorMessage>
         </FormControl>
-        <Box alignItems='center' mt={8}>
-          <HButton
-            text='Log in'
-            onPress={handleSubmit(onSubmit)}
-          />
-        </Box>
       </Box>
       
       <View style={styles.forgotLink}>
@@ -180,6 +174,12 @@ export const Login = (props) => {
           onPress={() => {}}
         />
       </View>
+      <Box alignItems='center' mt={8}>
+        <HButton
+          text='Log in'
+          onPress={handleSubmit(onSubmit)}
+        />
+      </Box>
     </View>
   )
 }
