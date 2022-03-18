@@ -120,7 +120,7 @@ export const Login = (props) => {
             }}
           />
           {errors?.email?.message && (
-            <Flex direction='row' alignItems='center' mt={1}>
+            <Flex direction='row' alignItems='center' mt={2}>
               <MaterialIcons name='warning' color={colors.error} />
               <HText style={styles.errorText}>{errors?.email?.message}</HText>
             </Flex>
@@ -183,7 +183,7 @@ export const Login = (props) => {
             )}
           />
           {errors?.password?.message && (
-            <Flex direction='row' alignItems='center' mt={1}>
+            <Flex direction='row' alignItems='center' mt={2}>
               <MaterialIcons name='warning' color={colors.error} />
               <HText style={styles.errorText}>{errors?.password?.message}</HText>
             </Flex>
