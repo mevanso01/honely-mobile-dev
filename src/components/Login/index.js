@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Keyboard } from 'react-native'
 import { HButton, HText, HSliderButton, HPressableText } from '../Shared'
-import { Box, Input, FormControl, Icon, IconButton } from 'native-base'
+import { Box, Input, FormControl, Icon, IconButton, Flex } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
@@ -16,11 +16,17 @@ export const Login = (props) => {
 
   const { control, handleSubmit, formState: { errors, isValid } } = useForm()
   const [passwordSee, setPasswordSee] = useState(false)
+  const [isLoginClicked, setIsLoginClicked] = useState(false)
   const inputRef = useRef()
 
   const onSubmit = (values) => {
     Keyboard.dismiss()
     console.log(values)
+  }
+
+  const handleLoginClick = () => {
+    !isLoginClicked && setIsLoginClicked(true)
+    handleSubmit(onSubmit)()
   }
 
   const handleChangeInputEmail = (value, onChange) => {
@@ -55,10 +61,7 @@ export const Login = (props) => {
       />
   
       <Box mt={8}>
-        <FormControl
-          mb={4}
-          isInvalid={errors?.email?.message}
-        >
+        <FormControl mb={4}>
           <FormControl.Label _text={styles.label} mb={1}>Email</FormControl.Label>
           <Controller
             name='email'
@@ -71,7 +74,9 @@ export const Login = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
-                borderColor={colors.borderColor}
+                borderColor={
+                  errors?.email?.message ? colors.error : (value && isLoginClicked) ? colors.primary : colors.borderColor
+                }
                 autoCapitalize='none'
                 autoCorrect={false}
                 autoCompleteType='email'
@@ -84,8 +89,22 @@ export const Login = (props) => {
                   <Icon
                     as={<MaterialIcons name="email" />}
                     size={5} ml="4"
-                    color={colors.text04}
+                    color={
+                      errors?.email?.message
+                        ? colors.error
+                        : (value && isLoginClicked) ? colors.primary : colors.text04
+                      }
                   />
+                }
+                InputRightElement={
+                  (!errors?.email?.message && isLoginClicked) && (
+                    <Icon
+                      as={<MaterialIcons name="check" />}
+                      size={5} mr="4"
+                      color={colors.primary}
+                      onPress={() => setPasswordSee(!passwordSee)}
+                    />
+                  )
                 }
                 _focus={{
                   borderColor: !errors?.email?.message ? colors.primary : colors.error
@@ -100,20 +119,15 @@ export const Login = (props) => {
               }
             }}
           />
-          <FormControl.ErrorMessage
-            leftIcon={
+          {errors?.email?.message && (
+            <Flex direction='row' alignItems='center' mt={1}>
               <MaterialIcons name='warning' color={colors.error} />
-            }
-            mt={1}
-            _text={styles.errorText}
-          >
-            {errors?.email?.message}
-          </FormControl.ErrorMessage>
+              <HText style={styles.errorText}>{errors?.email?.message}</HText>
+            </Flex>
+          )}
         </FormControl>
 
-        <FormControl
-          isInvalid={errors?.password?.message}
-        >
+        <FormControl>
           <FormControl.Label _text={styles.label} mb={1}>Password</FormControl.Label>
           <Controller
             name='password'
@@ -126,7 +140,9 @@ export const Login = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
-                borderColor={colors.borderColor}
+                borderColor={
+                  errors?.password?.message ? colors.error : (value && isLoginClicked) ? colors.primary : colors.borderColor
+                }
                 placeholderTextColor={colors.text03}
                 autoCompleteType='password'
                 ref={inputRef}
@@ -134,21 +150,31 @@ export const Login = (props) => {
                 blurOnSubmit
                 value={value}
                 onChangeText={val => onChange(val)}
-                onSubmitEditing={handleSubmit(onSubmit)}
+                onSubmitEditing={handleLoginClick}
                 InputLeftElement={
                   <Icon
                     as={<MaterialIcons name="lock" />}
                     size={5} ml="4"
-                    color={colors.text04}
+                    color={errors?.password?.message ? colors.error : (value && isLoginClicked) ? colors.primary : colors.text04}
                   />
                 }
                 InputRightElement={
-                  <Icon
-                    as={<MaterialIcons name={passwordSee ? "visibility" : "visibility-off"} />}
-                    size={5} mr="4"
-                    color={colors.text04}
-                    onPress={() => setPasswordSee(!passwordSee)}
-                  />
+                  <Flex direction='row'>
+                    {(!errors?.password?.message && isLoginClicked) && (
+                      <Icon
+                        as={<MaterialIcons name="check" />}
+                        size={5} mr="3"
+                        color={colors.primary}
+                        onPress={() => setPasswordSee(!passwordSee)}
+                      />
+                    )}
+                    <Icon
+                      as={<MaterialIcons name={passwordSee ? "visibility" : "visibility-off"} />}
+                      size={5} mr="4"
+                      color={colors.text04}
+                      onPress={() => setPasswordSee(!passwordSee)}
+                    />
+                  </Flex>
                 }
                 _focus={{
                   borderColor: !errors?.password?.message ? colors.primary :colors.error
@@ -156,15 +182,12 @@ export const Login = (props) => {
               />
             )}
           />
-          <FormControl.ErrorMessage
-            leftIcon={
+          {errors?.password?.message && (
+            <Flex direction='row' alignItems='center' mt={1}>
               <MaterialIcons name='warning' color={colors.error} />
-            }
-            mt={1}
-            _text={styles.errorText}
-          >
-            {errors?.password?.message}
-          </FormControl.ErrorMessage>
+              <HText style={styles.errorText}>{errors?.password?.message}</HText>
+            </Flex>
+          )}
         </FormControl>
       </Box>
       
@@ -177,7 +200,7 @@ export const Login = (props) => {
       <Box alignItems='center' mt={8}>
         <HButton
           text='Log in'
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleLoginClick}
         />
       </Box>
     </View>

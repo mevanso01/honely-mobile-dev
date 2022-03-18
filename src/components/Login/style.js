@@ -30,7 +30,8 @@ export default StyleSheet.create({
   },
   errorText: {
     color: colors.error,
-    fontSize: 12
+    fontSize: 12,
+    marginLeft: 5
   },
   forgotLink: {
     alignSelf: 'flex-end',
