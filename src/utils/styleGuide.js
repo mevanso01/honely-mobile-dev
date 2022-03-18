@@ -20,3 +20,11 @@ export const colors = {
   text04: "#1a1d1b33",
   text05: "#1a1d1b1a"
 }
+
+export const images = {
+  logo: require('../assets/images/logo.png'),
+  slider1: require('../assets/images/slider-1.png'),
+  slider2: require('../assets/images/slider-2.png'),
+  slider3: require('../assets/images/slider-3.png'),
+  slider4: require('../assets/images/slider-4.png')
+}

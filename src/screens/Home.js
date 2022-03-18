@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Home as HomeScreen } from '../components/Home';
-import { useTheme } from 'styled-components/native';
+import { colors } from '../utils/styleGuide'
 
 const Home = (props) => {
-  const theme = useTheme();
   const homeProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -16,7 +15,7 @@ const Home = (props) => {
   const styles = StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: theme.colors.backgroundColor,
+      backgroundColor: colors.backgroundColor,
     }
   })
 

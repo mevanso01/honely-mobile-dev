@@ -1,20 +1,20 @@
 
 import * as React from 'react'
-import styled, { useTheme } from 'styled-components/native'
+import styled from 'styled-components/native'
+import { colors } from '../../utils/styleGuide'
 
 const Wrapper = styled.View``
 
 const SImage = styled.Image`
-  tint-color: ${(props) => props.theme.colors.primary};
+  tint-color: ${colors.primary};
 `
 
 const HImage = (props) => {
-  const theme = useTheme()
 
   return (
     <Wrapper style={{ borderRadius: props.style?.borderRadius, overflow: 'hidden', marginHorizontal: props.style?.marginHorizontal }}>
       <SImage
-        source={props.src ? props.src : props.url ? { uri: props.url } : props.dummy ? props.dummy : theme.icons.message}
+        source={props.src ? props.src : props.url ? { uri: props.url } : props.dummy}
         style={{
           tintColor: props.color,
           flex: props.isWrap ? 1 : 0,

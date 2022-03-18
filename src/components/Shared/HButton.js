@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useTheme } from 'styled-components/native'
 import { Button } from 'native-base'
 import { darken } from 'polished'
+import { colors } from '../../utils/styleGuide'
 
 const HButton = (props) => {
   const {
@@ -10,8 +10,6 @@ const HButton = (props) => {
     textStyle
   } = props
 
-  const theme = useTheme()
-
   return (
     <Button
       onPress={props.onPress}
@@ -19,8 +17,8 @@ const HButton = (props) => {
       width={props.width || 180}
       height={props.height || 50}
       borderRadius={props.borderRadius || 50}
-      backgroundColor={backgroundColor || theme.colors.primary}
-      _pressed={{ backgroundColor: darken(0.1, (backgroundColor || theme.colors.primary)) }}
+      backgroundColor={backgroundColor || colors.primary}
+      _pressed={{ backgroundColor: darken(0.1, (backgroundColor || colors.primary)) }}
       _text={{
         fontSize: 16,
         fontWeight: '500',

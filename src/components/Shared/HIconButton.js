@@ -1,5 +1,6 @@
 import * as React from 'react'
-import styled, { useTheme } from 'styled-components/native'
+import styled from 'styled-components/native'
+import { colors } from '../../utils/styleGuide'
 
 const Wrapper = styled.TouchableOpacity`
   height: 40px;
@@ -30,7 +31,6 @@ const Title = styled.Text`
 
 const HIconButton = (props) => {
   const { RenderIcon } = props
-  const theme = useTheme()
 
   return (
     <>
@@ -70,8 +70,8 @@ const HIconButton = (props) => {
       ) : (
         <DisabledWrapper
           style={{
-            borderColor: theme.colors.borderColor,
-            backgroundColor: props.disabledColor ? props.disabledColor : theme.colors.borderColor,
+            borderColor: colors.borderColor,
+            backgroundColor: props.disabledColor ? props.disabledColor : colors.borderColor,
             height: props.height || 40,
             borderRadius: props.height ? props.height * 0.5 : 20,
             ...props.style

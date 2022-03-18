@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Login as LoginScreen } from '../components/Login';
-import styled, { useTheme } from 'styled-components/native';
+import styled from 'styled-components/native';
+import { colors } from '../utils/styleGuide'
 
 const KeyboardView = styled.KeyboardAvoidingView`
   flex: 1;
 `;
 
 const Login = (props) => {
-  const theme = useTheme();
   const loginProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -20,7 +20,7 @@ const Login = (props) => {
   const styles = StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: theme.colors.backgroundColor,
+      backgroundColor: colors.backgroundColor,
     }
   })
 
