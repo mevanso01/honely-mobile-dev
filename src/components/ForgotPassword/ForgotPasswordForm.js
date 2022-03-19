@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Keyboard } from 'react-native'
 import { HText, HButton } from '../Shared'
-import { Box, Input, Icon, FormControl, Flex } from 'native-base'
+import { Box, Input, Icon, FormControl, HStack } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './style'
 import { useForm, Controller } from 'react-hook-form'
@@ -89,10 +89,10 @@ export const ForgotPasswordForm = (props) => {
             }}
           />
           {errors?.email?.message && (
-            <Flex direction='row' alignItems='center' mt={2}>
+            <HStack alignItems='center' mt={2}>
               <MaterialIcons name='warning' color={colors.error} />
               <HText style={styles.errorText}>{errors?.email?.message}</HText>
-            </Flex>
+            </HStack>
           )}
         </FormControl>
       </Box>

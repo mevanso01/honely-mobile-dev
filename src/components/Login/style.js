@@ -12,6 +12,11 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: colors.headingColor
   },
+  errorTextWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8
+  },
   errorText: {
     color: colors.error,
     fontSize: 12,

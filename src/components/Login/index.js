@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Keyboard } from 'react-native'
 import { HButton, HText, HSliderButton, HPressableText, HScreenHeader} from '../Shared'
-import { Box, Input, FormControl, Icon, IconButton, Flex } from 'native-base'
+import { Box, Input, FormControl, Icon, IconButton, HStack } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
@@ -105,10 +105,10 @@ export const Login = (props) => {
             }}
           />
           {errors?.email?.message && (
-            <Flex direction='row' alignItems='center' mt={2}>
+            <View style={styles.errorTextWrapper}>
               <MaterialIcons name='warning' color={colors.error} />
               <HText style={styles.errorText}>{errors?.email?.message}</HText>
-            </Flex>
+            </View>
           )}
         </FormControl>
 
@@ -144,7 +144,7 @@ export const Login = (props) => {
                   />
                 }
                 InputRightElement={
-                  <Flex direction='row'>
+                  <HStack>
                     {(!errors?.password?.message && isLoginClicked) && (
                       <Icon
                         as={<MaterialIcons name="check" />}
@@ -159,7 +159,7 @@ export const Login = (props) => {
                       color={colors.text04}
                       onPress={() => setPasswordSee(!passwordSee)}
                     />
-                  </Flex>
+                  </HStack>
                 }
                 _focus={{
                   borderColor: !errors?.password?.message ? colors.primary :colors.error
@@ -168,10 +168,10 @@ export const Login = (props) => {
             )}
           />
           {errors?.password?.message && (
-            <Flex direction='row' alignItems='center' mt={2}>
+            <View style={styles.errorTextWrapper}>
               <MaterialIcons name='warning' color={colors.error} />
               <HText style={styles.errorText}>{errors?.password?.message}</HText>
-            </Flex>
+            </View>
           )}
         </FormControl>
       </Box>

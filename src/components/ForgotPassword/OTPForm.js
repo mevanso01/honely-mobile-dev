@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import { HText, HButton } from '../Shared'
-import { Box, Flex } from 'native-base'
+import { Box, HStack } from 'native-base'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
@@ -35,7 +35,7 @@ export const OTPForm = (props) => {
         <OTPInputView
           pinCount={4}
           style={styles.otpView}
-          autoFocusOnLoad={false}
+          autoFocusOnLoad
           keyboardType='number-pad'
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
@@ -46,10 +46,10 @@ export const OTPForm = (props) => {
         />
       </Box>
       {error && (
-        <Flex direction='row' alignItems='center' justifyContent='center' mt={2}>
+        <HStack alignItems='center' justifyContent='center' mt={2}>
           <MaterialIcons name='warning' color={colors.error} />
           <HText style={styles.errorText}>{error}</HText>
-        </Flex>
+        </HStack>
       )}
       <Box alignItems='center' mt='6'>
         <HButton

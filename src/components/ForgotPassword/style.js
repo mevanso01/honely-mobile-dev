@@ -64,7 +64,6 @@ export default StyleSheet.create({
   forgotPasswordImg: {
     resizeMode: 'contain',
     width: '100%',
-    height: '100%',
-    borderWidth: 1
+    height: '100%'
   }
 })

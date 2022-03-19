@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { View, Keyboard } from 'react-native'
-import { Box, Input, FormControl, Icon, Flex } from 'native-base'
+import { Box, Input, FormControl, Icon, HStack } from 'native-base'
 import { HButton, HText } from '../Shared'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
@@ -69,7 +69,7 @@ export const ResetPasswordForm = (props) => {
                   />
                 }
                 InputRightElement={
-                  <Flex direction='row'>
+                  <HStack>
                     {(!errors?.new_password?.message && isSubmitClicked) && (
                       <Icon
                         as={<MaterialIcons name="check" />}
@@ -84,7 +84,7 @@ export const ResetPasswordForm = (props) => {
                       color={colors.text04}
                       onPress={() => setNewPasswordSee(!newPasswordSee)}
                     />
-                  </Flex>
+                  </HStack>
                 }
                 _focus={{
                   borderColor: !errors?.new_password?.message ? colors.primary :colors.error
@@ -93,10 +93,10 @@ export const ResetPasswordForm = (props) => {
             )}
           />
           {errors?.new_password?.message && (
-            <Flex direction='row' alignItems='center' mt={2}>
+            <HStack alignItems='center' mt={2}>
               <MaterialIcons name='warning' color={colors.error} />
               <HText style={styles.errorText}>{errors?.new_password?.message}</HText>
-            </Flex>
+            </HStack>
           )}
         </FormControl>
         <FormControl mt='4'>
@@ -119,6 +119,7 @@ export const ResetPasswordForm = (props) => {
                   errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
                 }
                 placeholderTextColor={colors.text03}
+                textContentType='oneTimeCode'
                 autoCompleteType='password'
                 ref={confirmPasswordRef}
                 returnKeyType='done'
@@ -134,7 +135,7 @@ export const ResetPasswordForm = (props) => {
                   />
                 }
                 InputRightElement={
-                  <Flex direction='row'>
+                  <HStack>
                     {(!errors?.confirm_password?.message && isSubmitClicked) && (
                       <Icon
                         as={<MaterialIcons name="check" />}
@@ -149,7 +150,7 @@ export const ResetPasswordForm = (props) => {
                       color={colors.text04}
                       onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
                     />
-                  </Flex>
+                  </HStack>
                 }
                 _focus={{
                   borderColor: !errors?.confirm_password?.message ? colors.primary :colors.error
@@ -158,10 +159,10 @@ export const ResetPasswordForm = (props) => {
             )}
           />
           {errors?.confirm_password?.message && (
-            <Flex direction='row' alignItems='center' mt={2}>
+            <HStack alignItems='center' mt={2}>
               <MaterialIcons name='warning' color={colors.error} />
               <HText style={styles.errorText}>{errors?.confirm_password?.message}</HText>
-            </Flex>
+            </HStack>
           )}
         </FormControl>
       </Box>
