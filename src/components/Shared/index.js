@@ -4,6 +4,7 @@ import HIconButton from './HIconButton'
 import HInput from './HInput'
 import HPressableText from './HPressableText'
 import HSliderButton from './HSliderButton'
+import HScreenHeader from './HScreenHeader'
 
 export {
   HButton,
@@ -11,5 +12,6 @@ export {
   HText,
   HInput,
   HPressableText,
-  HSliderButton
+  HSliderButton,
+  HScreenHeader
 }

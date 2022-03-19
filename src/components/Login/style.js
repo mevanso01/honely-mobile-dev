@@ -6,22 +6,6 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: 18
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 48,
-    marginTop: 40
-  },
-  backArrow: {
-    position: 'absolute',
-    left: -10
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: colors.text01,
-  },
   label: {
     fontSize: 16,
     lineHeight: 24,

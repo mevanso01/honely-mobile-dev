@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Keyboard } from 'react-native'
-import { HButton, HText, HSliderButton, HPressableText } from '../Shared'
+import { HButton, HText, HSliderButton, HPressableText, HScreenHeader} from '../Shared'
 import { Box, Input, FormControl, Icon, IconButton, Flex } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
@@ -35,25 +35,10 @@ export const Login = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.header}>
-        <View style={styles.backArrow}>
-          <IconButton
-            borderRadius='full'
-            variant='ghost'
-            size='8'
-            _icon={{
-              as: MaterialIcons,
-              name: 'chevron-left',
-              color: colors.black,
-            }}
-            _pressed={{
-              bg: colors.text05
-            }}
-            onPress={() => navigation.goBack()}
-          />
-        </View>
-        <HText style={styles.title}>Login</HText>
-      </View>
+      <HScreenHeader
+        title='Login'
+        onPress={() => navigation.goBack()}
+      />
 
       <HSliderButton
         onFirstPress={() => {}}
@@ -194,7 +179,7 @@ export const Login = (props) => {
       <View style={styles.forgotLink}>
         <HPressableText
           text='Forgot password?'
-          onPress={() => {}}
+          onPress={() => onNavigationRedirect('ForgotPassword')}
         />
       </View>
       <Box alignItems='center' mt={8}>
