@@ -5,6 +5,7 @@ import Swiper from 'react-native-swiper'
 import SplashScreen from 'react-native-splash-screen'
 import { colors, images } from '../../utils/styleGuide'
 import styles from './style'
+import Logo from '../../assets/images/logo.svg'
 
 export const Home = (props) => {
   const {
@@ -40,7 +41,7 @@ export const Home = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <Image source={images.logo} style={styles.logoWrapper} />
+      <Logo width="100" height="36" />
       <Swiper
         showsButtons={false}
         loop={true}

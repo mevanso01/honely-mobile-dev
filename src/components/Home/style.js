@@ -27,10 +27,6 @@ export default StyleSheet.create({
     fontWeight: '500',
     lineHeight: 21
   },
-  logoWrapper: {
-    resizeMode: 'contain',
-    width: 100
-  },
   slideImage: {
     width: '100%',
     height: '70%',
