@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { View, Keyboard } from 'react-native'
+import { View, Keyboard, Image, ScrollView } from 'react-native'
 import { HButton, HText, HPressableText } from '../Shared'
-import { Box, Input, FormControl, Icon, HStack } from 'native-base'
+import { Box, Input, FormControl, Icon, HStack, Pressable } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { colors } from '../../utils/styleGuide'
+import { colors, icons } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
 import styles from './style'
 
@@ -32,7 +32,9 @@ export const LoginForm = (props) => {
   }
 
   return (
-    <View>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+    >
       <Box mt={8}>
         <FormControl mb={4}>
           <FormControl.Label _text={styles.label} mb={1}>Email</FormControl.Label>
@@ -59,14 +61,17 @@ export const LoginForm = (props) => {
                 onSubmitEditing={() => inputRef.current?.focus()}
                 blurOnSubmit={false}
                 InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="email" />}
-                    size={5} ml="4"
-                    color={
-                      errors?.email?.message
-                        ? colors.error
-                        : (value && isLoginClicked) ? colors.primary : colors.text04
+                  <Image
+                    source={icons.email}
+                    style={[
+                      styles.inputIcon,
+                      {tintColor: `${
+                        errors?.email?.message
+                          ? colors.error
+                          : (value && isLoginClicked) ? colors.primary : colors.text04
+                        }`
                       }
+                    ]}
                   />
                 }
                 InputRightElement={
@@ -126,14 +131,21 @@ export const LoginForm = (props) => {
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={handleLoginClick}
                 InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="lock" />}
-                    size={5} ml="4"
-                    color={errors?.password?.message ? colors.error : (value && isLoginClicked) ? colors.primary : colors.text04}
+                  <Image
+                    source={icons.lock}
+                    style={[
+                      styles.inputIcon,
+                      {tintColor: `${
+                        errors?.password?.message
+                          ? colors.error
+                          : (value && isLoginClicked) ? colors.primary : colors.text04
+                        }`
+                      }
+                    ]}
                   />
                 }
                 InputRightElement={
-                  <HStack>
+                  <HStack alignItems='center'>
                     {(!errors?.password?.message && isLoginClicked) && (
                       <Icon
                         as={<MaterialIcons name="check" />}
@@ -142,12 +154,15 @@ export const LoginForm = (props) => {
                         onPress={() => setPasswordSee(!passwordSee)}
                       />
                     )}
-                    <Icon
-                      as={<MaterialIcons name={passwordSee ? "visibility" : "visibility-off"} />}
-                      size={5} mr="4"
-                      color={colors.text04}
+                    <Pressable
+                      style={styles.visibilityIconWrapper}
                       onPress={() => setPasswordSee(!passwordSee)}
-                    />
+                    >
+                      <Image
+                        source={passwordSee ? icons.visibility : icons.visibilityOff}
+                        style={styles.visibilityIcon}
+                      />
+                    </Pressable>
                   </HStack>
                 }
                 _focus={{
@@ -178,6 +193,6 @@ export const LoginForm = (props) => {
           onPress={handleLoginClick}
         />
       </Box>
-    </View>
+    </ScrollView>
   )
 }
