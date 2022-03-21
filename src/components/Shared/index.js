@@ -1,4 +1,5 @@
 import HButton from './HButton'
+import HCricleProgress from './HCircleProgress'
 import HText from './HText'
 import HIconButton from './HIconButton'
 import HInput from './HInput'
@@ -8,6 +9,7 @@ import HScreenHeader from './HScreenHeader'
 
 export {
   HButton,
+  HCricleProgress,
   HIconButton,
   HText,
   HInput,

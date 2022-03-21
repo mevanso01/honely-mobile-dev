@@ -11,6 +11,7 @@ const KeyboardView = styled.KeyboardAvoidingView`
 const Login = (props) => {
   const loginProps = {
     ...props,
+    isSignUp: props.route.params?.isSignUp,
     onNavigationRedirect: (page, params) => {
       if (!page) return
       props.navigation.navigate(page, params);

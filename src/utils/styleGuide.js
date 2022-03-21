@@ -28,3 +28,14 @@ export const images = {
   slider4: require('../assets/images/slider-4.png'),
   forgotPassword: require('../assets/images/forgot-password.png')
 }
+
+export const icons = {
+  user: require('../assets/icons/user.png'),
+  email: require('../assets/icons/email.png'),
+  lock: require('../assets/icons/lock.png'),
+  phone: require('../assets/icons/phone.png'),
+  check: require('../assets/icons/check.png'),
+  visibility: require('../assets/icons/visibility.png'),
+  visibilityOff: require('../assets/icons/visibility-off.png'),
+  company: require('../assets/icons/company.png'),
+}

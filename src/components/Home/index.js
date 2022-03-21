@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { View, Image } from 'react-native'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HPressableText } from '../Shared'
 import Swiper from 'react-native-swiper'
 import SplashScreen from 'react-native-splash-screen'
 import { colors, images } from '../../utils/styleGuide'
@@ -68,13 +68,11 @@ export const Home = (props) => {
         marginVertical={16}
       />
 
-      <HText
-        style={{ fontSize: 16 }}
-        color={colors.primary}
-        weight='700'
-      >
-        New to Honely? Sign Up
-      </HText>
+      <HPressableText
+        text='New to Honely? Sign Up'
+        onPress={() => onNavigationRedirect('Login', { isSignUp: true })}
+        fontWeight='600'
+      />
     </View>
   )
 }

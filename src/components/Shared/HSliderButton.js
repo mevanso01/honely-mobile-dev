@@ -5,11 +5,14 @@ import HText from './HText'
 
 const HSliderButton = (props) => {
   const {
+    isForceActive,
+    firstText,
+    secondText,
     onFirstPress,
     onSecondPress
   } = props
 
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(isForceActive || false)
   let transformX = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
@@ -60,7 +63,7 @@ const HSliderButton = (props) => {
         }}
       >
         <HText style={[styles.textStyle, { color: !active ? colors.white : colors.text03 }]}>
-          Log In
+          {firstText}
         </HText>
       </TouchableOpacity>
       <TouchableOpacity
@@ -72,7 +75,7 @@ const HSliderButton = (props) => {
         }}
       >
         <HText style={[styles.textStyle, { color: active ? colors.white : colors.text03 }]}>
-          Sign Up
+          {secondText}
         </HText>
       </TouchableOpacity>
     </View>
