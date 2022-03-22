@@ -8,46 +8,47 @@ import { ConsumerTypeForm } from './ConsumerTypeForm'
 
 export const SignUpScreen = (props) => {
   const {
-    handleHideSliderButton
+    handleHideSliderButton,
+    signUpFormStep,
+    setSignUpFormStep
   } = props
-  const [formStep, setFormStep] = useState('signUp')
 
   const handleSignUpClick = () => {
     handleHideSliderButton()
-    setFormStep('describe')
+    setSignUpFormStep('describe')
   }
   const handleDescibeNextStep = (type) => {
     if (type === 'consumer') {
-      setFormStep('consumerType')
+      setSignUpFormStep('consumerType')
     } else {
-      setFormStep('businessType')
+      setSignUpFormStep('businessType')
     }
   }
   const handleBusinessTypeNextStep = (type) => {
-    setFormStep('businessCompany')
+    setSignUpFormStep('businessCompany')
   }
 
   return (
     <View style={{ flex: 1 }}>
-      {formStep === 'signUp' && (
+      {signUpFormStep === 'signUp' && (
         <SignUpForm
           handleNextStep={handleSignUpClick}
         />
       )}
-      {formStep === 'describe' && (
+      {signUpFormStep === 'describe' && (
         <DescribeForm
           handleNextStep={handleDescibeNextStep}
         />
       )}
-      {formStep === 'businessType' && (
+      {signUpFormStep === 'businessType' && (
         <BusinessTypeForm
           handleNextStep={handleBusinessTypeNextStep}
         />
       )}
-      {formStep === 'businessCompany' && (
+      {signUpFormStep === 'businessCompany' && (
         <BusinessCompanyForm />
       )}
-      {formStep === 'consumerType' && (
+      {signUpFormStep === 'consumerType' && (
         <ConsumerTypeForm />
       )}
     </View>

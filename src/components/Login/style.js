@@ -58,6 +58,7 @@ export default StyleSheet.create({
   },
   stepButtonContainer: {
     flex: 1,
+    paddingTop: 24,
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingBottom: 48,
@@ -66,5 +67,10 @@ export default StyleSheet.create({
     fontWeight: '500',
     fontSize: 16,
     marginLeft: 8
+  },
+  scrollViewContentContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column'
   }
 })

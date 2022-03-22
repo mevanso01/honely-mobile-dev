@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { HSliderButton, HScreenHeader} from '../Shared'
 import { LoginForm } from './LoginForm'
@@ -16,11 +16,43 @@ export const Login = (props) => {
   const [isSignUpScreen, setIsSignUpScreen] = useState(isSignUp || false)
   const [isShowSliderButton, setIsShowSliderButton] = useState(true)
 
+  const [signUpFormStep, setSignUpFormStep] = useState('signUp')
+
+  const handleGoBack = () => {
+    if (isSignUpScreen) {
+      switch (signUpFormStep) {
+        case 'describe':
+          setSignUpFormStep('signUp')
+          break
+        case 'businessType':
+          setSignUpFormStep('describe')
+          break
+        case 'businessCompany':
+          setSignUpFormStep('businessType')
+          break
+        case 'consumerType':
+          setSignUpFormStep('describe')
+          break       
+        default:
+          navigation.goBack()
+          break
+      }
+    } else {
+      navigation.goBack()
+    }
+  }
+
+  useEffect(() => {
+    if (signUpFormStep === 'signUp') {
+      setIsShowSliderButton(true)
+    }
+  }, [signUpFormStep])
+
   return (
     <View style={styles.wrapper}>
       <HScreenHeader
         title={isSignUpScreen ? 'Sign Up' : 'Login'}
-        onPress={() => navigation.goBack()}
+        onPress={() => handleGoBack()}
       />
 
       {isShowSliderButton && (
@@ -39,6 +71,8 @@ export const Login = (props) => {
         />
       ) : (
         <SignUpScreen
+          signUpFormStep={signUpFormStep}
+          setSignUpFormStep={setSignUpFormStep}
           handleHideSliderButton={() => setIsShowSliderButton(false)}
         />
       )}

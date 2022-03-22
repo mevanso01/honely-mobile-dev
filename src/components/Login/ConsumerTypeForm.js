@@ -22,7 +22,7 @@ export const ConsumerTypeForm = (props) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flex: 1 }}
+      contentContainerStyle={styles.scrollViewContentContainer}
     >
       <Box alignItems='center' mb='6'>
         <HText style={styles.subtitle}>That’s Great</HText>

@@ -25,7 +25,7 @@ export const BusinessCompanyForm = (props) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flex: 1 }}
+      contentContainerStyle={styles.scrollViewContentContainer}
     >
       <Box alignItems='center' mb='6'>
         <HText style={styles.subtitle}>One last thing</HText>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { HText, HButton, HCricleProgress } from '../Shared'
-import { Box, Input, Icon, FormControl, HStack } from 'native-base'
+import { Box, HStack } from 'native-base'
 import { colors } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
@@ -28,7 +28,10 @@ export const BusinessTypeForm = (props) => {
   ]
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.scrollViewContentContainer}
+    >
       <Box alignItems='center' mb='6'>
         <HText style={styles.subtitle}>That’s Great</HText>
         <HText style={styles.description}>How would you describe your business</HText>
@@ -69,6 +72,6 @@ export const BusinessTypeForm = (props) => {
           />
         </Box>
       </View>
-    </View>
+    </ScrollView>
   )
 }
