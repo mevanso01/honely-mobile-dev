@@ -55,7 +55,7 @@ export const Login = (props) => {
         onPress={() => handleGoBack()}
       />
 
-      {isShowSliderButton && (
+      <View style={{ display: isShowSliderButton ? 'flex' : 'none' }}>
         <HSliderButton
           isForceActive={isSignUpScreen}
           firstText='Log In'
@@ -63,7 +63,7 @@ export const Login = (props) => {
           onFirstPress={() => setIsSignUpScreen(false)}
           onSecondPress={() => setIsSignUpScreen(true)}
         />
-      )}
+      </View>
 
       {!isSignUpScreen ? (
         <LoginForm

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { ScrollView, Image, View, Keyboard } from 'react-native'
-import { HButton, HText, HPressableText } from '../Shared'
+import { HButton, HText } from '../Shared'
 import { Box, Input, FormControl, Icon, HStack, Pressable } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useForm, Controller } from 'react-hook-form'
@@ -9,10 +9,13 @@ import styles from './style'
 
 export const SignUpForm = (props) => {
   const {
+    formState,
     handleNextStep
   } = props
 
-  const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm()
+  const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm({
+    defaultValues: formState
+  })
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
   const [passwordSee, setPasswordSee] = useState(false)
   const [confirmPasswordSee, setConfirmPasswordSee] = useState(false)
@@ -25,9 +28,8 @@ export const SignUpForm = (props) => {
   passwordCurrent = watch('password', '')
 
   const onSubmit = (values) => {
-    console.log(values)
     Keyboard.dismiss()
-    handleNextStep()
+    handleNextStep(values)
   }
 
   const handleSubmitClick = () => {
@@ -94,7 +96,6 @@ export const SignUpForm = (props) => {
               _focus={{
                 borderColor: !errors?.username?.message ? colors.primary : colors.error
               }}
-              defaultValue=''
             />
           )}
           rules={{
@@ -158,7 +159,6 @@ export const SignUpForm = (props) => {
               _focus={{
                 borderColor: !errors?.fullname?.message ? colors.primary : colors.error
               }}
-              defaultValue=''
             />
           )}
           rules={{
@@ -224,7 +224,6 @@ export const SignUpForm = (props) => {
               _focus={{
                 borderColor: !errors?.email?.message ? colors.primary : colors.error
               }}
-              defaultValue=''
             />
           )}
           rules={{
@@ -293,7 +292,6 @@ export const SignUpForm = (props) => {
               _focus={{
                 borderColor: !errors?.phonenumber?.message ? colors.primary : colors.error
               }}
-              defaultValue=''
             />
           )}
           rules={{
@@ -308,155 +306,155 @@ export const SignUpForm = (props) => {
         )}
       </FormControl>
       <FormControl>
-          <FormControl.Label _text={styles.label} mb={1}>Password</FormControl.Label>
-          <Controller
-            name='password'
-            rules={{ required: { value: true, message: 'The password is required' } }}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                secureTextEntry={passwordSee ? false : true}
-                placeholder='Enter your password'
-                type={passwordSee ? "text" : "password"}
-                fontSize={14}
-                borderRadius={8}
-                height={50}
-                borderColor={
-                  errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
-                }
-                placeholderTextColor={colors.text03}
-                textContentType='oneTimeCode'
-                autoCompleteType='password'
-                returnKeyType='next'
-                blurOnSubmit={false}
-                value={value}
-                onChangeText={val => onChange(val)}
-                ref={passwordRef}
-                onSubmitEditing={() => confirmPasswordRef.current?.focus()}
-                InputLeftElement={
-                  <Image
-                    source={icons.lock}
-                    style={[
-                      styles.inputIcon,
-                      {tintColor: `${
-                        errors?.password?.message
-                          ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
-                        }`
-                      }
-                    ]}
-                  />
-                }
-                InputRightElement={
-                  <HStack alignItems='center'>
-                    {(!errors?.password?.message && isSubmitClicked) && (
-                      <Icon
-                        as={<MaterialIcons name="check" />}
-                        size={5} mr="3"
-                        color={colors.primary}
-                        onPress={() => setPasswordSee(!passwordSee)}
-                      />
-                    )}
-                    <Pressable
-                      style={styles.visibilityIconWrapper}
+        <FormControl.Label _text={styles.label} mb={1}>Password</FormControl.Label>
+        <Controller
+          name='password'
+          rules={{ required: { value: true, message: 'The password is required' } }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              secureTextEntry={passwordSee ? false : true}
+              placeholder='Enter your password'
+              type={passwordSee ? "text" : "password"}
+              fontSize={14}
+              borderRadius={8}
+              height={50}
+              borderColor={
+                errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+              }
+              placeholderTextColor={colors.text03}
+              textContentType='oneTimeCode'
+              autoCompleteType='password'
+              returnKeyType='next'
+              blurOnSubmit={false}
+              value={value}
+              onChangeText={val => onChange(val)}
+              ref={passwordRef}
+              onSubmitEditing={() => confirmPasswordRef.current?.focus()}
+              InputLeftElement={
+                <Image
+                  source={icons.lock}
+                  style={[
+                    styles.inputIcon,
+                    {tintColor: `${
+                      errors?.password?.message
+                        ? colors.error
+                        : (value && isSubmitClicked) ? colors.primary : colors.text04
+                      }`
+                    }
+                  ]}
+                />
+              }
+              InputRightElement={
+                <HStack alignItems='center'>
+                  {(!errors?.password?.message && isSubmitClicked) && (
+                    <Icon
+                      as={<MaterialIcons name="check" />}
+                      size={5} mr="3"
+                      color={colors.primary}
                       onPress={() => setPasswordSee(!passwordSee)}
-                    >
-                      <Image
-                        source={passwordSee ? icons.visibility : icons.visibilityOff}
-                        style={styles.visibilityIcon}
-                      />
-                    </Pressable>
-                  </HStack>
-                }
-                _focus={{
-                  borderColor: !errors?.password?.message ? colors.primary :colors.error
-                }}
-              />
-            )}
-          />
-          {errors?.password?.message && (
-            <HStack alignItems='center' mt={2}>
-              <MaterialIcons name='warning' color={colors.error} />
-              <HText style={styles.errorText}>{errors?.password?.message}</HText>
-            </HStack>
+                    />
+                  )}
+                  <Pressable
+                    style={styles.visibilityIconWrapper}
+                    onPress={() => setPasswordSee(!passwordSee)}
+                  >
+                    <Image
+                      source={passwordSee ? icons.visibility : icons.visibilityOff}
+                      style={styles.visibilityIcon}
+                    />
+                  </Pressable>
+                </HStack>
+              }
+              _focus={{
+                borderColor: !errors?.password?.message ? colors.primary :colors.error
+              }}
+            />
           )}
-        </FormControl>
-        <FormControl mt='4'>
-          <FormControl.Label _text={styles.label} mb={1}>Confirm password</FormControl.Label>
-          <Controller
-            name='confirm_password'
-            rules={{
-              required: { value: true, message: 'The confirm password is required' },
-              validate: value => value === passwordCurrent || 'The passwords do not match'
-            }}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                secureTextEntry={confirmPasswordSee ? false : true}
-                placeholder='Confirm your password'
-                type={confirmPasswordSee ? "text" : "password"}
-                fontSize={14}
-                borderRadius={8}
-                height={50}
-                borderColor={
-                  errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
-                }
-                placeholderTextColor={colors.text03}
-                textContentType='oneTimeCode'
-                autoCompleteType='password'
-                ref={confirmPasswordRef}
-                returnKeyType='done'
-                blurOnSubmit
-                value={value}
-                onChangeText={val => onChange(val)}
-                onSubmitEditing={handleSubmitClick}
-                InputLeftElement={
-                  <Image
-                    source={icons.lock}
-                    style={[
-                      styles.inputIcon,
-                      {tintColor: `${
-                        errors?.password?.message
-                          ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
-                        }`
-                      }
-                    ]}
-                  />
-                }
-                InputRightElement={
-                  <HStack alignItems='center'>
-                    {(!errors?.confirm_password?.message && isSubmitClicked) && (
-                      <Icon
-                        as={<MaterialIcons name="check" />}
-                        size={5} mr="3"
-                        color={colors.primary}
-                        onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
-                      />
-                    )}
-                    <Pressable
-                      style={styles.visibilityIconWrapper}
+        />
+        {errors?.password?.message && (
+          <HStack alignItems='center' mt={2}>
+            <MaterialIcons name='warning' color={colors.error} />
+            <HText style={styles.errorText}>{errors?.password?.message}</HText>
+          </HStack>
+        )}
+      </FormControl>
+      <FormControl mt='4'>
+        <FormControl.Label _text={styles.label} mb={1}>Confirm password</FormControl.Label>
+        <Controller
+          name='confirm_password'
+          rules={{
+            required: { value: true, message: 'The confirm password is required' },
+            validate: value => value === passwordCurrent || 'The passwords do not match'
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              secureTextEntry={confirmPasswordSee ? false : true}
+              placeholder='Confirm your password'
+              type={confirmPasswordSee ? "text" : "password"}
+              fontSize={14}
+              borderRadius={8}
+              height={50}
+              borderColor={
+                errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+              }
+              placeholderTextColor={colors.text03}
+              textContentType='oneTimeCode'
+              autoCompleteType='password'
+              ref={confirmPasswordRef}
+              returnKeyType='done'
+              blurOnSubmit
+              value={value}
+              onChangeText={val => onChange(val)}
+              onSubmitEditing={handleSubmitClick}
+              InputLeftElement={
+                <Image
+                  source={icons.lock}
+                  style={[
+                    styles.inputIcon,
+                    {tintColor: `${
+                      errors?.password?.message
+                        ? colors.error
+                        : (value && isSubmitClicked) ? colors.primary : colors.text04
+                      }`
+                    }
+                  ]}
+                />
+              }
+              InputRightElement={
+                <HStack alignItems='center'>
+                  {(!errors?.confirm_password?.message && isSubmitClicked) && (
+                    <Icon
+                      as={<MaterialIcons name="check" />}
+                      size={5} mr="3"
+                      color={colors.primary}
                       onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
-                    >
-                      <Image
-                        source={confirmPasswordSee ? icons.visibility : icons.visibilityOff}
-                        style={styles.visibilityIcon}
-                      />
-                    </Pressable>
-                  </HStack>
-                }
-                _focus={{
-                  borderColor: !errors?.confirm_password?.message ? colors.primary :colors.error
-                }}
-              />
-            )}
-          />
-          {errors?.confirm_password?.message && (
-            <HStack alignItems='center' mt={2}>
-              <MaterialIcons name='warning' color={colors.error} />
-              <HText style={styles.errorText}>{errors?.confirm_password?.message}</HText>
-            </HStack>
+                    />
+                  )}
+                  <Pressable
+                    style={styles.visibilityIconWrapper}
+                    onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
+                  >
+                    <Image
+                      source={confirmPasswordSee ? icons.visibility : icons.visibilityOff}
+                      style={styles.visibilityIcon}
+                    />
+                  </Pressable>
+                </HStack>
+              }
+              _focus={{
+                borderColor: !errors?.confirm_password?.message ? colors.primary :colors.error
+              }}
+            />
           )}
+        />
+        {errors?.confirm_password?.message && (
+          <HStack alignItems='center' mt={2}>
+            <MaterialIcons name='warning' color={colors.error} />
+            <HText style={styles.errorText}>{errors?.confirm_password?.message}</HText>
+          </HStack>
+        )}
       </FormControl>
 
       <Box alignItems='center' mt='6' mb='6'>

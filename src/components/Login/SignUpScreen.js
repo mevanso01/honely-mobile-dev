@@ -13,9 +13,14 @@ export const SignUpScreen = (props) => {
     setSignUpFormStep
   } = props
 
-  const handleSignUpClick = () => {
+  const [formState, setFormState] = useState({})
+  const handleSignUpClick = (values) => {
     handleHideSliderButton()
     setSignUpFormStep('describe')
+    setFormState({
+      ...formState,
+      ...values
+    })
   }
   const handleDescibeNextStep = (type) => {
     if (type === 'consumer') {
@@ -32,6 +37,7 @@ export const SignUpScreen = (props) => {
     <View style={{ flex: 1 }}>
       {signUpFormStep === 'signUp' && (
         <SignUpForm
+          formState={formState}
           handleNextStep={handleSignUpClick}
         />
       )}
