@@ -51,6 +51,7 @@ export const SignUpForm = (props) => {
           control={control}
           render={({ field: { onChange, value } }) => (
             <Input
+              keyboardType='default'
               placeholder='e.g Jonathanshah01'
               placeholderTextColor={colors.text03}
               fontSize={14}
@@ -314,6 +315,7 @@ export const SignUpForm = (props) => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
+                secureTextEntry={passwordSee ? false : true}
                 placeholder='Enter your password'
                 type={passwordSee ? "text" : "password"}
                 fontSize={14}
@@ -323,6 +325,7 @@ export const SignUpForm = (props) => {
                   errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
                 }
                 placeholderTextColor={colors.text03}
+                textContentType='oneTimeCode'
                 autoCompleteType='password'
                 returnKeyType='next'
                 blurOnSubmit={false}
@@ -389,6 +392,7 @@ export const SignUpForm = (props) => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
+                secureTextEntry={confirmPasswordSee ? false : true}
                 placeholder='Confirm your password'
                 type={confirmPasswordSee ? "text" : "password"}
                 fontSize={14}
