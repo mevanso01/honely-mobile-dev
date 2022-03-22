@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import { HText, HButton } from '../Shared'
-import { Box, HStack } from 'native-base'
+import { Box, HStack, ScrollView } from 'native-base'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
@@ -25,7 +25,9 @@ export const OTPForm = (props) => {
   }
 
   return (
-    <View>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+    >
       <Box alignItems='center' mb='8'>
         <HText style={styles.subtitle}>Enter OTP</HText>
         <HText style={styles.description}>An 4 digit code has been sent to</HText>
@@ -57,6 +59,6 @@ export const OTPForm = (props) => {
           onPress={handleSubmitClick}
         />
       </Box>
-    </View>
+    </ScrollView>
   )
 }

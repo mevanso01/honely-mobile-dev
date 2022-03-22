@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { View, Keyboard } from 'react-native'
+import { ScrollView, Keyboard } from 'react-native'
 import { Box, Input, FormControl, Icon, HStack } from 'native-base'
 import { HButton, HText } from '../Shared'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -32,7 +32,9 @@ export const ResetPasswordForm = (props) => {
   }
 
   return (
-    <Box>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+    >
       <Box alignItems='center' mb='8'>
         <HText style={styles.subtitle}>Reset Password</HText>
       </Box>
@@ -173,6 +175,6 @@ export const ResetPasswordForm = (props) => {
           onPress={handleSubmitClick}
         />
       </Box>
-    </Box>
+    </ScrollView>
   )
 }

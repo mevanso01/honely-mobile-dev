@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Keyboard } from 'react-native'
+import { ScrollView, Keyboard } from 'react-native'
 import { HText, HButton } from '../Shared'
 import { Box, Input, Icon, FormControl, HStack } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -28,7 +28,9 @@ export const ForgotPasswordForm = (props) => {
   }
 
   return (
-    <View>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+    >
       <Box alignItems='center' mb='8'>
         <HText style={styles.subtitle}>Forgot Password?</HText>
         <HText style={styles.description}>Don’t worry! it happens. Please enter the address associated with your account.</HText>
@@ -102,6 +104,6 @@ export const ForgotPasswordForm = (props) => {
           onPress={handleSubmitClick}
         />
       </Box>
-    </View>
+    </ScrollView>
   )
 }
