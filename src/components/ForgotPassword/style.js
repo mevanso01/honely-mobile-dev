@@ -34,13 +34,13 @@ export default StyleSheet.create({
   },
 
   otpView: {
-    width: 332,
+    width: (deviceWidth - 48),
     height: 55,
     alignSelf: 'center',
     paddingVertical: 0
   },
-  underlineStyleBase: {
-    width: 80,
+  otpInputStyle: {
+    width: (deviceWidth - 48 - 12) / 4,
     height: 55,
     borderRadius: 8,
     borderColor: colors.borderColor,

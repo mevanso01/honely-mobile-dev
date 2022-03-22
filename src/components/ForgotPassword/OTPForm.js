@@ -39,7 +39,7 @@ export const OTPForm = (props) => {
           style={styles.otpView}
           autoFocusOnLoad
           keyboardType='number-pad'
-          codeInputFieldStyle={styles.underlineStyleBase}
+          codeInputFieldStyle={styles.otpInputStyle}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
           editable
           onCodeFilled={value => {
