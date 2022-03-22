@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, ScrollView } from 'react-native'
+import { View, Image, ScrollView, Keyboard } from 'react-native'
 import { HText, HButton, HCricleProgress } from '../Shared'
 import { Box, HStack, Input, FormControl, Icon } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
@@ -8,13 +8,22 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './style'
 
 export const BusinessCompanyForm = (props) => {
-  const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm()
+  const {
+    formState,
+    setFormState
+  } = props
+  const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm({
+    defaultValues: { company_name: formState?.company_name || '' }
+  })
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
-  const companyName = watch('name', '')
+  const companyName = watch('company_name', '')
 
   const onSubmit = (values) => {
     Keyboard.dismiss()
-    console.log(values)
+    setFormState({
+      ...formState,
+      ...values,
+    })
   }
 
   const handleSubmitClick = () => {
@@ -34,7 +43,7 @@ export const BusinessCompanyForm = (props) => {
       <FormControl mb={4}>
         <FormControl.Label _text={styles.label} mb={1}>Company name</FormControl.Label>
         <Controller
-          name='name'
+          name='company_name'
           control={control}
           render={({ field: { onChange, value } }) => (
             <Input
@@ -45,7 +54,7 @@ export const BusinessCompanyForm = (props) => {
               fontWeight='500'
               height={50}
               borderColor={
-                errors?.name?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                errors?.company_name?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
               }
               autoCapitalize='none'
               autoCorrect={false}
@@ -60,7 +69,7 @@ export const BusinessCompanyForm = (props) => {
                   style={[
                     styles.inputIcon,
                     {tintColor: `${
-                      errors?.name?.message
+                      errors?.company_name?.message
                         ? colors.error
                         : (value && isSubmitClicked) ? colors.primary : colors.text04
                       }`
@@ -69,7 +78,7 @@ export const BusinessCompanyForm = (props) => {
                 />
               }
               InputRightElement={
-                (!errors?.name?.message && isSubmitClicked) && (
+                (!errors?.company_name?.message && isSubmitClicked) && (
                   <Icon
                     as={<MaterialIcons name="check" />}
                     size={5} mr="4"
@@ -79,7 +88,7 @@ export const BusinessCompanyForm = (props) => {
                 )
               }
               _focus={{
-                borderColor: !errors?.name?.message ? colors.primary : colors.error
+                borderColor: !errors?.company_name?.message ? colors.primary : colors.error
               }}
               defaultValue=''
             />
@@ -88,10 +97,10 @@ export const BusinessCompanyForm = (props) => {
             required: { value: true, message: 'The company name is required' },
           }}
         />
-        {errors?.name?.message && (
+        {errors?.company_name?.message && (
           <View style={styles.errorTextWrapper}>
             <MaterialIcons name='warning' color={colors.error} />
-            <HText style={styles.errorText}>{errors?.name?.message}</HText>
+            <HText style={styles.errorText}>{errors?.company_name?.message}</HText>
           </View>
         )}
       </FormControl>

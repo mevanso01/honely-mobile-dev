@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
 import { View, ScrollView } from 'react-native'
 import { HText, HButton, HCricleProgress } from '../Shared'
-import { Box, Input, Icon, FormControl, HStack } from 'native-base'
+import { Box, HStack } from 'native-base'
 import { colors } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
 
 export const ConsumerTypeForm = (props) => {
-  const {
-    handleNextStep
-  } = props
-
   const [selectedType, setSelectedType] = useState(null)
   const types = [
     { value: 'buyer', text: 'Buyer' },
@@ -60,7 +56,7 @@ export const ConsumerTypeForm = (props) => {
             backgroundColor={selectedType ? colors.primary : colors.text03}
             shadow='0'
             isDisabled={!selectedType}
-            onPress={() => handleNextStep(selectedType)}
+            onPress={() => {}}
           />
         </Box>
       </View>

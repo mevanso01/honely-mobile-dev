@@ -52,7 +52,10 @@ export const SignUpScreen = (props) => {
         />
       )}
       {signUpFormStep === 'businessCompany' && (
-        <BusinessCompanyForm />
+        <BusinessCompanyForm
+          formState={formState}
+          setFormState={setFormState}
+        />
       )}
       {signUpFormStep === 'consumerType' && (
         <ConsumerTypeForm />
