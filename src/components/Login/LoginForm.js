@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { LoginForm as LoginFormController } from './LoginFormFuction'
 import { View, Keyboard, Image, ScrollView } from 'react-native'
 import { HButton, HText, HPressableText } from '../Shared'
 import { Box, Input, FormControl, Icon, HStack, Pressable } from 'native-base'
@@ -7,7 +8,7 @@ import { colors, icons } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
 import styles from './style'
 
-export const LoginForm = (props) => {
+const LoginFormUI = (props) => {
   const {
     onNavigationRedirect
   } = props
@@ -195,4 +196,12 @@ export const LoginForm = (props) => {
       </Box>
     </ScrollView>
   )
+}
+
+export const LoginForm = (props) => {
+  const loginProps = {
+    ...props,
+    UIComponent: LoginFormUI
+  }
+  return <LoginFormController {...loginProps} />
 }

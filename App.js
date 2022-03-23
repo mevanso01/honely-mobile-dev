@@ -1,12 +1,20 @@
 import * as React from 'react'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+
 import HonelyApp from './src/HonelyApp'
+import { store, persistor } from './src/store/configureStore'
 
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <HonelyApp />
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <HonelyApp />
+        </SafeAreaProvider>
+      </PersistGate>
+    </Provider>
   )
 }
 
