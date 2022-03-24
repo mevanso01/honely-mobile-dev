@@ -1,4 +1,4 @@
-import { USER_SET } from '../actionType'
+import { USER_SET, USER_SIGNOUT  } from '../actionType'
 
 const setUser = (res) => {
   return {
@@ -9,4 +9,11 @@ const setUser = (res) => {
   }
 }
 
-export { setUser }
+const signoutUser = () => {
+  return {
+    type: USER_SIGNOUT,
+  };
+}
+
+
+export { setUser, signoutUser }

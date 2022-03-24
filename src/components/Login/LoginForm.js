@@ -10,7 +10,9 @@ import styles from './style'
 
 const LoginFormUI = (props) => {
   const {
-    onNavigationRedirect
+    onNavigationRedirect,
+    isLogin,
+    handleLogin
   } = props
 
   const { control, handleSubmit, formState: { errors, isValid } } = useForm()
@@ -20,7 +22,7 @@ const LoginFormUI = (props) => {
 
   const onSubmit = (values) => {
     Keyboard.dismiss()
-    console.log(values)
+    handleLogin(values)
   }
 
   const handleLoginClick = () => {
@@ -57,6 +59,7 @@ const LoginFormUI = (props) => {
                 autoCorrect={false}
                 autoCompleteType='email'
                 returnKeyType='next'
+                isDisabled={isLogin}
                 value={value}
                 onChangeText={val => handleChangeInputEmail(val, onChange)}
                 onSubmitEditing={() => inputRef.current?.focus()}
@@ -128,6 +131,7 @@ const LoginFormUI = (props) => {
                 ref={inputRef}
                 returnKeyType='done'
                 blurOnSubmit
+                isDisabled={isLogin}
                 value={value}
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={handleLoginClick}
@@ -192,6 +196,7 @@ const LoginFormUI = (props) => {
         <HButton
           text='Log in'
           onPress={handleLoginClick}
+          isLoading={isLogin}
         />
       </Box>
     </ScrollView>

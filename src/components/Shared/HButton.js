@@ -37,6 +37,10 @@ const HButton = (props) => {
       marginVertical={props.marginVertical || 0}
       variant={variant || 'default'}
       isDisabled={props.isDisabled || false}
+
+      isLoading={props.isLoading}
+      spinnerPlacement={props.spinnerPlacement || 'end'}
+      isLoadingText={props.isLoadingText || 'Submitting'}
     >
       {text}
     </Button>

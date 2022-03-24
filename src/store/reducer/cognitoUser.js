@@ -1,15 +1,12 @@
-import { USER_FETCH_CURRENT, USER_SET, USER_SIGNOUT } from '../actionType'
+import { COGNITO_USER_SET } from '../actionType'
 
 const initialState = {
-  isLoggedIn: false
+  isCognitoUserLoggedIn: false
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case USER_FETCH_CURRENT: {
-      return { ...state }
-    }
-    case USER_SET: {
+    case COGNITO_USER_SET: {
       const temp = {
         ...state
       }
@@ -17,9 +14,6 @@ export default function(state = initialState, action) {
         temp[key] = action.payload[key]
       }
       return temp
-    }
-    case USER_SIGNOUT: {
-      return initialState;
     }
     default: {
       return state
