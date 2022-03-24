@@ -9,8 +9,10 @@ import styles from './style'
 
 export const BusinessCompanyForm = (props) => {
   const {
+    isLoading,
     formState,
-    setFormState
+    setFormState,
+    handleCreateAccount
   } = props
   const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm({
     defaultValues: { company_name: formState?.company_name || '' }
@@ -24,6 +26,7 @@ export const BusinessCompanyForm = (props) => {
       ...formState,
       ...values,
     })
+    handleCreateAccount()
   }
 
   const handleSubmitClick = () => {
@@ -59,6 +62,7 @@ export const BusinessCompanyForm = (props) => {
               autoCapitalize='none'
               autoCorrect={false}
               returnKeyType='done'
+              isDisabled={isLoading}
               value={value}
               onChangeText={val => onChange(val)}
               blurOnSubmit
@@ -119,6 +123,7 @@ export const BusinessCompanyForm = (props) => {
             backgroundColor={companyName ? colors.primary : colors.text03}
             shadow='0'
             onPress={handleSubmitClick}
+            isLoading={isLoading}
           />
         </Box>
       </View>

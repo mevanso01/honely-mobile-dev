@@ -8,24 +8,46 @@ import styles from './style'
 
 export const BusinessTypeForm = (props) => {
   const {
-    handleNextStep
+    handleNextStep,
+    formState,
+    setFormState
   } = props
 
-  const [selectedType, setSelectedType] = useState(null)
   const types = [
     {
-      value: 'agent',
+      value: 'Realtor',
       text: 'Agent/Broker'
     },
     {
-      value: 'lender',
+      value: 'Lender',
       text: 'Lender'
     },
     {
-      value: 'contractor',
+      value: 'General Contractor',
       text: 'Contractor'
     }
   ]
+
+  const handleServiceProviderType = (type) => {
+    if (formState?.serviceProviderType) {
+      if (formState?.serviceProviderType?.includes(type)) {
+        setFormState(prevState => ({
+          ...prevState,
+          serviceProviderType: prevState?.serviceProviderType?.filter(item => item !== type)
+        }))
+      } else {
+        setFormState(prevState => ({
+          ...prevState,
+          serviceProviderType: [...prevState?.serviceProviderType, type]
+        }))
+      }
+    } else {
+      setFormState(prevState => ({
+        ...prevState,
+        serviceProviderType: [type]
+      }))
+    }
+  }
 
   return (
     <ScrollView
@@ -41,14 +63,14 @@ export const BusinessTypeForm = (props) => {
           <HButton
             text={type.text}
             variant='outline'
-            borderColor={selectedType === type.value ? colors.primary : colors.borderColor}
+            borderColor={formState?.serviceProviderType?.includes(type.value) ? colors.primary : colors.borderColor}
             backgroundColor={colors.white}
-            textStyle={{ color: selectedType === type.value ? colors.text01 : colors.text03 }}
+            textStyle={{ color: formState?.serviceProviderType?.includes(type.value) ? colors.text01 : colors.text03 }}
             borderRadius={8}
             shadow='0'
             width={deviceWidth - 36}
             size={20}
-            onPress={() => setSelectedType(type.value)}
+            onPress={() => handleServiceProviderType(type.value)}
           />
         </Box>
       ))}
@@ -57,7 +79,7 @@ export const BusinessTypeForm = (props) => {
         <HStack mb='6' alignItems='center'>
           <HCricleProgress
             fill={66}
-            isShowChecked={!!selectedType}
+            isShowChecked={formState?.serviceProviderType?.length}
           />
           <HText style={styles.stepTitle}>Step 2/3</HText>
         </HStack>
@@ -65,10 +87,10 @@ export const BusinessTypeForm = (props) => {
         <Box alignItems='center'>
           <HButton
             text='Next'
-            backgroundColor={selectedType ? colors.primary : colors.text03}
+            backgroundColor={formState?.serviceProviderType?.length ? colors.primary : colors.text03}
             shadow='0'
-            isDisabled={!selectedType}
-            onPress={() => handleNextStep(selectedType)}
+            isDisabled={!formState?.serviceProviderType?.length}
+            onPress={() => handleNextStep()}
           />
         </Box>
       </View>

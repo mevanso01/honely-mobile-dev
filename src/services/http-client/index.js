@@ -3,7 +3,7 @@ import { setUser, signoutUser } from '../../store/action/setUser';
 import * as Keychain from 'react-native-keychain';
 
 // DEV
-const base_url = 'https://api.honely.com/lookup/';
+const base_url = 'https://api.honely.com/';
 // PROD
 // const base_url = 'https://hubapi.getmyauto.com/api/';
 const sessionExpiredServerMsg = "Your session has expired or is invalid.";
@@ -105,14 +105,14 @@ exports.doUploadFile = (url, data, onSuccess, onFail) => {
 
 exports.doPost = (url, data, onSuccess, onFail, isPut) => {
   const state = store.getState();
-  const { jwtAccessToken } = state.currentUser;
+  // const { jwtAccessToken } = state.currentUser;
   return fetch(base_url + url, {
       method: isPut ? 'PUT' : 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Origin': '',
-        'Authorization': `Bearer ${jwtAccessToken}`,
+        // 'Authorization': `Bearer ${jwtAccessToken}`,
       },
       body: JSON.stringify(data),
     })

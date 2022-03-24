@@ -8,16 +8,18 @@ import styles from './style'
 
 export const DescribeForm = (props) => {
   const {
+    formState,
+    setFormState,
     handleNextStep
   } = props
-  const [selectedType, setSelectedType] = useState(null)
+
   const descibeTypes = [
     {
-      value: 'consumer',
+      value: 'Homeowner',
       text: 'Consumer'
     },
     {
-      value: 'business',
+      value: 'Service Provider',
       text: 'Business'
     }
   ]
@@ -33,14 +35,14 @@ export const DescribeForm = (props) => {
           <HButton
             text={type.text}
             variant='outline'
-            borderColor={selectedType === type.value ? colors.primary : colors.borderColor}
+            borderColor={formState?.userType === type.value ? colors.primary : colors.borderColor}
             backgroundColor={colors.white}
-            textStyle={{ color: selectedType === type.value ? colors.text01 : colors.text03 }}
+            textStyle={{ color: formState?.userType === type.value ? colors.text01 : colors.text03 }}
             borderRadius={8}
             shadow='0'
             width={deviceWidth - 36}
             size={20}
-            onPress={() => setSelectedType(type.value)}
+            onPress={() => setFormState({ ...formState, userType: type.value })}
           />
         </Box>
       ))}
@@ -48,19 +50,19 @@ export const DescribeForm = (props) => {
       <View style={styles.stepButtonContainer}>
         <HStack mb='6' alignItems='center'>
           <HCricleProgress
-            isShowChecked={!!selectedType}
-            fill={selectedType === 'consumer' ? 50 : 33}
+            isShowChecked={!!formState?.userType}
+            fill={formState?.userType === 'consumer' ? 50 : 33}
           />
-          <HText style={styles.stepTitle}>Step 1/{selectedType === 'consumer' ? 2 : 3}</HText>
+          <HText style={styles.stepTitle}>Step 1/{formState?.userType === 'consumer' ? 2 : 3}</HText>
         </HStack>
 
         <Box alignItems='center'>
           <HButton
             text='Next'
-            backgroundColor={selectedType ? colors.primary : colors.text03}
+            backgroundColor={formState?.userType ? colors.primary : colors.text03}
             shadow='0'
-            isDisabled={!selectedType}
-            onPress={() => handleNextStep(selectedType)}
+            isDisabled={!formState?.userType}
+            onPress={() => handleNextStep(formState?.userType)}
           />
         </Box>
       </View>

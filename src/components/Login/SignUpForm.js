@@ -1,18 +1,23 @@
 import React, { useState, useRef } from 'react'
 import { ScrollView, Image, View, Keyboard } from 'react-native'
 import { HButton, HText } from '../Shared'
-import { Box, Input, FormControl, Icon, HStack, Pressable } from 'native-base'
+import { Box, Input, FormControl, Icon, HStack, Pressable, useToast } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useForm, Controller } from 'react-hook-form'
+import { TOAST_LENGTH_SHORT } from '../../config'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 
 export const SignUpForm = (props) => {
   const {
+    isLoading,
     formState,
+    setFormState,
+    handleCheckUserNameExist,
     handleNextStep
   } = props
 
+  const toast = useToast()
   const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm({
     defaultValues: formState
   })
@@ -27,10 +32,41 @@ export const SignUpForm = (props) => {
   const passwordRef = useRef()
   passwordCurrent = watch('password', '')
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     Keyboard.dismiss()
-    handleNextStep(values)
+    setFormState({
+      ...formState,
+      ...values
+    })
+    const checkExist = await handleCheckUserNameExist(values?.userName)
+    if (checkExist) {
+      toast.show({
+        title: 'Error',
+        description: 'Username already exists',
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    } else {
+      handleNextStep()
+    }
   }
+
+  const checkPasswordValidation = (value) => {
+    if (!(/[\d]/i).test(value)) {
+      return 'Password should contain at least 1 number'
+    } else if (!(/[\!@#$%^&\*\(\)\_\+-]/i).test(value)) {
+      return 'Password should contain at least 1 special charactor'
+    } else if (!/(?=.*[A-Z])/.test(value)) {
+      return 'Password should contain at least 1 uppercase character'
+    } else if (!/(?=.*[a-z])/.test(value)) {
+      return 'Password should contain at least 1 lowercase character'
+    } else {
+      return true
+    }
+  }
+
 
   const handleSubmitClick = () => {
     !isSubmitClicked && setIsSubmitClicked(true)
@@ -49,7 +85,7 @@ export const SignUpForm = (props) => {
       <FormControl mb={4}>
         <FormControl.Label _text={styles.label} mb={1}>Username</FormControl.Label>
         <Controller
-          name='username'
+          name='userName'
           control={control}
           render={({ field: { onChange, value } }) => (
             <Input
@@ -60,11 +96,12 @@ export const SignUpForm = (props) => {
               borderRadius={8}
               height={50}
               borderColor={
-                errors?.username?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                errors?.userName?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
               }
               autoCapitalize='none'
               autoCorrect={false}
               returnKeyType='next'
+              isDisabled={isLoading}
               value={value}
               onChangeText={val => onChange(val)}
               blurOnSubmit={false}
@@ -75,7 +112,7 @@ export const SignUpForm = (props) => {
                   style={[
                     styles.inputIcon,
                     {tintColor: `${
-                      errors?.username?.message
+                      errors?.userName?.message
                         ? colors.error
                         : (value && isSubmitClicked) ? colors.primary : colors.text04
                       }`
@@ -84,7 +121,7 @@ export const SignUpForm = (props) => {
                 />
               }
               InputRightElement={
-                (!errors?.username?.message && isSubmitClicked) && (
+                (!errors?.userName?.message && isSubmitClicked) && (
                   <Icon
                     as={<MaterialIcons name="check" />}
                     size={5} mr="4"
@@ -94,18 +131,20 @@ export const SignUpForm = (props) => {
                 )
               }
               _focus={{
-                borderColor: !errors?.username?.message ? colors.primary : colors.error
+                borderColor: !errors?.userName?.message ? colors.primary : colors.error
               }}
             />
           )}
           rules={{
             required: { value: true, message: 'The field username is required' },
+            minLength: { value: 5, message: 'The Username has to be at least 5 characters' },
+            validate: value => !(/[\s!@#$%^&\*\(\)\_\+-]/i).test(value) || 'The username can not contain number or special charactors'
           }}
         />
-        {errors?.username?.message && (
+        {errors?.userName?.message && (
           <View style={styles.errorTextWrapper}>
             <MaterialIcons name='warning' color={colors.error} />
-            <HText style={styles.errorText}>{errors?.username?.message}</HText>
+            <HText style={styles.errorText}>{errors?.userName?.message}</HText>
           </View>
         )}
       </FormControl>
@@ -127,6 +166,7 @@ export const SignUpForm = (props) => {
               autoCapitalize='none'
               autoCorrect={false}
               returnKeyType='next'
+              isDisabled={isLoading}
               value={value}
               onChangeText={val => onChange(val)}
               blurOnSubmit={false}
@@ -192,6 +232,7 @@ export const SignUpForm = (props) => {
               autoCorrect={false}
               autoCompleteType='email'
               returnKeyType='next'
+              isDisabled={isLoading}
               value={value}
               onChangeText={val => handleChangeInputEmail(val, onChange)}
               ref={emailRef}
@@ -260,6 +301,7 @@ export const SignUpForm = (props) => {
               autoCapitalize='none'
               autoCorrect={false}
               returnKeyType='next'
+              isDisabled={isLoading}
               value={value}
               onChangeText={val => handleChangeInputEmail(val, onChange)}
               ref={phonenumberRef}
@@ -296,6 +338,7 @@ export const SignUpForm = (props) => {
           )}
           rules={{
             required: { value: true, message: 'The field phone number is required' },
+            minLength: { value: 10, message: 'Phone number must contain 10 digits' },
           }}
         />
         {errors?.phonenumber?.message && (
@@ -309,7 +352,11 @@ export const SignUpForm = (props) => {
         <FormControl.Label _text={styles.label} mb={1}>Password</FormControl.Label>
         <Controller
           name='password'
-          rules={{ required: { value: true, message: 'The password is required' } }}
+          rules={{
+            required: { value: true, message: 'The password is required' },
+            minLength: { value: 8, message: 'At least 8 characters in length' },
+            validate: checkPasswordValidation
+          }}
           control={control}
           render={({ field: { onChange, value } }) => (
             <Input
@@ -327,6 +374,7 @@ export const SignUpForm = (props) => {
               autoCompleteType='password'
               returnKeyType='next'
               blurOnSubmit={false}
+              isDisabled={isLoading}
               value={value}
               onChangeText={val => onChange(val)}
               ref={passwordRef}
@@ -405,6 +453,7 @@ export const SignUpForm = (props) => {
               ref={confirmPasswordRef}
               returnKeyType='done'
               blurOnSubmit
+              isDisabled={isLoading}
               value={value}
               onChangeText={val => onChange(val)}
               onSubmitEditing={handleSubmitClick}
@@ -461,6 +510,7 @@ export const SignUpForm = (props) => {
         <HButton
           text='Sign Up'
           onPress={handleSubmitClick}
+          isLoading={isLoading}
         />
       </Box>
     </ScrollView>

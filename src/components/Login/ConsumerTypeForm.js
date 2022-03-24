@@ -7,13 +7,40 @@ import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
 
 export const ConsumerTypeForm = (props) => {
-  const [selectedType, setSelectedType] = useState(null)
+  const {
+    isLoading,
+    formState,
+    setFormState,
+    handleCreateAccount
+  } = props
+
   const types = [
-    { value: 'buyer', text: 'Buyer' },
-    { value: 'seller', text: 'Seller' },
-    { value: 'refinancing', text: 'Refinancing' },
-    { value: 'browsing', text: 'Just Browsing' }
+    { value: 'Buyer', text: 'Buyer' },
+    { value: 'Seller', text: 'Seller' },
+    { value: 'Refinancer', text: 'Refinancing' },
+    { value: 'Other', text: 'Just Browsing' }
   ]
+
+  const handleHomeOwnerType = (type) => {
+    if (formState?.homeOwnerType) {
+      if (formState?.homeOwnerType?.includes(type)) {
+        setFormState(prevState => ({
+          ...prevState,
+          homeOwnerType: prevState?.homeOwnerType?.filter(item => item !== type)
+        }))
+      } else {
+        setFormState(prevState => ({
+          ...prevState,
+          homeOwnerType: [...prevState?.homeOwnerType, type]
+        }))
+      }
+    } else {
+      setFormState(prevState => ({
+        ...prevState,
+        homeOwnerType: [type]
+      }))
+    }
+  }
 
   return (
     <ScrollView
@@ -29,14 +56,15 @@ export const ConsumerTypeForm = (props) => {
           <HButton
             text={type.text}
             variant='outline'
-            borderColor={selectedType === type.value ? colors.primary : colors.borderColor}
+            borderColor={formState?.homeOwnerType?.includes(type.value) ? colors.primary : colors.borderColor}
             backgroundColor={colors.white}
-            textStyle={{ color: selectedType === type.value ? colors.text01 : colors.text03 }}
+            textStyle={{ color: formState?.homeOwnerType?.includes(type.value) ? colors.text01 : colors.text03 }}
             borderRadius={8}
             shadow='0'
             width={deviceWidth - 36}
             size={20}
-            onPress={() => setSelectedType(type.value)}
+            isDisabled={isLoading}
+            onPress={() => handleHomeOwnerType(type.value)}
           />
         </Box>
       ))}
@@ -45,7 +73,7 @@ export const ConsumerTypeForm = (props) => {
         <HStack mb='6' alignItems='center'>
           <HCricleProgress
             fill={100}
-            isShowChecked={!!selectedType}
+            isShowChecked={formState?.homeOwnerType?.length}
           />
           <HText style={styles.stepTitle}>Step 2/2</HText>
         </HStack>
@@ -53,10 +81,11 @@ export const ConsumerTypeForm = (props) => {
         <Box alignItems='center'>
           <HButton
             text='Next'
-            backgroundColor={selectedType ? colors.primary : colors.text03}
+            backgroundColor={formState?.homeOwnerType?.length  ? colors.primary : colors.text03}
             shadow='0'
-            isDisabled={!selectedType}
-            onPress={() => {}}
+            isDisabled={!formState?.homeOwnerType?.length}
+            isLoading={isLoading}
+            onPress={() => handleCreateAccount()}
           />
         </Box>
       </View>

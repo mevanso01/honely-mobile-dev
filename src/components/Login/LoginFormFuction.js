@@ -24,7 +24,7 @@ export const LoginForm = (props) => {
   const handleLogin = async (values) => {
     try {
       setIsLogin(true)
-      const response = await doGet('user_name_fetch', { user_identifier: values.email })
+      const response = await doGet('lookup/user_name_fetch', { user_identifier: values.email })
       if (response.result === 'Error.') {
         throw response;
       }
@@ -63,7 +63,7 @@ export const LoginForm = (props) => {
   const getUserProfile = async () => {
     try {
       if (cognitoUser.isCognitoUserLoggedIn) {
-        const response = await doGet('user_profile', { email: cognitoUser.attributes.email })
+        const response = await doGet('lookup/user_profile', { email: cognitoUser.attributes.email })
         if (response.error) {
           throw response
         }
