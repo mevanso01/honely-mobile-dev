@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
+import { ForgotPasswordFuction } from './ForgotPasswordFuction'
 import { HScreenHeader } from '../Shared'
 import styles from './style'
 import { ForgotPasswordForm } from './ForgotPasswordForm'
@@ -7,14 +8,19 @@ import { OTPForm } from './OTPForm'
 import { ResetPasswordForm } from './ResetPasswordForm'
 import { SuccessForm } from './SuccessForm'
 
-export const ForgotPassword = (props) => {
+const ForgotPasswordUI = (props) => {
   const {
     navigation,
-    onNavigationRedirect
-  } = props
+    onNavigationRedirect,
 
-  const [formStep, setFormStep] = useState('forgot')
-  const [recoveryEmail, setRecoverEmail] = useState(null)
+    formStep,
+    setFormStep,
+    isLoading,
+    formState,
+    setFormState,
+    handleUserIdentify,
+    handleResetPassword
+  } = props
 
   return (
     <View style={styles.wrapper}>
@@ -24,19 +30,23 @@ export const ForgotPassword = (props) => {
       />
       {formStep === 'forgot' && (
         <ForgotPasswordForm
-          handleNextStep={() => setFormStep('otp')}
-          setRecoverEmail={setRecoverEmail}
+          isLoading={isLoading}
+          formState={formState}
+          setFormState={setFormState}
+          handleUserIdentify={handleUserIdentify}
         />
       )}
       {formStep === 'otp' && (
         <OTPForm
-          recoveryEmail={recoveryEmail}
+          formState={formState}
+          setFormState={setFormState}
           handleNextStep={() => setFormStep('reset')}
         />
       )}
       {formStep === 'reset' && (
         <ResetPasswordForm
-          handleNextStep={() => setFormStep('success')}
+          isLoading={isLoading}
+          handleResetPassword={handleResetPassword}
         />
       )}
       {formStep === 'success' && (
@@ -46,4 +56,12 @@ export const ForgotPassword = (props) => {
       )}
     </View>
   )
+}
+
+export const ForgotPassword = (props) => {
+  const forgotPasswordProps = {
+    ...props,
+    UIComponent: ForgotPasswordUI
+  }
+  return <ForgotPasswordFuction {...forgotPasswordProps} />
 }

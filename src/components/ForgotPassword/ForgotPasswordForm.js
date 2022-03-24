@@ -9,8 +9,10 @@ import { colors } from '../../utils/styleGuide'
 
 export const ForgotPasswordForm = (props) => {
   const {
-    setRecoverEmail,
-    handleNextStep
+    formState,
+    setFormState,
+    isLoading,
+    handleUserIdentify
   } = props
 
   const { control, handleSubmit, formState: { errors, isValid } } = useForm()
@@ -18,8 +20,11 @@ export const ForgotPasswordForm = (props) => {
 
   const onSubmit = (values) => {
     Keyboard.dismiss()
-    setRecoverEmail(values?.email)
-    handleNextStep()
+    setFormState({
+      ...formState,
+      email: values?.email
+    })
+    handleUserIdentify(values?.email)
   }
 
   const handleSubmitClick = () => {
@@ -56,6 +61,7 @@ export const ForgotPasswordForm = (props) => {
                 autoCorrect={false}
                 autoCompleteType='email'
                 returnKeyType='done'
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => onChange(val)}
                 blurOnSubmit
@@ -102,6 +108,7 @@ export const ForgotPasswordForm = (props) => {
         <HButton
           text='Submit'
           onPress={handleSubmitClick}
+          isLoading={isLoading}
         />
       </Box>
     </ScrollView>

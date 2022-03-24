@@ -40,7 +40,7 @@ export default StyleSheet.create({
     paddingVertical: 0
   },
   otpInputStyle: {
-    width: (deviceWidth - 48 - 12) / 4,
+    width: (deviceWidth - 48 - 20) / 6,
     height: 55,
     borderRadius: 8,
     borderColor: colors.borderColor,

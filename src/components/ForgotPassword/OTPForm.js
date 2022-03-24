@@ -9,7 +9,8 @@ import styles from './style'
 
 export const OTPForm = (props) => {
   const {
-    recoveryEmail,
+    formState,
+    setFormState,
     handleNextStep
   } = props
 
@@ -18,6 +19,10 @@ export const OTPForm = (props) => {
 
   const handleSubmitClick = () => {
     if (code) {
+      setFormState({
+        ...formState,
+        code: code
+      })
       handleNextStep()
     } else {
       setError('The OTP code is required.')
@@ -31,11 +36,11 @@ export const OTPForm = (props) => {
       <Box alignItems='center' mb='8'>
         <HText style={styles.subtitle}>Enter OTP</HText>
         <HText style={styles.description}>An 4 digit code has been sent to</HText>
-        <HText style={styles.description}>{recoveryEmail}</HText>
+        <HText style={styles.description}>{formState?.email}</HText>
       </Box>
       <Box mt='8'>
         <OTPInputView
-          pinCount={4}
+          pinCount={6}
           style={styles.otpView}
           autoFocusOnLoad
           keyboardType='number-pad'

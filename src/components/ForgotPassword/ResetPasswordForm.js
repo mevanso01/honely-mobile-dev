@@ -9,7 +9,8 @@ import styles from './style'
 
 export const ResetPasswordForm = (props) => {
   const {
-    handleNextStep
+    isLoading,
+    handleResetPassword
   } = props
 
   const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm()
@@ -23,12 +24,26 @@ export const ResetPasswordForm = (props) => {
 
   const onSubmit = (values) => {
     Keyboard.dismiss()
-    handleNextStep()
+    handleResetPassword(values?.new_password)
   }
 
   const handleSubmitClick = () => {
     !isSubmitClicked && setIsSubmitClicked(true)
     handleSubmit(onSubmit)()
+  }
+
+  const checkPasswordValidation = (value) => {
+    if (!(/[\d]/i).test(value)) {
+      return 'Password should contain at least 1 number'
+    } else if (!(/[\!@#$%^&\*\(\)\_\+-]/i).test(value)) {
+      return 'Password should contain at least 1 special charactor'
+    } else if (!/(?=.*[A-Z])/.test(value)) {
+      return 'Password should contain at least 1 uppercase character'
+    } else if (!/(?=.*[a-z])/.test(value)) {
+      return 'Password should contain at least 1 lowercase character'
+    } else {
+      return true
+    }
   }
 
   return (
@@ -44,7 +59,11 @@ export const ResetPasswordForm = (props) => {
           <FormControl.Label _text={styles.label} mb={1}>New password</FormControl.Label>
           <Controller
             name='new_password'
-            rules={{ required: { value: true, message: 'The new password is required' } }}
+            rules={{
+              required: { value: true, message: 'The new password is required' },
+              minLength: { value: 8, message: 'At least 8 characters in length' },
+              validate: checkPasswordValidation
+            }}
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
@@ -60,6 +79,7 @@ export const ResetPasswordForm = (props) => {
                 autoCompleteType='password'
                 returnKeyType='next'
                 blurOnSubmit={false}
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={() => confirmPasswordRef.current?.focus()}
@@ -126,6 +146,7 @@ export const ResetPasswordForm = (props) => {
                 ref={confirmPasswordRef}
                 returnKeyType='done'
                 blurOnSubmit
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={handleSubmitClick}
@@ -173,6 +194,7 @@ export const ResetPasswordForm = (props) => {
         <HButton
           text='Submit'
           onPress={handleSubmitClick}
+          isLoading={isLoading}
         />
       </Box>
     </ScrollView>
