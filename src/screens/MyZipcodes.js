@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, Text } from 'react-native';
 import { colors } from '../utils/styleGuide'
-import { LeadsDashboard } from '../components/LeadsDashboard'
 
-const Leads = (props) => {
-  const leadsProps = {
+const MyZipcodes = (props) => {
+  const myZipcodesProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
       if (!page) return
@@ -16,14 +15,15 @@ const Leads = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
+      padding: 50
     }
   })
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <LeadsDashboard {...leadsProps} />
+      <Text>My Zipcodes</Text>
     </SafeAreaView>
   )
 }
 
-export default Leads
+export default MyZipcodes

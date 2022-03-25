@@ -13,6 +13,7 @@ export const colors = {
   white: "#FFFFFF",
 
   tint: "#EFFFF2",
+  tint02: "#FBFCFE",
 
   text01: "#1A1D1B",
   text02: "#464D55",
@@ -26,16 +27,25 @@ export const images = {
   slider2: require('../assets/images/slider-2.png'),
   slider3: require('../assets/images/slider-3.png'),
   slider4: require('../assets/images/slider-4.png'),
-  forgotPassword: require('../assets/images/forgot-password.png')
+  forgotPassword: require('../assets/images/forgot-password.png'),
+  leadsBg: require('../assets/images/leads-bg.png'),
 }
 
 export const icons = {
   user: require('../assets/icons/user.png'),
+  userOutline: require('../assets/icons/user-outline.png'),
   email: require('../assets/icons/email.png'),
+  emailOutline: require('../assets/icons/email-outline.png'),
   lock: require('../assets/icons/lock.png'),
   phone: require('../assets/icons/phone.png'),
   check: require('../assets/icons/check.png'),
   visibility: require('../assets/icons/visibility.png'),
   visibilityOff: require('../assets/icons/visibility-off.png'),
   company: require('../assets/icons/company.png'),
+  category: require('../assets/icons/category.png'),
+  categoryOutline: require('../assets/icons/category-outline.png'),
+  buy: require('../assets/icons/buy.png'),
+  buyOutline: require('../assets/icons/buy-outline.png'),
+  location: require('../assets/icons/location.png'),
+  locationOutline: require('../assets/icons/location-outline.png'),
 }
