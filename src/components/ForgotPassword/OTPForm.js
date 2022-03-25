@@ -35,7 +35,7 @@ export const OTPForm = (props) => {
     >
       <Box alignItems='center' mb='8'>
         <HText style={styles.subtitle}>Enter OTP</HText>
-        <HText style={styles.description}>An 4 digit code has been sent to</HText>
+        <HText style={styles.description}>An 6 digit code has been sent to</HText>
         <HText style={styles.description}>{formState?.email}</HText>
       </Box>
       <Box mt='8'>
