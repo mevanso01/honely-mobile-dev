@@ -24,6 +24,7 @@ export const SignUpScreenFunction = (props) => {
   })
   const [bodyParams, setBodyParams] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isResending, setIsResending] = useState(false)
 
   const handleCheckUserNameExist = async (userName) => {
     try {
@@ -193,6 +194,51 @@ export const SignUpScreenFunction = (props) => {
       })
     }
   }
+
+  const getRequestConde = async () => {
+    try {
+      await Auth.resendSignUp(bodyParams.user_name)
+      toast.show({
+        title: 'Success',
+        description: 'Resent Email Verification Code!',
+        status: 'success',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    } catch (error) {
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    } finally {
+      setIsResending(false)
+    }
+  }
+
+  const handleResendCode = async () => {
+    try {
+      const onSuccess = () => {
+        throw { message: 'Too much time has elapsed. Please sign up again.' }
+      }
+      setIsResending(true)
+      await doGet('lookup-test/email_verification_service', { email: bodyParams.email }, onSuccess, getRequestConde)
+    } catch (error) {
+      setIsResending(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
   
   return (
     <>
@@ -200,11 +246,13 @@ export const SignUpScreenFunction = (props) => {
         <UIComponent
           {...props}
           isLoading={isLoading}
+          isResending={isResending}
           formState={formState}
           setFormState={setFormState}
           handleCreateAccount={handleCreateAccount}
           handleCheckUserNameExist={handleCheckUserNameExist}
           handleCongitoConfirmSignUp={handleCongitoConfirmSignUp}
+          handleResendCode={handleResendCode}
         />
       )}
     </>

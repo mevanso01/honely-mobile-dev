@@ -9,9 +9,11 @@ import styles from './style'
 export const OTPForm = (props) => {
   const {
     isLoading,
+    isResending,
     formState,
     setFormState,
-    handleCongitoConfirmSignUp
+    handleCongitoConfirmSignUp,
+    handleResendCode
   } = props
 
   const [error, setError] = useState(null)
@@ -61,9 +63,18 @@ export const OTPForm = (props) => {
       )}
       <Box alignItems='center' mt='6'>
         <HButton
+          text='Resend'
+          onPress={handleResendCode}
+          isLoadingText='Please wait...'
+          isLoading={isResending}
+        />
+      </Box>
+      <Box alignItems='center' mt='6'>
+        <HButton
           text='Submit'
           onPress={handleSubmitClick}
           isLoading={isLoading}
+          isDisabled={isResending}
         />
       </Box>
     </ScrollView>

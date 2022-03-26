@@ -17,11 +17,13 @@ const SignUpScreenUI = (props) => {
     setSignUpFormStep,
 
     isLoading,
+    isResending,
     formState,
     setFormState,
     handleCheckUserNameExist,
     handleCreateAccount,
-    handleCongitoConfirmSignUp
+    handleCongitoConfirmSignUp,
+    handleResendCode
   } = props
 
   const handleSignUpClick = () => {
@@ -82,8 +84,10 @@ const SignUpScreenUI = (props) => {
       {signUpFormStep === 'otp' && (
         <OTPForm
           isLoading={isLoading}
+          isResending={isResending}
           formState={formState}
           setFormState={setFormState}
+          handleResendCode={handleResendCode}
           handleCongitoConfirmSignUp={handleCongitoConfirmSignUp}
         />
       )}
