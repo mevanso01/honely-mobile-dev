@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, Image, View } from 'react-native'
 import { HText, HSliderButton, HButton } from '../Shared'
 import { images } from '../../utils/styleGuide'
@@ -6,6 +6,7 @@ import { HStack } from 'native-base'
 import styles from './style'
 
 export const LeadsDashboard = (props) => {
+  const [isInbound, setIsInBound] = useState(true)
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -16,8 +17,8 @@ export const LeadsDashboard = (props) => {
         <HSliderButton
           firstText='Inbound'
           secondText='Claimed'
-          onFirstPress={() => {}}
-          onSecondPress={() => {}}
+          onFirstPress={() => setIsInBound(true)}
+          onSecondPress={() => setIsInBound(false)}
         />
       </HStack>
       <View style={styles.bottomContainer}>
@@ -27,8 +28,12 @@ export const LeadsDashboard = (props) => {
             style={styles.image}
           />
         </View>
-        <HText style={styles.title}>No Leads</HText>
-        <HText style={styles.description}>Buy leads to see what your consumers are looking for.</HText>
+        <HText style={styles.title}>
+          {isInbound ? 'No Leads' : 'No Claimed Leads'}
+        </HText>
+        <HText style={styles.description}>
+          {isInbound ? 'Buy leads to see what your consumers are looking for.' : 'Claim any leads from the dashboard to see claimed leads over here.'}
+        </HText>
         <HButton
           text='Buy Leads'
           onPress={() => {}}
