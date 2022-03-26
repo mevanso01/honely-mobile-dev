@@ -29,6 +29,7 @@ export const images = {
   slider4: require('../assets/images/slider-4.png'),
   forgotPassword: require('../assets/images/forgot-password.png'),
   leadsBg: require('../assets/images/leads-bg.png'),
+  logo: require('../assets/images/logo.png'),
 }
 
 export const icons = {

@@ -1,7 +1,8 @@
 import { COGNITO_USER_SET } from '../actionType'
 
 const initialState = {
-  isCognitoUserLoggedIn: false
+  isCognitoUserLoggedIn: false,
+  confirmationCodeRequested: false
 }
 
 export default function(state = initialState, action) {

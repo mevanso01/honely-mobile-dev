@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { HSliderButton, HScreenHeader} from '../Shared'
 import { LoginForm } from './LoginForm'
-import { SignUpScreen } from './SignUpScreen'
+import { SignUpScreen } from '../Signup'
 
 import styles from './style'
 
@@ -21,18 +21,18 @@ export const Login = (props) => {
   const handleGoBack = () => {
     if (isSignUpScreen) {
       switch (signUpFormStep) {
-        case 'describe':
+        case 'signUpAgree':
           setSignUpFormStep('signUp')
           break
         case 'businessType':
-          setSignUpFormStep('describe')
+          setSignUpFormStep('signUpAgree')
           break
         case 'businessCompany':
           setSignUpFormStep('businessType')
           break
-        case 'consumerType':
-          setSignUpFormStep('describe')
-          break       
+        case 'otp':
+          setSignUpFormStep('businessCompany')
+          break 
         default:
           navigation.goBack()
           break

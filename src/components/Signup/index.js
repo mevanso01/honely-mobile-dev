@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import { SignUpScreenFunction } from './SignUpScreenFunction'
 import { View } from 'react-native'
 import { SignUpForm } from './SignUpForm'
+import { SignUpAgreeForm } from './SignUpAgreeForm'
 import { DescribeForm } from './DescribeForm'
 import { BusinessTypeForm } from './BusinessTypeForm'
 import { BusinessCompanyForm } from './BusinessCompanyForm'
 import { ConsumerTypeForm } from './ConsumerTypeForm'
+import { OTPForm } from './OTPForm'
+import { Success } from './Success'
 
 const SignUpScreenUI = (props) => {
   const {
@@ -17,12 +20,13 @@ const SignUpScreenUI = (props) => {
     formState,
     setFormState,
     handleCheckUserNameExist,
-    handleCreateAccount
+    handleCreateAccount,
+    handleCongitoConfirmSignUp
   } = props
 
   const handleSignUpClick = () => {
     handleHideSliderButton()
-    setSignUpFormStep('describe')
+    setSignUpFormStep('signUpAgree')
   }
   const handleDescibeNextStep = (type) => {
     if (type === 'Homeowner') {
@@ -44,6 +48,13 @@ const SignUpScreenUI = (props) => {
           setFormState={setFormState}
           handleCheckUserNameExist={handleCheckUserNameExist}
           handleNextStep={handleSignUpClick}
+        />
+      )}
+      {signUpFormStep === 'signUpAgree' && (
+        <SignUpAgreeForm
+          formState={formState}
+          setFormState={setFormState}
+          handleNextStep={() => setSignUpFormStep('businessType')}
         />
       )}
       {signUpFormStep === 'describe' && (
@@ -68,6 +79,14 @@ const SignUpScreenUI = (props) => {
           handleCreateAccount={handleCreateAccount}
         />
       )}
+      {signUpFormStep === 'otp' && (
+        <OTPForm
+          isLoading={isLoading}
+          formState={formState}
+          setFormState={setFormState}
+          handleCongitoConfirmSignUp={handleCongitoConfirmSignUp}
+        />
+      )}
       {signUpFormStep === 'consumerType' && (
         <ConsumerTypeForm
           isLoading={isLoading}
@@ -75,6 +94,9 @@ const SignUpScreenUI = (props) => {
           setFormState={setFormState}
           handleCreateAccount={handleCreateAccount}
         />
+      )}
+      {signUpFormStep === 'success' && (
+        <Success />
       )}
     </View>
   )

@@ -114,7 +114,7 @@ export const BusinessCompanyForm = (props) => {
             isShowChecked={companyName}
             fill={100}
           />
-          <HText style={styles.stepTitle}>Step 3/3</HText>
+          <HText style={styles.stepTitle}>Step 2/2</HText>
         </HStack>
 
         <Box alignItems='center'>

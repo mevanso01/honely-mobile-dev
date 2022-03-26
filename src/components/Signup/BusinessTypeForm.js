@@ -81,7 +81,7 @@ export const BusinessTypeForm = (props) => {
             fill={66}
             isShowChecked={formState?.serviceProviderType?.length}
           />
-          <HText style={styles.stepTitle}>Step 2/3</HText>
+          <HText style={styles.stepTitle}>Step 1/2</HText>
         </HStack>
 
         <Box alignItems='center'>

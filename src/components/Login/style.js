@@ -39,38 +39,4 @@ export default StyleSheet.create({
     height: 24,
     tintColor: colors.text04,
   },
-  signUpFormWrapper: {
-    marginVertical: 32
-  },
-  subtitle: {
-    fontSize: 22,
-    fontWeight: '600',
-    lineHeight: 33,
-    marginBottom: 8,
-    color: colors.text01
-  },
-  description: {
-    color: colors.text02,
-    fontWeight: '500',
-    fontSize: 14,
-    lineHeight: 21,
-    textAlign: 'center'
-  },
-  stepButtonContainer: {
-    flex: 1,
-    paddingTop: 24,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: 48,
-  },
-  stepTitle: {
-    fontWeight: '500',
-    fontSize: 16,
-    marginLeft: 8
-  },
-  scrollViewContentContainer: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column'
-  }
 })
