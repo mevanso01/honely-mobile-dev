@@ -41,6 +41,7 @@ const HButton = (props) => {
       isLoading={props.isLoading}
       spinnerPlacement={props.spinnerPlacement || 'end'}
       isLoadingText={props.isLoadingText || 'Submitting'}
+      {...props}
     >
       {text}
     </Button>

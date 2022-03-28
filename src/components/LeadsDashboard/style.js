@@ -38,7 +38,63 @@ export default StyleSheet.create({
     flex: 1,
     paddingTop: 24,
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: 40
+    // justifyContent: 'flex-end',
+    paddingBottom: 40,
+    width: '100%',
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: colors.primary
+  },
+  locationText: {
+    fontSize: 18,
+    fontWeight: '500',
+    paddingLeft: 8,
+    color: colors.text01
+  },
+  cardHeader: {
+    borderBottomColor: colors.borderColor,
+    borderBottomWidth: 1,
+    paddingBottom: 13
+  },
+  infoIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: colors.borderColor
+  },
+  infoText: {
+    fontSize: 16,
+    fontWeight: '500',
+    paddingLeft: 8,
+    color: colors.text01
+  },
+  sheetContent: {
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    paddingBottom: 32,
+    width: '100%'
+  },
+  contactDescription: {
+    fontSize: 14,
+    lineHeight: 21,
+    marginTop: 4,
+    color: colors.text02
+  },
+  cardContainer: {
+    padding: 24,
+    borderRadius: 16,
+    width: '100%',
+
+    shadowColor: colors.text01,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.17,
+    shadowRadius: 8,
+    elevation: 3,
   }
 })
