@@ -78,7 +78,7 @@ export const BusinessTypeForm = (props) => {
       <View style={styles.stepButtonContainer}>
         <HStack mb='6' alignItems='center'>
           <HCricleProgress
-            fill={66}
+            fill={50}
             isShowChecked={formState?.serviceProviderType?.length}
           />
           <HText style={styles.stepTitle}>Step 1/2</HText>

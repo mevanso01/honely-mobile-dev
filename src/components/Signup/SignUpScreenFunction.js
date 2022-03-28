@@ -12,6 +12,7 @@ Amplify.configure(config)
 export const SignUpScreenFunction = (props) => {
   const {
     setSignUpFormStep,
+    handleGoToLogin,
     UIComponent
   } = props
 
@@ -155,6 +156,24 @@ export const SignUpScreenFunction = (props) => {
       dispatch(setCognitoUser({ confirmationCodeRequested: false }))
       await doDelete('lookup-test/unconfirmed_user_deletion', { email: bodyParams.email })
       setSignUpFormStep('success')
+      setTimeout(() => {
+        handleLogin()
+      }, 3000)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  const handleLogin = async () => {
+    try {
       const _cognitoUser = await Auth.signIn(bodyParams.user_name, formState.password)
       dispatch(setCognitoUser({ ..._cognitoUser, isCognitoUserLoggedIn: true }))
       await doPost('lookup/register_service', bodyParams)
@@ -169,6 +188,7 @@ export const SignUpScreenFunction = (props) => {
         marginRight: 4,
         marginLeft: 4,
       })
+      handleGoToLogin()
     }
   }
 

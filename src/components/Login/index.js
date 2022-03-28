@@ -42,6 +42,12 @@ export const Login = (props) => {
     }
   }
 
+  const handleGoToLogin = () => {
+    setIsSignUpScreen(false)
+    setIsShowSliderButton(true)
+    setSignUpFormStep('signUp')
+  }
+
   useEffect(() => {
     if (signUpFormStep === 'signUp') {
       setIsShowSliderButton(true)
@@ -74,6 +80,7 @@ export const Login = (props) => {
           signUpFormStep={signUpFormStep}
           setSignUpFormStep={setSignUpFormStep}
           handleHideSliderButton={() => setIsShowSliderButton(false)}
+          handleGoToLogin={() => handleGoToLogin()}
         />
       )}
     </View>

@@ -36,6 +36,10 @@ const HSliderButton = (props) => {
     outputRange: [0, 120]
   })
 
+  useEffect(() => {
+    setActive(isForceActive)
+  }, [isForceActive])
+
   return (
     <View style={styles.wrapper}>
       <Animated.View
