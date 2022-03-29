@@ -84,7 +84,6 @@ const LoginFormUI = (props) => {
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
                       color={colors.primary}
-                      onPress={() => setPasswordSee(!passwordSee)}
                     />
                   )
                 }
@@ -156,7 +155,6 @@ const LoginFormUI = (props) => {
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
                         color={colors.primary}
-                        onPress={() => setPasswordSee(!passwordSee)}
                       />
                     )}
                     <Pressable

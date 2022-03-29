@@ -87,7 +87,6 @@ export const BusinessCompanyForm = (props) => {
                     as={<MaterialIcons name="check" />}
                     size={5} mr="4"
                     color={colors.primary}
-                    onPress={() => setPasswordSee(!passwordSee)}
                   />
                 )
               }

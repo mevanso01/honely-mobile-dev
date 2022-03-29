@@ -125,7 +125,6 @@ export const SignUpForm = (props) => {
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
                       color={colors.primary}
-                      onPress={() => setPasswordSee(!passwordSee)}
                     />
                   )
                 }
@@ -193,7 +192,6 @@ export const SignUpForm = (props) => {
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
                       color={colors.primary}
-                      onPress={() => setPasswordSee(!passwordSee)}
                     />
                   )
                 }
@@ -269,7 +267,6 @@ export const SignUpForm = (props) => {
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
                         color={colors.primary}
-                        onPress={() => setPasswordSee(!passwordSee)}
                       />
                     )}
                     <Pressable
@@ -347,7 +344,6 @@ export const SignUpForm = (props) => {
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
                         color={colors.primary}
-                        onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
                       />
                     )}
                     <Pressable

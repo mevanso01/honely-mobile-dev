@@ -87,7 +87,6 @@ export const SignUpAgreeForm = (props) => {
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
                       color={colors.primary}
-                      onPress={() => setPasswordSee(!passwordSee)}
                     />
                   )
                 }
@@ -114,7 +113,7 @@ export const SignUpAgreeForm = (props) => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
-                placeholder='First Name'
+                placeholder='Last Name'
                 placeholderTextColor={colors.text03}
                 fontSize={14}
                 borderRadius={8}
@@ -151,7 +150,6 @@ export const SignUpAgreeForm = (props) => {
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
                       color={colors.primary}
-                      onPress={() => setPasswordSee(!passwordSee)}
                     />
                   )
                 }
@@ -216,7 +214,6 @@ export const SignUpAgreeForm = (props) => {
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
                       color={colors.primary}
-                      onPress={() => setPasswordSee(!passwordSee)}
                     />
                   )
                 }
