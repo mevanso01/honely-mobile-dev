@@ -30,9 +30,10 @@ export default StyleSheet.create({
     backgroundColor: colors.primaryContrast,
   },
   image: {
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     width: 153,
     height: 153,
+    borderRadius: 80
   },
   userName: {
     marginTop: 32

@@ -63,7 +63,7 @@ export const LoginForm = (props) => {
   const getUserProfile = async () => {
     try {
       if (cognitoUser.isCognitoUserLoggedIn) {
-        const response = await doGet('lookup/user_profile', { email: cognitoUser.attributes.email })
+        const response = await doGet('lookup-test/user_profile', { email: cognitoUser.attributes.email })
         if (response.error) {
           throw response
         }

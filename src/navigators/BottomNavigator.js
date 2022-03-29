@@ -7,7 +7,7 @@ import Leads from '../screens/Leads'
 import BuyLeads from '../screens/BuyLeads'
 import MyZipcodes from '../screens/MyZipcodes'
 import Inbox from '../screens/Inbox'
-import Profile from '../screens/Profile'
+import ProfileNavigator from './ProfileNavigator'
 
 const Tab = createBottomTabNavigator();
 
@@ -37,8 +37,8 @@ const BottomNavigator = () => {
         component={Inbox}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileNavigator"
+        component={ProfileNavigator}
       />
     </Tab.Navigator>
   )
@@ -55,7 +55,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         return icons.location
       case 'Inbox':
         return icons.email
-      case 'Profile':
+      case 'ProfileNavigator':
         return icons.user
       default:
         return icons.category
@@ -71,7 +71,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         return icons.locationOutline
       case 'Inbox':
         return icons.emailOutline
-      case 'Profile':
+      case 'ProfileNavigator':
         return icons.userOutline
       default:
         return icons.categoryOutline

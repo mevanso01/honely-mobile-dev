@@ -1,17 +1,16 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Platform } from 'react-native';
-import { Login as LoginScreen } from '../components/Login';
-import styled from 'styled-components/native';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native'
 import { colors } from '../utils/styleGuide'
+import styled from 'styled-components/native';
+import { EditProfile as EditProfileScreen } from '../components/EditProfile'
 
 const KeyboardView = styled.KeyboardAvoidingView`
   flex: 1;
 `;
 
-const Login = (props) => {
-  const loginProps = {
+const EditProfile = (props) => {
+  const editProfileProps = {
     ...props,
-    isSignUp: props.route.params?.isSignUp,
     onNavigationRedirect: (page, params) => {
       if (!page) return
       props.navigation.navigate(page, params);
@@ -31,10 +30,10 @@ const Login = (props) => {
         enabled
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <LoginScreen {...loginProps} />
+        <EditProfileScreen {...editProfileProps} />
       </KeyboardView>
     </SafeAreaView>
   )
 }
 
-export default Login
+export default EditProfile

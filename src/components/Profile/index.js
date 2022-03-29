@@ -1,11 +1,27 @@
 import React from 'react'
 import { View, ScrollView, Image } from 'react-native'
+import { useSelector } from 'react-redux'
 import { Box, VStack } from 'native-base'
 import { HText, HButton } from '../Shared'
-import { colors, images } from '../../utils/styleGuide'
+import { colors } from '../../utils/styleGuide'
+import { TOAST_LENGTH_SHORT } from '../../config'
 import styles from './style'
 
 export const Profile = (props) => {
+  const {
+    onNavigationRedirect
+  } = props
+
+  const currentUser = useSelector(state => state.currentUser)
+  const fetchImage = () => {
+    const defaultImg = 'https://honely-files-public.s3.amazonaws.com/images/avatar/avatar_user_01.png'
+    if (currentUser?.image_url) {
+      return currentUser.image_url
+    } else {
+      return defaultImg
+    }
+  }
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -17,7 +33,7 @@ export const Profile = (props) => {
       </View>
       <View style={styles.imageWrapper}>
         <Image
-          source={images.userAvatar}
+          source={{ uri: fetchImage() }}
           style={styles.image}
         />
         <View style={styles.userName}>
@@ -29,7 +45,7 @@ export const Profile = (props) => {
         <Box alignItems='center'>
           <HButton
             text='Edit Profile'
-            onPress={() => {}}
+            onPress={() => onNavigationRedirect('EditProfile')}
           />
         </Box>
         <Box alignItems='center' mt='2'>

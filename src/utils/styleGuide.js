@@ -31,7 +31,6 @@ export const images = {
   forgotPassword: require('../assets/images/forgot-password.png'),
   leadsBg: require('../assets/images/leads-bg.png'),
   logo: require('../assets/images/logo.png'),
-  userAvatar: require('../assets/images/user-avatar.png'),
 }
 
 export const icons = {
@@ -51,4 +50,5 @@ export const icons = {
   buyOutline: require('../assets/icons/buy-outline.png'),
   location: require('../assets/icons/location.png'),
   locationOutline: require('../assets/icons/location-outline.png'),
+  edit: require('../assets/icons/edit.png'),
 }
