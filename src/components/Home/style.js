@@ -5,11 +5,12 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 30,
+    paddingTop: 40,
+    paddingBottom: 30,
     paddingBottom: 50
   },
   slide: {
-    flex: 1,
+    flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 30
@@ -29,7 +30,7 @@ export default StyleSheet.create({
   },
   slideImage: {
     width: '100%',
-    height: '70%',
+    height: '65%',
     resizeMode: 'cover',
   },
   button: {

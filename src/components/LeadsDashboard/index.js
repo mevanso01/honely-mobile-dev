@@ -27,9 +27,7 @@ export const LeadsDashboard = (props) => {
       </HStack>
       {isNoData ? (
         <View style={styles.bottomContainer}>
-          <View
-            style={styles.cardContainer}
-            >
+          <View style={styles.cardContainer}>
             <View style={styles.cardHeader}>
               <HStack justifyContent='space-between'>
                 <HStack alignItems='center'>

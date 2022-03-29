@@ -63,19 +63,25 @@ export const OTPForm = (props) => {
       )}
       <Box alignItems='center' mt='6'>
         <HButton
-          text='Resend'
-          onPress={handleResendCode}
-          isLoadingText='Please wait...'
-          isLoading={isResending}
-        />
-      </Box>
-      <Box alignItems='center' mt='6'>
-        <HButton
           text='Submit'
           onPress={handleSubmitClick}
           isLoading={isLoading}
           isDisabled={isResending}
         />
+      <Box alignItems='center' mt='3'>
+        <HButton
+          text='Resend Code'
+          backgroundColor={colors.white}
+          borderColor={colors.white}
+          textStyle={{
+            color: colors.primary
+          }}
+          shadow={null}
+          onPress={handleResendCode}
+          isLoadingText='Please wait...'
+          isLoading={isResending}
+        />
+      </Box>
       </Box>
     </ScrollView>
   )
