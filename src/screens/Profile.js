@@ -1,12 +1,10 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import { colors } from '../utils/styleGuide'
-import { useDispatch } from 'react-redux'
-import { signoutUser } from '../store/action/setUser'
-import { HButton } from '../components/Shared'
+
+import { Profile as ProfileScreen } from '../components/Profile';
 
 const Profile = (props) => {
-  const dispatch = useDispatch()
   const profileProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -19,17 +17,12 @@ const Profile = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
-      padding: 50
     }
   })
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <Text>Profile</Text>
-      <HButton
-        text='Sign out'
-        onPress={() => dispatch(signoutUser())}
-      />
+      <ProfileScreen {...profileProps} />
     </SafeAreaView>
   )
 }

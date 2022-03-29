@@ -31,6 +31,7 @@ export const images = {
   forgotPassword: require('../assets/images/forgot-password.png'),
   leadsBg: require('../assets/images/leads-bg.png'),
   logo: require('../assets/images/logo.png'),
+  userAvatar: require('../assets/images/user-avatar.png'),
 }
 
 export const icons = {
