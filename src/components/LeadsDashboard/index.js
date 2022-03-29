@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ScrollView, Image, View } from 'react-native'
 import { HText, HSliderButton, HButton } from '../Shared'
 import { colors, images, icons } from '../../utils/styleGuide'
 import { HStack, VStack, Box, Actionsheet, useDisclose } from 'native-base'
+import SplashScreen from 'react-native-splash-screen'
 import styles from './style'
 
 export const LeadsDashboard = (props) => {
@@ -10,6 +11,10 @@ export const LeadsDashboard = (props) => {
   const [isInbound, setIsInBound] = useState(true)
 
   const isNoData = true
+
+  useEffect(() => {
+    SplashScreen.hide()
+  }, [])
 
   return (
     <ScrollView
