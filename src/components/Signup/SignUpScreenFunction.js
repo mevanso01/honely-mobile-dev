@@ -194,14 +194,12 @@ export const SignUpScreenFunction = (props) => {
 
   const getUserProfile = async () => {
     try {
-      if (cognitoUser.isCognitoUserLoggedIn) {
-        const response = await doGet('lookup-test/user_profile', { email: cognitoUser.attributes.email })
-        if (response.error) {
-          throw response
-        }
-        dispatch(setUser({ ...response, isLoggedIn: true }))
-        setIsLogin(false)
+      const response = await doGet('lookup-test/user_profile', { email: bodyParams.email })
+      if (response.error) {
+        throw response
       }
+      dispatch(setUser({ ...response, isLoggedIn: true }))
+      setIsLogin(false)
     } catch (error) {
       setIsLogin(false)
       toast.show({
