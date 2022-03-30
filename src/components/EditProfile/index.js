@@ -182,7 +182,7 @@ export const EditProfile = (props) => {
                   isDisabled
                   value={value}
                   onChangeText={val => onChange(val)}
-                  onSubmitEditing={() => firstNameRef.current?.focus()}
+                  onSubmitEditing={() => emailRef.current?.focus()}
                   blurOnSubmit={false}
                   InputLeftElement={
                     <Image
@@ -212,16 +212,81 @@ export const EditProfile = (props) => {
                   defaultValue=''
                 />
               )}
-              // rules={{
-              //   required: { value: true, message: 'The field username is required' },
-              //   minLength: { value: 5, message: 'The Username has to be at least 5 characters' },
-              //   validate: value => !(/[\s!@#$%^&\*\(\)\_\+-]/i).test(value) || 'The username can not contain number or special charactors'
-              // }}
             />
             {errors?.user_name?.message && (
               <View style={styles.errorTextWrapper}>
                 <MaterialIcons name='warning' color={colors.error} />
                 <HText style={styles.errorText}>{errors?.user_name?.message}</HText>
+              </View>
+            )}
+          </FormControl>
+          <FormControl mb={4}>
+            <FormControl.Label _text={styles.label} mb={1}>Email</FormControl.Label>
+            <Controller
+              name='email'
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  placeholder='e.g jshah@mail.com'
+                  placeholderTextColor={colors.text03}
+                  color={colors.text01}
+                  keyboardType="email-address"
+                  fontWeight='500'
+                  fontSize={14}
+                  borderRadius={8}
+                  height={55}
+                  borderColor={
+                    errors?.email?.message ? colors.error : colors.primary
+                  }
+                  autoCapitalize='none'
+                  autoCorrect={false}
+                  autoCompleteType='email'
+                  returnKeyType='done'
+                  ref={emailRef}
+                  isDisabled
+                  value={value}
+                  onChangeText={val => handleChangeInputEmail(val, onChange)}
+                  onSubmitEditing={() => firstNameRef.current?.focus()}
+                  blurOnSubmit={false}
+                  InputLeftElement={
+                    <Image
+                      source={icons.email}
+                      style={[
+                        styles.inputIcon,
+                        {tintColor: `${
+                          errors?.email?.message
+                            ? colors.error : colors.primary
+                          }`
+                        }
+                      ]}
+                    />
+                  }
+                  InputRightElement={
+                    (!errors?.email?.message && isSubmitClicked) && (
+                      <Icon
+                        as={<MaterialIcons name="check" />}
+                        size={5} mr="4"
+                        color={colors.primary}
+                      />
+                    )
+                  }
+                  _focus={{
+                    borderColor: !errors?.email?.message ? colors.primary : colors.error
+                  }}
+                />
+              )}
+              rules={{
+                required: { value: true, message: 'The field Email is required' },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Invalid email'
+                }
+              }}
+            />
+            {errors?.email?.message && (
+              <View style={styles.errorTextWrapper}>
+                <MaterialIcons name='warning' color={colors.error} />
+                <HText style={styles.errorText}>{errors?.email?.message}</HText>
               </View>
             )}
           </FormControl>
@@ -444,8 +509,8 @@ export const EditProfile = (props) => {
                   ref={companyNameRef}
                   value={value}
                   onChangeText={val => onChange(val)}
-                  blurOnSubmit={false}
-                  onSubmitEditing={() => emailRef.current?.focus()}
+                  blurOnSubmit
+                  onSubmitEditing={() => handleSubmitClick()}
                   InputLeftElement={
                     <Image
                       source={icons.company}
@@ -482,80 +547,6 @@ export const EditProfile = (props) => {
               <View style={styles.errorTextWrapper}>
                 <MaterialIcons name='warning' color={colors.error} />
                 <HText style={styles.errorText}>{errors?.company_name?.message}</HText>
-              </View>
-            )}
-          </FormControl>
-        </Box>
-
-        <Box mt='10'>
-          <HText style={styles.title}>Change Email</HText>
-          <FormControl mt={4}>
-            <FormControl.Label _text={styles.label} mb={1}>Email</FormControl.Label>
-            <Controller
-              name='email'
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  placeholder='e.g jshah@mail.com'
-                  placeholderTextColor={colors.text03}
-                  color={colors.text01}
-                  keyboardType="email-address"
-                  fontWeight='500'
-                  fontSize={14}
-                  borderRadius={8}
-                  height={55}
-                  borderColor={
-                    errors?.email?.message ? colors.error : colors.primary
-                  }
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  autoCompleteType='email'
-                  returnKeyType='done'
-                  ref={emailRef}
-                  isDisabled={isLoading}
-                  value={value}
-                  onChangeText={val => handleChangeInputEmail(val, onChange)}
-                  onSubmitEditing={() => handleSubmitClick()}
-                  blurOnSubmit
-                  InputLeftElement={
-                    <Image
-                      source={icons.email}
-                      style={[
-                        styles.inputIcon,
-                        {tintColor: `${
-                          errors?.email?.message
-                            ? colors.error : colors.primary
-                          }`
-                        }
-                      ]}
-                    />
-                  }
-                  InputRightElement={
-                    (!errors?.email?.message && isSubmitClicked) && (
-                      <Icon
-                        as={<MaterialIcons name="check" />}
-                        size={5} mr="4"
-                        color={colors.primary}
-                      />
-                    )
-                  }
-                  _focus={{
-                    borderColor: !errors?.email?.message ? colors.primary : colors.error
-                  }}
-                />
-              )}
-              rules={{
-                required: { value: true, message: 'The field Email is required' },
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email'
-                }
-              }}
-            />
-            {errors?.email?.message && (
-              <View style={styles.errorTextWrapper}>
-                <MaterialIcons name='warning' color={colors.error} />
-                <HText style={styles.errorText}>{errors?.email?.message}</HText>
               </View>
             )}
           </FormControl>
