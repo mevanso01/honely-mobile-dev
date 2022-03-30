@@ -83,12 +83,10 @@ export default StyleSheet.create({
     marginTop: 4,
     color: colors.text02
   },
-  cardContainer: {
-    padding: 24,
-    borderRadius: 16,
-    width: '100%',
-
+  shadowContainer: {
     shadowColor: colors.text01,
+    backgroundColor: colors.text01,
+    width: '100%',
     shadowOffset: {
       width: 2,
       height: 2,
@@ -96,5 +94,11 @@ export default StyleSheet.create({
     shadowOpacity: 0.17,
     shadowRadius: 8,
     elevation: 3,
+    borderRadius: 16,
+  },
+  cardContainer: {
+    padding: 24,
+    backgroundColor: colors.white,
+    borderRadius: 16
   }
 })

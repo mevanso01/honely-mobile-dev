@@ -32,46 +32,48 @@ export const LeadsDashboard = (props) => {
       </HStack>
       {isNoData ? (
         <View style={styles.bottomContainer}>
-          <View style={styles.cardContainer}>
-            <View style={styles.cardHeader}>
-              <HStack justifyContent='space-between'>
-                <HStack alignItems='center'>
-                  <Image source={icons.location} style={styles.icon}
+          <View style={styles.shadowContainer}>
+            <View style={styles.cardContainer}>
+              <View style={styles.cardHeader}>
+                <HStack justifyContent='space-between'>
+                  <HStack alignItems='center'>
+                    <Image source={icons.location} style={styles.icon}
+                    />
+                    <HText style={styles.locationText}>72839</HText>
+                  </HStack>
+                  <HButton
+                    shadow={null}
+                    text='Buyer'
+                    borderColor={colors.lightPrimary}
+                    backgroundColor={colors.lightPrimary}
+                    textStyle={{
+                      color: colors.primary,
+                      fontSize: 12
+                    }}
+                    width={67}
+                    height={8}
                   />
-                  <HText style={styles.locationText}>72839</HText>
                 </HStack>
-                <HButton
-                  shadow={null}
-                  text='Buyer'
-                  borderColor={colors.lightPrimary}
-                  backgroundColor={colors.lightPrimary}
-                  textStyle={{
-                    color: colors.primary,
-                    fontSize: 12
-                  }}
-                  width={67}
-                  height={8}
-                />
+              </View>
+              <HStack mt='4'>
+                <Image source={icons.user} style={styles.infoIcon} />
+                <HText style={styles.infoText}>Jonathan Shah</HText>
               </HStack>
+              <HStack mt='4'>
+                <Image source={icons.email} style={styles.infoIcon} />
+                <HText style={styles.infoText}>jonathan@mail.com</HText>
+              </HStack>
+              <HStack mt='4'>
+                <Image source={icons.phone} style={styles.infoIcon} />
+                <HText style={styles.infoText}>+1 238 2838 282</HText>
+              </HStack>
+              <Box alignItems='center' mt='8'>
+                <HButton
+                  text='Claim'
+                  onPress={() => onOpen()}
+                />
+              </Box>
             </View>
-            <HStack mt='4'>
-              <Image source={icons.user} style={styles.infoIcon} />
-              <HText style={styles.infoText}>Jonathan Shah</HText>
-            </HStack>
-            <HStack mt='4'>
-              <Image source={icons.email} style={styles.infoIcon} />
-              <HText style={styles.infoText}>jonathan@mail.com</HText>
-            </HStack>
-            <HStack mt='4'>
-              <Image source={icons.phone} style={styles.infoIcon} />
-              <HText style={styles.infoText}>+1 238 2838 282</HText>
-            </HStack>
-            <Box alignItems='center' mt='8'>
-              <HButton
-                text='Claim'
-                onPress={() => onOpen()}
-              />
-            </Box>
           </View>
         </View>
       ) : (
