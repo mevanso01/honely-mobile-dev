@@ -59,7 +59,7 @@ export const Profile = (props) => {
               color: colors.primary
             }}
             shadow={null}
-            onPress={() => {}}
+            onPress={() => onNavigationRedirect('Settings')}
           />
         </Box>
       </VStack>

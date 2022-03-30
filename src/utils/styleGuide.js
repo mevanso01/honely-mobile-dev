@@ -51,4 +51,5 @@ export const icons = {
   location: require('../assets/icons/location.png'),
   locationOutline: require('../assets/icons/location-outline.png'),
   edit: require('../assets/icons/edit.png'),
+  arrowLeft: require('../assets/icons/arrow-left.png'),
 }
