@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors, icons } from '../utils/styleGuide'
 
 import Leads from '../screens/Leads'
@@ -45,6 +46,24 @@ const BottomNavigator = () => {
 }
 
 function MyTabBar({ state, descriptors, navigation }) {
+  const insets = useSafeAreaInsets()
+  const styles = StyleSheet.create({
+    barStyle: {
+      flexDirection: 'row',
+      backgroundColor: colors.tint02,
+      height: 80,
+      marginBottom: insets.bottom
+    },
+    tabButton: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    iconStyle: {
+      width: 24,
+      height: 24
+    }
+  })
   const getActiveIcon = (name) => {
     switch (name) {
       case 'Leads':
@@ -123,22 +142,5 @@ function MyTabBar({ state, descriptors, navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  barStyle: {
-    flexDirection: 'row',
-    backgroundColor: colors.tint02,
-    height: 80
-  },
-  tabButton: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  iconStyle: {
-    width: 24,
-    height: 24
-  }
-})
 
 export default BottomNavigator
