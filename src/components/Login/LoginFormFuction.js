@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useToast } from 'native-base';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { doGet } from '../../services/http-client'
 import { TOAST_LENGTH_SHORT } from '../../config';
 import { setCognitoUser } from '../../store/action/setCognitoUser'
@@ -18,11 +18,12 @@ export const LoginForm = (props) => {
   
   const toast = useToast()
   const dispatch = useDispatch()
-  const cognitoUser = useSelector(state => state.cognitoUser)
   const [isLogin, setIsLogin] = useState(false)
+  const [formState, setFormState] = useState({})
 
   const handleLogin = async (values) => {
     try {
+      setFormState(values)
       setIsLogin(true)
       const response = await doGet('lookup/user_name_fetch', { user_identifier: values.email })
       if (response.result === 'Error.') {
@@ -62,14 +63,12 @@ export const LoginForm = (props) => {
 
   const getUserProfile = async () => {
     try {
-      if (cognitoUser.isCognitoUserLoggedIn) {
-        const response = await doGet('lookup-test/user_profile', { email: cognitoUser.attributes.email })
-        if (response.error) {
-          throw response
-        }
-        dispatch(setUser({ ...response, isLoggedIn: true }))
-        setIsLogin(false)
+      const response = await doGet('lookup-test/user_profile', { email: formState.email })
+      if (response.error) {
+        throw response
       }
+      dispatch(setUser({ ...response, isLoggedIn: true }))
+      setIsLogin(false)
     } catch (error) {
       setIsLogin(false)
       toast.show({
