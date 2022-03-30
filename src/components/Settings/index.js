@@ -2,6 +2,8 @@ import React from 'react'
 import { View, ScrollView, Image } from 'react-native'
 import { HScreenHeader, HText, HButton } from '../Shared'
 import { Pressable, VStack, HStack, Box } from 'native-base'
+import { useDispatch } from 'react-redux'
+import { signoutUser } from '../../store/action/setUser'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 
@@ -9,6 +11,9 @@ export const Settings = (props) => {
   const {
     navigation
   } = props
+
+  const dispatch = useDispatch()
+
   return (
     <View style={styles.container}>
       <HScreenHeader
@@ -65,7 +70,7 @@ export const Settings = (props) => {
             textStyle={{
               color: colors.error
             }}
-            onPress={() => {}}
+            onPress={() => useDispatch(signoutUser())}
           />
         </Box>
       </ScrollView>
