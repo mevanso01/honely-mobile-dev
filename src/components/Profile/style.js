@@ -21,7 +21,7 @@ export default StyleSheet.create({
     color: colors.text02,
     marginBottom: 32
   },
-  imageWrapper: {
+  imageContainer: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
@@ -29,10 +29,16 @@ export default StyleSheet.create({
     borderRadius: 28,
     backgroundColor: colors.primaryContrast,
   },
-  image: {
-    resizeMode: 'cover',
+  photoWrapper: {
     width: 153,
     height: 153,
+    borderRadius: 80,
+    backgroundColor: colors.text05
+  },
+  image: {
+    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
     borderRadius: 80
   },
   userName: {

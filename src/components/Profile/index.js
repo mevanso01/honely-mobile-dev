@@ -31,11 +31,13 @@ export const Profile = (props) => {
         <HText style={styles.title}>My Profile</HText>
         <HText style={styles.subTitle}>What you look like to consumer</HText>
       </View>
-      <View style={styles.imageWrapper}>
-        <Image
-          source={{ uri: fetchImage() }}
-          style={styles.image}
-        />
+      <View style={styles.imageContainer}>
+        <View style={styles.photoWrapper}>
+          <Image
+            source={{ uri: fetchImage() }}
+            style={styles.image}
+          />
+        </View>
         <View style={styles.userName}>
           <HText style={styles.title}>Jeff Jefferies</HText>
           <HText style={styles.nameDetail}>Keller Willaims Realty</HText>
