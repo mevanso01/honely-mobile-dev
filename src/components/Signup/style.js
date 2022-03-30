@@ -91,7 +91,13 @@ export default StyleSheet.create({
   successWrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+  },
+  signupCompleteTitle: {
+    fontSize: 16,
+    fontWeight: '500',
+    lineHeight: 24,
+    textAlign: 'center'
   },
   logoWrapper: {
     width: 181,

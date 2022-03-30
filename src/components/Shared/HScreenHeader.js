@@ -16,7 +16,6 @@ const HScreenHeader = (props) => {
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 48,
-      marginTop: 40
     },
     backArrow: {
       position: 'absolute',

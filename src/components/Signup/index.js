@@ -100,7 +100,9 @@ const SignUpScreenUI = (props) => {
         />
       )}
       {signUpFormStep === 'success' && (
-        <Success />
+        <Success
+          formState={formState}
+        />
       )}
     </View>
   )

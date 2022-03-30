@@ -56,10 +56,12 @@ export const Login = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <HScreenHeader
-        title={isSignUpScreen ? 'Sign Up' : 'Login'}
-        onPress={() => handleGoBack()}
-      />
+      {!(signUpFormStep === 'success' && isSignUpScreen) && (
+        <HScreenHeader
+          title={isSignUpScreen ? 'Sign Up' : 'Login'}
+          onPress={() => handleGoBack()}
+        />
+      )}
 
       <View style={{ display: isShowSliderButton ? 'flex' : 'none' }}>
         <HSliderButton
