@@ -8,7 +8,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'column',
     paddingHorizontal: 18,
-    paddingVertical: 30
+    paddingBottom: 30
   },
   title: {
     fontSize: 22,

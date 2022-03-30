@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../utils/styleGuide'
 
-import { Profile as ProfileScreen } from '../components/Profile';
+import { Profile as ProfileScreen } from '../components/Profile'
 
 const Profile = (props) => {
+  const insets = useSafeAreaInsets()
   const profileProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -17,6 +19,8 @@ const Profile = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
+      paddingBottom: insets.bottom,
+      paddingTop: Platform.OS === 'ios' ? 30 : 40
     }
   })
 

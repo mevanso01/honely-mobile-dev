@@ -129,8 +129,6 @@ export const EditProfile = (props) => {
     dispatch(setFormState(initialFormState))
   }, [])
 
-  console.log(formState)
-
   return (
     <View style={styles.wrapper}>
       <HScreenHeader

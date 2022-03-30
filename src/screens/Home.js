@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import { Home as HomeScreen } from '../components/Home';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Home as HomeScreen } from '../components/Home'
 import { colors } from '../utils/styleGuide'
 
 const Home = (props) => {
+  const insets = useSafeAreaInsets()
   const homeProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -16,6 +18,8 @@ const Home = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
+      paddingBottom: insets.bottom,
+      paddingTop: Platform.OS === 'ios' ? 30 : 40
     }
   })
 

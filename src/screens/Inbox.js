@@ -1,8 +1,11 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, Platform } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { colors } from '../utils/styleGuide'
 
 const Inbox = (props) => {
+  const insets = useSafeAreaInsets()
   const inboxProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -15,7 +18,8 @@ const Inbox = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
-      padding: 50
+      paddingBottom: insets.bottom,
+      paddingTop: Platform.OS === 'ios' ? 30 : 40
     }
   })
 

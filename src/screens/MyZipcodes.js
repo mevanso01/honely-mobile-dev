@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, Platform } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../utils/styleGuide'
 
 const MyZipcodes = (props) => {
+  const insets = useSafeAreaInsets()
   const myZipcodesProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -15,7 +17,8 @@ const MyZipcodes = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
-      padding: 50
+      paddingBottom: insets.bottom,
+      paddingTop: Platform.OS === 'ios' ? 30 : 40
     }
   })
 

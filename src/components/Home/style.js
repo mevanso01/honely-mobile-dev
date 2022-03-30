@@ -5,9 +5,7 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 40,
-    paddingBottom: 30,
-    paddingBottom: 50
+    paddingBottom: 40,
   },
   slide: {
     flex: 0,

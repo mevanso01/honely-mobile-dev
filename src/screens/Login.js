@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Login as LoginScreen } from '../components/Login';
 import styled from 'styled-components/native';
 import { colors } from '../utils/styleGuide'
@@ -9,6 +10,7 @@ const KeyboardView = styled.KeyboardAvoidingView`
 `;
 
 const Login = (props) => {
+  const insets = useSafeAreaInsets()
   const loginProps = {
     ...props,
     isSignUp: props.route.params?.isSignUp,
@@ -22,7 +24,8 @@ const Login = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40
+      paddingTop: Platform.OS === 'ios' ? 30 : 40,
+      paddingBottom: insets.bottom,
     }
   })
 

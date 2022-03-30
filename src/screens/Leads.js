@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { colors } from '../utils/styleGuide'
 import { LeadsDashboard } from '../components/LeadsDashboard'
 
 const Leads = (props) => {
+  const insets = useSafeAreaInsets()
   const leadsProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -16,6 +19,8 @@ const Leads = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
+      paddingBottom: insets.bottom,
+      paddingTop: Platform.OS === 'ios' ? 30 : 40
     }
   })
 
