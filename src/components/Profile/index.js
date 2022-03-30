@@ -39,7 +39,7 @@ export const Profile = (props) => {
           />
         </View>
         <View style={styles.userName}>
-          <HText style={styles.title}>Jeff Jefferies</HText>
+          <HText style={styles.title}>{currentUser?.first_name} {currentUser?.last_name}</HText>
           <HText style={styles.nameDetail}>Keller Willaims Realty</HText>
         </View>
       </View>
