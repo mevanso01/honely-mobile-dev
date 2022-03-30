@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react'
-import { EditProfileFunction } from './EditProfileFunction'
+import React, { useState, useRef, useEffect } from 'react'
 import { View, Image, ScrollView, Keyboard } from 'react-native'
-import { Box, Input, FormControl, Pressable, useToast, Icon } from 'native-base'
+import { Box, Input, FormControl, Pressable, useToast, Icon, Button } from 'native-base'
 import { useForm, Controller } from 'react-hook-form'
 import { HText, HScreenHeader, HButton } from '../Shared'
 import { icons, colors } from '../../utils/styleGuide'
@@ -10,19 +9,21 @@ import { launchImageLibrary } from 'react-native-image-picker'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import styles from './style'
 
-const EditProfileUI = (props) => {
+import { useDispatch, useSelector } from 'react-redux'
+import { setFormState, doUpdateProfile } from './store'
+
+export const EditProfile = (props) => {
   const {
     navigation,
-  
-    isLoading,
-    formState,
-    setFormState,
-    handleUpdateUserProfile
   } = props
+
+  const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.currentUser)
+  const { isLoading, formState } = useSelector(({ screens }) => screens.editprofile)
 
   const toast = useToast()
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
-  const { control, handleSubmit, formState: { errors, isValid } } = useForm({
+  const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm({
     defaultValues: formState
   })
 
@@ -38,7 +39,29 @@ const EditProfileUI = (props) => {
 
   const onSubmit = async (values) => {
     Keyboard.dismiss()
-    handleUpdateUserProfile()
+    dispatch(setFormState(values))
+    try {
+      const response = await dispatch(doUpdateProfile())
+      if (response.result === 'Success') {
+        toast.show({
+          title: 'Success',
+          description: 'Profile updated',
+          status: 'success',
+          duration: TOAST_LENGTH_SHORT,
+          marginRight: 4,
+          marginLeft: 4,
+        })
+      }
+    } catch (error) {
+      toast.show({
+        title: 'Error',
+        description: error,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
   }
 
   const handleSubmitClick = () => {
@@ -63,10 +86,7 @@ const EditProfileUI = (props) => {
       } else {
         if (response?.assets) {
           const userPhoto = `data:${response.assets[0].type};base64,${response.assets[0].base64}`
-          setFormState({
-            ...formState,
-            image_url: userPhoto
-          })
+          dispatch(setFormState({ image_url: userPhoto }))
         } else {
           toast.show({
             title: 'Error',
@@ -80,6 +100,36 @@ const EditProfileUI = (props) => {
       }
     })
   }
+
+  useEffect(() => {
+    const fetchImage = () => {
+      const defaultImg = 'https://honely-files-public.s3.amazonaws.com/images/avatar/avatar_user_01.png'
+      if (currentUser?.image_url) {
+        return currentUser.image_url
+      } else {
+        return defaultImg
+      }
+    }
+    const initialFormState = {
+      user_name: currentUser.user_name,
+      user_type: currentUser.user_type,
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      phone_number: currentUser.phone_number,
+      email: currentUser.email,
+      image_url: fetchImage()
+    }
+    setValue('user_name', initialFormState.user_name)
+    setValue('first_name', initialFormState.first_name)
+    setValue('last_name', initialFormState.last_name)
+    setValue('phone_number', initialFormState.phone_number)
+    setValue('email', initialFormState.email)
+    setValue('image_url', initialFormState.image_url)
+
+    dispatch(setFormState(initialFormState))
+  }, [])
+
+  console.log(formState)
 
   return (
     <View style={styles.wrapper}>
@@ -200,10 +250,7 @@ const EditProfileUI = (props) => {
                   isDisabled={isLoading}
                   ref={firstNameRef}
                   value={value}
-                  onChangeText={val => {
-                    setFormState({ ...formState, first_name: val })
-                    onChange(val)
-                  }}
+                  onChangeText={val => onChange(val)}
                   blurOnSubmit={false}
                   onSubmitEditing={() => lastNameRef.current?.focus()}
                   InputLeftElement={
@@ -267,10 +314,7 @@ const EditProfileUI = (props) => {
                   isDisabled={isLoading}
                   ref={lastNameRef}
                   value={value}
-                  onChangeText={val => {
-                    setFormState({ ...formState, last_name: val })
-                    onChange(val)
-                  }}
+                  onChangeText={val => onChange(val)}
                   blurOnSubmit={false}
                   onSubmitEditing={() => phoneNumberRef.current?.focus()}
                   InputLeftElement={
@@ -334,10 +378,7 @@ const EditProfileUI = (props) => {
                   returnKeyType='next'
                   isDisabled={isLoading}
                   value={value}
-                  onChangeText={val => {
-                    setFormState({ ...formState, phone_number: val })
-                    onChange(val)
-                  }}
+                  onChangeText={val => onChange(val)}
                   ref={phoneNumberRef}
                   blurOnSubmit={false}
                   onSubmitEditing={() => companyNameRef.current?.focus()}
@@ -405,8 +446,8 @@ const EditProfileUI = (props) => {
                   ref={companyNameRef}
                   value={value}
                   onChangeText={val => onChange(val)}
-                  blurOnSubmit
-                  onSubmitEditing={() => handleSubmitClick()}
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => emailRef.current?.focus()}
                   InputLeftElement={
                     <Image
                       source={icons.company}
@@ -473,7 +514,7 @@ const EditProfileUI = (props) => {
                   autoCompleteType='email'
                   returnKeyType='done'
                   ref={emailRef}
-                  isDisabled
+                  isDisabled={isLoading}
                   value={value}
                   onChangeText={val => handleChangeInputEmail(val, onChange)}
                   onSubmitEditing={() => handleSubmitClick()}
@@ -532,12 +573,4 @@ const EditProfileUI = (props) => {
       </ScrollView>
     </View>
   )
-}
-
-export const EditProfile = (props) => {
-  const editProps = {
-    ...props,
-    UIComponent: EditProfileUI
-  }
-  return <EditProfileFunction {...editProps} />
 }

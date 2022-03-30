@@ -18,8 +18,8 @@ export default StyleSheet.create({
     color: colors.headingColor
   },
   userPhoto: {
-    width: 80,
-    height: 80,
+    width: '100%',
+    height: '100%',
     resizeMode: 'cover',
     borderRadius: 40
   },
@@ -48,7 +48,9 @@ export default StyleSheet.create({
     marginTop: 16,
     position: 'relative',
     width: 80,
-    height: 80
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.text05
   },
   photoEditBtn: {
     backgroundColor: colors.tint,

@@ -19,7 +19,7 @@ export const LoginForm = (props) => {
   const toast = useToast()
   const dispatch = useDispatch()
   const [isLogin, setIsLogin] = useState(false)
-  const [formState, setFormState] = useState({})
+  const [formState, setFormState] = useState()
 
   const handleLogin = async (values) => {
     try {
@@ -29,7 +29,7 @@ export const LoginForm = (props) => {
       if (response.result === 'Error.') {
         throw response;
       }
-      userCognitoLogin(response.user_name, values.password)
+      userCognitoLogin(response.user_name, values.password, values.email)
     } catch (error) {
       setIsLogin(false)
       toast.show({
@@ -43,11 +43,11 @@ export const LoginForm = (props) => {
     }
   }
 
-  const userCognitoLogin = async (username, password) => {
+  const userCognitoLogin = async (username, password, email) => {
     try {
       const user = await Auth.signIn(username, password)
       dispatch(setCognitoUser({ ...user, isCognitoUserLoggedIn: true }))
-      getUserProfile()
+      getUserProfile(email)
     } catch (error) {
       setIsLogin(false)
       toast.show({
@@ -61,9 +61,9 @@ export const LoginForm = (props) => {
     }
   }
 
-  const getUserProfile = async () => {
+  const getUserProfile = async (email) => {
     try {
-      const response = await doGet('lookup-test/user_profile', { email: formState.email })
+      const response = await doGet('lookup-test/user_profile', { email: email })
       if (response.error) {
         throw response
       }
