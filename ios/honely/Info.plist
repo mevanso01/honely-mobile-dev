@@ -51,6 +51,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>The app requires access to the camera for the profile picture, to upload images to communicate via the messaging features of the app.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The app requires access to the photo library for the profile picture, to upload images to communicate via the messaging features of the app.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>

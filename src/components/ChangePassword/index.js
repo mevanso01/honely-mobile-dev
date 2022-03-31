@@ -134,12 +134,12 @@ export const ChangePassword = (props) => {
                   <Icon
                     as={<MaterialIcons name="lock" />}
                     size={5} ml="4"
-                    color={errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.text04}
+                    color={errors?.current_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.text04}
                   />
                 }
                 InputRightElement={
                   <HStack alignItems='center'>
-                    {(!errors?.password?.message && isSubmitClicked) && (
+                    {(!errors?.current_password?.message && isSubmitClicked) && (
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
@@ -203,12 +203,12 @@ export const ChangePassword = (props) => {
                   <Icon
                     as={<MaterialIcons name="lock" />}
                     size={5} ml="4"
-                    color={errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.text04}
+                    color={errors?.new_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.text04}
                   />
                 }
                 InputRightElement={
                   <HStack alignItems='center'>
-                    {(!errors?.password?.message && isSubmitClicked) && (
+                    {(!errors?.new_password?.message && isSubmitClicked) && (
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
@@ -277,7 +277,7 @@ export const ChangePassword = (props) => {
                 }
                 InputRightElement={
                   <HStack alignItems='center'>
-                    {(!errors?.password?.message && isSubmitClicked) && (
+                    {(!errors?.confirm_password?.message && isSubmitClicked) && (
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
