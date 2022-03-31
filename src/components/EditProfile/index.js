@@ -39,29 +39,29 @@ export const EditProfile = (props) => {
 
   const onSubmit = async (values) => {
     Keyboard.dismiss()
-    dispatch(setFormState(values))
-    try {
-      const response = await dispatch(doUpdateProfile())
-      if (response.result === 'Success') {
-        toast.show({
-          title: 'Success',
-          description: 'Profile updated',
-          status: 'success',
-          duration: TOAST_LENGTH_SHORT,
-          marginRight: 4,
-          marginLeft: 4,
-        })
-      }
-    } catch (error) {
-      toast.show({
-        title: 'Error',
-        description: error,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
-      })
-    }
+    // dispatch(setFormState(values))
+    // try {
+    //   const response = await dispatch(doUpdateProfile())
+    //   if (response.result === 'Success') {
+    //     toast.show({
+    //       title: 'Success',
+    //       description: 'Profile updated',
+    //       status: 'success',
+    //       duration: TOAST_LENGTH_SHORT,
+    //       marginRight: 4,
+    //       marginLeft: 4,
+    //     })
+    //   }
+    // } catch (error) {
+    //   toast.show({
+    //     title: 'Error',
+    //     description: error,
+    //     status: 'error',
+    //     duration: TOAST_LENGTH_SHORT,
+    //     marginRight: 4,
+    //     marginLeft: 4,
+    //   })
+    // }
   }
 
   const handleSubmitClick = () => {
