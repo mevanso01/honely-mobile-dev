@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Profile from '../screens/Profile'
 import EditProfile from '../screens/EditProfile'
 import Settings from '../screens/Settings'
+import ChangePassword from '../screens/ChangePassword'
 
 const Stack = createStackNavigator()
 
@@ -25,6 +26,11 @@ const ProfileNavigator = () => {
       <Stack.Screen
         name='Settings'
         component={Settings}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='ChangePassword'
+        component={ChangePassword}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

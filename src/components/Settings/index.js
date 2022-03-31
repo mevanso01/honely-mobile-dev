@@ -9,7 +9,8 @@ import styles from './style'
 
 export const Settings = (props) => {
   const {
-    navigation
+    navigation,
+    onNavigationRedirect
   } = props
 
   const dispatch = useDispatch()
@@ -28,7 +29,7 @@ export const Settings = (props) => {
         <VStack mt='2'>
           <OptionItem
             text='Change Password'
-            onPress={() => {}}
+            onPress={() => onNavigationRedirect('ChangePassword')}
           />
           <OptionItem
             text='Notifications'
