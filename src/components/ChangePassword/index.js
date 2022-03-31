@@ -1,17 +1,23 @@
 import React, { useState, useRef } from 'react'
 import { View, ScrollView, Image, Keyboard } from 'react-native'
 import { HScreenHeader, HText, HButton } from '../Shared'
-import { Pressable, VStack, HStack, Box, Input, FormControl, Icon } from 'native-base'
+import { Pressable, VStack, HStack, Box, Input, FormControl, Icon, useToast } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useForm, Controller } from 'react-hook-form'
+import { TOAST_LENGTH_SHORT } from '../../config'
 import styles from './style'
+
+import config from '../../aws-exports'
+import Amplify, { Auth } from 'aws-amplify'
+Amplify.configure(config)
 
 export const ChangePassword = (props) => {
   const {
     navigation
   } = props
 
+  const toast = useToast()
   const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm()
   const [currentPasswordSee, setCurrentPasswordSee] = useState(false)
   const [newPasswordSee, setNewPasswordSee] = useState(false)
@@ -22,8 +28,51 @@ export const ChangePassword = (props) => {
   const confirmPasswordRef = useRef()
   const newPassword = watch('new_password', '')
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleChangePassword = async (oldPassword, newPassword) => {
+    try {
+      setIsLoading(true)
+      const user = await Auth.currentAuthenticatedUser()
+      await Auth.changePassword(user, oldPassword, newPassword)
+      toast.show({
+        title: 'Success',
+        description: 'Password Changed Succesfully.',
+        status: 'success',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    } catch (err) {
+      let errorMessage = ''
+      if (err.code == 'LimitExceededException') {
+        errorMessage = "Password Limit Change Exceeded. Please try again later."
+      }
+      else if (err.code == 'NotAuthorizedException') {
+        errorMessage = "Incorrect Current password provided."
+      }
+      else if (err.code == "InvalidPasswordException") {
+        errorMessage = err.message
+      }
+      else {
+        errorMessage = "Password Change Failed. Please check your network connection and try again"
+      }
+      toast.show({
+        title: 'Error',
+        description: errorMessage,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const onSubmit = (values) => {
     Keyboard.dismiss()
+    handleChangePassword(values.current_password, values.new_password)
   }
   const handleSubmitClick = () => {
     !isSubmitClicked && setIsSubmitClicked(true)
@@ -77,7 +126,7 @@ export const ChangePassword = (props) => {
                 autoCompleteType='password'
                 returnKeyType='next'
                 blurOnSubmit={false}
-                // isDisabled={isLoading}
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={() => newPasswordRef.current?.focus()}
@@ -146,7 +195,7 @@ export const ChangePassword = (props) => {
                 ref={newPasswordRef}
                 returnKeyType='next'
                 blurOnSubmit={false}
-                // isDisabled={isLoading}
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={() => confirmPasswordRef.current?.focus()}
@@ -215,7 +264,7 @@ export const ChangePassword = (props) => {
                 ref={confirmPasswordRef}
                 returnKeyType='done'
                 blurOnSubmit
-                // isDisabled={isLoading}
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={handleSubmitClick}
@@ -263,10 +312,10 @@ export const ChangePassword = (props) => {
           <HButton
             text='Save Changes'
             onPress={() => handleSubmitClick()}
+            isLoading={isLoading}
           />
         </Box>
       </ScrollView>
     </View>
   )
 }
-
