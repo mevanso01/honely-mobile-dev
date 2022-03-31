@@ -71,7 +71,7 @@ export const Settings = (props) => {
             textStyle={{
               color: colors.error
             }}
-            onPress={() => useDispatch(signoutUser())}
+            onPress={() => dispatch(signoutUser())}
           />
         </Box>
       </ScrollView>
