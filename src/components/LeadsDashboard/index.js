@@ -30,7 +30,7 @@ export const LeadsDashboard = (props) => {
           onSecondPress={() => setIsInBound(false)}
         />
       </HStack>
-      {isNoData ? (
+      {!isNoData ? (
         <View style={styles.bottomContainer}>
           <View style={styles.shadowContainer}>
             <View style={styles.cardContainer}>
