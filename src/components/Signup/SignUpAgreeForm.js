@@ -58,7 +58,7 @@ export const SignUpAgreeForm = (props) => {
                 borderColor={
                   errors?.firstName?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
                 }
-                autoCapitalize='none'
+                autoCapitalize='words'
                 autoCorrect={false}
                 returnKeyType='next'
                 isDisabled={isLoading}
@@ -120,7 +120,7 @@ export const SignUpAgreeForm = (props) => {
                 borderColor={
                   errors?.lastName?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
                 }
-                autoCapitalize='none'
+                autoCapitaliz='words'
                 autoCorrect={false}
                 returnKeyType='next'
                 isDisabled={isLoading}
