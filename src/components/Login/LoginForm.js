@@ -36,7 +36,7 @@ export const LoginForm = (props) => {
       }
       try {
         await dispatch(cognitoSignIn({ username: response.user_name, password: values.password }))
-        getUserProfile()
+        getUserProfile(values.email)
       } catch (error) {
         setIsLoading(false)
         toast.show({
@@ -61,9 +61,9 @@ export const LoginForm = (props) => {
     }
   }
   
-  const getUserProfile = async () => {
+  const getUserProfile = async (email) => {
     try {
-      const response = await doGet('lookup-test/user_profile', { email: cognitoUser.user.attributes.email })
+      const response = await doGet('lookup-test/user_profile', { email: email })
       if (response?.message) {
         throw response
       }
