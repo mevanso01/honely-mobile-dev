@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { SignUpScreenFunction } from './SignUpScreenFunction'
+import React from 'react'
 import { View } from 'react-native'
 import { SignUpForm } from './SignUpForm'
 import { SignUpAgreeForm } from './SignUpAgreeForm'
@@ -10,20 +9,12 @@ import { ConsumerTypeForm } from './ConsumerTypeForm'
 import { OTPForm } from './OTPForm'
 import { Success } from './Success'
 
-const SignUpScreenUI = (props) => {
+export const SignUpScreen = (props) => {
   const {
     handleHideSliderButton,
     signUpFormStep,
     setSignUpFormStep,
-
-    isLoading,
-    isResending,
-    formState,
-    setFormState,
-    handleCheckUserNameExist,
-    handleCreateAccount,
-    handleCongitoConfirmSignUp,
-    handleResendCode
+    handleGoToLogin
   } = props
 
   const handleSignUpClick = () => {
@@ -45,73 +36,43 @@ const SignUpScreenUI = (props) => {
     <View style={{ flex: 1 }}>
       {signUpFormStep === 'signUp' && (
         <SignUpForm
-          isLoading={isLoading}
-          formState={formState}
-          setFormState={setFormState}
-          handleCheckUserNameExist={handleCheckUserNameExist}
           handleNextStep={handleSignUpClick}
         />
       )}
       {signUpFormStep === 'signUpAgree' && (
         <SignUpAgreeForm
-          formState={formState}
-          setFormState={setFormState}
           handleNextStep={() => setSignUpFormStep('businessType')}
         />
       )}
       {signUpFormStep === 'describe' && (
         <DescribeForm
-          formState={formState}
-          setFormState={setFormState}
           handleNextStep={handleDescibeNextStep}
         />
       )}
       {signUpFormStep === 'businessType' && (
         <BusinessTypeForm
-          formState={formState}
-          setFormState={setFormState}
           handleNextStep={handleBusinessTypeNextStep}
         />
       )}
       {signUpFormStep === 'businessCompany' && (
         <BusinessCompanyForm
-          isLoading={isLoading}
-          formState={formState}
-          setFormState={setFormState}
-          handleCreateAccount={handleCreateAccount}
+          setSignUpFormStep={setSignUpFormStep}
         />
       )}
       {signUpFormStep === 'otp' && (
         <OTPForm
-          isLoading={isLoading}
-          isResending={isResending}
-          formState={formState}
-          setFormState={setFormState}
-          handleResendCode={handleResendCode}
-          handleCongitoConfirmSignUp={handleCongitoConfirmSignUp}
+          setSignUpFormStep={setSignUpFormStep}
+          handleGoToLogin={handleGoToLogin}
         />
       )}
       {signUpFormStep === 'consumerType' && (
         <ConsumerTypeForm
-          isLoading={isLoading}
-          formState={formState}
-          setFormState={setFormState}
           handleCreateAccount={handleCreateAccount}
         />
       )}
       {signUpFormStep === 'success' && (
-        <Success
-          formState={formState}
-        />
+        <Success />
       )}
     </View>
   )
-}
-
-export const SignUpScreen = (props) => {
-  const signUpProps = {
-    ...props,
-    UIComponent: SignUpScreenUI
-  }
-  return <SignUpScreenFunction {...signUpProps} />
 }

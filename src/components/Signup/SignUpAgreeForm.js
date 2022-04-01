@@ -4,17 +4,19 @@ import { HButton, HText } from '../Shared'
 import { Box, Input, FormControl, Icon, HStack, Pressable, Checkbox } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useForm, Controller } from 'react-hook-form'
-import { TOAST_LENGTH_SHORT } from '../../config'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setFormState } from './store'
+
 export const SignUpAgreeForm = (props) => {
   const {
-    isLoading,
-    formState,
-    setFormState,
     handleNextStep
   } = props
+
+  const dispatch = useDispatch()
+  const { isLoading, formState } = useSelector(({ screens }) => screens.signup)
 
   const { control, handleSubmit, formState: { errors, isValid } } = useForm({
     defaultValues: formState
@@ -26,10 +28,7 @@ export const SignUpAgreeForm = (props) => {
 
   const onSubmit = async (values) => {
     Keyboard.dismiss()
-    setFormState({
-      ...formState,
-      ...values
-    })
+    dispatch(setFormState(values))
     handleNextStep()
   }
   const handleSubmitClick = () => {
@@ -282,7 +281,7 @@ export const SignUpAgreeForm = (props) => {
               opacity: 0
             }}
             isChecked={formState?.emailConsent || false}
-            onChange={selected => setFormState({ ...formState, emailConsent: selected })}
+            onChange={selected => dispatch(setFormState({ emailConsent: selected }))}
           />
           <HText style={styles.checkboxText}>
             I consent to receive Honely newsletters and promotional content via email. For further information, please consult the Privacy Policy.

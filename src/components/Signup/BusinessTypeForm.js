@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, ScrollView } from 'react-native'
 import { HText, HButton, HCricleProgress } from '../Shared'
 import { Box, HStack } from 'native-base'
@@ -6,12 +6,16 @@ import { colors } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setFormState } from './store'
+
 export const BusinessTypeForm = (props) => {
   const {
-    handleNextStep,
-    formState,
-    setFormState
+    handleNextStep
   } = props
+
+  const dispatch = useDispatch()
+  const { formState } = useSelector(({ screens }) => screens.signup)
 
   const types = [
     {
@@ -31,21 +35,12 @@ export const BusinessTypeForm = (props) => {
   const handleServiceProviderType = (type) => {
     if (formState?.serviceProviderType) {
       if (formState?.serviceProviderType?.includes(type)) {
-        setFormState(prevState => ({
-          ...prevState,
-          serviceProviderType: prevState?.serviceProviderType?.filter(item => item !== type)
-        }))
+        dispatch(setFormState({ serviceProviderType: formState?.serviceProviderType?.filter(item => item !== type) }))
       } else {
-        setFormState(prevState => ({
-          ...prevState,
-          serviceProviderType: [...prevState?.serviceProviderType, type]
-        }))
+        dispatch(setFormState({ serviceProviderType: [...formState?.serviceProviderType, type] }))
       }
     } else {
-      setFormState(prevState => ({
-        ...prevState,
-        serviceProviderType: [type]
-      }))
+      dispatch(setFormState({ serviceProviderType: [type] }))
     }
   }
 

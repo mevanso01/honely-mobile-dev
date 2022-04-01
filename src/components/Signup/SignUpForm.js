@@ -8,14 +8,16 @@ import { TOAST_LENGTH_SHORT } from '../../config'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 
+import { handleCheckUserNameExist } from './store'
+import { useDispatch, useSelector } from 'react-redux'
+
 export const SignUpForm = (props) => {
   const {
-    isLoading,
-    formState,
-    setFormState,
-    handleCheckUserNameExist,
     handleNextStep
   } = props
+
+  const dispatch = useDispatch()
+  const { isLoading, formState } = useSelector(({ screens }) => screens.signup)
 
   const toast = useToast()
   const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm({
@@ -32,11 +34,7 @@ export const SignUpForm = (props) => {
 
   const onSubmit = async (values) => {
     Keyboard.dismiss()
-    setFormState({
-      ...formState,
-      ...values
-    })
-    const checkExist = await handleCheckUserNameExist(values?.userName)
+    const checkExist = await dispatch(handleCheckUserNameExist(values))
     if (checkExist) {
       toast.show({
         title: 'Error',
@@ -89,7 +87,7 @@ export const SignUpForm = (props) => {
             render={({ field: { onChange, value } }) => (
               <Input
                 keyboardType='default'
-                placeholder='e.g Jonathanshah01'
+                placeholder='username01'
                 placeholderTextColor={colors.text03}
                 fontSize={14}
                 borderRadius={8}
@@ -153,7 +151,7 @@ export const SignUpForm = (props) => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
-                placeholder='e.g jshah@mail.com'
+                placeholder='example@mail.com'
                 placeholderTextColor={colors.text03}
                 keyboardType="email-address"
                 fontSize={14}

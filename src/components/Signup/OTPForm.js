@@ -1,35 +1,88 @@
 import React, { useState } from 'react'
 import { HText, HButton } from '../Shared'
-import { Box, HStack, ScrollView } from 'native-base'
+import { Box, HStack, ScrollView, useToast } from 'native-base'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
 import styles from './style'
 
+import { TOAST_LENGTH_SHORT } from '../../config'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFormState, handleResendCode, handleCongitoConfirmSignUp, handleLogin } from './store'
+
 export const OTPForm = (props) => {
-  const {
-    isLoading,
-    isResending,
-    formState,
-    setFormState,
-    handleCongitoConfirmSignUp,
-    handleResendCode
-  } = props
+  const { setSignUpFormStep } = props
+  const toast = useToast()
+  const dispatch = useDispatch()
+  const { isLoading, isResending, formState } = useSelector(({ screens }) => screens.signup)
 
   const [error, setError] = useState(null)
   const [code, setCode] = useState(null)
 
-  const handleSubmitClick = () => {
+  const handleSubmitClick = async () => {
     if (code) {
-      setFormState({
-        ...formState,
-        code: code
-      })
-      handleCongitoConfirmSignUp(code)
+      try {
+        await dispatch(handleCongitoConfirmSignUp(formState.userName, code, formState.email))
+        setSignUpFormStep('success')
+        setTimeout(() => {
+          doLogin()
+        }, 3000)
+
+      } catch (error) {
+        toast.show({
+          title: 'Error',
+          description: error.message,
+          status: 'error',
+          duration: TOAST_LENGTH_SHORT,
+          marginRight: 4,
+          marginLeft: 4,
+        })
+      }
     } else {
       setError('The OTP code is required.')
     }
   }
+
+  const doLogin = async () => {
+    try {
+      dispatch(handleLogin(formState.userName, formState.password, formState.email))
+    } catch (error) {
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+      handleGoToLogin()
+    }
+  }
+
+  const doResendCode = async () => {
+    try {
+      await dispatch(handleResendCode(formState.email, formState.userName))
+      toast.show({
+        title: 'Success',
+        description: 'Resent Email Verification Code!',
+        status: 'success',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    } catch (error) {
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  console.log('_________form state___________', formState)
 
   return (
     <ScrollView
@@ -77,7 +130,7 @@ export const OTPForm = (props) => {
             color: colors.primary
           }}
           shadow={null}
-          onPress={handleResendCode}
+          onPress={() => doResendCode()}
           isLoadingText='Please wait...'
           isLoading={isResending}
         />

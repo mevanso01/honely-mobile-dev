@@ -4,11 +4,11 @@ import { HText } from '../Shared'
 import { images } from '../../utils/styleGuide'
 import Loader from 'react-native-three-dots-loader'
 import styles from './style'
+import { useSelector } from 'react-redux'
 
 export const Success = (props) => {
-  const {
-    formState
-  } = props
+  const { formState } = useSelector(({ screens }) => screens.signup)
+
   return (
     <>
       <HText style={styles.signupCompleteTitle}>Sign Up Complete</HText>

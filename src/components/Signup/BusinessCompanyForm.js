@@ -1,32 +1,44 @@
 import React, { useState } from 'react'
 import { View, Image, ScrollView, Keyboard } from 'react-native'
 import { HText, HButton, HCricleProgress } from '../Shared'
-import { Box, HStack, Input, FormControl, Icon } from 'native-base'
+import { Box, HStack, Input, FormControl, Icon, useToast } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './style'
 
+import { TOAST_LENGTH_SHORT } from '../../config'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFormState, handleCreateAccount } from './store'
+
 export const BusinessCompanyForm = (props) => {
-  const {
-    isLoading,
-    formState,
-    setFormState,
-    handleCreateAccount
-  } = props
+  const { setSignUpFormStep } = props
+  const toast = useToast()
+  const dispatch = useDispatch()
+  const { isLoading, formState } = useSelector(({ screens }) => screens.signup)
+
   const { control, handleSubmit, formState: { errors, isValid }, watch } = useForm({
     defaultValues: { company_name: formState?.company_name || '' }
   })
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
   const companyName = watch('company_name', '')
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     Keyboard.dismiss()
-    setFormState({
-      ...formState,
-      ...values,
-    })
-    handleCreateAccount()
+    try {
+      dispatch(setFormState(values))
+      await dispatch(handleCreateAccount())
+      setSignUpFormStep('otp')
+    } catch (error) {
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
   }
 
   const handleSubmitClick = () => {

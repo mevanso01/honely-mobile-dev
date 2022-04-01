@@ -13,11 +13,41 @@ export const cognitoSignIn = (payload) => async (dispatch, getState) => {
   try {
     const username = payload.username
     const password = payload.password
-    const congnitoUser = await Auth.signIn(username, password)
+    const cognitoUser = await Auth.signIn(username, password)
     dispatch(setIsLoggedIn(true))
-    dispatch(setCognitoUser(congnitoUser))
-    return congnitoUser
+    dispatch(setCognitoUser(cognitoUser))
+    return cognitoUser
   } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const cognitoSignup = (payload) => async (dispatch, getState) => {
+  try {
+    const username = payload.username
+    const password = payload.password
+    const attributes = payload.attributes
+    const cognitoUser = await Auth.signUp({ username, password, attributes })
+    dispatch(setCognitoUser(cognitoUser))
+    return cognitoUser
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const cognitoResendSignUp = (username) => async (dispatch, getState) => {
+  try {
+    await Auth.resendSignUp(username)
+    return true
+  } catch {
+    return Promise.reject(error)
+  }
+}
+
+export const cognitoConfirmSignUp = (username, code) => async (dispatch, getState) => {
+  try {
+    await Auth.confirmSignUp(username, code)
+  } catch {
     return Promise.reject(error)
   }
 }
