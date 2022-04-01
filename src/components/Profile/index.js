@@ -38,10 +38,10 @@ export const Profile = (props) => {
               style={styles.image}
             />
           </View>
-          <View style={styles.userName}>
+          <VStack mt='8' alignItems='center'>
             <HText style={styles.title}>{currentUser?.first_name} {currentUser?.last_name}</HText>
             <HText style={styles.nameDetail}>Keller Willaims Realty</HText>
-          </View>
+          </VStack>
         </View>
         <VStack mt='4' mb='3'>
           <Box alignItems='center'>

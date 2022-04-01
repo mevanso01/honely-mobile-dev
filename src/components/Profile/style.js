@@ -38,9 +38,6 @@ export default StyleSheet.create({
     height: '100%',
     borderRadius: 80
   },
-  userName: {
-    marginTop: 32
-  },
   nameDetail: {
     marginTop: 5,
     fontWeight: '500',
