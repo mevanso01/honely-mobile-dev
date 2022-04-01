@@ -8,6 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { doGet } from '../../services/http-client'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { useDispatch, useSelector } from 'react-redux'
+import { cognitoSignIn } from '../../store/reducer/cognitoUser'
 import { setUser } from '../../store/action/setUser'
 import styles from './style'
 
