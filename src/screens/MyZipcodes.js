@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Text, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { MyZipcodes as MyZipcodesScreen} from '../components/MyZipcodes'
 import { colors } from '../utils/styleGuide'
 
 const MyZipcodes = (props) => {
@@ -18,13 +19,14 @@ const MyZipcodes = (props) => {
       flex: 1,
       backgroundColor: colors.backgroundColor,
       paddingBottom: insets.bottom,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40
+      paddingTop: Platform.OS === 'ios' ? 30 : 40,
+      paddingHorizontal: 18
     }
   })
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <Text>My Zipcodes</Text>
+      <MyZipcodesScreen {...myZipcodesProps} />
     </SafeAreaView>
   )
 }

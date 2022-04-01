@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Text, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { Inbox as InboxScreen } from '../components/Inbox'
 import { colors } from '../utils/styleGuide'
 
 const Inbox = (props) => {
@@ -19,13 +19,14 @@ const Inbox = (props) => {
       flex: 1,
       backgroundColor: colors.backgroundColor,
       paddingBottom: insets.bottom,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40
+      paddingTop: Platform.OS === 'ios' ? 30 : 40,
+      paddingHorizontal: 18
     }
   })
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <Text>Inbox</Text>
+      <InboxScreen {...inboxProps} />
     </SafeAreaView>
   )
 }

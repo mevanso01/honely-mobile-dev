@@ -2,10 +2,6 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../utils/styleGuide'
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 18,
-  },
   title: {
     fontSize: 22,
     fontWeight: '600',
@@ -17,8 +13,10 @@ export default StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
     lineHeight: 21,
-    color: colors.text02,
-    marginBottom: 32
+    color: colors.text02
+  },
+  container: {
+    flex: 1,
   },
   imageContainer: {
     flex: 1,

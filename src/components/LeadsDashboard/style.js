@@ -3,17 +3,17 @@ import { colors } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 
 export default StyleSheet.create({
+  title: {
+    fontSize: 22,
+    fontWeight: '600',
+    lineHeight: 33,
+    marginBottom: 32
+  },
   container: {
     flexGrow: 1,
     justifyContent: 'space-between',
     flexDirection: 'column',
-    paddingHorizontal: 18,
     paddingBottom: 30
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '600',
-    lineHeight: 33
   },
   description: {
     fontSize: 14,
