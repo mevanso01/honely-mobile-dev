@@ -1,23 +1,41 @@
-import { COGNITO_USER_SET } from '../actionType'
+import { createSlice } from '@reduxjs/toolkit'
+import awsConfig from '../../aws-exports'
+import Amplify, { Auth } from 'aws-amplify'
+Amplify.configure(awsConfig)
 
 const initialState = {
-  isCognitoUserLoggedIn: false,
-  confirmationCodeRequested: false
+  isLoggedIn: false,
+  confirmationCodeRequested: false,
+  user: null
 }
 
-export default function(state = initialState, action) {
-  switch (action.type) {
-    case COGNITO_USER_SET: {
-      const temp = {
-        ...state
-      }
-      for (let key in action.payload) {
-        temp[key] = action.payload[key]
-      }
-      return temp
-    }
-    default: {
-      return state
-    }
+export const cognitoSignIn = (payload) => async (dispatch, getState) => {
+  try {
+    const username = payload.username
+    const password = payload.password
+    const congnitoUser = await Auth.signIn(username, password)
+    dispatch(setIsLoggedIn(true))
+    dispatch(setCognitoUser(congnitoUser))
+    return congnitoUser
+  } catch (error) {
+    return Promise.reject(error)
   }
 }
+
+const cognitoUserSlice = createSlice({
+  name: 'cognitoUser',
+  initialState,
+  reducers: {
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = !!action.payload
+    },
+    setCognitoUser: (state, action) => {
+      state.user = action.payload
+    },
+  },
+  extraReducers: {}
+})
+
+export const { setIsLoggedIn, setCognitoUser } = cognitoUserSlice.actions
+
+export default cognitoUserSlice.reducer

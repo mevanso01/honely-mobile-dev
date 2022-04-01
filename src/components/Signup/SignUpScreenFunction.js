@@ -3,7 +3,7 @@ import { useToast } from 'native-base';
 import { doGet, doPost, doDelete } from '../../services/http-client'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCognitoUser } from '../../store/action/setCognitoUser'
+// import { setCognitoUser } from '../../store/action/setCognitoUser'
 import { setUser } from '../../store/action/setUser'
 import config from '../../aws-exports'
 import Amplify, { Auth } from 'aws-amplify'
@@ -116,7 +116,7 @@ export const SignUpScreenFunction = (props) => {
           phone_number,
         }
       })
-      dispatch(setCognitoUser({ ..._cognitoUser, confirmationCodeRequested: true }))
+      // dispatch(setCognitoUser({ ..._cognitoUser, confirmationCodeRequested: true }))
       handleUnconfirmedUserAddition(params)
       setSignUpFormStep('otp')
     } catch (error) {
@@ -153,7 +153,7 @@ export const SignUpScreenFunction = (props) => {
     try {
       setIsLoading(true)
       await Auth.confirmSignUp(bodyParams.user_name, code)
-      dispatch(setCognitoUser({ confirmationCodeRequested: false }))
+      // dispatch(setCognitoUser({ confirmationCodeRequested: false }))
       await doDelete('lookup-test/unconfirmed_user_deletion', { email: bodyParams.email })
       setSignUpFormStep('success')
       setTimeout(() => {
@@ -175,7 +175,7 @@ export const SignUpScreenFunction = (props) => {
   const handleLogin = async () => {
     try {
       const _cognitoUser = await Auth.signIn(bodyParams.user_name, formState.password)
-      dispatch(setCognitoUser({ ..._cognitoUser, isCognitoUserLoggedIn: true }))
+      // dispatch(setCognitoUser({ ..._cognitoUser, isCognitoUserLoggedIn: true }))
       await doPost('lookup/register_service', bodyParams)
       getUserProfile()
     } catch (error) {

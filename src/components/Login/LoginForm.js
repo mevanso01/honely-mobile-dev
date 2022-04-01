@@ -1,24 +1,85 @@
 import React, { useState, useRef } from 'react'
-import { LoginForm as LoginFormController } from './LoginFormFuction'
 import { View, Keyboard, Image, ScrollView } from 'react-native'
 import { HButton, HText, HPressableText } from '../Shared'
-import { Box, Input, FormControl, Icon, HStack, Pressable } from 'native-base'
+import { Box, Input, FormControl, Icon, HStack, Pressable, useToast } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors, icons } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
+import { doGet } from '../../services/http-client'
+import { TOAST_LENGTH_SHORT } from '../../config'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser } from '../../store/action/setUser'
 import styles from './style'
 
-const LoginFormUI = (props) => {
+export const LoginForm = (props) => {
   const {
     onNavigationRedirect,
-    isLogin,
-    handleLogin
   } = props
 
   const { control, handleSubmit, formState: { errors, isValid } } = useForm()
   const [passwordSee, setPasswordSee] = useState(false)
   const [isLoginClicked, setIsLoginClicked] = useState(false)
   const inputRef = useRef()
+
+  const toast = useToast()
+  const dispatch = useDispatch()
+  const cognitoUser = useSelector(state => state.cognitoUser)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleLogin = async (values) => {
+    try {
+      setIsLoading(true)
+      const response = await doGet('lookup/user_name_fetch', { user_identifier: values.email })
+      if (response.result === 'Error.') {
+        throw response;
+      }
+      try {
+        await dispatch(cognitoSignIn({ username: response.user_name, password: values.password }))
+        getUserProfile()
+      } catch (error) {
+        setIsLoading(false)
+        toast.show({
+          title: 'Error',
+          description: error.message,
+          status: 'error',
+          duration: TOAST_LENGTH_SHORT,
+          marginRight: 4,
+          marginLeft: 4,
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+  
+  const getUserProfile = async () => {
+    try {
+      const response = await doGet('lookup-test/user_profile', { email: cognitoUser.user.attributes.email })
+      if (response?.message) {
+        throw response
+      }
+      dispatch(setUser({ ...response, isLoggedIn: true }))
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
 
   const onSubmit = (values) => {
     Keyboard.dismiss()
@@ -59,7 +120,7 @@ const LoginFormUI = (props) => {
                 autoCorrect={false}
                 autoCompleteType='email'
                 returnKeyType='next'
-                isDisabled={isLogin}
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => handleChangeInputEmail(val, onChange)}
                 onSubmitEditing={() => inputRef.current?.focus()}
@@ -130,7 +191,7 @@ const LoginFormUI = (props) => {
                 ref={inputRef}
                 returnKeyType='done'
                 blurOnSubmit
-                isDisabled={isLogin}
+                isDisabled={isLoading}
                 value={value}
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={handleLoginClick}
@@ -194,17 +255,9 @@ const LoginFormUI = (props) => {
         <HButton
           text='Log in'
           onPress={handleLoginClick}
-          isLoading={isLogin}
+          isLoading={isLoading}
         />
       </Box>
     </ScrollView>
   )
-}
-
-export const LoginForm = (props) => {
-  const loginProps = {
-    ...props,
-    UIComponent: LoginFormUI
-  }
-  return <LoginFormController {...loginProps} />
 }
