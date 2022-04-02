@@ -5,6 +5,7 @@ import { images } from '../../utils/styleGuide'
 import Loader from 'react-native-three-dots-loader'
 import styles from './style'
 import { useSelector } from 'react-redux'
+import { colors } from '../../utils/styleGuide'
 
 export const Success = (props) => {
   const { formState } = useSelector(({ screens }) => screens.signup)
@@ -17,12 +18,14 @@ export const Success = (props) => {
           source={images.logo}
           style={styles.logoWrapper}
         />
-        <HText style={styles.congratsText}>Weclome {formState?.firstName}</HText>
+        <HText style={styles.congratsText}>Weclome {formState?.firstName} {formState?.lastName}</HText>
         <HText style={styles.loadingText}>
           Loading
           <Loader
             size={5}
             dotMargin={5}
+            background={colors.text05}
+            activeBackground={colors.text03}
           />
         </HText>
       </View>

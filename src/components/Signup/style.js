@@ -112,9 +112,10 @@ export default StyleSheet.create({
     lineHeight: 33
   },
   loadingText: {
-    color: colors.text02,
+    color: colors.text03,
     fontSize: 16,
-    marginVertical: 10
+    marginTop: 60,
+    marginBottom: 10
   },
   otpView: {
     width: (deviceWidth - 48),
