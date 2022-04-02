@@ -50,7 +50,7 @@ export const SignUpAgreeForm = (props) => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
-                placeholder='First Name'
+                placeholder='John'
                 placeholderTextColor={colors.text03}
                 fontSize={14}
                 borderRadius={8}
@@ -112,7 +112,7 @@ export const SignUpAgreeForm = (props) => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
-                placeholder='Last Name'
+                placeholder='Doe'
                 placeholderTextColor={colors.text03}
                 fontSize={14}
                 borderRadius={8}
