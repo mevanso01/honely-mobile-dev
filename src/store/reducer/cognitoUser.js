@@ -39,7 +39,7 @@ export const cognitoResendSignUp = (username) => async (dispatch, getState) => {
   try {
     await Auth.resendSignUp(username)
     return true
-  } catch {
+  } catch (error) {
     return Promise.reject(error)
   }
 }
@@ -47,7 +47,25 @@ export const cognitoResendSignUp = (username) => async (dispatch, getState) => {
 export const cognitoConfirmSignUp = (username, code) => async (dispatch, getState) => {
   try {
     await Auth.confirmSignUp(username, code)
-  } catch {
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const cognitoForgotPassword = (username) => async (dispatch, getState) => {
+  try {
+    await Auth.forgotPassword(username)
+    return true
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const cognitoResetPassword = (username, code, newPassword) => async (dispatch, getState) => {
+  try {
+    await Auth.forgotPasswordSubmit(username, code, newPassword)
+    return true
+  } catch (error) {
     return Promise.reject(error)
   }
 }
