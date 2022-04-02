@@ -3,6 +3,10 @@ import { colors } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 
 export default StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    paddingHorizontal: 18
+  },
   title: {
     fontSize: 22,
     fontWeight: '600',

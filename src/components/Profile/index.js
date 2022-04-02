@@ -22,7 +22,7 @@ export const Profile = (props) => {
   }
 
   return (
-    <>
+    <View style={styles.screenContainer}>
       <VStack mb='8'>
         <HText style={styles.title}>My Profile</HText>
         <HText style={styles.subTitle}>What you look like to consumer</HText>
@@ -64,6 +64,6 @@ export const Profile = (props) => {
           </Box>
         </VStack>
       </ScrollView>
-    </>
+    </View>
   )
 }

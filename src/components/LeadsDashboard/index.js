@@ -17,7 +17,7 @@ export const LeadsDashboard = (props) => {
   }, [])
 
   return (
-    <>
+    <View style={styles.screenContainer}>
       <HText style={styles.title}>Leads Dashboard</HText>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -128,6 +128,6 @@ export const LeadsDashboard = (props) => {
           </Actionsheet.Content>
         </Actionsheet>
       </ScrollView>
-    </>
+    </View>
   )
 }
