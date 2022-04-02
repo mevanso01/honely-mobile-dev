@@ -82,8 +82,6 @@ export const OTPForm = (props) => {
     }
   }
 
-  console.log('_________form state___________', formState)
-
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

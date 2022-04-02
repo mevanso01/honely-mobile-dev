@@ -165,7 +165,7 @@ export const handleLogin = (username, password, email) => async (dispatch, getSt
         if (response.error) {
           throw response
         }
-        dispatch(setLoading(false))
+        dispatch(resetState())
         dispatch(setUser({ ...response, isLoggedIn: true }))
         return true
       } catch (error) {
@@ -208,11 +208,17 @@ const singupSlice = createSlice({
         temp[key] = action.payload[key]
       }
       state.formState = temp
+    },
+    resetState: (state, action) => {
+      state.isLoading = false
+      state.isResending = false
+      state.formState = {}
+      state.params = {}
     }
   },
   extraReducers: {}
 })
 
-export const { setLoading, setIsResending, setParams, setFormState } = singupSlice.actions
+export const { setLoading, setIsResending, setParams, setFormState, resetState } = singupSlice.actions
 
 export default singupSlice.reducer
