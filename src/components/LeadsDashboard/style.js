@@ -8,16 +8,24 @@ export default StyleSheet.create({
     paddingHorizontal: 18
   },
   title: {
-    fontSize: 22,
-    fontWeight: '600',
+    fontSize: 27,
+    fontWeight: '700',
     lineHeight: 33,
-    marginBottom: 32
+    marginBottom: 32,
+    textAlign: 'center',
+    color: colors.black
   },
   container: {
     flexGrow: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
     paddingBottom: 30
+  },
+  subtitle: {
+    fontSize: 22,
+    color: colors.text01,
+    fontWeight: '700',
+    lineHeight: 22,
+    textAlign: 'center',
+    marginTop: 32
   },
   description: {
     fontSize: 14,
@@ -29,9 +37,9 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
   imageWrapper: {
-    padding: 15,
-    width: deviceWidth * 0.7,
-    marginBottom: 17
+    width: deviceWidth * 0.6,
+    marginBottom: 17,
+    marginTop: 32
   },
   image: {
     resizeMode: 'contain',
@@ -42,26 +50,22 @@ export default StyleSheet.create({
     flex: 1,
     paddingTop: 24,
     alignItems: 'center',
-    // justifyContent: 'flex-end',
     paddingBottom: 40,
     width: '100%',
   },
-  icon: {
+  leadsContent: {
+  },
+  locationIcon: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
-    tintColor: colors.primary
+    tintColor: colors.white
   },
   locationText: {
     fontSize: 18,
     fontWeight: '500',
     paddingLeft: 8,
-    color: colors.text01
-  },
-  cardHeader: {
-    borderBottomColor: colors.borderColor,
-    borderBottomWidth: 1,
-    paddingBottom: 13
+    color: colors.white
   },
   infoIcon: {
     width: 24,
@@ -69,11 +73,22 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     tintColor: colors.borderColor
   },
+  nameText: {
+    fontSize: 25,
+    fontWeight: '700',
+    color: colors.white
+  },
   infoText: {
     fontSize: 16,
     fontWeight: '500',
     paddingLeft: 8,
-    color: colors.text01
+    color: colors.white,
+    lineHeight: 24,
+    paddingBottom: 7,
+    marginLeft: 20,
+    borderBottomColor: colors.white,
+    borderBottomWidth: 1,
+    flex: 1
   },
   sheetContent: {
     paddingHorizontal: 10,
@@ -87,22 +102,14 @@ export default StyleSheet.create({
     marginTop: 4,
     color: colors.text02
   },
-  shadowContainer: {
-    shadowColor: colors.text01,
-    backgroundColor: colors.text01,
-    width: '100%',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.17,
-    shadowRadius: 8,
-    elevation: 3,
-    borderRadius: 16,
-  },
   cardContainer: {
     padding: 24,
-    backgroundColor: colors.white,
-    borderRadius: 16
+    backgroundColor: colors.purple,
+    borderRadius: 16,
+  },
+  paginationText: {
+    color: colors.gray,
+    fontSize: 21,
+    marginTop: 32
   }
 })

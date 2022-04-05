@@ -12,6 +12,8 @@ export const colors = {
   headingColor: "#1F2937",
   black: "#000000",
   white: "#FFFFFF",
+  purple: "#5D5FEF",
+  gray: "#9C9E9D",
 
   tint: "#EFFFF2",
   tint02: "#FBFCFE",
