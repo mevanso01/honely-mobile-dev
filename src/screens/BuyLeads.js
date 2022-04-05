@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text, Platform } from 'react-native'
+import { StyleSheet, SafeAreaView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { BuyLeads as BuyLeadsScreen } from '../components/BuyLeads'
 import { colors } from '../utils/styleGuide'
+import { HFocusAwareStatusBar } from '../components/Shared'
 
 const BuyLeads = (props) => {
   const insets = useSafeAreaInsets()
@@ -25,6 +26,10 @@ const BuyLeads = (props) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      <HFocusAwareStatusBar
+        backgroundColor={colors.purple}
+        barStyle='dark-content'
+      />
       <BuyLeadsScreen {...buyLeadsProps} />
     </SafeAreaView>
   )

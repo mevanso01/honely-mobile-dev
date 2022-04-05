@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../utils/styleGuide'
 import styled from 'styled-components/native';
 import { EditProfile as EditProfileScreen } from '../components/EditProfile'
+import { HFocusAwareStatusBar } from '../components/Shared'
 
 const KeyboardView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -30,6 +31,10 @@ const EditProfile = (props) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      <HFocusAwareStatusBar
+        backgroundColor={colors.white}
+        barStyle='dark-content'
+      />
       <KeyboardView
         enabled
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Login as LoginScreen } from '../components/Login';
 import styled from 'styled-components/native';
 import { colors } from '../utils/styleGuide'
+import { HFocusAwareStatusBar } from '../components/Shared'
 
 const KeyboardView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -31,6 +32,10 @@ const Login = (props) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      <HFocusAwareStatusBar
+        backgroundColor={colors.white}
+        barStyle='dark-content'
+      />
       <KeyboardView
         enabled
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

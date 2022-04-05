@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text, Platform } from 'react-native'
+import { StyleSheet, SafeAreaView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Inbox as InboxScreen } from '../components/Inbox'
 import { colors } from '../utils/styleGuide'
+import { HFocusAwareStatusBar } from '../components/Shared'
 
 const Inbox = (props) => {
   const insets = useSafeAreaInsets()
@@ -25,6 +26,10 @@ const Inbox = (props) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      <HFocusAwareStatusBar
+        backgroundColor={colors.white}
+        barStyle='dark-content'
+      />
       <InboxScreen {...inboxProps} />
     </SafeAreaView>
   )

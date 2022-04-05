@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../utils/styleGuide'
-
 import { Profile as ProfileScreen } from '../components/Profile'
+import { HFocusAwareStatusBar } from '../components/Shared'
 
 const Profile = (props) => {
   const insets = useSafeAreaInsets()
@@ -27,6 +27,10 @@ const Profile = (props) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      <HFocusAwareStatusBar
+        backgroundColor={colors.white}
+        barStyle='dark-content'
+      />
       <ProfileScreen {...profileProps} />
     </SafeAreaView>
   )
