@@ -4,6 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { BuyLeads as BuyLeadsScreen } from '../components/BuyLeads'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
+import styled from 'styled-components/native'
+
+const KeyboardView = styled.KeyboardAvoidingView`
+  flex: 1;
+`;
 
 const BuyLeads = (props) => {
   const insets = useSafeAreaInsets()
@@ -20,7 +25,6 @@ const BuyLeads = (props) => {
       flex: 1,
       backgroundColor: colors.backgroundColor,
       paddingBottom: insets.bottom,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40,
     }
   })
 
@@ -30,7 +34,12 @@ const BuyLeads = (props) => {
         backgroundColor={colors.purple}
         barStyle='dark-content'
       />
-      <BuyLeadsScreen {...buyLeadsProps} />
+      <KeyboardView
+        enabled
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <BuyLeadsScreen {...buyLeadsProps} />
+      </KeyboardView>
     </SafeAreaView>
   )
 }
