@@ -14,6 +14,7 @@ export const colors = {
   white: "#FFFFFF",
   purple: "#5D5FEF",
   gray: "#9C9E9D",
+  info100: "#7484fc1a",
 
   tint: "#EFFFF2",
   tint02: "#FBFCFE",
@@ -33,6 +34,7 @@ export const images = {
   forgotPassword: require('../assets/images/forgot-password.png'),
   leadsBg: require('../assets/images/leads-bg.png'),
   logo: require('../assets/images/logo.png'),
+  dummyAvatar: require('../assets/images/dummy-avatar.png'),
 }
 
 export const icons = {

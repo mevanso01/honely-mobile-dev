@@ -8,7 +8,11 @@ import Swiper from 'react-native-swiper'
 import styles from './style'
 
 export const LeadsDashboard = (props) => {
-  const isNoData = true
+  const {
+    onNavigationRedirect
+  } = props
+
+  const isNoData = false
 
   useEffect(() => {
     SplashScreen.hide()
@@ -81,7 +85,7 @@ export const LeadsDashboard = (props) => {
                         fontWeight: '700'
                       }}
                       height='50'
-                      onPress={() => {}}
+                      onPress={() => onNavigationRedirect('ContactLead')}
                     />
                   </Box>
                 </View>

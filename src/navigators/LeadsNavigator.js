@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import BottomNavigator from './BottomNavigator'
 
 const Stack = createStackNavigator()
+import ContactLead from '../screens/ContactLead'
 
 const LeadsNavigator = () => {
   return (
@@ -10,6 +11,11 @@ const LeadsNavigator = () => {
       <Stack.Screen
         name='BottomNavigator'
         component={BottomNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='ContactLead'
+        component={ContactLead}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

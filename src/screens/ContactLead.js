@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Text, Platform } from 'react-native'
+import { StyleSheet, SafeAreaView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { MyZipcodes as MyZipcodesScreen} from '../components/MyZipcodes'
+import { ContactLead as ContactLeadScreen} from '../components/ContactLead'
 import { colors } from '../utils/styleGuide'
 
-const MyZipcodes = (props) => {
+const ContactLead = (props) => {
   const insets = useSafeAreaInsets()
-  const myZipcodesProps = {
+  const contactLeadProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
       if (!page) return
@@ -25,9 +25,9 @@ const MyZipcodes = (props) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <MyZipcodesScreen {...myZipcodesProps} />
+      <ContactLeadScreen {...contactLeadProps} />
     </SafeAreaView>
   )
 }
 
-export default MyZipcodes
+export default ContactLead
