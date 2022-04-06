@@ -64,11 +64,12 @@ export const Home = (props) => {
           </View>
         ))}
       </Swiper>
-
-      <HButton
-        text='Log in'
-        onPress={() => onNavigationRedirect('Login')}
-      />
+      <Box mt='4'>
+        <HButton
+          text='Log in'
+          onPress={() => onNavigationRedirect('Login')}
+        />
+      </Box>
       <Box alignItems='center' mt='6'>
         <HPressableText
           text='New to Honely? Sign Up'
