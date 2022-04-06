@@ -32,7 +32,8 @@ export default StyleSheet.create({
     paddingBottom: 27,
     paddingHorizontal: 18,
     position: 'relative',
-    zIndex: 1000
+    zIndex: 1000,
+    padding: 10
   },
   recentSearchContainer: {
     paddingHorizontal: 18,
@@ -76,6 +77,9 @@ export default StyleSheet.create({
   },
   dropDownContainer: {
     maxHeight: 250,
+    borderTopWidth: 1,
+    borderTopColor: colors.purple,
+    marginHorizontal: 18
   },
   dropDownContent: {
     paddingVertical: 10

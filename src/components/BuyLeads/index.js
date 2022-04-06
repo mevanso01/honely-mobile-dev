@@ -47,6 +47,7 @@ export const BuyLeads = (props) => {
             paddingRight={17}
             color={colors.purple}
             borderColor={colors.purple}
+            borderWidth={isOpenDropdown ? 0 : 1}
             autoCapitalize='none'
             returnKeyType='done'
             blurOnSubmit
