@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Platform } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { BuyLeads as BuyLeadsScreen } from '../components/BuyLeads'
 import { colors } from '../utils/styleGuide'
@@ -29,7 +29,7 @@ const BuyLeads = (props) => {
   })
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <View style={styles.wrapper}>
       <HFocusAwareStatusBar
         backgroundColor={colors.purple}
         barStyle='dark-content'
@@ -40,7 +40,7 @@ const BuyLeads = (props) => {
       >
         <BuyLeadsScreen {...buyLeadsProps} />
       </KeyboardView>
-    </SafeAreaView>
+    </View>
   )
 }
 

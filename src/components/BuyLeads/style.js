@@ -1,5 +1,8 @@
 import { StyleSheet, Platform } from 'react-native'
 import { colors } from '../../utils/styleGuide'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+const insets = useSafeAreaInsets()
+const statusBarHeight = insets.top
 
 export default StyleSheet.create({
   screenContainer: {
@@ -7,7 +10,7 @@ export default StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: colors.purple,
-    paddingTop: Platform.OS === 'ios' ? 30 : 40,
+    paddingTop: Platform.OS === 'ios' ? statusBarHeight + 30 : 40,
   },
   title: {
     fontSize: 27,
