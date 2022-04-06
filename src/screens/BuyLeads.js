@@ -31,7 +31,7 @@ const BuyLeads = (props) => {
   return (
     <View style={styles.wrapper}>
       <HFocusAwareStatusBar
-        backgroundColor={colors.purple}
+        backgroundColor={colors.primary}
         barStyle='dark-content'
       />
       <KeyboardView

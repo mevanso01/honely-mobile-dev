@@ -80,7 +80,7 @@ export const LeadsDashboard = (props) => {
                       borderColor={colors.white}
                       backgroundColor={colors.white}
                       textStyle={{
-                        color: colors.purple,
+                        color: colors.primary,
                         fontSize: 24,
                         fontWeight: '700'
                       }}
@@ -104,8 +104,8 @@ export const LeadsDashboard = (props) => {
             <HText style={styles.description}>Buy leads to see what your consumers are looking for.</HText>
             <HButton
               text='Buy Leads'
-              borderColor={colors.purple}
-              backgroundColor={colors.purple}
+              borderColor={colors.primary}
+              backgroundColor={colors.primary}
               onPress={() => {}}
             />
           </View>

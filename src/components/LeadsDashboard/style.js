@@ -104,7 +104,7 @@ export default StyleSheet.create({
   },
   cardContainer: {
     padding: 24,
-    backgroundColor: colors.purple,
+    backgroundColor: colors.primary,
     borderRadius: 16,
   },
   paginationText: {

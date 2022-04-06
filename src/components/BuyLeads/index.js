@@ -42,14 +42,14 @@ export const BuyLeads = (props) => {
         <View style={styles.searchBoxWrapper}>
           <Input
             placeholder='Enter City, or Zip Code'
-            placeholderTextColor={colors.purple}
+            placeholderTextColor={colors.primary}
             backgroundColor={colors.white}
             fontSize={27}
             height={60}
             borderRadius={30}
             paddingRight={17}
-            color={colors.purple}
-            borderColor={colors.purple}
+            color={colors.primary}
+            borderColor={colors.primary}
             borderWidth={isOpenDropdown ? 0 : 1}
             autoCapitalize='none'
             returnKeyType='done'
@@ -57,7 +57,7 @@ export const BuyLeads = (props) => {
             // value={searchValue}
             onChangeText={val => onChangeSearch(val)}
             _focus={{
-              borderColor: colors.purple
+              borderColor: colors.primary
             }}
             zIndex={1001}
             InputLeftElement={

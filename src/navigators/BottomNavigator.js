@@ -125,7 +125,7 @@ function MyTabBar({ state, descriptors, navigation }) {
           >
             <Image
               source={isFocused ? getActiveIcon(route.name) : getInactiveIcon(route.name)}
-              style={[styles.iconStyle, { tintColor: isFocused ? colors.purple : colors.text03 }]}
+              style={[styles.iconStyle, { tintColor: isFocused ? colors.primary : colors.text03 }]}
             />
           </TouchableOpacity>
         );

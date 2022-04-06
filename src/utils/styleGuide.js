@@ -1,5 +1,5 @@
 export const colors = {
-  primary: "#24CB43",
+  primary: "#5D5FEF",
   lightPrimary: "#24cb431a",
   primaryContrast: "#EFFFF2",
   secondary: "#FF7D1F",
@@ -12,7 +12,6 @@ export const colors = {
   headingColor: "#1F2937",
   black: "#000000",
   white: "#FFFFFF",
-  purple: "#5D5FEF",
   gray: "#9C9E9D",
   info100: "#7484fc1a",
 

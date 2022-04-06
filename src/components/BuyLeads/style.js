@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.primary,
   },
   title: {
     fontSize: 27,
@@ -17,7 +17,7 @@ export default StyleSheet.create({
     color: colors.white
   },
   zipIcon: {
-    tintColor: colors.purple,
+    tintColor: colors.primary,
     width: 24,
     height: 24,
     marginLeft: 17,
@@ -27,7 +27,7 @@ export default StyleSheet.create({
     flexGrow: 1,
   },
   searchBoxWrapper: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.primary,
     paddingBottom: 27,
     paddingHorizontal: 18,
     position: 'relative',
@@ -39,24 +39,24 @@ export default StyleSheet.create({
     marginTop: 42
   },
   recentText: {
-    color: colors.purple,
+    color: colors.primary,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 20,
     textAlign: 'center'
   },
   recentSearchItem: {
-    borderColor: colors.purple,
+    borderColor: colors.primary,
     borderWidth: 1,
     borderRadius: 10,
     padding: 24
   },
   searchAddressText: {
-    color: colors.purple,
+    color: colors.primary,
     fontSize: 25
   },
   searchLeadsText: {
-    color: colors.purple,
+    color: colors.primary,
     fontSize: 14,
     marginTop: 10
   },
@@ -71,13 +71,13 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderWidth: 1,
-    borderColor: colors.purple,
+    borderColor: colors.primary,
     paddingTop: 60
   },
   dropDownContainer: {
     maxHeight: 250,
     borderTopWidth: 1,
-    borderTopColor: colors.purple,
+    borderTopColor: colors.primary,
     marginHorizontal: 18
   },
   dropDownContent: {
@@ -85,7 +85,7 @@ export default StyleSheet.create({
   },
   searchText: {
     fontSize: 27,
-    color: colors.purple,
+    color: colors.primary,
     paddingLeft: 18,
     paddingRight: 18,
     paddingVertical: 6

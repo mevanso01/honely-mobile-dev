@@ -49,9 +49,9 @@ export const ContactLead = (props) => {
                         circleSize={30}
                         barHeight={32}
                         circleBorderWidth={2}
-                        circleBorderActiveColor={colors.purple}
+                        circleBorderActiveColor={colors.primary}
                         circleBorderInactiveColor={colors.gray}
-                        backgroundActive={colors.purple}
+                        backgroundActive={colors.primary}
                         backgroundInactive={colors.gray}
                         circleActiveColor={colors.white}
                         circleInActiveColor={colors.white}
@@ -94,9 +94,9 @@ export const ContactLead = (props) => {
           <Box alignItems='center' mt='8' mb='10'>
             <HButton
               text='Send Message'
-              borderColor={colors.purple}
+              borderColor={colors.primary}
               height={50}
-              backgroundColor={colors.purple}
+              backgroundColor={colors.primary}
               onPress={() => {}}
             />
           </Box>
