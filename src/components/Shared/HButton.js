@@ -16,8 +16,9 @@ const HButton = (props) => {
     <Button
       size={props.size || 12}
       onPress={props.onPress}
-      shadow={props.shadow || '3'}
-      width={props.width || 180}
+      shadow={props.shadow || null}
+      width={props.width || 247}
+      height={50}
       borderRadius={props.borderRadius || 50}
       backgroundColor={backgroundColor || colors.primary}
       borderColor={borderColor || colors.primary}
@@ -26,8 +27,8 @@ const HButton = (props) => {
         borderColor: darken(0.1, (borderColor || colors.primary)),
       }}
       _text={{
-        fontSize: 16,
-        fontWeight: '500',
+        fontSize: 20,
+        fontWeight: '700',
         color: colors.white,
         ...textStyle
       }}

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { View, Image } from 'react-native'
 import { HText, HButton, HPressableText } from '../Shared'
+import { Box } from 'native-base'
 import Swiper from 'react-native-swiper'
 import SplashScreen from 'react-native-splash-screen'
 import { colors, images } from '../../utils/styleGuide'
 import styles from './style'
-import Logo from '../../assets/images/logo.svg'
 
 export const Home = (props) => {
   const {
@@ -14,22 +14,22 @@ export const Home = (props) => {
 
   const data = [
     {
-      image: images.slider1,
+      image: images.homeBg,
       title: 'What do we offer?',
       text: 'Honely uses AI and machine learning to forecast home prices, neighborhood trends and so much more!'
     },
     {
-      image: images.slider2,
+      image: images.homeBg,
       title: 'Property Value Forecasts',
       text: 'View the future value of over 100 million properties nationwide from 3 months to 3 years into the future!'
     },
     {
-      image: images.slider3,
+      image: images.homeBg,
       title: 'Neighborhood At A Glance',
       text: 'Get equipped with all the predictive informaiton needed to analyze an area like a pro. '
     },
     {
-      image: images.slider4,
+      image: images.homeBg,
       title: 'Buyer’s Score',
       text: 'Compare deals using our Buyer’s Score to always make sure you get the best bang for your buck!'
     },
@@ -41,7 +41,10 @@ export const Home = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <Logo width="100" height="36" />
+      <Image
+        source={images.logo}
+        style={styles.logo}
+      />
       <Swiper
         showsButtons={false}
         loop={true}
@@ -54,7 +57,7 @@ export const Home = (props) => {
             style={styles.slide}
           >
             <Image source={item.image} style={styles.slideImage} />
-            <View style={{ padding: 18 }}>
+            <View>
               <HText style={styles.title}>{item.title}</HText>
               <HText style={styles.description}>{item.text}</HText>
             </View>
@@ -65,14 +68,14 @@ export const Home = (props) => {
       <HButton
         text='Log in'
         onPress={() => onNavigationRedirect('Login')}
-        marginVertical={16}
       />
-
-      <HPressableText
-        text='New to Honely? Sign Up'
-        onPress={() => onNavigationRedirect('Login', { isSignUp: true })}
-        fontWeight='600'
-      />
+      <Box alignItems='center' mt='6'>
+        <HPressableText
+          text='New to Honely? Sign Up'
+          onPress={() => onNavigationRedirect('Login', { isSignUp: true })}
+          fontWeight='600'
+        />
+      </Box>
     </View>
   )
 }
