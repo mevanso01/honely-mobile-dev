@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Image } from 'react-native'
+import { View, ScrollView, Image, Platform } from 'react-native'
 import { Input, Pressable } from 'native-base'
 import { HText } from '../Shared'
 import { ScrollView as DropDownContainer } from 'react-native-gesture-handler'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const BuyLeads = (props) => {
+  const insets = useSafeAreaInsets()
+  const statusBarHeight = insets.top
   const [searchValue, setSearchValue] = useState('')
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   let timeout = null
@@ -29,7 +32,7 @@ export const BuyLeads = (props) => {
 
   return (
     <View style={styles.screenContainer}>
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer, { paddingTop: Platform.OS === 'ios' ? statusBarHeight + 30 : 40, }]}>
         <HText style={styles.title}>Find Leads</HText>
       </View>
       <ScrollView
