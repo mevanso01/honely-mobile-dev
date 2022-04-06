@@ -4,6 +4,8 @@
 
     </item>
     <item
+        android:width="236dp"
+        android:height="88dp"
         android:gravity="center"
         android:drawable="@drawable/splash_logo_150">
     </item>
