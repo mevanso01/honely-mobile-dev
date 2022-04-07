@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Inbox as InboxScreen } from '../components/Inbox'
+import { ContactedLeads as ContactedLeadsScreen } from '../components/ContactedLeads'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
 
-const Inbox = (props) => {
+const ContactedLeads = (props) => {
   const insets = useSafeAreaInsets()
-  const inboxProps = {
+  const contactedLeadsProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
       if (!page) return
@@ -30,9 +30,9 @@ const Inbox = (props) => {
         backgroundColor={colors.white}
         barStyle='dark-content'
       />
-      <InboxScreen {...inboxProps} />
+      <ContactedLeadsScreen {...contactedLeadsProps} />
     </SafeAreaView>
   )
 }
 
-export default Inbox
+export default ContactedLeads

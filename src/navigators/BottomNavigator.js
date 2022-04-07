@@ -6,7 +6,7 @@ import { colors, icons } from '../utils/styleGuide'
 
 import Leads from '../screens/Leads'
 import BuyLeads from '../screens/BuyLeads'
-import Inbox from '../screens/Inbox'
+import ContactedLeads from '../screens/ContactedLeads'
 import ProfileNavigator from './ProfileNavigator'
 
 const Tab = createBottomTabNavigator();
@@ -29,8 +29,8 @@ const BottomNavigator = () => {
         component={BuyLeads}
       />
       <Tab.Screen
-        name="Inbox"
-        component={Inbox}
+        name="ContactedLeads"
+        component={ContactedLeads}
       />
       <Tab.Screen
         name="ProfileNavigator"
@@ -65,7 +65,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         return icons.category
       case 'BuyLeads':
         return icons.buy
-      case 'Inbox':
+      case 'ContactedLeads':
         return icons.email
       case 'ProfileNavigator':
         return icons.user
@@ -79,7 +79,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         return icons.categoryOutline
       case 'BuyLeads':
         return icons.buyOutline
-      case 'Inbox':
+      case 'ContactedLeads':
         return icons.emailOutline
       case 'ProfileNavigator':
         return icons.userOutline
