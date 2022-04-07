@@ -6,7 +6,6 @@ import { HStack, VStack, Box, Pressable, Checkbox, Icon } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
 import Swiper from 'react-native-swiper'
 import styles from './style'
-import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export const LeadsDashboard = (props) => {
   const {

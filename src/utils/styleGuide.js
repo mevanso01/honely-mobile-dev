@@ -13,9 +13,11 @@ export const colors = {
   black: "#000000",
   white: "#FFFFFF",
   red: "#FF0000",
+  green: "#24CB43",
   gray: "#9C9E9D",
   lightGray: "#F3F3F3",
   info100: "#7484fc1a",
+  disabled: "#6F6F6F",
 
   tint: "#EFFFF2",
   tint02: "#FBFCFE",
@@ -56,5 +58,7 @@ export const icons = {
   edit: require('../assets/icons/edit.png'),
   arrowLeft: require('../assets/icons/arrow-left.png'),
   arrowRight: require('../assets/icons/arrow-right.png'),
+  arrowDown: require('../assets/icons/arrow-down.png'),
   cirlceCheckOn: require('../assets/icons/cirlce-check-on.png'),
+  setting: require('../assets/icons/setting.png'),
 }

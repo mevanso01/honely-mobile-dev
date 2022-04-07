@@ -6,6 +6,7 @@ import HPressableText from './HPressableText'
 import HSliderButton from './HSliderButton'
 import HScreenHeader from './HScreenHeader'
 import HFocusAwareStatusBar from './HFocusAwareStatusBar'
+import HSwitch from './HSwitch'
 
 export {
   HButton,
@@ -15,5 +16,6 @@ export {
   HPressableText,
   HSliderButton,
   HScreenHeader,
-  HFocusAwareStatusBar
+  HFocusAwareStatusBar,
+  HSwitch
 }

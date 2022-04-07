@@ -6,12 +6,44 @@ export default StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    paddingHorizontal: 18
+    paddingHorizontal: 18,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 14
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: colors.black,
+  },
+  backText: {
+    fontSize: 15,
+    fontWeight: '500',
+    marginLeft: 6
+  },
+  settingIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    lineHeight: 33,
+    textAlign: 'center',
+    color: colors.text01,
+    marginBottom: 24
+  },
+  arrowDownIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: colors.white
   },
   scrollViewContainer: {
     flexGrow: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
     paddingHorizontal: 18,
     paddingVertical: 3
   },
@@ -26,42 +58,56 @@ export default StyleSheet.create({
     shadowOpacity: 0.17,
     shadowRadius: 8,
     elevation: 3,
-    borderRadius: 16,
+    borderRadius: 8,
   },
   contactCardContainer: {
     backgroundColor: colors.white,
-    borderRadius: 16
+    borderRadius: 8
   },
   contactCardInnerContainer: {
     backgroundColor: colors.info100,
-    padding: 16,
-    borderRadius: 16
-  },
-  photoWrapper: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    resizeMode: 'cover'
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8
   },
   switchContainer: {
     justifyContent: 'flex-end'
   },
-  phoneNumberText: {
-    color: colors.text01,
-    fontSize: 16,
-    marginBottom: 13
-  },
-  contactDescription: {
-    color: colors.text02,
-    fontSize: 14
-  },
   label: {
     color: colors.text01,
-    fontSize: 14,
-    marginBottom: 19
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '500'
   },
   textArearWrapper: {
     borderWidth: 1,
-    borderRadius: 8
+    borderRadius: 8,
+    marginTop: 10
   },
+  statusLabel: {
+    fontSize: 18,
+    color: colors.text01,
+    marginRight: 16
+  },
+  statusWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 18
+  },
+  ToContactContainer: {
+    marginTop: 15,
+    paddingHorizontal: 16,
+  },
+  contactIcon: {
+    tintColor: colors.disabled,
+    width: 14,
+    height: 14,
+    resizeMode: 'contain'
+  },
+  contactInfoText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: colors.disabled,
+    marginLeft: 6
+  }
 })

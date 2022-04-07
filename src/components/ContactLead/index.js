@@ -1,18 +1,26 @@
 import React, { useState } from 'react'
 import { View, Image, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
-import { HStack, Box, VStack, TextArea } from 'native-base'
-import { HText, HScreenHeader, HButton } from '../Shared'
-import { Switch } from 'react-native-switch'
+import { HStack, Box, VStack, TextArea, Pressable } from 'native-base'
+import { HText, HButton, HSwitch } from '../Shared'
+import SelectDropdown from 'react-native-select-dropdown'
 import styles from './style'
-import { colors, images } from '../../utils/styleGuide'
+import { colors, icons } from '../../utils/styleGuide'
 
 export const ContactLead = (props) => {
   const {
     navigation
   } = props
 
-  const [enabled, setEnabled] = useState(false)
-  const [isFocus, setIsFocus] = useState(false)
+  const [emailEnabled, setEmailEnabled] = useState(false)
+  const [smsEnabled, setSmsEnabled] = useState(false)
+  const [isSmsFocus, setIsSmsFocus] = useState(false)
+  const [isEmailFocus, setIsEmailFocus] = useState(false)
+
+  const [statusValue, setStatusValue] = useState(1)
+  const statusOptions = [
+    { value: 1, content: 'New' },
+    { value: 2, content: 'Attempted Contact' }
+  ]
 
   return (
     <TouchableWithoutFeedback
@@ -20,82 +28,137 @@ export const ContactLead = (props) => {
     >
       <View style={styles.screenContainer}>
         <View style={styles.headerContainer}>
-          <HScreenHeader
-            title='Contact Lead'
+          <Pressable
             onPress={() => navigation.goBack()}
-          />
+            _pressed={{ opacity: 0.7 }}
+          >
+            <HStack alignItems='center'>
+              <Image source={icons.arrowLeft} style={styles.backIcon} />
+              <HText>Back</HText>
+            </HStack>
+          </Pressable>
+          <Pressable
+            _pressed={{ opacity: 0.7 }}
+          >
+            <Image source={icons.setting} style={styles.settingIcon} />
+          </Pressable>
         </View>
+        <HText style={styles.headerTitle}>Contact Lead</HText>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollViewContainer}
         >
-          <Box>
-            <View style={styles.shadowContainer}>
-              <View style={styles.contactCardContainer}>
-                <View style={styles.contactCardInnerContainer}>
-                  <HStack>
-                    <Image
-                      source={images.dummyAvatar}
-                      style={styles.photoWrapper}
-                    />
-                    <Box mr='2' ml='2' flex='1'>
-                      <HText style={styles.phoneNumberText}>+1 954 237 726</HText>
-                      <HText style={styles.contactDescription}>Honely would send a text message using this number</HText>
-                    </Box>
-                    <View style={styles.switchContainer}>
-                      <Switch
-                        value={enabled}
-                        onValueChange={val => setEnabled(val)}
-                        circleSize={30}
-                        barHeight={32}
-                        circleBorderWidth={2}
-                        circleBorderActiveColor={colors.primary}
-                        circleBorderInactiveColor={colors.gray}
-                        backgroundActive={colors.primary}
-                        backgroundInactive={colors.gray}
-                        circleActiveColor={colors.white}
-                        circleInActiveColor={colors.white}
-                        changeValueImmediately={true}
-                        innerCircleStyle={{ alignItems: "center", justifyContent: "center" }} // style for inner animated circle for what you (may) be rendering inside the circle
-                        renderActiveText={false}
-                        renderInActiveText={false}
-                        switchLeftPx={3}
-                        switchRightPx={3}
-                        switchWidthMultiplier={1.7}
-                        switchBorderRadius={30}
-                      />
-                    </View>
-                  </HStack>
-                </View>
+          <View style={styles.statusWrapper}>
+            <HText style={styles.statusLabel}>Status:</HText>
+            <SelectDropdown
+              defaultButtonText='Select an option'
+              defaultValueByIndex='0'
+              data={statusOptions}
+              onSelect={(selectedItem, index) => setStatusValue(selectedItem.value)}
+              buttonTextAfterSelection={(selectedItem, index) => { return selectedItem.content }}
+              rowTextForSelection={(item, index) => { return item.content }}
+              buttonStyle={{
+                backgroundColor: statusValue === 1 ? colors.primary : colors.green,
+                borderRadius: 8,
+                height: 38,
+                flex: 1
+              }}
+              buttonTextStyle={{
+                color: colors.white,
+                fontSize: 19,
+                fontWeight: '700'
+              }}
+              dropdownStyle={{
+                borderRadius: 8
+              }}
+              rowTextStyle={{
+                color: colors.text01
+              }}
+              renderDropdownIcon={() => {return <Image source={icons.arrowDown} style={styles.arrowDownIcon} />}}
+            />
+          </View>
+          <View style={styles.shadowContainer}>
+            <View style={styles.contactCardContainer}>
+              <View style={styles.contactCardInnerContainer}>
+                <HStack>
+                  <HText style={styles.label} mRight='12'>From:</HText>
+                  <HText style={styles.label}>John Closter</HText>
+                </HStack>
               </View>
             </View>
+          </View>
+          
+          <View style={styles.ToContactContainer}>
+            <HStack>
+              <HText style={styles.label} mRight='12'>To:</HText>
+              <VStack space='1'>
+                <HText style={styles.label}>First Name  Last Name</HText>
+                <HStack alignItems='center'>
+                  <Image source={icons.email} style={styles.contactIcon} />
+                  <HText style={styles.contactInfoText}>jonathan@mail.com</HText>
+                </HStack>
+                <HStack alignItems='center'>
+                  <Image source={icons.phone} style={styles.contactIcon} />
+                  <HText style={styles.contactInfoText}>+1 238 2838 282</HText>
+                </HStack>
+              </VStack>
+            </HStack>
+          </View>
 
-            <VStack mt='6'>
-              <HText style={styles.label}>Buyers preset message</HText>
-              <View
-                style={[styles.textArearWrapper, { borderColor: isFocus ? colors.primary : colors.borderColor }]}
-              >
-                <TextArea
-                  fontSize={14}
-                  borderRadius={8}
-                  borderWidth={0}
-                  height={120}
-                  padding='4'
-                  color={colors.text01}
-                  autoCapitalize='none'
-                  onChangeText={e => console.log(e)}
-                  blurOnSubmit={false}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(false)}
-                />
-              </View>
-            </VStack>
-          </Box>
-          <Box alignItems='center' mt='8' mb='10'>
+          <VStack mt='6'>
+            <HStack justifyContent='space-between'>
+              <HText style={styles.label}>SMS Message</HText>
+              <HSwitch
+                value={smsEnabled}
+                onValueChange={val => setSmsEnabled(val)}
+              />
+            </HStack>
+            <View
+              style={[styles.textArearWrapper, { borderColor: isSmsFocus ? colors.primary : colors.borderColor }]}
+            >
+              <TextArea
+                fontSize={16}
+                borderRadius={8}
+                borderWidth={0}
+                height={120}
+                padding='4'
+                color={colors.text01}
+                autoCapitalize='none'
+                onChangeText={e => console.log(e)}
+                blurOnSubmit={false}
+                onFocus={() => setIsSmsFocus(true)}
+                onBlur={() => setIsSmsFocus(false)}
+              />
+            </View>
+            <HStack justifyContent='space-between' mt='4'>
+              <HText style={styles.label}>Email Message</HText>
+              <HSwitch
+                value={emailEnabled}
+                onValueChange={val => setEmailEnabled(val)}
+              />
+            </HStack>
+            <View
+              style={[styles.textArearWrapper, { borderColor: isEmailFocus ? colors.primary : colors.borderColor }]}
+            >
+              <TextArea
+                fontSize={16}
+                borderRadius={8}
+                borderWidth={0}
+                height={120}
+                padding='4'
+                color={colors.text01}
+                autoCapitalize='none'
+                onChangeText={e => console.log(e)}
+                blurOnSubmit={false}
+                onFocus={() => setIsEmailFocus(true)}
+                onBlur={() => setIsEmailFocus(false)}
+              />
+            </View>
+          </VStack>
+          <Box alignItems='center' mt='5' mb='8'>
             <HButton
-              text='Send Message'
+              text='Send'
               borderColor={colors.primary}
-              height={50}
               backgroundColor={colors.primary}
               onPress={() => {}}
             />
