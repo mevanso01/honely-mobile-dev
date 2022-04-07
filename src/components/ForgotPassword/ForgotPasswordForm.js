@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import { ScrollView, Keyboard } from 'react-native'
+import { ScrollView, Keyboard, Image } from 'react-native'
 import { HText, HButton } from '../Shared'
 import { Box, Input, Icon, FormControl, HStack } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './style'
 import { useForm, Controller } from 'react-hook-form'
-import { colors } from '../../utils/styleGuide'
+import { colors, icons } from '../../utils/styleGuide'
 
 export const ForgotPasswordForm = (props) => {
   const {
-    formState,
-    setFormState,
     isLoading,
     handleUserIdentify
   } = props
@@ -20,10 +18,6 @@ export const ForgotPasswordForm = (props) => {
 
   const onSubmit = (values) => {
     Keyboard.dismiss()
-    setFormState({
-      ...formState,
-      email: values?.email
-    })
     handleUserIdentify(values?.email)
   }
 
@@ -36,13 +30,13 @@ export const ForgotPasswordForm = (props) => {
     <ScrollView
       showsVerticalScrollIndicator={false}
     >
-      <Box alignItems='center' mb='8'>
+      <Box alignItems='center' mb='9'>
         <HText style={styles.subtitle}>Forgot Password?</HText>
         <HText style={styles.description}>Don’t worry! it happens. Please enter the address associated with your account.</HText>
       </Box>
       <Box>
         <FormControl>
-          <FormControl.Label _text={styles.label} mb={1}>Email/Mobile number</FormControl.Label>
+          <FormControl.Label _text={styles.label} mb={2}>Email/Mobile number</FormControl.Label>
           <Controller
             name='email'
             control={control}
@@ -51,11 +45,11 @@ export const ForgotPasswordForm = (props) => {
                 placeholder='Enter your email or Mobile number'
                 placeholderTextColor={colors.text03}
                 keyboardType="email-address"
-                fontSize={14}
+                fontSize={16}
                 borderRadius={8}
-                height={50}
+                height={55}
                 borderColor={
-                  errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -67,14 +61,17 @@ export const ForgotPasswordForm = (props) => {
                 blurOnSubmit
                 onSubmitEditing={handleSubmitClick}
                 InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="email" />}
-                    size={5} ml="4"
-                    color={
-                      errors?.email?.message
-                        ? colors.error
-                        : (value && isSubmitClicked) ? colors.primary : colors.text04
+                  <Image
+                    source={icons.email}
+                    style={[
+                      styles.inputIcon,
+                      {tintColor: `${
+                        errors?.email?.message
+                          ? colors.error
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
+                        }`
                       }
+                    ]}
                   />
                 }
                 InputRightElement={
@@ -82,13 +79,13 @@ export const ForgotPasswordForm = (props) => {
                     <Icon
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
-                      color={colors.primary}
+                      color={colors.lightPrimary}
                       onPress={() => setPasswordSee(!passwordSee)}
                     />
                   )
                 }
                 _focus={{
-                  borderColor: !errors?.email?.message ? colors.primary : colors.error
+                  borderColor: !errors?.email?.message ? colors.lightPrimary : colors.error
                 }}
               />
             )}
@@ -104,7 +101,7 @@ export const ForgotPasswordForm = (props) => {
           )}
         </FormControl>
       </Box>
-      <Box alignItems='center' mt='6'>
+      <Box alignItems='center' mt='9'>
         <HButton
           text='Submit'
           onPress={handleSubmitClick}

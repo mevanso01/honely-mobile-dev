@@ -8,24 +8,24 @@ export default StyleSheet.create({
     paddingHorizontal: 18
   },
   subtitle: {
-    fontSize: 22,
-    fontWeight: '600',
-    lineHeight: 33,
-    marginBottom: 8,
+    fontSize: 25,
+    fontWeight: '700',
+    lineHeight: 25,
+    marginBottom: 21,
     color: colors.text01
   },
   description: {
     color: colors.text02,
-    fontWeight: '500',
+    fontWeight: '400',
     fontSize: 14,
-    lineHeight: 21,
+    lineHeight: 17,
     textAlign: 'center'
   },
   label: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '500',
-    color: colors.headingColor
+    fontSize: 17,
+    lineHeight: 17,
+    fontWeight: '400',
+    color: colors.headingColor,
   },
   errorText: {
     color: colors.error,
@@ -44,26 +44,41 @@ export default StyleSheet.create({
     height: 55,
     borderRadius: 8,
     borderColor: colors.borderColor,
-    color: colors.text01,
+    color: colors.primary,
+    fontSize: 27
   },
   underlineStyleHighLighted: {
     borderColor: colors.primary,
   },
   changeSuccessText: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '500',
-    color: colors.text01,
+    fontSize: 25,
+    lineHeight: 29,
+    fontWeight: '700',
+    color: colors.primary,
     textAlign: 'center',
-    maxWidth: 162
+    maxWidth: 304
   },
   forgotPasswordImgWrapper: {
-    width: deviceWidth - 36,
-    paddingRight: 29
+    width: deviceWidth * 0.77,
+    alignSelf: 'center',
+    marginTop: 50
   },
   forgotPasswordImg: {
     resizeMode: 'contain',
     width: '100%',
     height: '100%'
-  }
+  },
+  inputIcon: {
+    width: 20,
+    height: 20,
+    marginLeft: 16
+  },
+  visibilityIconWrapper: {
+    marginRight: 16
+  },
+  visibilityIcon: {
+    width: 24,
+    height: 24,
+    tintColor: colors.text04,
+  },
 })

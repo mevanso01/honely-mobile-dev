@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
 import { HText, HButton } from '../Shared'
 import { Box, HStack, ScrollView } from 'native-base'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
@@ -38,7 +37,7 @@ export const OTPForm = (props) => {
         <HText style={styles.description}>An 6 digit code has been sent to</HText>
         <HText style={styles.description}>{formState?.email}</HText>
       </Box>
-      <Box mt='8'>
+      <Box mt='9'>
         <OTPInputView
           pinCount={6}
           style={styles.otpView}
@@ -58,7 +57,7 @@ export const OTPForm = (props) => {
           <HText style={styles.errorText}>{error}</HText>
         </HStack>
       )}
-      <Box alignItems='center' mt='6'>
+      <Box alignItems='center' mt='8'>
         <HButton
           text='Submit'
           onPress={handleSubmitClick}

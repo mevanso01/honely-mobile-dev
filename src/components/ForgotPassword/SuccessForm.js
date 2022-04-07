@@ -11,16 +11,16 @@ export const SuccessForm = (props) => {
   } = props
   return (
     <View>
-      <Box mt='16' alignItems='center'>
+      <Box mt='2' alignItems='center'>
         <HText style={styles.changeSuccessText}>Password Changed Successfully</HText>
       </Box>
-      <Box alignItems='center' mt='8'>
+      <Box alignItems='center' mt='10'>
         <HButton
           text='Log In'
           onPress={() => onNavigationRedirect('Login')}
         />
       </Box>
-      <View style={[styles.forgotPasswordImgWrapper, { aspectRatio: 327 / 426 }]}>
+      <View style={[styles.forgotPasswordImgWrapper, { aspectRatio: 291 / 304 }]}>
         <Image
           source={images.forgotPassword}
           style={styles.forgotPasswordImg}

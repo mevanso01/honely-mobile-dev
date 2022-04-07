@@ -50,7 +50,7 @@ export const ForgotPassword = (props) => {
         throw response
       }
       setFormState({
-        ...formState,
+        email: email,
         userName: response.user_name
       })
       handleCognitoSendForgotPasswordCode(response.user_name)
@@ -97,8 +97,6 @@ export const ForgotPassword = (props) => {
       {formStep === 'forgot' && (
         <ForgotPasswordForm
           isLoading={isLoading}
-          formState={formState}
-          setFormState={setFormState}
           handleUserIdentify={handleUserIdentify}
         />
       )}

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { ScrollView, Keyboard } from 'react-native'
-import { Box, Input, FormControl, Icon, HStack } from 'native-base'
+import { ScrollView, Keyboard, Image } from 'react-native'
+import { Box, Input, FormControl, Icon, HStack, Pressable } from 'native-base'
 import { HButton, HText } from '../Shared'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { colors } from '../../utils/styleGuide'
+import { colors, icons } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
 import styles from './style'
 
@@ -56,7 +56,7 @@ export const ResetPasswordForm = (props) => {
 
       <Box>
         <FormControl>
-          <FormControl.Label _text={styles.label} mb={1}>New password</FormControl.Label>
+          <FormControl.Label _text={styles.label} mb={2}>New password</FormControl.Label>
           <Controller
             name='new_password'
             rules={{
@@ -73,7 +73,7 @@ export const ResetPasswordForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.new_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.new_password?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 placeholderTextColor={colors.text03}
                 autoCompleteType='password'
@@ -84,10 +84,17 @@ export const ResetPasswordForm = (props) => {
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={() => confirmPasswordRef.current?.focus()}
                 InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="lock" />}
-                    size={5} ml="4"
-                    color={errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.text04}
+                  <Image
+                    source={icons.lock}
+                    style={[
+                      styles.inputIcon,
+                      {tintColor: `${
+                        errors?.new_password?.message
+                          ? colors.error
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
+                        }`
+                      }
+                    ]}
                   />
                 }
                 InputRightElement={
@@ -96,20 +103,23 @@ export const ResetPasswordForm = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                         onPress={() => setNewPasswordSee(!newPasswordSee)}
                       />
                     )}
-                    <Icon
-                      as={<MaterialIcons name={newPasswordSee ? "visibility" : "visibility-off"} />}
-                      size={5} mr="4"
-                      color={colors.text04}
+                    <Pressable
+                      style={styles.visibilityIconWrapper}
                       onPress={() => setNewPasswordSee(!newPasswordSee)}
-                    />
+                    >
+                      <Image
+                        source={!newPasswordSee ? icons.visibility : icons.visibilityOff}
+                        style={styles.visibilityIcon}
+                      />
+                    </Pressable>
                   </HStack>
                 }
                 _focus={{
-                  borderColor: !errors?.new_password?.message ? colors.primary :colors.error
+                  borderColor: !errors?.new_password?.message ? colors.lightPrimary :colors.error
                 }}
               />
             )}
@@ -122,7 +132,7 @@ export const ResetPasswordForm = (props) => {
           )}
         </FormControl>
         <FormControl mt='4'>
-          <FormControl.Label _text={styles.label} mb={1}>Confirm new password</FormControl.Label>
+          <FormControl.Label _text={styles.label} mb={2}>Confirm new password</FormControl.Label>
           <Controller
             name='confirm_password'
             rules={{
@@ -151,10 +161,17 @@ export const ResetPasswordForm = (props) => {
                 onChangeText={val => onChange(val)}
                 onSubmitEditing={handleSubmitClick}
                 InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="lock" />}
-                    size={5} ml="4"
-                    color={errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.text04}
+                  <Image
+                    source={icons.lock}
+                    style={[
+                      styles.inputIcon,
+                      {tintColor: `${
+                        errors?.confirm_password?.message
+                          ? colors.error
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
+                        }`
+                      }
+                    ]}
                   />
                 }
                 InputRightElement={
@@ -163,20 +180,23 @@ export const ResetPasswordForm = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                         onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
                       />
                     )}
-                    <Icon
-                      as={<MaterialIcons name={confirmPasswordSee ? "visibility" : "visibility-off"} />}
-                      size={5} mr="4"
-                      color={colors.text04}
+                    <Pressable
+                      style={styles.visibilityIconWrapper}
                       onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
-                    />
+                    >
+                      <Image
+                        source={!confirmPasswordSee ? icons.visibility : icons.visibilityOff}
+                        style={styles.visibilityIcon}
+                      />
+                    </Pressable>
                   </HStack>
                 }
                 _focus={{
-                  borderColor: !errors?.confirm_password?.message ? colors.primary :colors.error
+                  borderColor: !errors?.confirm_password?.message ? colors.lightPrimary :colors.error
                 }}
               />
             )}
