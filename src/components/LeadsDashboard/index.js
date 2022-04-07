@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, Image, View } from 'react-native'
-import { HText, HButton, HPressableText } from '../Shared'
+import { HText, HButton } from '../Shared'
 import { colors, images, icons } from '../../utils/styleGuide'
-import { HStack, VStack, Box } from 'native-base'
+import { HStack, VStack, Box, Pressable, Checkbox, Icon } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
 import Swiper from 'react-native-swiper'
 import styles from './style'
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export const LeadsDashboard = (props) => {
   const {
@@ -27,50 +28,96 @@ export const LeadsDashboard = (props) => {
       >
         {!isNoData ? (
           <View style={styles.leadsContent}>
-            <HStack justifyContent='space-around' mb='8'>
-              <HPressableText
-                text='Buyers'
-                textColor={colors.gray}
-                fontSize={21}
-                fontWeight='400'
-                onPress={() => {}}
-              />
-              <HPressableText
-                text='Seller'
-                textColor={colors.gray}
-                fontSize={21}
-                fontWeight='400'
-                onPress={() => {}}
-              />
-              <HPressableText
-                text='Prospective'
-                textColor={colors.gray}
-                fontSize={21}
-                fontWeight='400'
-                onPress={() => {}}
-              />
-            </HStack>
+            <VStack mb='12'>
+              <HStack mb='4' justifyContent='space-between'>
+                <HText style={styles.filterText}>Filter by:</HText>
+                <HText style={styles.filterText}>32 leads</HText>
+              </HStack>
+              <HStack>
+                <HStack alignItems='center' mr='8'>
+                  <Checkbox
+                    size='md'
+                    borderRadius={15}
+                    borderColor={colors.primary}
+                    _checked={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.primary,
+                    }}
+                    _interactionBox={{
+                      opacity: 0
+                    }}
+                    icon={
+                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                    }
+                    accessibilityLabel='Buyers'
+                  />
+                  <HText style={styles.radioLabel}>Buyers</HText>
+                </HStack>
+                <HStack alignItems='center' mr='8'>
+                  <Checkbox
+                    size='md'
+                    borderRadius={15}
+                    borderColor={colors.primary}
+                    _checked={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.primary,
+                    }}
+                    _interactionBox={{
+                      opacity: 0
+                    }}
+                    icon={
+                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                    }
+                  />
+                  <HText style={styles.radioLabel}>Sellers</HText>
+                </HStack>
+                <HStack alignItems='center'>
+                  <Checkbox
+                    size='md'
+                    borderRadius={15}
+                    borderColor={colors.primary}
+                    _checked={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.primary,
+                    }}
+                    _interactionBox={{
+                      opacity: 0
+                    }}
+                    icon={
+                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                    }
+                  />
+                  <HText style={styles.radioLabel}>Prospective</HText>
+                </HStack>
+              </HStack>
+            </VStack>
             <Swiper
               showsButtons={false}
               loop={true}
               renderPagination={renderPagination}
-              height={410}
+              height={420}
             >
               {[...Array(32).keys()].map(i => (
                 <View key={i} style={styles.cardContainer}>
                   <HStack alignItems='center' borderBottomColor={colors.borderColor} borderBottomWidth='1' pb='5'>
                     <Image source={icons.location} style={styles.locationIcon}
                     />
-                    <HText style={styles.locationText}>72839</HText>
+                    <HText style={styles.locationText}>Los Angeles, CA 92131</HText>
                   </HStack>
-                  <Box mt='10' mb='10' alignItems='center'>
+                  <Box mt='6' mb='6'>
                     <HText style={styles.nameText}>Jonathan Shah</HText>
                   </Box>
-                  <HStack alignItems='center'>
+                  <HStack justifyContent='space-between'>
+                    <HText style={styles.userTypeText}>Buyer</HText>
+                    <HText style={styles.userTypeText}>
+                      <HText style={[styles.userTypeText, { color: colors.borderColor }]}>Status:</HText> New
+                    </HText>
+                  </HStack>
+                  <HStack mt='6' alignItems='center'>
                     <Image source={icons.email} style={styles.infoIcon} />
                     <HText style={styles.infoText}>jonathan@mail.com</HText>
                   </HStack>
-                  <HStack mt='4' alignItems='center'>
+                  <HStack mt='5' alignItems='center'>
                     <Image source={icons.phone} style={styles.infoIcon} />
                     <HText style={styles.infoText}>+1 238 2838 282</HText>
                   </HStack>
@@ -84,7 +131,8 @@ export const LeadsDashboard = (props) => {
                         fontSize: 24,
                         fontWeight: '700'
                       }}
-                      height='50'
+                      height={50}
+                      width={180}
                       onPress={() => onNavigationRedirect('ContactLead')}
                     />
                   </Box>

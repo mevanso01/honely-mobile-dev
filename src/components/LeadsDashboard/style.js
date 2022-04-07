@@ -110,6 +110,21 @@ export default StyleSheet.create({
   paginationText: {
     color: colors.gray,
     fontSize: 21,
-    marginTop: 32
+    marginTop: 21
+  },
+  radioLabel: {
+    color: colors.primary,
+    fontSize: 14,
+    marginLeft: 6
+  },
+  filterText: {
+    fontWeight: '700',
+    fontSize: 13,
+    color: colors.primary
+  },
+  userTypeText: {
+    color: colors.white,
+    fontWeight: '500',
+    fontSize: 15
   }
 })

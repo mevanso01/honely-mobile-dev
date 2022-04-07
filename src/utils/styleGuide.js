@@ -56,4 +56,5 @@ export const icons = {
   edit: require('../assets/icons/edit.png'),
   arrowLeft: require('../assets/icons/arrow-left.png'),
   arrowRight: require('../assets/icons/arrow-right.png'),
+  cirlceCheckOn: require('../assets/icons/cirlce-check-on.png'),
 }
