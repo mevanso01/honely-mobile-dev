@@ -18,7 +18,7 @@ const HPressableText = (props) => {
       <HText
         style={{
           color: props.textColor || colors.primary,
-          fontSize: props.fontSize || 16,
+          fontSize: props.fontSize || 18,
           fontWeight: props.fontWeight || '500',
           ...textStyle
         }}

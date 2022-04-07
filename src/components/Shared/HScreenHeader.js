@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { IconButton } from 'native-base'
+import { StyleSheet, View, Image } from 'react-native'
+import { IconButton, Pressable } from 'native-base'
 import HText from './HText'
-import { colors } from '../../utils/styleGuide'
+import { colors, icons } from '../../utils/styleGuide'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const HScreenHeader = (props) => {
@@ -17,34 +17,38 @@ const HScreenHeader = (props) => {
       justifyContent: 'center',
       marginBottom: 48,
     },
-    backArrow: {
-      position: 'absolute',
-      left: -10
-    },
     title: {
-      fontSize: 16,
-      fontWeight: '500',
+      fontSize: 17,
+      fontWeight: '700',
       color: colors.text01,
     },
+    arrowIcon: {
+      width: 24,
+      height: 24,
+      tintColor: colors.black,
+      resizeMode: 'contain'
+    }
   })
   return (
     <View style={styles.header}>
-      <View style={styles.backArrow}>
-        <IconButton
-          borderRadius='full'
-          variant='ghost'
-          size='8'
-          _icon={{
-            as: MaterialIcons,
-            name: 'chevron-left',
-            color: colors.black,
-          }}
-          _pressed={{
-            bg: colors.text05
-          }}
-          onPress={props.onPress}
+      <Pressable
+        onPress={props.onPress}
+        position='absolute'
+        left={-10}
+        width={30}
+        height={30}
+        alignItems='center'
+        justifyContent='center'
+        _pressed={{
+          backgroundColor: colors.text05,
+          borderRadius: 15
+        }}
+      >
+        <Image
+          source={icons.arrowLeft}
+          style={styles.arrowIcon}
         />
-      </View>
+      </Pressable>
       <HText style={styles.title}>{title}</HText>
     </View>
   )

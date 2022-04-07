@@ -1,6 +1,6 @@
 export const colors = {
   primary: "#5D5FEF",
-  lightPrimary: "#24cb431a",
+  lightPrimary: "#9FA1F4",
   primaryContrast: "#EFFFF2",
   secondary: "#FF7D1F",
   error: "#FF735E",
@@ -13,6 +13,7 @@ export const colors = {
   black: "#000000",
   white: "#FFFFFF",
   gray: "#9C9E9D",
+  lightGray: "#F3F3F3",
   info100: "#7484fc1a",
 
   tint: "#EFFFF2",
@@ -52,4 +53,5 @@ export const icons = {
   locationOutline: require('../assets/icons/location-outline.png'),
   edit: require('../assets/icons/edit.png'),
   arrowLeft: require('../assets/icons/arrow-left.png'),
+  arrowRight: require('../assets/icons/arrow-right.png'),
 }

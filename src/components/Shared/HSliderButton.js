@@ -66,7 +66,15 @@ const HSliderButton = (props) => {
           setActive(false)
         }}
       >
-        <HText style={[styles.textStyle, { color: !active ? colors.white : colors.text03 }]}>
+        <HText
+          style={[
+            styles.textStyle,
+            {
+              color: !active ? colors.white : colors.text03,
+              fontWeight: active ? '400': '700'
+            }
+          ]}
+        >
           {firstText}
         </HText>
       </TouchableOpacity>
@@ -78,7 +86,15 @@ const HSliderButton = (props) => {
           setActive(true)
         }}
       >
-        <HText style={[styles.textStyle, { color: active ? colors.white : colors.text03 }]}>
+        <HText
+          style={[
+            styles.textStyle,
+            {
+              color: active ? colors.white : colors.text03,
+              fontWeight: active ? '700': '400'
+            }
+          ]}
+        >
           {secondText}
         </HText>
       </TouchableOpacity>
@@ -92,7 +108,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 50,
     borderRadius: 25,
-    backgroundColor: colors.tint,
+    backgroundColor: colors.lightGray,
     marginHorizontal: 5,
     width: 240,
     alignSelf: 'center'
@@ -103,8 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textStyle: {
-    fontSize: 16,
-    fontWeight: '500'
+    fontSize: 18,
   }
 })
 

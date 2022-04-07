@@ -94,7 +94,7 @@ const OptionItem = ({ text, onPress }) => {
         borderBottomWidth={1}
       >
         <HText style={styles.optionText}>{text}</HText>
-        <Image source={icons.arrowLeft} style={styles.arrowIcon} />
+        <Image source={icons.arrowRight} style={styles.arrowIcon} />
       </HStack>
     </Pressable>
   )

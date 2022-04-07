@@ -108,14 +108,14 @@ export const LoginForm = (props) => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
-                placeholder='Enter your email or username'
+                placeholder='Enter your email'
                 placeholderTextColor={colors.text03}
                 keyboardType="email-address"
                 fontSize={14}
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.email?.message ? colors.error : (value && isLoginClicked) ? colors.primary : colors.borderColor
+                  errors?.email?.message ? colors.error : (value && isLoginClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -134,7 +134,7 @@ export const LoginForm = (props) => {
                       {tintColor: `${
                         errors?.email?.message
                           ? colors.error
-                          : (value && isLoginClicked) ? colors.primary : colors.text04
+                          : (value && isLoginClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -145,12 +145,12 @@ export const LoginForm = (props) => {
                     <Icon
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
-                      color={colors.primary}
+                      color={colors.lightPrimary}
                     />
                   )
                 }
                 _focus={{
-                  borderColor: !errors?.email?.message ? colors.primary : colors.error
+                  borderColor: !errors?.email?.message ? colors.lightPrimary : colors.error
                 }}
                 defaultValue=''
               />
@@ -185,7 +185,7 @@ export const LoginForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.password?.message ? colors.error : (value && isLoginClicked) ? colors.primary : colors.borderColor
+                  errors?.password?.message ? colors.error : (value && isLoginClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 placeholderTextColor={colors.text03}
                 autoCompleteType='password'
@@ -204,7 +204,7 @@ export const LoginForm = (props) => {
                       {tintColor: `${
                         errors?.password?.message
                           ? colors.error
-                          : (value && isLoginClicked) ? colors.primary : colors.text04
+                          : (value && isLoginClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -216,7 +216,7 @@ export const LoginForm = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )}
                     <Pressable
@@ -224,14 +224,14 @@ export const LoginForm = (props) => {
                       onPress={() => setPasswordSee(!passwordSee)}
                     >
                       <Image
-                        source={passwordSee ? icons.visibility : icons.visibilityOff}
+                        source={!passwordSee ? icons.visibility : icons.visibilityOff}
                         style={styles.visibilityIcon}
                       />
                     </Pressable>
                   </HStack>
                 }
                 _focus={{
-                  borderColor: !errors?.password?.message ? colors.primary :colors.error
+                  borderColor: !errors?.password?.message ? colors.lightPrimary :colors.error
                 }}
                 defaultValue=''
               />
@@ -252,7 +252,7 @@ export const LoginForm = (props) => {
           onPress={() => onNavigationRedirect('ForgotPassword')}
         />
       </View>
-      <Box alignItems='center' mt={8}>
+      <Box alignItems='center' mt='9'>
         <HButton
           text='Log in'
           onPress={handleLoginClick}
