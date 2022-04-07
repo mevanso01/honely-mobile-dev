@@ -112,7 +112,7 @@ export const OTPForm = (props) => {
           <HText style={styles.errorText}>{error}</HText>
         </HStack>
       )}
-      <Box alignItems='center' mt='6'>
+      <Box alignItems='center' mt='8'>
         <HButton
           text='Submit'
           onPress={handleSubmitClick}

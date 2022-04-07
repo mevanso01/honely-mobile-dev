@@ -44,16 +44,16 @@ export default StyleSheet.create({
     marginVertical: 32
   },
   subtitle: {
-    fontSize: 22,
-    fontWeight: '600',
+    fontSize: 25,
+    fontWeight: '700',
     lineHeight: 33,
-    marginBottom: 8,
+    marginBottom: 20,
     color: colors.text01
   },
   description: {
     color: colors.text02,
-    fontWeight: '500',
-    fontSize: 14,
+    fontWeight: '400',
+    fontSize: 16,
     lineHeight: 21,
     textAlign: 'center'
   },
@@ -103,7 +103,7 @@ export default StyleSheet.create({
     width: 181,
     height: 65,
     resizeMode: 'contain',
-    marginBottom: 105
+    marginBottom: 24
   },
   congratsText: {
     color: colors.text01,
@@ -128,9 +128,20 @@ export default StyleSheet.create({
     height: 55,
     borderRadius: 8,
     borderColor: colors.borderColor,
-    color: colors.text01,
+    color: colors.primary,
+    fontSize: 27
   },
   underlineStyleHighLighted: {
     borderColor: colors.primary,
   },
+  circleWrapper: {
+    backgroundColor: colors.red,
+    width: deviceWidth * 0.75,
+    height: deviceWidth * 0.75,
+    borderRadius: deviceWidth * 0.75 / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.55,
+    position: 'absolute'
+  }
 })

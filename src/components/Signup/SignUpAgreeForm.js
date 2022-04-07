@@ -56,7 +56,7 @@ export const SignUpAgreeForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.firstName?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.firstName?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 autoCapitalize='words'
                 autoCorrect={false}
@@ -74,7 +74,7 @@ export const SignUpAgreeForm = (props) => {
                       {tintColor: `${
                         errors?.firstName?.message
                           ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -85,12 +85,12 @@ export const SignUpAgreeForm = (props) => {
                     <Icon
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
-                      color={colors.primary}
+                      color={colors.lightPrimary}
                     />
                   )
                 }
                 _focus={{
-                  borderColor: !errors?.firstName?.message ? colors.primary : colors.error
+                  borderColor: !errors?.firstName?.message ? colors.lightPrimary : colors.error
                 }}
               />
             )}
@@ -118,7 +118,7 @@ export const SignUpAgreeForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.lastName?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.lastName?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 autoCapitaliz='words'
                 autoCorrect={false}
@@ -137,7 +137,7 @@ export const SignUpAgreeForm = (props) => {
                       {tintColor: `${
                         errors?.lastName?.message
                           ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -148,12 +148,12 @@ export const SignUpAgreeForm = (props) => {
                     <Icon
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
-                      color={colors.primary}
+                      color={colors.lightPrimary}
                     />
                   )
                 }
                 _focus={{
-                  borderColor: !errors?.lastName?.message ? colors.primary : colors.error
+                  borderColor: !errors?.lastName?.message ? colors.lightPrimary : colors.error
                 }}
               />
             )}
@@ -182,7 +182,7 @@ export const SignUpAgreeForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.phonenumber?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.phonenumber?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -201,7 +201,7 @@ export const SignUpAgreeForm = (props) => {
                       {tintColor: `${
                         errors?.phonenumber?.message
                           ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -212,12 +212,12 @@ export const SignUpAgreeForm = (props) => {
                     <Icon
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
-                      color={colors.primary}
+                      color={colors.lightPrimary}
                     />
                   )
                 }
                 _focus={{
-                  borderColor: !errors?.phonenumber?.message ? colors.primary : colors.error
+                  borderColor: !errors?.phonenumber?.message ? colors.lightPrimary : colors.error
                 }}
               />
             )}

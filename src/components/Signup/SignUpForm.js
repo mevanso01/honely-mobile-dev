@@ -93,7 +93,7 @@ export const SignUpForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.userName?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.userName?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -111,7 +111,7 @@ export const SignUpForm = (props) => {
                       {tintColor: `${
                         errors?.userName?.message
                           ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -122,12 +122,12 @@ export const SignUpForm = (props) => {
                     <Icon
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
-                      color={colors.primary}
+                      color={colors.lightPrimary}
                     />
                   )
                 }
                 _focus={{
-                  borderColor: !errors?.userName?.message ? colors.primary : colors.error
+                  borderColor: !errors?.userName?.message ? colors.lightPrimary : colors.error
                 }}
               />
             )}
@@ -158,7 +158,7 @@ export const SignUpForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -178,7 +178,7 @@ export const SignUpForm = (props) => {
                       {tintColor: `${
                         errors?.email?.message
                           ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -189,12 +189,12 @@ export const SignUpForm = (props) => {
                     <Icon
                       as={<MaterialIcons name="check" />}
                       size={5} mr="4"
-                      color={colors.primary}
+                      color={colors.lightPrimary}
                     />
                   )
                 }
                 _focus={{
-                  borderColor: !errors?.email?.message ? colors.primary : colors.error
+                  borderColor: !errors?.email?.message ? colors.lightPrimary : colors.error
                 }}
               />
             )}
@@ -232,7 +232,7 @@ export const SignUpForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 placeholderTextColor={colors.text03}
                 textContentType='oneTimeCode'
@@ -252,7 +252,7 @@ export const SignUpForm = (props) => {
                       {tintColor: `${
                         errors?.password?.message
                           ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -264,7 +264,7 @@ export const SignUpForm = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )}
                     <Pressable
@@ -272,14 +272,14 @@ export const SignUpForm = (props) => {
                       onPress={() => setPasswordSee(!passwordSee)}
                     >
                       <Image
-                        source={passwordSee ? icons.visibility : icons.visibilityOff}
+                        source={!passwordSee ? icons.visibility : icons.visibilityOff}
                         style={styles.visibilityIcon}
                       />
                     </Pressable>
                   </HStack>
                 }
                 _focus={{
-                  borderColor: !errors?.password?.message ? colors.primary :colors.error
+                  borderColor: !errors?.password?.message ? colors.lightPrimary :colors.error
                 }}
               />
             )}
@@ -309,7 +309,7 @@ export const SignUpForm = (props) => {
                 borderRadius={8}
                 height={50}
                 borderColor={
-                  errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                  errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
                 placeholderTextColor={colors.text03}
                 textContentType='oneTimeCode'
@@ -327,9 +327,9 @@ export const SignUpForm = (props) => {
                     style={[
                       styles.inputIcon,
                       {tintColor: `${
-                        errors?.password?.message
+                        errors?.confirm_password?.message
                           ? colors.error
-                          : (value && isSubmitClicked) ? colors.primary : colors.text04
+                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                         }`
                       }
                     ]}
@@ -341,7 +341,7 @@ export const SignUpForm = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="3"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )}
                     <Pressable
@@ -349,14 +349,14 @@ export const SignUpForm = (props) => {
                       onPress={() => setConfirmPasswordSee(!confirmPasswordSee)}
                     >
                       <Image
-                        source={confirmPasswordSee ? icons.visibility : icons.visibilityOff}
+                        source={!confirmPasswordSee ? icons.visibility : icons.visibilityOff}
                         style={styles.visibilityIcon}
                       />
                     </Pressable>
                   </HStack>
                 }
                 _focus={{
-                  borderColor: !errors?.confirm_password?.message ? colors.primary :colors.error
+                  borderColor: !errors?.confirm_password?.message ? colors.lightPrimary :colors.error
                 }}
               />
             )}

@@ -60,11 +60,15 @@ export const BusinessTypeForm = (props) => {
             variant='outline'
             borderColor={formState?.serviceProviderType?.includes(type.value) ? colors.primary : colors.borderColor}
             backgroundColor={colors.white}
-            textStyle={{ color: formState?.serviceProviderType?.includes(type.value) ? colors.text01 : colors.text03 }}
+            textStyle={{
+              color: formState?.serviceProviderType?.includes(type.value) ? colors.text01 : colors.text03,
+              fontWeight: '500',
+              fontSize: 16
+            }}
             borderRadius={8}
             shadow='0'
             width={deviceWidth - 36}
-            size={20}
+            height={100}
             onPress={() => handleServiceProviderType(type.value)}
           />
         </Box>

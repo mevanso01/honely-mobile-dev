@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, View } from 'react-native'
+import { Box } from 'native-base'
 import { HText } from '../Shared'
 import { images } from '../../utils/styleGuide'
 import Loader from 'react-native-three-dots-loader'
@@ -15,10 +16,13 @@ export const Success = (props) => {
       <HText style={styles.signupCompleteTitle}>Sign Up Complete</HText>
       <View style={styles.successWrapper}>
         <Image
-          source={images.logo}
+          source={images.logoGreen}
           style={styles.logoWrapper}
         />
         <HText style={styles.congratsText}>Weclome {formState?.firstName} {formState?.lastName}</HText>
+        <View style={styles.circleWrapper} />
+      </View>
+      <Box mb='8' alignItems='center'>
         <HText style={styles.loadingText}>
           Loading
           <Loader
@@ -28,7 +32,7 @@ export const Success = (props) => {
             activeBackground={colors.text03}
           />
         </HText>
-      </View>
+      </Box>
     </>
   )
 }

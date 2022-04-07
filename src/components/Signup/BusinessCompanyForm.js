@@ -56,7 +56,7 @@ export const BusinessCompanyForm = (props) => {
         <HText style={styles.description}>What name does your business have</HText>
       </Box>
       <FormControl mb={4}>
-        <FormControl.Label _text={styles.label} mb={1}>Company name</FormControl.Label>
+        <FormControl.Label _text={styles.label} mb={2}>Company name</FormControl.Label>
         <Controller
           name='company_name'
           control={control}
@@ -67,9 +67,9 @@ export const BusinessCompanyForm = (props) => {
               fontSize={14}
               borderRadius={8}
               fontWeight='500'
-              height={50}
+              height={55}
               borderColor={
-                errors?.company_name?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
+                errors?.company_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
               }
               autoCapitalize='none'
               autoCorrect={false}
@@ -87,7 +87,7 @@ export const BusinessCompanyForm = (props) => {
                     {tintColor: `${
                       errors?.company_name?.message
                         ? colors.error
-                        : (value && isSubmitClicked) ? colors.primary : colors.text04
+                        : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
                       }`
                     }
                   ]}
@@ -98,12 +98,12 @@ export const BusinessCompanyForm = (props) => {
                   <Icon
                     as={<MaterialIcons name="check" />}
                     size={5} mr="4"
-                    color={colors.primary}
+                    color={colors.lightPrimary}
                   />
                 )
               }
               _focus={{
-                borderColor: !errors?.company_name?.message ? colors.primary : colors.error
+                borderColor: !errors?.company_name?.message ? colors.lightPrimary : colors.error
               }}
               defaultValue=''
             />

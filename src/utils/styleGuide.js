@@ -12,6 +12,7 @@ export const colors = {
   headingColor: "#1F2937",
   black: "#000000",
   white: "#FFFFFF",
+  red: "#FF0000",
   gray: "#9C9E9D",
   lightGray: "#F3F3F3",
   info100: "#7484fc1a",
@@ -31,6 +32,7 @@ export const images = {
   forgotPassword: require('../assets/images/forgot-password.png'),
   leadsBg: require('../assets/images/leads-bg.png'),
   logo: require('../assets/images/logo.png'),
+  logoGreen: require('../assets/images/logo-green.png'),
   dummyAvatar: require('../assets/images/dummy-avatar.png'),
 }
 
