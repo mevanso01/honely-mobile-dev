@@ -12,6 +12,29 @@ const HSliderButton = (props) => {
     onSecondPress
   } = props
 
+  const totalWidth = props.width || 240
+
+  const styles = StyleSheet.create({
+    wrapper: {
+      flexDirection: 'row',
+      position: 'relative',
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: colors.lightGray,
+      marginHorizontal: 5,
+      width: totalWidth,
+      alignSelf: 'center'
+    },
+    textWrapper: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    textStyle: {
+      fontSize: 18,
+    }
+  })
+
   const [active, setActive] = useState(isForceActive || false)
   let transformX = useRef(new Animated.Value(0)).current
 
@@ -33,7 +56,7 @@ const HSliderButton = (props) => {
 
   const rotationX = transformX.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 120]
+    outputRange: [0, totalWidth / 2]
   })
 
   useEffect(() => {
@@ -48,7 +71,7 @@ const HSliderButton = (props) => {
           height: 50,
           top: 0,
           borderRadius: 25,
-          width: 120,
+          width: totalWidth / 2,
           transform: [
             {
               translateX: rotationX
@@ -101,26 +124,5 @@ const HSliderButton = (props) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flexDirection: 'row',
-    position: 'relative',
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: colors.lightGray,
-    marginHorizontal: 5,
-    width: 240,
-    alignSelf: 'center'
-  },
-  textWrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textStyle: {
-    fontSize: 18,
-  }
-})
 
 export default HSliderButton

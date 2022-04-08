@@ -8,7 +8,8 @@ import { colors, icons } from '../../utils/styleGuide'
 
 export const ContactLead = (props) => {
   const {
-    navigation
+    navigation,
+    onNavigationRedirect
   } = props
 
   const [emailEnabled, setEmailEnabled] = useState(false)
@@ -39,6 +40,7 @@ export const ContactLead = (props) => {
           </Pressable>
           <Pressable
             _pressed={{ opacity: 0.7 }}
+            onPress={() => onNavigationRedirect('ContactLeadPreset')}
           >
             <Image source={icons.setting} style={styles.settingIcon} />
           </Pressable>
