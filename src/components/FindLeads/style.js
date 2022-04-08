@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { colors } from '../../utils/styleGuide'
+import { deviceWidth, deviceHeight } from '../../utils/stylesheet'
 
 export default StyleSheet.create({
   screenContainer: {
@@ -31,7 +32,7 @@ export default StyleSheet.create({
     paddingBottom: 27,
     paddingHorizontal: 18,
     position: 'relative',
-    zIndex: 1000,
+    zIndex: 100,
     padding: 10
   },
   recentSearchContainer: {
@@ -89,5 +90,40 @@ export default StyleSheet.create({
     paddingLeft: 18,
     paddingRight: 18,
     paddingVertical: 6
+  },
+  hintContainer: {
+    position: 'absolute',
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: colors.pimary_100,
+    borderRadius: 10,
+    paddingHorizontal: 32,
+    paddingTop: 26,
+    paddingBottom: 59,
+    left: 18,
+    top: 70,
+    zIndex: 2000
+  },
+  hintText: {
+    fontSize: 29,
+    lineHeight: 34,
+    fontWeight: '700',
+    color: colors.white,
+    textAlign: 'center'
+  },
+  hintArrow: {
+    width: 30,
+    height: 38,
+    resizeMode: 'contain',
+    marginBottom: 14
+  },
+  backDrop: {
+    position: 'absolute',
+    top: -93,
+    left: 0,
+    width: deviceWidth,
+    height: deviceHeight,
+    backgroundColor: '#00000080',
+    zIndex: 1000
   }
 })

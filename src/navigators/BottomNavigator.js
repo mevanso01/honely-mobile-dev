@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors, icons } from '../utils/styleGuide'
 
 import Leads from '../screens/Leads'
-import BuyLeads from '../screens/BuyLeads'
+import FindLeads from '../screens/FindLeads'
 import ContactedLeads from '../screens/ContactedLeads'
 import ProfileNavigator from './ProfileNavigator'
 
@@ -25,8 +25,8 @@ const BottomNavigator = () => {
         component={Leads}
       />
       <Tab.Screen
-        name="BuyLeads"
-        component={BuyLeads}
+        name="FindLeads"
+        component={FindLeads}
       />
       <Tab.Screen
         name="ContactedLeads"
@@ -63,8 +63,8 @@ function MyTabBar({ state, descriptors, navigation }) {
     switch (name) {
       case 'Leads':
         return icons.category
-      case 'BuyLeads':
-        return icons.buy
+      case 'FindLeads':
+        return icons.search
       case 'ContactedLeads':
         return icons.email
       case 'ProfileNavigator':
@@ -77,8 +77,8 @@ function MyTabBar({ state, descriptors, navigation }) {
     switch (name) {
       case 'Leads':
         return icons.categoryOutline
-      case 'BuyLeads':
-        return icons.buyOutline
+      case 'FindLeads':
+        return icons.search
       case 'ContactedLeads':
         return icons.emailOutline
       case 'ProfileNavigator':

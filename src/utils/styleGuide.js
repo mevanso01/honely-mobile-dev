@@ -1,6 +1,7 @@
 export const colors = {
   primary: "#5D5FEF",
   lightPrimary: "#9FA1F4",
+  pimary_100: "#A2A3F7",
   primaryContrast: "#EFFFF2",
   secondary: "#FF7D1F",
   error: "#FF735E",
@@ -62,4 +63,6 @@ export const icons = {
   arrowDown: require('../assets/icons/arrow-down.png'),
   cirlceCheckOn: require('../assets/icons/cirlce-check-on.png'),
   setting: require('../assets/icons/setting.png'),
+  search: require('../assets/icons/search.png'),
+  hintArrowUp: require('../assets/icons/hint-arrow-up.png'),
 }

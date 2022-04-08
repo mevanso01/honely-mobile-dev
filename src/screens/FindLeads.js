@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { BuyLeads as BuyLeadsScreen } from '../components/BuyLeads'
+import { FindLeads as FindLeadsScreen } from '../components/FindLeads'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
 import styled from 'styled-components/native'
@@ -10,9 +10,9 @@ const KeyboardView = styled.KeyboardAvoidingView`
   flex: 1;
 `;
 
-const BuyLeads = (props) => {
+const FindLeads = (props) => {
   const insets = useSafeAreaInsets()
-  const buyLeadsProps = {
+  const findLeadsProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
       if (!page) return
@@ -38,10 +38,10 @@ const BuyLeads = (props) => {
         enabled
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <BuyLeadsScreen {...buyLeadsProps} />
+        <FindLeadsScreen {...findLeadsProps} />
       </KeyboardView>
     </View>
   )
 }
 
-export default BuyLeads
+export default FindLeads
