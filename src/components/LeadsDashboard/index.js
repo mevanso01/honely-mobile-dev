@@ -20,76 +20,80 @@ export const LeadsDashboard = (props) => {
 
   return (
     <View style={styles.screenContainer}>
-      <HText style={styles.title}>Leads Dashboard</HText>
+      <View style={styles.innerContainer}>
+        <HText style={styles.title}>Leads Dashboard</HText>
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       >
         {!isNoData ? (
           <View style={styles.leadsContent}>
-            <VStack mb='12'>
-              <HStack mb='4' justifyContent='space-between'>
-                <HText style={styles.filterText}>Filter by:</HText>
-                <HText style={styles.filterText}>32 leads</HText>
-              </HStack>
-              <HStack>
-                <HStack alignItems='center' mr='8'>
-                  <Checkbox
-                    size='md'
-                    borderRadius={15}
-                    borderColor={colors.primary}
-                    _checked={{
-                      backgroundColor: colors.white,
-                      borderColor: colors.primary,
-                    }}
-                    _interactionBox={{
-                      opacity: 0
-                    }}
-                    icon={
-                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                    }
-                    accessibilityLabel='Buyers'
-                  />
-                  <HText style={styles.radioLabel}>Buyers</HText>
+            <View style={styles.innerContainer}>
+              <VStack mb='12'>
+                <HStack mb='4' justifyContent='space-between'>
+                  <HText style={styles.filterText}>Filter by:</HText>
+                  <HText style={styles.filterText}>32 leads</HText>
                 </HStack>
-                <HStack alignItems='center' mr='8'>
-                  <Checkbox
-                    size='md'
-                    borderRadius={15}
-                    borderColor={colors.primary}
-                    _checked={{
-                      backgroundColor: colors.white,
-                      borderColor: colors.primary,
-                    }}
-                    _interactionBox={{
-                      opacity: 0
-                    }}
-                    icon={
-                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                    }
-                  />
-                  <HText style={styles.radioLabel}>Sellers</HText>
+                <HStack>
+                  <HStack alignItems='center' mr='8'>
+                    <Checkbox
+                      size='md'
+                      borderRadius={15}
+                      borderColor={colors.primary}
+                      _checked={{
+                        backgroundColor: colors.white,
+                        borderColor: colors.primary,
+                      }}
+                      _interactionBox={{
+                        opacity: 0
+                      }}
+                      icon={
+                        <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                      }
+                      accessibilityLabel='Buyers'
+                    />
+                    <HText style={styles.radioLabel}>Buyers</HText>
+                  </HStack>
+                  <HStack alignItems='center' mr='8'>
+                    <Checkbox
+                      size='md'
+                      borderRadius={15}
+                      borderColor={colors.primary}
+                      _checked={{
+                        backgroundColor: colors.white,
+                        borderColor: colors.primary,
+                      }}
+                      _interactionBox={{
+                        opacity: 0
+                      }}
+                      icon={
+                        <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                      }
+                    />
+                    <HText style={styles.radioLabel}>Sellers</HText>
+                  </HStack>
+                  <HStack alignItems='center'>
+                    <Checkbox
+                      size='md'
+                      borderRadius={15}
+                      borderColor={colors.primary}
+                      _checked={{
+                        backgroundColor: colors.white,
+                        borderColor: colors.primary,
+                      }}
+                      _interactionBox={{
+                        opacity: 0
+                      }}
+                      icon={
+                        <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                      }
+                    />
+                    <HText style={styles.radioLabel}>Prospective</HText>
+                  </HStack>
                 </HStack>
-                <HStack alignItems='center'>
-                  <Checkbox
-                    size='md'
-                    borderRadius={15}
-                    borderColor={colors.primary}
-                    _checked={{
-                      backgroundColor: colors.white,
-                      borderColor: colors.primary,
-                    }}
-                    _interactionBox={{
-                      opacity: 0
-                    }}
-                    icon={
-                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                    }
-                  />
-                  <HText style={styles.radioLabel}>Prospective</HText>
-                </HStack>
-              </HStack>
-            </VStack>
+              </VStack>
+            </View>
             <Swiper
               showsButtons={false}
               loop={true}

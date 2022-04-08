@@ -5,6 +5,8 @@ import { deviceWidth } from '../../utils/stylesheet'
 export default StyleSheet.create({
   screenContainer: {
     flex: 1,
+  },
+  innerContainer: {
     paddingHorizontal: 18
   },
   title: {
@@ -52,6 +54,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 40,
     width: '100%',
+    paddingHorizontal: 18
   },
   leadsContent: {
   },
@@ -106,6 +109,7 @@ export default StyleSheet.create({
     padding: 24,
     backgroundColor: colors.primary,
     borderRadius: 16,
+    marginHorizontal: 18
   },
   paginationText: {
     color: colors.gray,
