@@ -4,6 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ContactLeadPreset as ContactLeadPresetScreen} from '../components/ContactLeadPreset'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
+import styled from 'styled-components/native';
+
+const KeyboardView = styled.KeyboardAvoidingView`
+  flex: 1;
+`;
 
 const ContactLeadPreset = (props) => {
   const insets = useSafeAreaInsets()
@@ -30,7 +35,12 @@ const ContactLeadPreset = (props) => {
         backgroundColor={colors.white}
         barStyle='dark-content'
       />
-      <ContactLeadPresetScreen {...contactLeadPresetProps} />
+      <KeyboardView
+        enabled
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ContactLeadPresetScreen {...contactLeadPresetProps} />
+      </KeyboardView>
     </SafeAreaView>
   )
 }
