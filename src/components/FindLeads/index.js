@@ -113,7 +113,7 @@ export const FindLeads = (props) => {
           )}
           {isShowHint && (
             <>
-              <View style={[styles.backDrop, { top: -(53 + statusBarHeight) }]} />
+              <View style={[styles.backDrop, { top: Platform.OS === 'ios' ? -(53 + statusBarHeight) : -93 }]} />
               <Animated.View
                 style={[
                   styles.hintContainer,
