@@ -56,7 +56,10 @@ export const FindLeads = (props) => {
       onPress={() => handleBackgoundClick()}
     >
       <View style={styles.screenContainer}>
-        <View style={[styles.headerContainer, { paddingTop: Platform.OS === 'ios' ? statusBarHeight + 30 : 40, }]}>
+        <View style={[
+          styles.headerContainer,
+          { paddingTop: Platform.OS === 'ios' ? statusBarHeight : 40, }
+        ]}>
           <HText style={styles.title}>Find Leads</HText>
         </View>
         <View style={styles.searchBoxWrapper}>
@@ -110,7 +113,7 @@ export const FindLeads = (props) => {
           )}
           {isShowHint && (
             <>
-              <View style={styles.backDrop} />
+              <View style={[styles.backDrop, { top: -(53 + statusBarHeight) }]} />
               <Animated.View
                 style={[
                   styles.hintContainer,

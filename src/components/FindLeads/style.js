@@ -119,7 +119,6 @@ export default StyleSheet.create({
   },
   backDrop: {
     position: 'absolute',
-    top: -93,
     left: 0,
     width: deviceWidth,
     height: deviceHeight,
