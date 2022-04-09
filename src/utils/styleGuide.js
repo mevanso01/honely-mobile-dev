@@ -70,5 +70,5 @@ export const icons = {
 }
 
 export const fonts = {
-  bold: Platform.OS === 'ios' ? 'Brown-Bold' : 'SFUIDisplay-Bold',
+  bold: 'Brown-Bold'
 }
