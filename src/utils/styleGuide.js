@@ -66,3 +66,8 @@ export const icons = {
   search: require('../assets/icons/search.png'),
   hintArrowUp: require('../assets/icons/hint-arrow-up.png'),
 }
+
+export const fonts = {
+  bold: 'SFUIDisplay-Bold',
+  regular: 'SFUIDisplay-Regular',
+}
