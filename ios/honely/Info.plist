@@ -63,6 +63,11 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Brown-Light.otf</string>
+		<string>Brown-Regular.otf</string>
+		<string>Brown-Thin.otf</string>
+		<string>Brown-Bold.otf</string>
+		<string></string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

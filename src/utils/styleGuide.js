@@ -1,3 +1,5 @@
+import { Platform } from 'react-native'
+
 export const colors = {
   primary: "#5D5FEF",
   lightPrimary: "#9FA1F4",
@@ -68,6 +70,5 @@ export const icons = {
 }
 
 export const fonts = {
-  bold: 'SFUIDisplay-Bold',
-  regular: 'SFUIDisplay-Regular',
+  bold: Platform.OS === 'ios' ? 'Brown-Bold' : 'SFUIDisplay-Bold',
 }

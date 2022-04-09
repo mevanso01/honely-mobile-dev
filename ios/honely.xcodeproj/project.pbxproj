@@ -13,6 +13,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2ED7E331F031601E9B9012A5 /* libPods-honely-honelyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA369F211621C8DA06A4EE23 /* libPods-honely-honelyTests.a */; };
 		35BCB3689BF27C6A13EEE983 /* libPods-honely.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DABC9DF3405A37F2D2BDD947 /* libPods-honely.a */; };
+		3DC45C9428017DAF00CC64F4 /* Brown-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC45C9028017DA800CC64F4 /* Brown-Regular.otf */; };
+		3DC45C9528017DB300CC64F4 /* Brown-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC45C9128017DA800CC64F4 /* Brown-Light.otf */; };
+		3DC45C9628017DB600CC64F4 /* Brown-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC45C9228017DA800CC64F4 /* Brown-Thin.otf */; };
+		3DC45C9728017DBA00CC64F4 /* Brown-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC45C9328017DA800CC64F4 /* Brown-Bold.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +42,10 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = honely/main.m; sourceTree = "<group>"; };
 		17E7CD2451546D9EDD15F377 /* Pods-honely-honelyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-honely-honelyTests.release.xcconfig"; path = "Target Support Files/Pods-honely-honelyTests/Pods-honely-honelyTests.release.xcconfig"; sourceTree = "<group>"; };
 		280322C811F8C70F3C0A27F8 /* Pods-honely.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-honely.debug.xcconfig"; path = "Target Support Files/Pods-honely/Pods-honely.debug.xcconfig"; sourceTree = "<group>"; };
+		3DC45C9028017DA800CC64F4 /* Brown-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Brown-Regular.otf"; sourceTree = "<group>"; };
+		3DC45C9128017DA800CC64F4 /* Brown-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Brown-Light.otf"; sourceTree = "<group>"; };
+		3DC45C9228017DA800CC64F4 /* Brown-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Brown-Thin.otf"; sourceTree = "<group>"; };
+		3DC45C9328017DA800CC64F4 /* Brown-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Brown-Bold.otf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = honely/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9238EAA17A1AA588AA2D9D68 /* Pods-honely-honelyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-honely-honelyTests.debug.xcconfig"; path = "Target Support Files/Pods-honely-honelyTests/Pods-honely-honelyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DA369F211621C8DA06A4EE23 /* libPods-honely-honelyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-honely-honelyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +114,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3DC45C8F28017DA800CC64F4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3DC45C9028017DA800CC64F4 /* Brown-Regular.otf */,
+				3DC45C9128017DA800CC64F4 /* Brown-Light.otf */,
+				3DC45C9228017DA800CC64F4 /* Brown-Thin.otf */,
+				3DC45C9328017DA800CC64F4 /* Brown-Bold.otf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		4AAAFE29EAEF16D4B1E73D94 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +146,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3DC45C8F28017DA800CC64F4 /* Resources */,
 				13B07FAE1A68108700A75B9A /* honely */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* honelyTests */,
@@ -242,6 +262,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DC45C9728017DBA00CC64F4 /* Brown-Bold.otf in Resources */,
+				3DC45C9628017DB600CC64F4 /* Brown-Thin.otf in Resources */,
+				3DC45C9528017DB300CC64F4 /* Brown-Light.otf in Resources */,
+				3DC45C9428017DAF00CC64F4 /* Brown-Regular.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
