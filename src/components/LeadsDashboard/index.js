@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Image, View } from 'react-native'
+import { ScrollView, Image, View, Vibration } from 'react-native'
 import { HText, HButton } from '../Shared'
 import { colors, images, icons } from '../../utils/styleGuide'
 import { HStack, VStack, Box, Pressable, Checkbox, Icon } from 'native-base'
@@ -13,6 +13,10 @@ export const LeadsDashboard = (props) => {
   } = props
 
   const isNoData = false
+
+  const onSelectFilterBy = () => {
+    Vibration.vibrate(150)
+  }
 
   useEffect(() => {
     SplashScreen.hide()
@@ -36,61 +40,62 @@ export const LeadsDashboard = (props) => {
                   <HText style={styles.filterText}>32 leads</HText>
                 </HStack>
                 <HStack>
-                  <HStack alignItems='center' mr='8'>
-                    <Checkbox
-                      size='md'
-                      borderRadius={15}
-                      borderColor={colors.primary}
-                      _checked={{
-                        backgroundColor: colors.white,
-                        borderColor: colors.primary,
-                      }}
-                      _interactionBox={{
-                        opacity: 0
-                      }}
-                      icon={
-                        <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                      }
-                      accessibilityLabel='Buyers'
-                    />
+                  <Checkbox
+                    size='md'
+                    mr='8'
+                    borderRadius={15}
+                    borderColor={colors.primary}
+                    _checked={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.primary,
+                    }}
+                    _interactionBox={{
+                      opacity: 0
+                    }}
+                    icon={
+                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                    }
+                    onChange={selected => onSelectFilterBy(selected)}
+                  >
                     <HText style={styles.radioLabel}>Buyers</HText>
-                  </HStack>
-                  <HStack alignItems='center' mr='8'>
-                    <Checkbox
-                      size='md'
-                      borderRadius={15}
-                      borderColor={colors.primary}
-                      _checked={{
-                        backgroundColor: colors.white,
-                        borderColor: colors.primary,
-                      }}
-                      _interactionBox={{
-                        opacity: 0
-                      }}
-                      icon={
-                        <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                      }
-                    />
+                  </Checkbox>
+                  <Checkbox
+                    size='md'
+                    mr='8'
+                    borderRadius={15}
+                    borderColor={colors.primary}
+                    _checked={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.primary,
+                    }}
+                    _interactionBox={{
+                      opacity: 0
+                    }}
+                    icon={
+                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                    }
+                    onChange={selected => onSelectFilterBy(selected)}
+                  >
                     <HText style={styles.radioLabel}>Sellers</HText>
-                  </HStack>
-                  <HStack alignItems='center'>
-                    <Checkbox
-                      size='md'
-                      borderRadius={15}
-                      borderColor={colors.primary}
-                      _checked={{
-                        backgroundColor: colors.white,
-                        borderColor: colors.primary,
-                      }}
-                      _interactionBox={{
-                        opacity: 0
-                      }}
-                      icon={
-                        <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                      }
-                    />
+                  </Checkbox>
+                  <Checkbox
+                    size='md'
+                    borderRadius={15}
+                    borderColor={colors.primary}
+                    _checked={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.primary,
+                    }}
+                    _interactionBox={{
+                      opacity: 0
+                    }}
+                    icon={
+                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                    }
+                    onChange={selected => onSelectFilterBy(selected)}
+                  >
                     <HText style={styles.radioLabel}>Prospective</HText>
-                  </HStack>
+                  </Checkbox>
                 </HStack>
               </VStack>
             </View>
