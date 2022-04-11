@@ -66,6 +66,7 @@ export default StyleSheet.create({
   editIcon: {
     width: 16,
     height: 16,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    tintColor: colors.primary
   }
 })
