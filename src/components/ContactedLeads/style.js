@@ -35,7 +35,6 @@ export default StyleSheet.create({
   },
   statusText: {
     fontSize: 14,
-    flex: 1,
     color: '#737373cc'
   },
   contactText: {
@@ -47,6 +46,7 @@ export default StyleSheet.create({
     width: 20,
     height: 20,
     resizeMode: 'contain',
-    tintColor: colors.black
+    tintColor: colors.black,
+    marginLeft: 6
   }
 })
