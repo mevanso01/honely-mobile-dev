@@ -19,9 +19,17 @@ export const ContactLead = (props) => {
 
   const [statusValue, setStatusValue] = useState(1)
   const statusOptions = [
-    { value: 1, content: 'New' },
-    { value: 2, content: 'Attempted Contact' }
+    { value: 1, content: 'New', color: colors.primary },
+    { value: 2, content: 'Attempted Contact', color: colors.green },
+    { value: 3, content: 'Rejected', color: colors.rejected },
+    { value: 4, content: 'Closed Sale', color: colors.green },
+    { value: 5, content: 'Closed Leads', color: colors.green },
   ]
+
+  const getSelectBgColor = (value) => {
+    const found = statusOptions.find(item => item.value === value)
+    return found?.color
+  }
 
   return (
     <View style={styles.screenContainer}>
@@ -57,7 +65,7 @@ export const ContactLead = (props) => {
             buttonTextAfterSelection={(selectedItem, index) => { return selectedItem.content }}
             rowTextForSelection={(item, index) => { return item.content }}
             buttonStyle={{
-              backgroundColor: statusValue === 1 ? colors.primary : colors.green,
+              backgroundColor: getSelectBgColor(statusValue),
               borderRadius: 8,
               height: 38,
               flex: 1

@@ -22,6 +22,7 @@ export const colors = {
   lightGray: "#F3F3F3",
   info100: "#7484fc1a",
   disabled: "#6F6F6F",
+  rejected: "#C4C4C4",
 
   tint: "#EFFFF2",
   tint02: "#FBFCFE",

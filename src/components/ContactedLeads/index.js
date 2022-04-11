@@ -12,11 +12,10 @@ export const ContactedLeads = (props) => {
   } = props
   const getStatus = (status) => {
     const statuses = [
-      { value: 1, content: 'Working with client', color: colors.disabled },
-      { value: 2, content: 'New', color: colors.primary },
-      { value: 3, content: 'Rejected', color: colors.red },
-      { value: 4, content: 'Closed Sale', color: colors.darkGreen },
-      { value: 5, content: 'Attempted Contact', color: colors.green },
+      { value: 1, content: 'New', color: colors.primary },
+      { value: 2, content: 'Rejected', color: colors.rejected },
+      { value: 3, content: 'Closed Sale', color: colors.darkGreen },
+      { value: 4, content: 'Attempted Contact', color: colors.green },
     ]
     const objectStatus = statuses.find((o) => o.value === status)
     return objectStatus && objectStatus
@@ -99,7 +98,7 @@ export const ContactedLeads = (props) => {
             </HStack>
             <HText style={styles.statusText}>Status</HText>
           </HStack>
-          {[...Array(5).keys()].map(i => (
+          {[...Array(4).keys()].map(i => (
             <Pressable
               key={i}
               onPress={() => onNavigationRedirect('ContactLead')}
