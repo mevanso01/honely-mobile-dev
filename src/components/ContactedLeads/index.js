@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ScrollView, Image } from 'react-native'
+import { View, ScrollView, Image, Vibration } from 'react-native'
 import { HStack, VStack, Box, Checkbox, Icon, Pressable } from 'native-base'
 import { HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
@@ -7,18 +7,23 @@ import styles from './style'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const dummyData = [
-  { id: 1, name: 'Jonathan Shah', status: 3 },
-  { id: 2, name: 'James Smith', status: 2 },
-  { id: 3, name: 'Robert Smith', status: 4 },
   { id: 4, name: 'David Smith', status: 1 },
   { id: 5, name: 'James Johnson', status: 3 },
+  { id: 2, name: 'James Smith', status: 2 },
+  { id: 1, name: 'Jonathan Shah', status: 3 },
+  { id: 3, name: 'Robert Smith', status: 4 },
 ]
 
 export const ContactedLeads = (props) => {
   const {
     onNavigationRedirect
   } = props
+
   const [contactedLeadsList, setContactedLeadsList] = useState(dummyData)
+  const [isNameAscending, setIsNameAscending] = useState(true)
+  const [isStatusAscending, setIsStatusAscending] = useState(false)
+  const [isNameSort, setIsNameSort] = useState(true)
+
   const getStatus = (status) => {
     const statuses = [
       { value: 1, content: 'New', color: colors.primary },
@@ -33,18 +38,40 @@ export const ContactedLeads = (props) => {
   const handleSortList = (sort) => {
     const _contactedLeadsList = [...dummyData]
     if (sort === 'status') {
-      _contactedLeadsList.sort((a, b) => {
-        return a.status - b.status
-      })
+      setIsNameSort(false)
+      if (isStatusAscending) {
+        _contactedLeadsList.sort((a, b) => {
+          return b.status - a.status
+        })
+      } else {
+        _contactedLeadsList.sort((a, b) => {
+          return a.status - b.status
+        })
+      }
+      setIsStatusAscending(!isStatusAscending)
     }
     if (sort === 'name') {
-      _contactedLeadsList.sort(function(a, b){
-        if(a.name < b.name) { return -1; }
-        if(a.name > b.name) { return 1; }
-        return 0;
-      })
+      setIsNameSort(true)
+      if (isNameAscending) {
+        _contactedLeadsList.sort(function(a, b){
+          if(a.name > b.name) { return -1; }
+          if(a.name < b.name) { return 1; }
+          return 0;
+        })
+      } else {
+        _contactedLeadsList.sort(function(a, b){
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+      }
+      setIsNameAscending(!isNameAscending)
     }
     setContactedLeadsList(_contactedLeadsList)
+  }
+
+  const onSelectFilterBy = () => {
+    Vibration.vibrate(150)
   }
 
   return (
@@ -60,61 +87,62 @@ export const ContactedLeads = (props) => {
             <HText style={styles.filterText}>420 leads</HText>
           </HStack>
           <HStack>
-            <HStack alignItems='center' mr='8'>
-              <Checkbox
-                size='md'
-                borderRadius={15}
-                borderColor={colors.primary}
-                _checked={{
-                  backgroundColor: colors.white,
-                  borderColor: colors.primary,
-                }}
-                _interactionBox={{
-                  opacity: 0
-                }}
-                icon={
-                  <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                }
-                accessibilityLabel='Buyers'
-              />
+            <Checkbox
+              size='md'
+              mr='8'
+              borderRadius={15}
+              borderColor={colors.primary}
+              _checked={{
+                backgroundColor: colors.white,
+                borderColor: colors.primary,
+              }}
+              _interactionBox={{
+                opacity: 0
+              }}
+              icon={
+                <Icon as={<Image source={icons.cirlceCheckOn} />} />
+              }
+              onChange={selected => onSelectFilterBy(selected)}
+            >
               <HText style={styles.radioLabel}>Buyers</HText>
-            </HStack>
-            <HStack alignItems='center' mr='8'>
-              <Checkbox
-                size='md'
-                borderRadius={15}
-                borderColor={colors.primary}
-                _checked={{
-                  backgroundColor: colors.white,
-                  borderColor: colors.primary,
-                }}
-                _interactionBox={{
-                  opacity: 0
-                }}
-                icon={
-                  <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                }
-              />
+            </Checkbox>
+            <Checkbox
+              size='md'
+              mr='8'
+              borderRadius={15}
+              borderColor={colors.primary}
+              _checked={{
+                backgroundColor: colors.white,
+                borderColor: colors.primary,
+              }}
+              _interactionBox={{
+                opacity: 0
+              }}
+              icon={
+                <Icon as={<Image source={icons.cirlceCheckOn} />} />
+              }
+              onChange={selected => onSelectFilterBy(selected)}
+            >
               <HText style={styles.radioLabel}>Sellers</HText>
-            </HStack>
-            <HStack alignItems='center'>
-              <Checkbox
-                size='md'
-                borderRadius={15}
-                borderColor={colors.primary}
-                _checked={{
-                  backgroundColor: colors.white,
-                  borderColor: colors.primary,
-                }}
-                _interactionBox={{
-                  opacity: 0
-                }}
-                icon={
-                  <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                }
-              />
+            </Checkbox>
+            <Checkbox
+              size='md'
+              borderRadius={15}
+              borderColor={colors.primary}
+              _checked={{
+                backgroundColor: colors.white,
+                borderColor: colors.primary,
+              }}
+              _interactionBox={{
+                opacity: 0
+              }}
+              icon={
+                <Icon as={<Image source={icons.cirlceCheckOn} />} />
+              }
+              onChange={selected => onSelectFilterBy(selected)}
+            >
               <HText style={styles.radioLabel}>Prospective</HText>
-            </HStack>
+            </Checkbox>
           </HStack>
         </VStack>
         <VStack>
@@ -127,7 +155,7 @@ export const ContactedLeads = (props) => {
               onPress={() => handleSortList('name')}
             >
               <HStack py='2'>
-                <HText style={styles.headerNameText}>Name</HText>
+                <HText style={isNameSort ? styles.headerNameText : styles.statusText}>Name</HText>
                 <Image source={icons.arrowDown} style={styles.arrowDownIcon} />
               </HStack>
             </Pressable>
@@ -139,7 +167,7 @@ export const ContactedLeads = (props) => {
               onPress={() => handleSortList('status')}
             >
               <HStack py='2'>
-                <HText style={styles.statusText}>Status</HText>
+                <HText style={!isNameSort ? styles.headerNameText : styles.statusText}>Status</HText>
                 <Image source={icons.arrowDown} style={styles.arrowDownIcon} />
               </HStack>
             </Pressable>
