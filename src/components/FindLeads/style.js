@@ -94,7 +94,7 @@ export default StyleSheet.create({
     position: 'absolute',
     width: '100%',
     alignItems: 'center',
-    backgroundColor: colors.pimary_100,
+    backgroundColor: colors.primary_100,
     borderRadius: 10,
     paddingHorizontal: 32,
     paddingTop: 26,

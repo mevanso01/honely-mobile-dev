@@ -1,9 +1,8 @@
-import { Platform } from 'react-native'
-
 export const colors = {
   primary: "#5D5FEF",
   lightPrimary: "#9FA1F4",
-  pimary_100: "#A2A3F7",
+  darkPrimary: "#2F31BE",
+  primary_100: "#A2A3F7",
   primaryContrast: "#EFFFF2",
   secondary: "#FF7D1F",
   error: "#FF735E",
@@ -68,6 +67,8 @@ export const icons = {
   setting: require('../assets/icons/setting.png'),
   search: require('../assets/icons/search.png'),
   hintArrowUp: require('../assets/icons/hint-arrow-up.png'),
+  leadsMarker: require('../assets/icons/leads-marker.png'),
+  sliderThumb: require('../assets/icons/slider-thumb.png'),
 }
 
 export const fonts = {

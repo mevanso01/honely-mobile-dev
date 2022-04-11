@@ -5,6 +5,7 @@ import BottomNavigator from './BottomNavigator'
 const Stack = createStackNavigator()
 import ContactLead from '../screens/ContactLead'
 import ContactLeadPreset from '../screens/ContactLeadPreset'
+import LeadsMap from '../screens/LeadsMap'
 
 const LeadsNavigator = () => {
   return (
@@ -22,6 +23,11 @@ const LeadsNavigator = () => {
       <Stack.Screen
         name='ContactLeadPreset'
         component={ContactLeadPreset}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='LeadsMap'
+        component={LeadsMap}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

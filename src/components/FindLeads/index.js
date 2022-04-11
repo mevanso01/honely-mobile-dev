@@ -9,6 +9,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FeatherIcons from 'react-native-vector-icons/Feather'
 
 export const FindLeads = (props) => {
+  const {
+    onNavigationRedirect
+  } = props
+
   const insets = useSafeAreaInsets()
   const statusBarHeight = insets.top
   const [searchValue, setSearchValue] = useState('')
@@ -33,6 +37,11 @@ export const FindLeads = (props) => {
     timeout = setTimeout(function () {
       setSearchValue(value)
     }, 750)
+  }
+
+  const handleSelectZipcode = () => {
+    setIsOpenDropdown(false)
+    onNavigationRedirect('LeadsMap')
   }
 
   useEffect(() => {
@@ -74,7 +83,7 @@ export const FindLeads = (props) => {
             paddingRight={17}
             zIndex={1100}
             color={colors.primary}
-            borderColor={colors.primary}
+            borderColor={isOpenDropdown ? colors.white : colors.primary}
             autoCapitalize='none'
             returnKeyType='done'
             blurOnSubmit
@@ -103,7 +112,7 @@ export const FindLeads = (props) => {
                     _pressed={{
                       backgroundColor: colors.text05
                     }}
-                    onPress={() => setIsOpenDropdown(false)}
+                    onPress={() => handleSelectZipcode()}
                   >
                     <HText style={styles.searchText}>{2643 + i}</HText>
                   </Pressable>
@@ -139,6 +148,7 @@ export const FindLeads = (props) => {
                 _pressed={{
                   backgroundColor: colors.text05
                 }}
+                onPress={() => handleSelectZipcode()}
               >
                 <View style={styles.recentSearchItem}>
                   <HText style={styles.searchAddressText}>Los Angeles, CA</HText>
