@@ -58,15 +58,14 @@ export default StyleSheet.create({
   },
   searchLeadsText: {
     color: colors.primary,
-    fontSize: 14,
-    marginTop: 10
+    fontSize: 14
   },
   searchListContainer: {
     position: 'absolute',
     backgroundColor: colors.white,
-    top: 0,
-    left: 18,
-    width: '100%',
+    top: 10,
+    left: 16,
+    width: deviceWidth - 32,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     borderBottomLeftRadius: 10,
@@ -76,10 +75,10 @@ export default StyleSheet.create({
     paddingTop: 60
   },
   dropDownContainer: {
-    maxHeight: 250,
+    maxHeight: 230,
     borderTopWidth: 1,
     borderTopColor: colors.primary,
-    marginHorizontal: 18
+    marginHorizontal: 18,
   },
   dropDownContent: {
     paddingVertical: 10

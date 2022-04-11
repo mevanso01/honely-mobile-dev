@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, ScrollView, Image, Platform, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
-import { Input, Pressable } from 'native-base'
+import { Input, Pressable, HStack } from 'native-base'
 import { HText } from '../Shared'
 import { ScrollView as DropDownContainer } from 'react-native-gesture-handler'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import FeatherIcons from 'react-native-vector-icons/Feather'
 
 export const FindLeads = (props) => {
   const insets = useSafeAreaInsets()
@@ -74,14 +75,13 @@ export const FindLeads = (props) => {
             zIndex={1100}
             color={colors.primary}
             borderColor={colors.primary}
-            borderWidth={isOpenDropdown ? 0 : 1}
             autoCapitalize='none'
             returnKeyType='done'
             blurOnSubmit
             // value={searchValue}
             onChangeText={val => onChangeSearch(val)}
             _focus={{
-              borderColor: colors.primary
+              borderColor: isOpenDropdown ? colors.white : colors.primary
             }}
             InputLeftElement={
               <Image
@@ -132,10 +132,23 @@ export const FindLeads = (props) => {
         >
           <View style={styles.recentSearchContainer}>
             <HText style={styles.recentText}>Recent Searches</HText>
-            <View style={styles.recentSearchItem}>
-              <HText style={styles.searchAddressText}>Los Angeles, CA</HText>
-              <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
-            </View>
+            {[...Array(3).keys()].map(i => (
+              <Pressable
+                key={i}
+                mb='3'
+                _pressed={{
+                  backgroundColor: colors.text05
+                }}
+              >
+                <View style={styles.recentSearchItem}>
+                  <HText style={styles.searchAddressText}>Los Angeles, CA</HText>
+                  <HStack mt='2' alignItems='center' justifyContent='space-between'>
+                    <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
+                    <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
+                  </HStack>
+                </View>
+              </Pressable>
+            ))}
           </View>
         </ScrollView>
       </View>
