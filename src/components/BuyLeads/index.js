@@ -122,7 +122,7 @@ export const BuyLeads = (props) => {
         </View>
       </ScrollView>
       <Divider backgroundColor={colors.primary} opacity={0.7} />
-      <Box alignItems='center' mt='4' mb='8'>
+      <Box alignItems='center' mt='4' mb='4'>
         <HButton
           text='(3) Proceed to Checkout'
           width={deviceWidth - 48}

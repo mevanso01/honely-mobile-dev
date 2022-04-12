@@ -104,6 +104,7 @@ export const LeadsMap = (props) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
       >
         <VStack alignItems='center'>
           <View style={styles.maxDistanceLabelWrapper}>
@@ -198,17 +199,17 @@ export const LeadsMap = (props) => {
             </HStack>
           </View>
         </Pressable>
-        <Box alignItems='center' mt='16' mb='10'>
-          <HButton
-            text='View All Leads'
-            borderColor={colors.darkPrimary}
-            backgroundColor={colors.darkPrimary}
-            widt={(deviceWidth - 36) * 0.9}
-            height={60}
-            onPress={() => onNavigationRedirect('BuyLeads')}
-          />
-        </Box>
       </ScrollView>
+      <Box alignItems='center' mt='4' mb='4'>
+        <HButton
+          text='View All Leads'
+          borderColor={colors.darkPrimary}
+          backgroundColor={colors.darkPrimary}
+          widt={(deviceWidth - 36) * 0.9}
+          height={60}
+          onPress={() => onNavigationRedirect('BuyLeads')}
+        />
+      </Box>
     </View>
   )
 }

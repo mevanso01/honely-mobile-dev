@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-    height: 200
+    height: 200,
   },
   markerIcon: {
     width: 50,
@@ -22,9 +22,9 @@ export default StyleSheet.create({
     tintColor: colors.white
   },
   backBtnWrapper: {
-    paddingTop: 45,
-    paddingLeft: 10,
-    height: 160
+    position: 'absolute',
+    top: 45,
+    left: 10
   },
   addressIcon: {
     tintColor: colors.primary,
@@ -47,9 +47,13 @@ export default StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 24,
     paddingVertical: 14,
-    marginBottom: 26
+    position: 'absolute',
+    top: 160
   },
   scrollContainer: {
+    marginTop: 250
+  },
+  scrollContent: {
     flexGrow: 1
   },
   labelText: {
