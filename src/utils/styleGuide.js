@@ -22,6 +22,7 @@ export const colors = {
   info100: "#7484fc1a",
   disabled: "#6F6F6F",
   rejected: "#C4C4C4",
+  leadsCardBg: "#646bffe0",
 
   tint: "#EFFFF2",
   tint02: "#FBFCFE",
@@ -69,6 +70,8 @@ export const icons = {
   hintArrowUp: require('../assets/icons/hint-arrow-up.png'),
   leadsMarker: require('../assets/icons/leads-marker.png'),
   sliderThumb: require('../assets/icons/slider-thumb.png'),
+  cart: require('../assets/icons/cart.png'),
+  groupUser: require('../assets/icons/group-user.png'),
 }
 
 export const fonts = {

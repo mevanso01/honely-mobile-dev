@@ -38,7 +38,8 @@ const markers = [
 
 export const LeadsMap = (props) => {
   const {
-    navigation
+    navigation,
+    onNavigationRedirect
   } = props
 
   const [maxDistance, setMaxDistance] = useState(14)
@@ -142,6 +143,7 @@ export const LeadsMap = (props) => {
           _pressed={{
             backgroundColor: colors.text05
           }}
+          onPress={() => onNavigationRedirect('BuyLeads')}
         >
           <View style={styles.sectionContainer}>
             <VStack width='70%'>
@@ -161,6 +163,7 @@ export const LeadsMap = (props) => {
           _pressed={{
             backgroundColor: colors.text05
           }}
+          onPress={() => onNavigationRedirect('BuyLeads')}
         >
           <View style={styles.sectionContainer}>
             <VStack width='70%'>
@@ -180,6 +183,7 @@ export const LeadsMap = (props) => {
           _pressed={{
             backgroundColor: colors.text05
           }}
+          onPress={() => onNavigationRedirect('BuyLeads')}
         >
           <View style={styles.sectionContainer}>
             <VStack width='70%'>
@@ -201,6 +205,7 @@ export const LeadsMap = (props) => {
             backgroundColor={colors.darkPrimary}
             widt={(deviceWidth - 36) * 0.9}
             height={60}
+            onPress={() => onNavigationRedirect('BuyLeads')}
           />
         </Box>
       </ScrollView>
