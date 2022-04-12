@@ -1,8 +1,9 @@
 import React from 'react'
 import { View, Image, Vibration, ScrollView } from 'react-native'
-import { Pressable, HStack, VStack, Badge, Box, Checkbox, Icon, Divider } from 'native-base'
+import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider } from 'native-base'
 import { HButton, HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
+import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
 import { Card } from './Card'
 
@@ -121,6 +122,18 @@ export const BuyLeads = (props) => {
         </View>
       </ScrollView>
       <Divider backgroundColor={colors.primary} opacity={0.7} />
+      <Box alignItems='center' mt='4' mb='8'>
+        <HButton
+          text='(3) Proceed to Checkout'
+          width={deviceWidth - 48}
+          borderColor={colors.primary}
+          backgroundColor={colors.white}
+          borderWidth={1}
+          textStyle={{
+            color: colors.primary
+          }}
+        />
+      </Box>
     </View>
   )
 }
