@@ -9,7 +9,8 @@ import { Card } from './Card'
 
 export const BuyLeads = (props) => {
   const {
-    navigation
+    navigation,
+    onNavigationRedirect
   } = props
   
   const onSelectFilterBy = () => {
@@ -32,10 +33,17 @@ export const BuyLeads = (props) => {
       <View style={styles.titleContainer}>
         <HText style={styles.headerTitle}>Buy leads</HText>
         <View style={styles.cartIconContainer}>
-          <Image source={icons.cart} style={styles.cartIcon} />
-          <View style={styles.cartQtyWrapper}>
-            <HText style={styles.cartQty}>12</HText>
-          </View>
+          <Pressable
+            _pressed={{
+              opacity: 0.6
+            }}
+            onPress={() => onNavigationRedirect('LeadsCheckout')}
+          >
+            <Image source={icons.cart} style={styles.cartIcon} />
+            <View style={styles.cartQtyWrapper}>
+              <HText style={styles.cartQty}>12</HText>
+            </View>
+          </Pressable>
         </View>
       </View>
 
@@ -132,6 +140,7 @@ export const BuyLeads = (props) => {
           textStyle={{
             color: colors.primary
           }}
+          onPress={() => onNavigationRedirect('LeadsCheckout')}
         />
       </Box>
     </View>
