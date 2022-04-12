@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, SafeAreaView } from 'react-native'
 import { BuyLeads as BuyLeadsScreen } from '../components/BuyLeads'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
@@ -21,13 +21,13 @@ const BuyLeads = (props) => {
   })
 
   return (
-    <View style={styles.wrapper}>
+    <SafeAreaView style={styles.wrapper}>
       <HFocusAwareStatusBar
         backgroundColor={colors.white}
         barStyle='dark-content'
       />
       <BuyLeadsScreen {...buyLeadsProps} />
-    </View>
+    </SafeAreaView>
   )
 }
 
