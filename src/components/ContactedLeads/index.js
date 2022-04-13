@@ -156,7 +156,9 @@ export const ContactedLeads = (props) => {
             >
               <HStack py='2'>
                 <HText style={isNameSort ? styles.headerNameText : styles.statusText}>Name</HText>
-                <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isNameAscending ? '180deg': '0deg' }] }]} />
+                {isNameSort && (
+                  <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isNameAscending ? '0deg': '180deg' }] }]} />
+                )}
               </HStack>
             </Pressable>
             <Pressable
@@ -168,7 +170,9 @@ export const ContactedLeads = (props) => {
             >
               <HStack py='2'>
                 <HText style={!isNameSort ? styles.headerNameText : styles.statusText}>Status</HText>
-                <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isStatusAscending ? '180deg': '0deg' }] }]} />
+                {!isNameSort && (
+                  <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isStatusAscending ? '0deg': '180deg' }] }]} />
+                )}
               </HStack>
             </Pressable>
           </HStack>
