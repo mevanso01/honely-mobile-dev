@@ -40,17 +40,21 @@ export default StyleSheet.create({
     color: colors.primary
   },
   qtyTextContainer: {
+    minWidth: 80,
+    alignItems: 'center'
+  },
+  qtyTextWrapper: {
+    minWidth: 40,
     alignItems: 'center',
-    minWidth: 80
+    borderBottomColor: colors.primary,
+    borderBottomWidth: 1
   },
   qtyText: {
     fontSize: 28,
     color: colors.primary,
-    borderBottomColor: colors.primary,
-    borderBottomWidth: 1,
     paddingRight: 5,
     paddingLeft: 5,
-    paddingBottom: 3
+    paddingBottom: 3,
   },
   qtyBtnText: {
     fontSize: 39,

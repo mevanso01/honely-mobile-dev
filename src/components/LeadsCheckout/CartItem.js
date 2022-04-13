@@ -37,7 +37,9 @@ export const CartItem = (props) => {
             <HText style={styles.qtyBtnText}>-</HText>
           </Pressable>
           <View style={styles.qtyTextContainer}>
-            <HText style={styles.qtyText}>{cartQty}</HText>
+            <View style={styles.qtyTextWrapper}>
+              <HText style={styles.qtyText}>{cartQty}</HText>
+            </View>
           </View>
           <Pressable
             _pressed={{

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import { HText, HButton } from '../Shared'
-import { Pressable, HStack, Box, Divider } from 'native-base'
+import { Pressable, HStack, Box } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
