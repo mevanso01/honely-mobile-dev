@@ -24,7 +24,7 @@ export const colors = {
   rejected: "#C4C4C4",
   leadsCardBg: "#646bffe0",
 
-  tint: "#EFFFF2",
+  tint: "#e0e1f9",
   tint02: "#FBFCFE",
 
   text01: "#1A1D1B",
