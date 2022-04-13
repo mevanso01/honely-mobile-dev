@@ -53,7 +53,7 @@ export default StyleSheet.create({
     backgroundColor: colors.text05
   },
   photoEditBtn: {
-    backgroundColor: colors.tint,
+    backgroundColor: colors.lightPrimary,
     position: 'absolute',
     bottom: 0,
     right: 0,

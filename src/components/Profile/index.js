@@ -39,7 +39,7 @@ export const Profile = (props) => {
             />
           </View>
           <VStack mt='8' alignItems='center'>
-            <HText style={styles.title}>{currentUser?.first_name} {currentUser?.last_name}</HText>
+            <HText style={styles.nameText}>{currentUser?.first_name} {currentUser?.last_name}</HText>
             <HText style={styles.nameDetail}>Keller Willaims Realty</HText>
           </VStack>
         </View>

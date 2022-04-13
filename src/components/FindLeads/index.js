@@ -92,6 +92,7 @@ export const FindLeads = (props) => {
             _focus={{
               borderColor: isOpenDropdown ? colors.white : colors.primary
             }}
+            onFocus={() => setIsShowHint(false)}
             InputLeftElement={
               <Image
                 source={icons.location}

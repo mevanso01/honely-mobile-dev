@@ -27,78 +27,78 @@ export const LeadsDashboard = (props) => {
       <View style={styles.innerContainer}>
         <HText style={styles.title}>Leads Dashboard</HText>
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}
-      >
-        {!isNoData ? (
-          <View style={styles.leadsContent}>
-            <View style={styles.innerContainer}>
-              <VStack mb='12'>
-                <HStack mb='4' justifyContent='space-between'>
-                  <HText style={styles.filterText}>Filter by:</HText>
-                  <HText style={styles.filterText}>32 leads</HText>
-                </HStack>
-                <HStack>
-                  <Checkbox
-                    size='md'
-                    mr='8'
-                    borderRadius={15}
-                    borderColor={colors.primary}
-                    _checked={{
-                      backgroundColor: colors.white,
-                      borderColor: colors.primary,
-                    }}
-                    _interactionBox={{
-                      opacity: 0
-                    }}
-                    icon={
-                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                    }
-                    onChange={selected => onSelectFilterBy(selected)}
-                  >
-                    <HText style={styles.radioLabel}>Buyers</HText>
-                  </Checkbox>
-                  <Checkbox
-                    size='md'
-                    mr='8'
-                    borderRadius={15}
-                    borderColor={colors.primary}
-                    _checked={{
-                      backgroundColor: colors.white,
-                      borderColor: colors.primary,
-                    }}
-                    _interactionBox={{
-                      opacity: 0
-                    }}
-                    icon={
-                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                    }
-                    onChange={selected => onSelectFilterBy(selected)}
-                  >
-                    <HText style={styles.radioLabel}>Sellers</HText>
-                  </Checkbox>
-                  <Checkbox
-                    size='md'
-                    borderRadius={15}
-                    borderColor={colors.primary}
-                    _checked={{
-                      backgroundColor: colors.white,
-                      borderColor: colors.primary,
-                    }}
-                    _interactionBox={{
-                      opacity: 0
-                    }}
-                    icon={
-                      <Icon as={<Image source={icons.cirlceCheckOn} />} />
-                    }
-                    onChange={selected => onSelectFilterBy(selected)}
-                  >
-                    <HText style={styles.radioLabel}>Prospective</HText>
-                  </Checkbox>
-                </HStack>
-              </VStack>
-            </View>
+      {!isNoData ? (
+        <View style={styles.leadsContent}>
+          <View style={styles.innerContainer}>
+            <VStack mb='12'>
+              <HStack mb='4' justifyContent='space-between'>
+                <HText style={styles.filterText}>Filter by:</HText>
+                <HText style={styles.filterText}>32 leads</HText>
+              </HStack>
+              <HStack>
+                <Checkbox
+                  size='md'
+                  mr='8'
+                  borderRadius={15}
+                  borderColor={colors.primary}
+                  _checked={{
+                    backgroundColor: colors.white,
+                    borderColor: colors.primary,
+                  }}
+                  _interactionBox={{
+                    opacity: 0
+                  }}
+                  icon={
+                    <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                  }
+                  onChange={selected => onSelectFilterBy(selected)}
+                >
+                  <HText style={styles.radioLabel}>Buyers</HText>
+                </Checkbox>
+                <Checkbox
+                  size='md'
+                  mr='8'
+                  borderRadius={15}
+                  borderColor={colors.primary}
+                  _checked={{
+                    backgroundColor: colors.white,
+                    borderColor: colors.primary,
+                  }}
+                  _interactionBox={{
+                    opacity: 0
+                  }}
+                  icon={
+                    <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                  }
+                  onChange={selected => onSelectFilterBy(selected)}
+                >
+                  <HText style={styles.radioLabel}>Sellers</HText>
+                </Checkbox>
+                <Checkbox
+                  size='md'
+                  borderRadius={15}
+                  borderColor={colors.primary}
+                  _checked={{
+                    backgroundColor: colors.white,
+                    borderColor: colors.primary,
+                  }}
+                  _interactionBox={{
+                    opacity: 0
+                  }}
+                  icon={
+                    <Icon as={<Image source={icons.cirlceCheckOn} />} />
+                  }
+                  onChange={selected => onSelectFilterBy(selected)}
+                >
+                  <HText style={styles.radioLabel}>Prospective</HText>
+                </Checkbox>
+              </HStack>
+            </VStack>
+          </View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+          >
             <Swiper
               showsButtons={false}
               loop={true}
@@ -147,8 +147,13 @@ export const LeadsDashboard = (props) => {
                 </View>
               ))}
             </Swiper>
-          </View>
-        ) : (
+          </ScrollView>
+        </View>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.container}
+        >
           <View style={styles.bottomContainer}>
             <View style={[styles.imageWrapper, { aspectRatio: 221 / 240 }]}>
               <Image
@@ -165,8 +170,8 @@ export const LeadsDashboard = (props) => {
               onPress={() => {}}
             />
           </View>
-        )}
-      </ScrollView>
+        </ScrollView>
+      )}
     </View>
   )
 }

@@ -147,7 +147,7 @@ export const EditProfile = (props) => {
           />
           <Pressable
             onPress={handleImagePicker}
-               style={styles.photoEditBtn}
+            style={styles.photoEditBtn}
             _pressed={{
               opacity: 0.6
             }}

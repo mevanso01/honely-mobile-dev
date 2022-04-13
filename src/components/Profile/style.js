@@ -28,7 +28,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 28,
-    backgroundColor: colors.primaryContrast,
+    backgroundColor: colors.leadsCardBg,
   },
   photoWrapper: {
     width: 153,
@@ -42,11 +42,17 @@ export default StyleSheet.create({
     height: '100%',
     borderRadius: 80
   },
+  nameText: {
+    fontSize: 22,
+    fontWeight: '600',
+    lineHeight: 33,
+    color: colors.white
+  },
   nameDetail: {
     marginTop: 5,
     fontWeight: '500',
     fontSize: 14,
-    color: colors.text02, 
+    color: colors.white, 
     lineHeight: 21,
   }
 })

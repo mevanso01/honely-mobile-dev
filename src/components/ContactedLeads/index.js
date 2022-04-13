@@ -20,7 +20,7 @@ export const ContactedLeads = (props) => {
   } = props
 
   const [contactedLeadsList, setContactedLeadsList] = useState(dummyData)
-  const [isNameAscending, setIsNameAscending] = useState(true)
+  const [isNameAscending, setIsNameAscending] = useState(false)
   const [isStatusAscending, setIsStatusAscending] = useState(false)
   const [isNameSort, setIsNameSort] = useState(true)
 
@@ -52,7 +52,7 @@ export const ContactedLeads = (props) => {
     }
     if (sort === 'name') {
       setIsNameSort(true)
-      if (isNameAscending) {
+      if (!isNameAscending) {
         _contactedLeadsList.sort(function(a, b){
           if(a.name > b.name) { return -1; }
           if(a.name < b.name) { return 1; }
@@ -77,74 +77,74 @@ export const ContactedLeads = (props) => {
   return (
     <View style={styles.screenContainer}>
       <HText style={styles.title}>Contacted Leads</HText>
+      <VStack mb='10'>
+        <HStack mb='4' justifyContent='space-between'>
+          <HText style={styles.filterText}>Filter by:</HText>
+          <HText style={styles.filterText}>420 leads</HText>
+        </HStack>
+        <HStack>
+          <Checkbox
+            size='md'
+            mr='8'
+            borderRadius={15}
+            borderColor={colors.primary}
+            _checked={{
+              backgroundColor: colors.white,
+              borderColor: colors.primary,
+            }}
+            _interactionBox={{
+              opacity: 0
+            }}
+            icon={
+              <Icon as={<Image source={icons.cirlceCheckOn} />} />
+            }
+            onChange={selected => onSelectFilterBy(selected)}
+          >
+            <HText style={styles.radioLabel}>Buyers</HText>
+          </Checkbox>
+          <Checkbox
+            size='md'
+            mr='8'
+            borderRadius={15}
+            borderColor={colors.primary}
+            _checked={{
+              backgroundColor: colors.white,
+              borderColor: colors.primary,
+            }}
+            _interactionBox={{
+              opacity: 0
+            }}
+            icon={
+              <Icon as={<Image source={icons.cirlceCheckOn} />} />
+            }
+            onChange={selected => onSelectFilterBy(selected)}
+          >
+            <HText style={styles.radioLabel}>Sellers</HText>
+          </Checkbox>
+          <Checkbox
+            size='md'
+            borderRadius={15}
+            borderColor={colors.primary}
+            _checked={{
+              backgroundColor: colors.white,
+              borderColor: colors.primary,
+            }}
+            _interactionBox={{
+              opacity: 0
+            }}
+            icon={
+              <Icon as={<Image source={icons.cirlceCheckOn} />} />
+            }
+            onChange={selected => onSelectFilterBy(selected)}
+          >
+            <HText style={styles.radioLabel}>Prospective</HText>
+          </Checkbox>
+        </HStack>
+      </VStack>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
       >
-        <VStack mb='10'>
-          <HStack mb='4' justifyContent='space-between'>
-            <HText style={styles.filterText}>Filter by:</HText>
-            <HText style={styles.filterText}>420 leads</HText>
-          </HStack>
-          <HStack>
-            <Checkbox
-              size='md'
-              mr='8'
-              borderRadius={15}
-              borderColor={colors.primary}
-              _checked={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-              }}
-              _interactionBox={{
-                opacity: 0
-              }}
-              icon={
-                <Icon as={<Image source={icons.cirlceCheckOn} />} />
-              }
-              onChange={selected => onSelectFilterBy(selected)}
-            >
-              <HText style={styles.radioLabel}>Buyers</HText>
-            </Checkbox>
-            <Checkbox
-              size='md'
-              mr='8'
-              borderRadius={15}
-              borderColor={colors.primary}
-              _checked={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-              }}
-              _interactionBox={{
-                opacity: 0
-              }}
-              icon={
-                <Icon as={<Image source={icons.cirlceCheckOn} />} />
-              }
-              onChange={selected => onSelectFilterBy(selected)}
-            >
-              <HText style={styles.radioLabel}>Sellers</HText>
-            </Checkbox>
-            <Checkbox
-              size='md'
-              borderRadius={15}
-              borderColor={colors.primary}
-              _checked={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-              }}
-              _interactionBox={{
-                opacity: 0
-              }}
-              icon={
-                <Icon as={<Image source={icons.cirlceCheckOn} />} />
-              }
-              onChange={selected => onSelectFilterBy(selected)}
-            >
-              <HText style={styles.radioLabel}>Prospective</HText>
-            </Checkbox>
-          </HStack>
-        </VStack>
         <VStack>
           <HStack>
             <Pressable
@@ -156,7 +156,7 @@ export const ContactedLeads = (props) => {
             >
               <HStack py='2'>
                 <HText style={isNameSort ? styles.headerNameText : styles.statusText}>Name</HText>
-                <Image source={icons.arrowDown} style={styles.arrowDownIcon} />
+                <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isNameAscending ? '180deg': '0deg' }] }]} />
               </HStack>
             </Pressable>
             <Pressable
@@ -168,7 +168,7 @@ export const ContactedLeads = (props) => {
             >
               <HStack py='2'>
                 <HText style={!isNameSort ? styles.headerNameText : styles.statusText}>Status</HText>
-                <Image source={icons.arrowDown} style={styles.arrowDownIcon} />
+                <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isStatusAscending ? '180deg': '0deg' }] }]} />
               </HStack>
             </Pressable>
           </HStack>
