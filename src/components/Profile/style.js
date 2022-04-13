@@ -46,13 +46,13 @@ export default StyleSheet.create({
     fontSize: 22,
     fontWeight: '700',
     lineHeight: 33,
-    color: colors.primary
+    color: colors.text01
   },
   nameDetail: {
     marginTop: 5,
     fontWeight: '500',
     fontSize: 14,
-    color: colors.primary, 
+    color: colors.text01, 
     lineHeight: 21,
   }
 })
