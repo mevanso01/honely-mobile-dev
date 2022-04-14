@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import { doPost } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
 
-export const doUpdateProfile = () => async (dispatch, getState) => {
+export const doUpdateUserProfile = () => async (dispatch, getState) => {
   const { screens: { editprofile: { formState } } } = getState()
-  dispatch(setLoading(true))
+  // dispatch(setLoading(true))
 
   try {
     const body = {
@@ -14,8 +14,6 @@ export const doUpdateProfile = () => async (dispatch, getState) => {
       last_name_value: formState.last_name,
       phone_number_value: formState.phone_number,
       user_type: formState.user_type,
-      // email: formState.email,
-      // image_url: formState.image_url
     }
     const response = await doPost('lookup-test/user_profile_modification', body)
     dispatch(setLoading(false))
@@ -26,19 +24,49 @@ export const doUpdateProfile = () => async (dispatch, getState) => {
       first_name: formState.first_name,
       last_name: formState.last_name,
       phone_number: formState.phone_number,
-      // email: formState.email,
-      // image_url: formState.image_url
     }))
     return response
   } catch (error) {
-    dispatch(setLoading(false))
+    // dispatch(setLoading(false))
+    return Promise.reject(error)
+  }
+}
+
+export const doUpdateAgentProfile = () => async (dispatch, getState) => {
+  const { screens: { editprofile: { formState, agentProfile } } } = getState()
+  try {
+    // const infoList = ['first_name', 'last_name', 'phone_number', 'company_name', 'home_url']
+    const infoList = ['company_name', 'home_url']
+    let body = {
+      agent_id: agentProfile.agent_id,
+      information: infoList,
+      // first_name_value: agentProfile.first_name,
+      // last_name_value: agentProfile.last_name,
+      // phone_number_value: agentProfile.phone_number,
+      company_name_value: formState.company_name,
+      home_url_value: agentProfile.home_url,
+    }
+    if (formState.imageFileData) {
+      infoList.push('image')
+      body.user_name = formState.user_name
+      body.base64 = formState.imageFileData
+      body.extension = formState.imageFileExt
+    }
+    const response = await doPost('lookup-test/agent_profile_modification', body)
+    if (formState.imageFileData) {
+      const image_url = 'https://honely-files-public.s3.amazonaws.com/images/' + formState.user_name + '.' + formState.imageFileExt
+      dispatch(setUser({ image_url: image_url }))
+    }
+    return response
+  } catch (error) {
     return Promise.reject(error)
   }
 }
 
 const initialState = {
   isLoading: false,
-  formState: {}
+  formState: {},
+  agentProfile: {}
 }
 
 const editProfileSlice = createSlice({
@@ -56,11 +84,20 @@ const editProfileSlice = createSlice({
         temp[key] = action.payload[key]
       }
       state.formState = temp
+    },
+    setAgentProfile: (state, action) => {
+      const temp = {
+        ...state.agentProfile
+      }
+      for (let key in action.payload) {
+        temp[key] = action.payload[key]
+      }
+      state.agentProfile = temp
     }
   },
   extraReducers: {}
 })
 
-export const { setLoading, setFormState } = editProfileSlice.actions
+export const { setLoading, setFormState, setAgentProfile } = editProfileSlice.actions
 
 export default editProfileSlice.reducer

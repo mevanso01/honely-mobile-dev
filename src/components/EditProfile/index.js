@@ -10,7 +10,7 @@ import { TOAST_LENGTH_SHORT } from '../../config'
 import styles from './style'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { setFormState, doUpdateProfile } from './store'
+import { setLoading, setFormState, doUpdateUserProfile, doUpdateAgentProfile } from './store'
 
 export const EditProfile = (props) => {
   const {
@@ -19,10 +19,11 @@ export const EditProfile = (props) => {
 
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
-  const { isLoading, formState } = useSelector(({ screens }) => screens.editprofile)
+  const { isLoading, formState, agentProfile } = useSelector(({ screens }) => screens.editprofile)
 
   const toast = useToast()
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
+  const [agentPhoto, setAgentPhoto] = useState(null)
   const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm({
     defaultValues: formState
   })
@@ -39,29 +40,34 @@ export const EditProfile = (props) => {
 
   const onSubmit = async (values) => {
     Keyboard.dismiss()
-    // dispatch(setFormState(values))
-    // try {
-    //   const response = await dispatch(doUpdateProfile())
-    //   if (response.result === 'Success') {
-    //     toast.show({
-    //       title: 'Success',
-    //       description: 'Profile updated',
-    //       status: 'success',
-    //       duration: TOAST_LENGTH_SHORT,
-    //       marginRight: 4,
-    //       marginLeft: 4,
-    //     })
-    //   }
-    // } catch (error) {
-    //   toast.show({
-    //     title: 'Error',
-    //     description: error,
-    //     status: 'error',
-    //     duration: TOAST_LENGTH_SHORT,
-    //     marginRight: 4,
-    //     marginLeft: 4,
-    //   })
-    // }
+    dispatch(setFormState(values))
+    try {
+      dispatch(setLoading(true))
+      await dispatch(doUpdateUserProfile())
+      const updatedAgent = await dispatch(doUpdateAgentProfile())
+      dispatch(setLoading(false))
+
+      if (updatedAgent.result === 'Success') {
+        toast.show({
+          title: 'Success',
+          description: 'Profile updated',
+          status: 'success',
+          duration: TOAST_LENGTH_SHORT,
+          marginRight: 4,
+          marginLeft: 4,
+        })
+      }
+    } catch (error) {
+      dispatch(setLoading(false))
+      toast.show({
+        title: 'Error',
+        description: error,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
   }
 
   const handleSubmitClick = () => {
@@ -86,7 +92,11 @@ export const EditProfile = (props) => {
       } else {
         if (response?.assets) {
           const userPhoto = `data:${response.assets[0].type};base64,${response.assets[0].base64}`
-          dispatch(setFormState({ image_url: userPhoto }))
+          setAgentPhoto(userPhoto)
+          dispatch(setFormState({
+            imageFileData: response.assets[0].base64,
+            imageFileExt: response.assets[0].type.replace('image/', '')
+          }))
         } else {
           toast.show({
             title: 'Error',
@@ -105,7 +115,7 @@ export const EditProfile = (props) => {
     const fetchImage = () => {
       const defaultImg = 'https://honely-files-public.s3.amazonaws.com/images/avatar/avatar_user_01.png'
       if (currentUser?.image_url) {
-        return currentUser.image_url
+        return currentUser.image_url + '?random_number=' + new Date().getTime()
       } else {
         return defaultImg
       }
@@ -117,7 +127,8 @@ export const EditProfile = (props) => {
       last_name: currentUser.last_name,
       phone_number: currentUser.phone_number,
       email: currentUser.email,
-      image_url: fetchImage()
+      image_url: fetchImage(),
+      company_name: agentProfile.company_name
     }
     setValue('user_name', initialFormState.user_name)
     setValue('first_name', initialFormState.first_name)
@@ -125,6 +136,7 @@ export const EditProfile = (props) => {
     setValue('phone_number', initialFormState.phone_number)
     setValue('email', initialFormState.email)
     setValue('image_url', initialFormState.image_url)
+    setValue('company_name', initialFormState.company_name)
 
     dispatch(setFormState(initialFormState))
   }, [])
@@ -142,7 +154,7 @@ export const EditProfile = (props) => {
         <HText style={styles.title}>Account Information</HText>
         <View style={styles.photoWrapper}>
           <Image
-            source={{ uri: formState.image_url }}
+            source={{ uri: agentPhoto || formState.image_url }}
             style={styles.userPhoto}
           />
           <Pressable
