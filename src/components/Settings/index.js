@@ -36,6 +36,10 @@ export const Settings = (props) => {
             onPress={() => {}}
           />
           <OptionItem
+            text='Contact Lead Preset'
+            onPress={() => onNavigationRedirect('ContactLeadPreset')}
+          />
+          <OptionItem
             text='Privacy and Sharing'
             onPress={() => {}}
           />
