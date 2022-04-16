@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, ScrollView, Linking } from 'react-native'
+import { View, Image, ScrollView, Linking, Platform } from 'react-native'
 import { HStack, Box, VStack, TextArea, Pressable } from 'native-base'
 import { HText, HButton, HSwitch } from '../Shared'
 import SelectDropdown from 'react-native-select-dropdown'
@@ -33,15 +33,24 @@ export const ContactLead = (props) => {
     return found?.color
   }
 
-  const handleOpenMessage = () => {
+  const handleOpenMessage = async () => {
     if (smsEnabled) {
-      const phone = '+12382838282'
-      Linking.openURL(`sms:${phone}?body=${smsMessage}`)
+      const phone = '+123456789'
+      const url = (Platform.OS === 'android')
+        ? `sms:${phone}?body=${smsMessage}`
+        : `sms:${phone}&body=${smsMessage}`;
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      }
     }
     if (emailEnabled) {
-      const subject = ''
       const recipient = 'jonathan@mail.com'
-      Linking.openURL(`mailto:${recipient}?subject=${subject}&body=${emailMessage}`)
+      const url = `mailto:${recipient}?body=${emailMessage}`
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      }
     }
   }
 

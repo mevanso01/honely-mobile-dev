@@ -381,7 +381,7 @@ PODS:
     - React-perflogger (= 0.67.3)
   - RNAWSCognito (5.2.8):
     - React-Core
-  - RNCAsyncStorage (1.17.1):
+  - RNCAsyncStorage (1.17.0):
     - React-Core
   - RNCClipboard (1.5.1):
     - React-Core
@@ -609,10 +609,10 @@ SPEC CHECKSUMS:
   React-jsinspector: 1e1e03345cf6d47779e2061d679d0a87d9ae73d8
   React-logger: 1e10789cb84f99288479ba5f20822ce43ced6ffe
   react-native-google-maps: 17432eb7412df3c65d7c7c52ede085d0f5624f77
-  react-native-image-picker: ae1202414bd5c37c00b2a701daa5b6194a06b7d9
+  react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
   react-native-maps: d752b0dd0e1951d815b1336332835aab6b4a836f
-  react-native-netinfo: 1929cb10180c83da2f7875bef715ae482e37831f
-  react-native-safe-area-context: 22c24fc19e2d09e523dfc29bb41cc8da5f37e9bd
+  react-native-netinfo: e922cb2e3eaf9ccdf16b8d4744a89657377aa4a1
+  react-native-safe-area-context: 806f8370bf9fc9db90a3413aaa1aab0d2e22fdf3
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   React-perflogger: 93d3f142d6d9a46e635f09ba0518027215a41098
   React-RCTActionSheet: 87327c3722203cc79cf79d02fb83e7332aeedd18
@@ -627,8 +627,8 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: af1946623656f9c5fd64ca6f36f3863516193446
   ReactCommon: 650e33cde4fb7d36781cd3143f5276da0abb2f96
   RNAWSCognito: 4bb232cc7ed978257658876ee280de9456f998a1
-  RNCAsyncStorage: da4d77f746b3062e8c5e3a1892389372388c0652
-  RNCClipboard: 5e299c6df8e0c98f3d7416b86ae563d3a9f768a3
+  RNCAsyncStorage: 4efdcd2f7378421b29467c9de58f43552b60cf5b
+  RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNCPicker: 6d5d64e7b90c240c779ee0938ec433c11e2dd758
   RNGestureHandler: 6e757e487a4834e7280e98e9bac66d2d9c575e9c
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
