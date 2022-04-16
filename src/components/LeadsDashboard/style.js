@@ -57,6 +57,7 @@ export default StyleSheet.create({
     paddingHorizontal: 18
   },
   leadsContent: {
+    flex: 1,
   },
   locationIcon: {
     width: 24,

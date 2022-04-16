@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, ScrollView } from 'react-native'
+import { View, Image, ScrollView, Linking } from 'react-native'
 import { HStack, Box, VStack, TextArea, Pressable } from 'native-base'
 import { HText, HButton, HSwitch } from '../Shared'
 import SelectDropdown from 'react-native-select-dropdown'
@@ -16,8 +16,10 @@ export const ContactLead = (props) => {
   const [smsEnabled, setSmsEnabled] = useState(false)
   const [isSmsFocus, setIsSmsFocus] = useState(false)
   const [isEmailFocus, setIsEmailFocus] = useState(false)
-
   const [statusValue, setStatusValue] = useState(1)
+  const [emailMessage, setEmailMessage] = useState('')
+  const [smsMessage, setSmsMessage] = useState('')
+
   const statusOptions = [
     { value: 1, content: 'New', color: colors.primary },
     { value: 2, content: 'Attempted Contact', color: colors.green },
@@ -29,6 +31,18 @@ export const ContactLead = (props) => {
   const getSelectBgColor = (value) => {
     const found = statusOptions.find(item => item.value === value)
     return found?.color
+  }
+
+  const handleOpenMessage = () => {
+    if (smsEnabled) {
+      const phone = '+12382838282'
+      Linking.openURL(`sms:${phone}?body=${smsMessage}`)
+    }
+    if (emailEnabled) {
+      const subject = ''
+      const recipient = 'jonathan@mail.com'
+      Linking.openURL(`mailto:${recipient}?subject=${subject}&body=${emailMessage}`)
+    }
   }
 
   return (
@@ -131,7 +145,7 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
-              onChangeText={e => console.log(e)}
+              onChangeText={e => setSmsMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
               onBlur={() => setIsSmsFocus(false)}
@@ -155,7 +169,7 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
-              onChangeText={e => console.log(e)}
+              onChangeText={e => setEmailMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsEmailFocus(true)}
               onBlur={() => setIsEmailFocus(false)}
@@ -167,7 +181,8 @@ export const ContactLead = (props) => {
             text='Send'
             borderColor={colors.primary}
             backgroundColor={colors.primary}
-            onPress={() => {}}
+            isDisabled={!(emailEnabled || smsEnabled)}
+            onPress={() => handleOpenMessage()}
           />
         </Box>
       </ScrollView>
