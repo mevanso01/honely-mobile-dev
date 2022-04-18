@@ -24,7 +24,6 @@ export const Accordion = (props) => {
   const {
     title,
     isLoading,
-    isUpdating,
     emailText,
     smsText,
     handleChangeEmailText,
@@ -103,7 +102,7 @@ export const Accordion = (props) => {
               color={colors.text01}
               autoCapitalize='none'
               defaultValue={emailText || ''}
-              isDisabled={isLoading || isUpdating}
+              isDisabled={isLoading}
               onChangeText={e => handleChangeEmailText(e)}
               blurOnSubmit={false}
               onFocus={() => setIsEmailFocus(true)}
@@ -126,7 +125,7 @@ export const Accordion = (props) => {
               color={colors.text01}
               autoCapitalize='none'
               defaultValue={smsText || ''}
-              isDisabled={isLoading || isUpdating}
+              isDisabled={isLoading}
               onChangeText={e => handleChangeSmsText(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
@@ -137,7 +136,7 @@ export const Accordion = (props) => {
         <Box alignItems='center' my='8'>
           <HButton
             text='Save'
-            isLoading={isUpdating}
+            isLoading={isLoading}
             onPress={onSave}
           />
         </Box>

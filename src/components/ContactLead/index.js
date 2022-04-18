@@ -5,12 +5,15 @@ import { HText, HButton, HSwitch } from '../Shared'
 import SelectDropdown from 'react-native-select-dropdown'
 import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
+import { useSelector } from 'react-redux'
 
 export const ContactLead = (props) => {
   const {
     navigation,
     onNavigationRedirect
   } = props
+
+  const currentUser = useSelector(state => state.currentUser)
 
   const [emailEnabled, setEmailEnabled] = useState(false)
   const [smsEnabled, setSmsEnabled] = useState(false)
@@ -99,14 +102,14 @@ export const ContactLead = (props) => {
           <HStack>
             <HText style={styles.label} mRight='12'>To:</HText>
             <VStack space='1'>
-              <HText style={styles.label}>First Name  Last Name</HText>
+              <HText style={styles.label}>{currentUser?.first_name} {currentUser?.last_name}</HText>
               <HStack alignItems='center'>
                 <Image source={icons.email} style={styles.contactIcon} />
-                <HText style={styles.contactInfoText}>jonathan@mail.com</HText>
+                <HText style={styles.contactInfoText}>{currentUser?.email}</HText>
               </HStack>
               <HStack alignItems='center'>
                 <Image source={icons.phone} style={styles.contactIcon} />
-                <HText style={styles.contactInfoText}>+1 238 2838 282</HText>
+                <HText style={styles.contactInfoText}>{currentUser?.phone_number}</HText>
               </HStack>
             </VStack>
           </HStack>

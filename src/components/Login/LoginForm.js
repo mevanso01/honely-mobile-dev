@@ -36,7 +36,8 @@ export const LoginForm = (props) => {
       }
       try {
         await dispatch(cognitoSignIn({ username: response.user_name, password: values.password }))
-        getUserProfile(values.email)
+        await getPresetData(values.email)
+        await getUserProfile(values.email)
       } catch (error) {
         setIsLoading(false)
         toast.show({
@@ -71,6 +72,25 @@ export const LoginForm = (props) => {
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  const getPresetData = async (email) => {
+    try {
+      const response = await doGet('lookup-test/user_settings', { 'user-email': email })
+      if (response?.message) {
+        throw response
+      }
+      dispatch(setUser({ preset: response.data }))
+    } catch (error) {
       toast.show({
         title: 'Error',
         description: error.message,
