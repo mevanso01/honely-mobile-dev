@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../utils/styleGuide'
+import { colors, fonts } from '../../utils/styleGuide'
 
 export default StyleSheet.create({
   container: {
@@ -10,10 +10,11 @@ export default StyleSheet.create({
     flexGrow: 1,
   },
   title: {
-    fontSize: 22,
+    fontSize: 25,
     lineHeight: 33,
-    fontWeight: '600',
-    color: colors.text01
+    color: colors.text01,
+    textAlign: 'center',
+    fontFamily: fonts.bold
   },
   visibilityIconWrapper: {
     marginRight: 16

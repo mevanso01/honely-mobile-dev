@@ -96,7 +96,7 @@ export const ChangePassword = (props) => {
   return (
     <View style={styles.container}>
       <HScreenHeader
-        title='Change Password'
+        title='Edit Profile'
         onPress={() => navigation.goBack()}
       />
       <ScrollView

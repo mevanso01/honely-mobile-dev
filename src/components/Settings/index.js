@@ -18,7 +18,7 @@ export const Settings = (props) => {
   return (
     <View style={styles.container}>
       <HScreenHeader
-        title='Settings'
+        title='Edit Profile'
         onPress={() => navigation.goBack()}
       />
       <ScrollView
