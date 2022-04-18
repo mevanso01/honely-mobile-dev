@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, ScrollView, Linking, Platform } from 'react-native'
+import { View, Image, ScrollView } from 'react-native'
 import { HStack, Box, VStack, TextArea, Pressable } from 'native-base'
 import { HText, HButton, HSwitch } from '../Shared'
 import SelectDropdown from 'react-native-select-dropdown'
@@ -16,10 +16,8 @@ export const ContactLead = (props) => {
   const [smsEnabled, setSmsEnabled] = useState(false)
   const [isSmsFocus, setIsSmsFocus] = useState(false)
   const [isEmailFocus, setIsEmailFocus] = useState(false)
-  const [statusValue, setStatusValue] = useState(1)
-  const [emailMessage, setEmailMessage] = useState('')
-  const [smsMessage, setSmsMessage] = useState('')
 
+  const [statusValue, setStatusValue] = useState(1)
   const statusOptions = [
     { value: 1, content: 'New', color: colors.primary },
     { value: 2, content: 'Attempted Contact', color: colors.green },
@@ -31,27 +29,6 @@ export const ContactLead = (props) => {
   const getSelectBgColor = (value) => {
     const found = statusOptions.find(item => item.value === value)
     return found?.color
-  }
-
-  const handleOpenMessage = async () => {
-    if (smsEnabled) {
-      const phone = '+123456789'
-      const url = (Platform.OS === 'android')
-        ? `sms:${phone}?body=${smsMessage}`
-        : `sms:${phone}&body=${smsMessage}`;
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      }
-    }
-    if (emailEnabled) {
-      const recipient = 'jonathan@mail.com'
-      const url = `mailto:${recipient}?body=${emailMessage}`
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      }
-    }
   }
 
   return (
@@ -154,7 +131,7 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
-              onChangeText={e => setSmsMessage(e)}
+              onChangeText={e => console.log(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
               onBlur={() => setIsSmsFocus(false)}
@@ -178,7 +155,7 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
-              onChangeText={e => setEmailMessage(e)}
+              onChangeText={e => console.log(e)}
               blurOnSubmit={false}
               onFocus={() => setIsEmailFocus(true)}
               onBlur={() => setIsEmailFocus(false)}
@@ -190,8 +167,7 @@ export const ContactLead = (props) => {
             text='Send'
             borderColor={colors.primary}
             backgroundColor={colors.primary}
-            isDisabled={!(emailEnabled || smsEnabled)}
-            onPress={() => handleOpenMessage()}
+            onPress={() => {}}
           />
         </Box>
       </ScrollView>
