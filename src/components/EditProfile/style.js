@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { colors } from '../../utils/styleGuide'
+import { colors, fonts } from '../../utils/styleGuide'
 
 export default StyleSheet.create({
   wrapper: {
@@ -12,10 +12,11 @@ export default StyleSheet.create({
     flexDirection: 'column'
   },
   title: {
-    fontSize: 22,
+    fontSize: 25,
     lineHeight: 33,
-    fontWeight: '600',
-    color: colors.headingColor
+    color: colors.headingColor,
+    textAlign: 'center',
+    fontFamily: fonts.bold
   },
   userPhoto: {
     width: '100%',
@@ -45,7 +46,7 @@ export default StyleSheet.create({
     marginLeft: 16
   },
   photoWrapper: {
-    marginTop: 16,
+    marginTop: 26,
     position: 'relative',
     width: 80,
     height: 80,
@@ -53,7 +54,7 @@ export default StyleSheet.create({
     backgroundColor: colors.text05
   },
   photoEditBtn: {
-    backgroundColor: colors.tint,
+    backgroundColor: colors.primary,
     position: 'absolute',
     bottom: 0,
     right: 0,
@@ -67,6 +68,6 @@ export default StyleSheet.create({
     width: 16,
     height: 16,
     resizeMode: 'contain',
-    tintColor: colors.primary
+    tintColor: colors.white
   }
 })

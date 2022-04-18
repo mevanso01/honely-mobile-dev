@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Image, ScrollView, Keyboard } from 'react-native'
-import { Box, Input, FormControl, Pressable, useToast, Icon, Button } from 'native-base'
+import { Box, Input, FormControl, Pressable, useToast, Icon } from 'native-base'
 import { useForm, Controller } from 'react-hook-form'
 import { HText, HScreenHeader, HButton } from '../Shared'
 import { icons, colors } from '../../utils/styleGuide'
@@ -152,24 +152,26 @@ export const EditProfile = (props) => {
         contentContainerStyle={styles.scrollViewContentContainer}
       >
         <HText style={styles.title}>Account Information</HText>
-        <View style={styles.photoWrapper}>
-          <Image
-            source={{ uri: agentPhoto || formState.image_url }}
-            style={styles.userPhoto}
-          />
-          <Pressable
-            onPress={handleImagePicker}
-            style={styles.photoEditBtn}
-            _pressed={{
-              opacity: 0.6
-            }}
-          >
+        <Box alignItems='center'>
+          <View style={styles.photoWrapper}>
             <Image
-              source={icons.edit}
-              style={styles.editIcon}
+              source={{ uri: agentPhoto || formState.image_url }}
+              style={styles.userPhoto}
             />
-          </Pressable>
-        </View>
+            <Pressable
+              onPress={handleImagePicker}
+              style={styles.photoEditBtn}
+              _pressed={{
+                opacity: 0.6
+              }}
+            >
+              <Image
+                source={icons.edit}
+                style={styles.editIcon}
+              />
+            </Pressable>
+          </View>
+        </Box>
         <Box mt='6'>
           <FormControl mb={4}>
             <FormControl.Label _text={styles.label} mb={1}>Username</FormControl.Label>
