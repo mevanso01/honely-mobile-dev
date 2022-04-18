@@ -28,6 +28,7 @@ const HSwitch = (props) => {
       switchRightPx={3}
       switchWidthMultiplier={1.7}
       switchBorderRadius={30}
+      disabled={props.disabled || false}
     />
   )
 }

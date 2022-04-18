@@ -83,10 +83,10 @@ export const ContactLeadPreset = (props) => {
     }
   }
 
-  const handleUpdatePreset = async () => {
+  const handleUpdatePreset = async (params) => {
     try {
       setIsLoading(true)
-      const response = await doPost(`lookup-test/user_settings?user-email=${currentUser.email}`, formState)
+      const response = await doPost(`lookup-test/user_settings?user-email=${currentUser.email}`, params)
       if (response.result === 'Success') {
         dispatch(setUser({ preset: formState }))
         toast.show({
@@ -112,6 +112,17 @@ export const ContactLeadPreset = (props) => {
         marginLeft: 4,
       })
     }
+  }
+
+  const handleEnableSwitch = (val, isEmail) => {
+    let params = null
+    if (isEmail) {
+      params = { ...formState, use_email: val }
+    } else {
+      params = { ...formState, use_phone_number: val  }
+    }
+    setFormState(params)
+    handleUpdatePreset(params)
   }
 
   return (
@@ -151,14 +162,20 @@ export const ContactLeadPreset = (props) => {
                         </Box>
                       </VStack>
                       <VStack ml='2' justifyContent='space-between'>
-                        <HSwitch
-                          value={phoneEnabled}
-                          onValueChange={val => setPhoneEnabled(val)}
-                        />
-                        <HSwitch
-                          value={emailEnabled}
-                          onValueChange={val => setEmailEnabled(val)}
-                        />
+                        <View style={{ opacity: isLoading ? 0.6 : 1 }}>
+                          <HSwitch
+                            value={formState?.use_phone_number || false}
+                            disabled={isLoading}
+                            onValueChange={val => handleEnableSwitch(val, false)}
+                          />
+                        </View>
+                        <View style={{ opacity: isLoading ? 0.6 : 1 }}>
+                          <HSwitch
+                            value={formState?.use_email || false}
+                            disabled={isLoading}
+                            onValueChange={val => handleEnableSwitch(val, true)}
+                          />
+                        </View>
                       </VStack>
                     </HStack>
                   </VStack>
@@ -181,6 +198,7 @@ export const ContactLeadPreset = (props) => {
           <Accordion
             title='First message'
             isLoading={isLoading}
+            formState={formState}
             emailText={selectedUserType === 'buyer' ? formState?.preset_bayer_email_msg_first : formState?.preset_seller_email_msg_first}
             smsText={selectedUserType === 'buyer' ? formState?.preset_bayer_text_msg_first : formState?.preset_seller_text_msg_first}
             handleChangeEmailText={val => handleChangeEmailPreset(true, val)}
@@ -190,6 +208,7 @@ export const ContactLeadPreset = (props) => {
           <Accordion
             title='Follow-up message'
             isLoading={isLoading}
+            formState={formState}
             emailText={selectedUserType === 'buyer' ? formState?.preset_bayer_email_msg_second : formState?.preset_seller_email_msg_second}
             smsText={selectedUserType === 'buyer' ? formState?.preset_bayer_text_msg_second : formState?.preset_seller_text_msg_second}
             handleChangeEmailText={val => handleChangeEmailPreset(false, val)}

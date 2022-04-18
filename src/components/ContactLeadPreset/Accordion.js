@@ -26,6 +26,7 @@ export const Accordion = (props) => {
     isLoading,
     emailText,
     smsText,
+    formState,
     handleChangeEmailText,
     handleChangeSmsText,
     onSave
@@ -137,7 +138,7 @@ export const Accordion = (props) => {
           <HButton
             text='Save'
             isLoading={isLoading}
-            onPress={onSave}
+            onPress={() => onSave(formState)}
           />
         </Box>
       </View>
