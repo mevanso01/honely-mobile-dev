@@ -19,16 +19,13 @@ const Profile = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
-      paddingBottom: insets.bottom,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40,
-      paddingHorizontal: 18
     }
   })
 
   return (
     <SafeAreaView style={styles.wrapper}>
       <HFocusAwareStatusBar
-        backgroundColor={colors.white}
+        backgroundColor={colors.primary}
         barStyle='dark-content'
       />
       <ProfileScreen {...profileProps} />

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView, Image } from 'react-native'
 import { useSelector } from 'react-redux'
-import { Box, VStack, useToast } from 'native-base'
+import { Box, Divider, Pressable, VStack, useToast } from 'native-base'
 import { HText, HButton } from '../Shared'
-import { colors } from '../../utils/styleGuide'
+import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { doGet } from '../../services/http-client'
@@ -70,48 +70,48 @@ export const Profile = (props) => {
 
   return (
     <View style={styles.screenContainer}>
-      <VStack mb='8'>
+      <View style={[
+        styles.headerContainer,
+        { paddingTop: Platform.OS === 'ios' ? statusBarHeight : 40 }
+      ]}>
         <HText style={styles.title}>My Profile</HText>
-        <HText style={styles.subTitle}>What you look like to consumer</HText>
-      </VStack>
+        <HText style={styles.subTitle}>What your profile looks like to a guest.</HText>
+        <View style={[styles.settingIconContainer, { paddingTop: Platform.OS === 'ios' ? statusBarHeight : 40 }]}>
+          <Pressable
+            _pressed={{ opacity: 0.7 }}
+            onPress={() => onNavigationRedirect('Settings')}
+          >
+            <Image source={icons.setting} style={styles.settingIcon} />
+          </Pressable>
+        </View>
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       >
         <View style={styles.imageContainer}>
-          <View style={styles.photoWrapper}>
-            <Image
-              source={{ uri: fetchImage() }}
-              style={styles.image}
-            />
-          </View>
-          <VStack mt='8' alignItems='center'>
+          <Box alignItems='center'>
+            <View style={styles.photoWrapper}>
+              <Image
+                source={{ uri: fetchImage() }}
+                style={styles.image}
+              />
+            </View>
+          </Box>
+          <VStack mt='8'>
             <HText style={styles.nameText}>{currentUser?.first_name} {currentUser?.last_name}</HText>
+            <Divider backgroundColor={colors.white} width='full' />
             <HText style={styles.nameDetail}>Keller Willaims Realty</HText>
           </VStack>
         </View>
-        <VStack mt='4' mb='3'>
-          <Box alignItems='center'>
-            <HButton
-              text='Edit Profile'
-              isDisabled={isLoading}
-              disabledOpacity={0.6}
-              onPress={() => onNavigationRedirect('EditProfile')}
-            />
-          </Box>
-          <Box alignItems='center' mt='2'>
-            <HButton
-              text='Settings'
-              backgroundColor={colors.white}
-              borderColor={colors.white}
-              textStyle={{
-                color: colors.primary
-              }}
-              shadow={null}
-              onPress={() => onNavigationRedirect('Settings')}
-            />
-          </Box>
-        </VStack>
+        <Box mt='5' mb='10' alignItems='center'>
+          <HButton
+            text='Edit Profile'
+            isDisabled={isLoading}
+            disabledOpacity={0.6}
+            onPress={() => onNavigationRedirect('EditProfile')}
+          />
+        </Box>
       </ScrollView>
     </View>
   )
