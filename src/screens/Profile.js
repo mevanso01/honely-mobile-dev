@@ -1,12 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Platform } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { StyleSheet, View } from 'react-native'
 import { colors } from '../utils/styleGuide'
 import { Profile as ProfileScreen } from '../components/Profile'
 import { HFocusAwareStatusBar } from '../components/Shared'
 
 const Profile = (props) => {
-  const insets = useSafeAreaInsets()
   const profileProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
