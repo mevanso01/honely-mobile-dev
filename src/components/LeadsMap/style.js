@@ -19,7 +19,8 @@ export default StyleSheet.create({
     width: 24,
     height: 24,
     resizeMode: 'contain',
-    tintColor: colors.white
+    tintColor: colors.white,
+    marginRight: 2
   },
   backBtnWrapper: {
     position: 'absolute',

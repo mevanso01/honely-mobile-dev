@@ -46,7 +46,7 @@ export const EditProfile = (props) => {
       await dispatch(doUpdateUserProfile())
       const updatedAgent = await dispatch(doUpdateAgentProfile())
       dispatch(setLoading(false))
-
+      setIsSubmitClicked(false)
       if (updatedAgent.result === 'Success') {
         toast.show({
           title: 'Success',
@@ -59,6 +59,7 @@ export const EditProfile = (props) => {
       }
     } catch (error) {
       dispatch(setLoading(false))
+      setIsSubmitClicked(false)
       toast.show({
         title: 'Error',
         description: error,
@@ -188,7 +189,7 @@ export const EditProfile = (props) => {
                   borderRadius={8}
                   height={55}
                   borderColor={
-                    errors?.user_name?.message ? colors.error : colors.primary
+                    errors?.user_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
                   autoCapitalize='none'
                   autoCorrect={false}
@@ -205,7 +206,7 @@ export const EditProfile = (props) => {
                         styles.inputIcon,
                         {tintColor: `${
                           errors?.user_name?.message
-                            ? colors.error : colors.primary
+                            ? colors.error : value ? colors.lightPrimary : colors.text04
                           }`
                         }
                       ]}
@@ -216,12 +217,12 @@ export const EditProfile = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="4"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )
                   }
                   _focus={{
-                    borderColor: !errors?.email?.message ? colors.primary : colors.error
+                    borderColor: !errors?.email?.message ? colors.lightPrimary : colors.error
                   }}
                   defaultValue=''
                 />
@@ -250,7 +251,7 @@ export const EditProfile = (props) => {
                   borderRadius={8}
                   height={55}
                   borderColor={
-                    errors?.email?.message ? colors.error : colors.primary
+                    errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
                   autoCapitalize='none'
                   autoCorrect={false}
@@ -269,7 +270,7 @@ export const EditProfile = (props) => {
                         styles.inputIcon,
                         {tintColor: `${
                           errors?.email?.message
-                            ? colors.error : colors.primary
+                            ? colors.error : value ? colors.lightPrimary : colors.text04
                           }`
                         }
                       ]}
@@ -280,12 +281,12 @@ export const EditProfile = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="4"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )
                   }
                   _focus={{
-                    borderColor: !errors?.email?.message ? colors.primary : colors.error
+                    borderColor: !errors?.email?.message ? colors.lightPrimary : colors.error
                   }}
                 />
               )}
@@ -319,7 +320,7 @@ export const EditProfile = (props) => {
                   height={55}
                   fontWeight='500'
                   borderColor={
-                    errors?.first_name?.message ? colors.error : colors.primary
+                    errors?.first_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
                   autoCapitalize='none'
                   autoCorrect={false}
@@ -337,7 +338,7 @@ export const EditProfile = (props) => {
                         styles.inputIcon,
                         {tintColor: `${
                           errors?.first_name?.message
-                            ? colors.error : colors.primary
+                            ? colors.error : value ? colors.lightPrimary : colors.text04
                           }`
                         }
                       ]}
@@ -348,12 +349,12 @@ export const EditProfile = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="4"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )
                   }
                   _focus={{
-                    borderColor: !errors?.first_name?.message ? colors.primary : colors.error
+                    borderColor: !errors?.first_name?.message ? colors.lightPrimary : colors.error
                   }}
                 />
               )}
@@ -383,7 +384,7 @@ export const EditProfile = (props) => {
                   borderRadius={8}
                   height={55}
                   borderColor={
-                    errors?.last_name?.message ? colors.error : colors.primary
+                    errors?.last_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
                   autoCapitalize='none'
                   autoCorrect={false}
@@ -401,7 +402,7 @@ export const EditProfile = (props) => {
                         styles.inputIcon,
                         {tintColor: `${
                           errors?.last_name?.message
-                            ? colors.error : colors.primary
+                            ? colors.error : value ? colors.lightPrimary : colors.text04
                           }`
                         }
                       ]}
@@ -412,12 +413,12 @@ export const EditProfile = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="4"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )
                   }
                   _focus={{
-                    borderColor: !errors?.last_name?.message ? colors.primary : colors.error
+                    borderColor: !errors?.last_name?.message ? colors.lightPrimary : colors.error
                   }}
                 />
               )}
@@ -448,7 +449,7 @@ export const EditProfile = (props) => {
                   borderRadius={8}
                   height={55}
                   borderColor={
-                    errors?.phone_number?.message ? colors.error : colors.primary
+                    errors?.phone_number?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
                   autoCapitalize='none'
                   autoCorrect={false}
@@ -466,7 +467,7 @@ export const EditProfile = (props) => {
                         styles.inputIcon,
                         {tintColor: `${
                           errors?.phone_number?.message
-                            ? colors.error : colors.primary
+                            ? colors.error : value ? colors.lightPrimary : colors.text04
                           }`
                         }
                       ]}
@@ -477,13 +478,13 @@ export const EditProfile = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="4"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                         onPress={() => setPasswordSee(!passwordSee)}
                       />
                     )
                   }
                   _focus={{
-                    borderColor: !errors?.phone_number?.message ? colors.primary : colors.error
+                    borderColor: !errors?.phone_number?.message ? colors.lightPrimary : colors.error
                   }}
                 />
               )}
@@ -514,7 +515,7 @@ export const EditProfile = (props) => {
                   fontWeight='500'
                   height={55}
                   borderColor={
-                    errors?.company_name?.message ? colors.error : colors.primary
+                    errors?.company_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
                   autoCapitalize='none'
                   autoCorrect={false}
@@ -532,7 +533,7 @@ export const EditProfile = (props) => {
                         styles.inputIcon,
                         {tintColor: `${
                           errors?.company_name?.message
-                            ? colors.error : colors.primary
+                            ? colors.error : value ? colors.lightPrimary : colors.text04
                           }`
                         }
                       ]}
@@ -543,12 +544,12 @@ export const EditProfile = (props) => {
                       <Icon
                         as={<MaterialIcons name="check" />}
                         size={5} mr="4"
-                        color={colors.primary}
+                        color={colors.lightPrimary}
                       />
                     )
                   }
                   _focus={{
-                    borderColor: !errors?.company_name?.message ? colors.primary : colors.error
+                    borderColor: !errors?.company_name?.message ? colors.lightPrimary : colors.error
                   }}
                   defaultValue=''
                 />

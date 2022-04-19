@@ -26,6 +26,6 @@ export default StyleSheet.create({
     width: 24,
     height: 24,
     resizeMode: 'contain',
-    tintColor: colors.black
+    tintColor: colors.primary
   }
 })
