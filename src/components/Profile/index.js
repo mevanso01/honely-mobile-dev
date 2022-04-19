@@ -9,11 +9,15 @@ import { TOAST_LENGTH_SHORT } from '../../config'
 import { doGet } from '../../services/http-client'
 import { useDispatch } from 'react-redux'
 import { setAgentProfile } from '../EditProfile/store'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Profile = (props) => {
   const {
     onNavigationRedirect
   } = props
+
+  const insets = useSafeAreaInsets()
+  const statusBarHeight = insets.top
 
   const toast = useToast()
   const dispatch = useDispatch()

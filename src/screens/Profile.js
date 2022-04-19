@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Platform } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../utils/styleGuide'
 import { Profile as ProfileScreen } from '../components/Profile'
@@ -23,13 +23,13 @@ const Profile = (props) => {
   })
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <View style={styles.wrapper}>
       <HFocusAwareStatusBar
         backgroundColor={colors.primary}
         barStyle='dark-content'
       />
       <ProfileScreen {...profileProps} />
-    </SafeAreaView>
+    </View>
   )
 }
 
