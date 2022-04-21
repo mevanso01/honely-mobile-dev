@@ -100,6 +100,7 @@ export const Profile = (props) => {
               <FitImage
                 source={{ uri: fetchImage() }}
                 indicatorSize='large'
+                indicatorColor={colors.white}
                 resizeMode='cover'
                 style={styles.image}
               />
