@@ -8,6 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import styles from './style'
+import FitImage from 'react-native-fit-image';
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setFormState, doUpdateUserProfile, doUpdateAgentProfile } from './store'
@@ -154,8 +155,9 @@ export const EditProfile = (props) => {
         <HText style={styles.title}>Account Information</HText>
         <Box alignItems='center'>
           <View style={styles.photoWrapper}>
-            <Image
+            <FitImage
               source={{ uri: agentPhoto || formState.image_url }}
+              resizeMode='cover'
               style={styles.userPhoto}
             />
             <Pressable
