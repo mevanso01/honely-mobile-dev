@@ -19,10 +19,10 @@ export default StyleSheet.create({
     fontFamily: fonts.bold
   },
   userPhoto: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-    borderRadius: 40
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    overflow: 'hidden'
   },
   label: {
     fontSize: 16,

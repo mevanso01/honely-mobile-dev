@@ -54,13 +54,12 @@ export default StyleSheet.create({
     width: 153,
     height: 153,
     borderRadius: 80,
-    backgroundColor: colors.text05
+    backgroundColor: colors.text05,
+    overflow: 'hidden',
   },
   image: {
-    resizeMode: 'cover',
-    width: '100%',
-    height: '100%',
-    borderRadius: 80
+    width: 153,
+    height: 153,
   },
   nameText: {
     fontSize: 27,

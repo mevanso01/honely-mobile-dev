@@ -10,6 +10,7 @@ import { doGet } from '../../services/http-client'
 import { useDispatch } from 'react-redux'
 import { setAgentProfile } from '../EditProfile/store'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import FitImage from 'react-native-fit-image';
 
 export const Profile = (props) => {
   const {
@@ -96,8 +97,10 @@ export const Profile = (props) => {
         <View style={styles.imageContainer}>
           <Box alignItems='center'>
             <View style={styles.photoWrapper}>
-              <Image
+              <FitImage
                 source={{ uri: fetchImage() }}
+                indicatorSize='large'
+                resizeMode='cover'
                 style={styles.image}
               />
             </View>
