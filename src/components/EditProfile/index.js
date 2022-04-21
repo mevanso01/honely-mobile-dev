@@ -40,10 +40,9 @@ export const EditProfile = (props) => {
 
   const onSubmit = async (values) => {
     Keyboard.dismiss()
-    dispatch(setFormState(values))
     try {
       dispatch(setLoading(true))
-      await dispatch(doUpdateUserProfile())
+      await dispatch(doUpdateUserProfile(values))
       const updatedAgent = await dispatch(doUpdateAgentProfile())
       dispatch(setLoading(false))
       setIsSubmitClicked(false)

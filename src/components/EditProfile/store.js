@@ -2,17 +2,17 @@ import { createSlice } from '@reduxjs/toolkit'
 import { doPost } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
 
-export const doUpdateUserProfile = () => async (dispatch, getState) => {
+export const doUpdateUserProfile = (formValues) => async (dispatch, getState) => {
   const { screens: { editprofile: { formState } } } = getState()
   // dispatch(setLoading(true))
 
   try {
     const body = {
-      user_name: formState.user_name,
+      user_name: formValues.user_name,
       information: ['first_name', 'last_name', 'phone_number', 'user_type', 'email', 'image_url'],
-      first_name_value: formState.first_name,
-      last_name_value: formState.last_name,
-      phone_number_value: formState.phone_number,
+      first_name_value: formValues.first_name,
+      last_name_value: formValues.last_name,
+      phone_number_value: formValues.phone_number,
       user_type: formState.user_type,
     }
     const response = await doPost('lookup-test/user_profile_modification', body)
@@ -21,9 +21,9 @@ export const doUpdateUserProfile = () => async (dispatch, getState) => {
       throw response.msg
     }
     dispatch(setUser({
-      first_name: formState.first_name,
-      last_name: formState.last_name,
-      phone_number: formState.phone_number,
+      first_name: formValues.first_name,
+      last_name: formValues.last_name,
+      phone_number: formValues.phone_number,
     }))
     return response
   } catch (error) {
