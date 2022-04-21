@@ -53,6 +53,9 @@ export const doUpdateAgentProfile = () => async (dispatch, getState) => {
       body.extension = formState.imageFileExt
     }
     const response = await doPost('lookup-test/agent_profile_modification', body)
+    if (response?.error) {
+      throw response.msg
+    }
     if (formState.imageFileData) {
       const image_url = 'https://honely-files-public.s3.amazonaws.com/images/' + formState.user_name + '.' + formState.imageFileExt
       dispatch(setUser({ image_url: image_url }))
@@ -93,11 +96,12 @@ const editProfileSlice = createSlice({
         temp[key] = action.payload[key]
       }
       state.agentProfile = temp
-    }
+    },
+    resetProfileInfo: () => initialState
   },
   extraReducers: {}
 })
 
-export const { setLoading, setFormState, setAgentProfile } = editProfileSlice.actions
+export const { setLoading, setFormState, setAgentProfile, resetProfileInfo } = editProfileSlice.actions
 
 export default editProfileSlice.reducer

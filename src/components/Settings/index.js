@@ -4,6 +4,7 @@ import { HScreenHeader, HText, HButton } from '../Shared'
 import { Pressable, VStack, HStack, Box } from 'native-base'
 import { useDispatch } from 'react-redux'
 import { signoutUser } from '../../store/action/setUser'
+import { resetProfileInfo } from '../EditProfile/store'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 
@@ -14,6 +15,11 @@ export const Settings = (props) => {
   } = props
 
   const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(resetProfileInfo())
+    dispatch(signoutUser())
+  }
 
   return (
     <View style={styles.container}>
@@ -75,7 +81,7 @@ export const Settings = (props) => {
             textStyle={{
               color: colors.error
             }}
-            onPress={() => dispatch(signoutUser())}
+            onPress={() => handleLogout()}
           />
         </Box>
       </ScrollView>
