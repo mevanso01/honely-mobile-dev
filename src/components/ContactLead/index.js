@@ -157,6 +157,7 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
+              defaultValue={currentUser?.preset?.preset_bayer_text_msg_first || ''}
               onChangeText={e => setSmsMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
@@ -181,6 +182,7 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
+              defaultValue={currentUser?.preset?.preset_bayer_email_msg_first || ''}
               onChangeText={e => setEmailMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsEmailFocus(true)}
