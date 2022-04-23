@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Image, View, Vibration } from 'react-native'
+import { ScrollView, Image, View } from 'react-native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import { HText, HButton } from '../Shared'
 import { colors, images, icons } from '../../utils/styleGuide'
 import { HStack, VStack, Box, Pressable, Checkbox, Icon } from 'native-base'
@@ -15,7 +16,11 @@ export const LeadsDashboard = (props) => {
   const isNoData = false
 
   const onSelectFilterBy = () => {
-    Vibration.vibrate(150)
+    const options = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: true
+    }
+    ReactNativeHapticFeedback.trigger('impactLight', options)
   }
 
   useEffect(() => {

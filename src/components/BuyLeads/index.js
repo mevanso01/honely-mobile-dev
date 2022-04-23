@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Image, Vibration, ScrollView } from 'react-native'
+import { View, Image, ScrollView } from 'react-native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider } from 'native-base'
 import { HButton, HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
@@ -14,7 +15,11 @@ export const BuyLeads = (props) => {
   } = props
   
   const onSelectFilterBy = () => {
-    Vibration.vibrate(150)
+    const options = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: true
+    }
+    ReactNativeHapticFeedback.trigger('impactLight', options)
   }
 
   return (

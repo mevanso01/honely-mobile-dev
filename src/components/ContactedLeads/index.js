@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { View, ScrollView, Image, Vibration } from 'react-native'
+import { View, ScrollView, Image } from 'react-native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import { HStack, VStack, Box, Checkbox, Icon, Pressable } from 'native-base'
 import { HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
@@ -71,7 +72,11 @@ export const ContactedLeads = (props) => {
   }
 
   const onSelectFilterBy = () => {
-    Vibration.vibrate(150)
+    const options = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: true
+    }
+    ReactNativeHapticFeedback.trigger('impactLight', options)
   }
 
   return (
