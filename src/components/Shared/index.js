@@ -7,6 +7,7 @@ import HSliderButton from './HSliderButton'
 import HScreenHeader from './HScreenHeader'
 import HFocusAwareStatusBar from './HFocusAwareStatusBar'
 import HSwitch from './HSwitch'
+import HToast from './HToast'
 
 export {
   HButton,
@@ -17,5 +18,6 @@ export {
   HSliderButton,
   HScreenHeader,
   HFocusAwareStatusBar,
-  HSwitch
+  HSwitch,
+  HToast
 }
