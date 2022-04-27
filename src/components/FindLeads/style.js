@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { colors } from '../../utils/styleGuide'
+import { colors, fonts } from '../../utils/styleGuide'
 import { deviceWidth, deviceHeight } from '../../utils/stylesheet'
 
 export default StyleSheet.create({
@@ -89,6 +89,17 @@ export default StyleSheet.create({
     paddingLeft: 18,
     paddingRight: 18,
     paddingVertical: 6
+  },
+  paragraph: {
+    color: colors.primary,
+    fontSize: 27
+  },
+  noSuggestionText: {
+    color: colors.text01,
+    fontSize: 14
+  },
+  highlight: {
+    color: colors.darkPrimary,
   },
   hintContainer: {
     position: 'absolute',

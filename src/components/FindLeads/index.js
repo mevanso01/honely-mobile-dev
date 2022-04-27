@@ -1,23 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, ScrollView, Image, Platform, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
-import { Input, Pressable, HStack } from 'native-base'
+import { Input, Pressable, HStack, useToast, Spinner } from 'native-base'
 import { HText } from '../Shared'
 import { ScrollView as DropDownContainer } from 'react-native-gesture-handler'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FeatherIcons from 'react-native-vector-icons/Feather'
+import { doGet } from '../../services/http-client'
+import { TOAST_LENGTH_SHORT } from '../../config'
 
 export const FindLeads = (props) => {
   const {
     onNavigationRedirect
   } = props
 
+  const toast = useToast()
   const insets = useSafeAreaInsets()
   const statusBarHeight = insets.top
   const [searchValue, setSearchValue] = useState('')
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [isShowHint, setIsShowHint] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [suggestionList, setSuggestionList] = useState(null)
+
   let timeout = null
   let transformY = useRef(new Animated.Value(0)).current
   const animatedY = transformY.interpolate({
@@ -36,6 +42,11 @@ export const FindLeads = (props) => {
     clearTimeout(timeout)
     timeout = setTimeout(function () {
       setSearchValue(value)
+      if (value) {
+        handleGetSuggestionAddress(value)
+      } else {
+        setIsOpenDropdown(false)
+      }
     }, 750)
   }
 
@@ -44,13 +55,54 @@ export const FindLeads = (props) => {
     onNavigationRedirect('LeadsMap')
   }
 
-  useEffect(() => {
-    if (searchValue) {
+  const handleSearchFocus = () => {
+    setIsShowHint(false)
+    if (suggestionList && searchValue) {
       setIsOpenDropdown(true)
-    } else {
-      setIsOpenDropdown(false)
     }
-  }, [searchValue])
+  }
+  
+  const getFullAddressText = (address) => {
+    let text = ''
+    const level = suggestionList?.data?.level
+    if (level === 'zipcode') {
+      text += address?.zip_code + ' '
+      if (address?.city) {
+        text += address.city + ', '
+      }
+      text += address?.state
+    }
+    if (level === 'city') {
+      if (address?.city) {
+        text += address.city + ', '
+      }
+      text += address?.state
+    }
+    if (level === 'state') {
+      text += address?.state_short
+    }
+    return text
+  }
+
+  const handleGetSuggestionAddress = async (address) => {
+    try {
+      setIsLoading(true)
+      const response = await doGet('searches/lead/address-suggestions', { address: address, limit: 5 })
+      setSuggestionList(response)
+      setIsOpenDropdown(true)
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
 
   useEffect(() => {
     Animated.loop(
@@ -87,37 +139,48 @@ export const FindLeads = (props) => {
             autoCapitalize='none'
             returnKeyType='done'
             blurOnSubmit
-            // value={searchValue}
             onChangeText={val => onChangeSearch(val)}
             _focus={{
               borderColor: isOpenDropdown ? colors.white : colors.primary
             }}
-            onFocus={() => setIsShowHint(false)}
+            onFocus={() => handleSearchFocus()}
             InputLeftElement={
               <Image
                 source={icons.location}
                 style={styles.zipIcon}
               />
             }
+            InputRightElement={
+              isLoading && <Spinner color={colors.primary} size='lg' mr='4' ml='4' />
+            }
           />
-          {isOpenDropdown && (
+          {isOpenDropdown && suggestionList && (
             <View style={styles.searchListContainer}>
               <DropDownContainer
                 showsVerticalScrollIndicator={false}
                 style={styles.dropDownContainer}
                 contentContainerStyle={styles.dropDownContent}
               >
-                {[...Array(10).keys()].map(i => (
-                  <Pressable
-                    key={i}
-                    _pressed={{
-                      backgroundColor: colors.text05
-                    }}
-                    onPress={() => handleSelectZipcode()}
-                  >
-                    <HText style={styles.searchText}>{2643 + i}</HText>
-                  </Pressable>
-                ))}
+                {suggestionList?.result === 'Error' ? (
+                  <HText style={styles.noSuggestionText}>{suggestionList?.message}</HText>
+                ) : (
+                  <>
+                    {suggestionList?.data?.addresses.map((address, i) => (
+                      <Pressable
+                        key={i}
+                        _pressed={{
+                          backgroundColor: colors.text05
+                        }}
+                        onPress={() => handleSelectZipcode()}
+                      >
+                        <HilightTextConvert
+                          text={getFullAddressText(address)}
+                          highlight={searchValue}
+                        />
+                      </Pressable>
+                    ))}
+                  </>
+                )}
               </DropDownContainer>
             </View>
           )}
@@ -152,7 +215,7 @@ export const FindLeads = (props) => {
                 onPress={() => handleSelectZipcode()}
               >
                 <View style={styles.recentSearchItem}>
-                  <HText style={styles.searchAddressText}>Los Angeles, CA</HText>
+                  <HText style={styles.searchsuggestionText}>Los Angeles, CA</HText>
                   <HStack mt='2' alignItems='center' justifyContent='space-between'>
                     <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
                     <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
@@ -165,4 +228,27 @@ export const FindLeads = (props) => {
       </View>
     </TouchableWithoutFeedback>
   )
+}
+
+const HilightTextConvert = (props) => {
+  const {
+    text,
+    highlight
+  } = props
+  
+  let startIndex = text.toLowerCase().indexOf(highlight.toLowerCase());
+  let endIndex = text.toLowerCase().indexOf(highlight.toLowerCase()) + highlight.length;
+  if (startIndex !== -1) {
+    return (
+      <HText style={styles.paragraph}>
+        {text.substring(0, startIndex)}
+        <HText style={{ ...styles.paragraph, ...styles.highlight }}>
+          {text.substring(startIndex, endIndex)}
+        </HText>
+        {text.substring(endIndex, text.length)}
+      </HText>
+    )
+  } else {
+    return <HText style={styles.paragraph}>{text}</HText>
+  }
 }
