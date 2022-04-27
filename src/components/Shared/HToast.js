@@ -1,13 +1,15 @@
 import React from 'react'
-import { View, Text, StyleSheet, Platform } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { colors } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const HToast = (props) => {
   const {
     message,
     type
   } = props
+  const insets = useSafeAreaInsets()
 
   let backgroundColor = '#333333'
   switch (type) {
@@ -30,7 +32,7 @@ const HToast = (props) => {
       backgroundColor: backgroundColor,
       paddingHorizontal: 18,
       paddingVertical: 15,
-      bottom: Platform.OS === 'android' ? -50 : -20
+      bottom: insets.bottom ? -18 : -50
     },
     messageText: {
       color: colors.white,
