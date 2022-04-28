@@ -92,7 +92,7 @@ export default StyleSheet.create({
   },
   paragraph: {
     color: colors.primary,
-    fontSize: 27
+    fontSize: 25
   },
   noSuggestionText: {
     color: colors.text01,

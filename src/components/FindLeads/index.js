@@ -171,6 +171,7 @@ export const FindLeads = (props) => {
                         _pressed={{
                           backgroundColor: colors.text05
                         }}
+                        py='1'
                         onPress={() => handleSelectZipcode(address)}
                       >
                         <HilightTextConvert
@@ -240,7 +241,7 @@ const HilightTextConvert = (props) => {
   let endIndex = text.toLowerCase().indexOf(highlight.toLowerCase()) + highlight.length;
   if (startIndex !== -1) {
     return (
-      <HText style={styles.paragraph}>
+      <HText style={styles.paragraph} numberOfLines={1}>
         {text.substring(0, startIndex)}
         <HText style={{ ...styles.paragraph, ...styles.highlight }}>
           {text.substring(startIndex, endIndex)}

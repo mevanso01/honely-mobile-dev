@@ -10,6 +10,7 @@ import { Card } from './Card'
 
 export const BuyLeads = (props) => {
   const {
+    fullAddres,
     leads,
     defaultFilterBy,
     navigation,
@@ -107,7 +108,7 @@ export const BuyLeads = (props) => {
       <View style={styles.innerContainer}>
         <HStack mb='4' alignItems='center'>
           <Image source={icons.location} style={styles.addressIcon} />
-          <HText style={styles.addressText}>Miami, FL</HText>
+          <HText style={styles.addressText}>{fullAddres}</HText>
         </HStack>
         <VStack mb='4'>
           <HStack mb='4' justifyContent='space-between'>

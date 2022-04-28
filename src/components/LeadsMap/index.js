@@ -66,7 +66,7 @@ export const LeadsMap = (props) => {
   }
 
   const handleGoToBuyLeads = (filterBy) => {
-    onNavigationRedirect('BuyLeads', { leads: leadsListing, filterBy: filterBy })
+    onNavigationRedirect('BuyLeads', { leads: leadsListing, filterBy: filterBy, fullAddres: getFullAddress() })
   }
 
   const getFullAddress = () => {
