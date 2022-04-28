@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
-import { Pressable, Box, HStack, VStack, Slider, Divider } from 'native-base'
+import { Pressable, Box, HStack, VStack, Slider, Divider, useToast, Skeleton } from 'native-base'
 import { HText, HButton } from '../Shared'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import FeatherIcons from 'react-native-vector-icons/Feather'
+import { doGet } from '../../services/http-client'
+import { TOAST_LENGTH_SHORT } from '../../config'
 
 const DEFAULT_PADDING = { top: 20, right: 20, bottom: 20, left: 20 }
 const location = {
@@ -38,10 +40,13 @@ const markers = [
 
 export const LeadsMap = (props) => {
   const {
+    level,
+    address,
     navigation,
     onNavigationRedirect
   } = props
 
+  const toast = useToast()
   const [maxDistance, setMaxDistance] = useState(14)
   const mapRef = useRef(null)
   const [region, setRegion] = useState({
@@ -50,6 +55,8 @@ export const LeadsMap = (props) => {
     latitudeDelta: 0.5,
     longitudeDelta: 0.5 * deviceWidth / 200,
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [leadsListing, setLeadsListing] = useState({})
 
   const fitAllMarkers = () => {
     mapRef.current.fitToCoordinates(markers, {
@@ -58,11 +65,77 @@ export const LeadsMap = (props) => {
     });
   }
 
+  const getFullAddress = () => {
+    if (level === 'state') return address.state_short
+    else {
+      let fulllAddress = ''
+      if (address?.zip_code) {
+        fulllAddress += address?.zip_code + ' '
+      }
+      if (address?.city) {
+        fulllAddress += address?.city + ', '
+      }
+      fulllAddress += address?.state
+      return fulllAddress
+    }
+  }
+
+  const handleGetLeads = async (level, address) => {
+    try {
+      setIsLoading(true)
+      let params = {}
+      if (level === 'zipcode') {
+        params = {
+          level: 'zip_code',
+          zip_code: address.zip_code
+        }
+      }
+      if (level === 'city') {
+        if (address.city) {
+          params = {
+            level: 'city',
+            city: address.city,
+            state: address.state
+          }
+        } else {
+          params = {
+            level: 'state',
+            state: address.state
+          }
+        }
+      }
+      if (level === 'state') {
+        params = {
+          level: 'state',
+          state: address.state_short
+        }
+      }
+      const response = await doGet('searches/leads', params)
+      if (response.result === 'Error') throw response
+      setLeadsListing(response.data)
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
   useEffect(() => {
     if (mapRef.current) {
       fitAllMarkers()
     }
   }, [markers, mapRef])
+
+  useEffect(() => {
+    handleGetLeads(level, address)
+  }, [level, address])
 
   return (
     <View style={styles.container}>
@@ -99,7 +172,7 @@ export const LeadsMap = (props) => {
       </View>
       <View style={styles.addressContainer}>
         <Image source={icons.location} style={styles.addressIcon} />
-        <HText style={styles.addressText}>Miami, Fl</HText>
+        <HText style={styles.addressText}>{getFullAddress()}</HText>
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -153,7 +226,11 @@ export const LeadsMap = (props) => {
             </VStack>
             <HStack width='30%' justifyContent='space-between'>
               <Box>
-                <HText style={styles.qtyText}>3</HText>
+                {isLoading ? (
+                  <Skeleton h='6' w='10' rounded='sm' ml='7' />
+                ) : (
+                  <HText style={styles.qtyText}>{leadsListing?.sellers?.total || 0}</HText>
+                )}
               </Box>
               <FeatherIcons name='arrow-right' size={24} color={colors.primary_100} />
             </HStack>
@@ -173,7 +250,11 @@ export const LeadsMap = (props) => {
             </VStack>
             <HStack width='30%' justifyContent='space-between'>
               <Box>
-                <HText style={styles.qtyText}>28</HText>
+                {isLoading ? (
+                  <Skeleton h='6' w='10' rounded='sm' ml='7' />
+                ) : (
+                  <HText style={styles.qtyText}>{leadsListing?.buyers?.total || 0}</HText>
+                )}
               </Box>
               <FeatherIcons name='arrow-right' size={24} color={colors.primary_100} />
             </HStack>
@@ -193,7 +274,11 @@ export const LeadsMap = (props) => {
             </VStack>
             <HStack width='30%' justifyContent='space-between'>
               <Box>
-                <HText style={styles.qtyText}>34</HText>
+                {isLoading ? (
+                  <Skeleton h='6' w='10' rounded='sm' ml='7' />
+                ) : (
+                  <HText style={styles.qtyText}>{leadsListing?.prospective?.total || 0}</HText>
+                )}
               </Box>
               <FeatherIcons name='arrow-right' size={24} color={colors.primary_100} />
             </HStack>

@@ -9,6 +9,8 @@ const LeadsMap = (props) => {
   const insets = useSafeAreaInsets()
   const leadsMapProps = {
     ...props,
+    level: props.route.params?.level,
+    address: props.route.params?.address,
     onNavigationRedirect: (page, params) => {
       if (!page) return
       props.navigation.navigate(page, params);

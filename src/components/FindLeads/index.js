@@ -50,9 +50,9 @@ export const FindLeads = (props) => {
     }, 750)
   }
 
-  const handleSelectZipcode = () => {
+  const handleSelectZipcode = (address) => {
     setIsOpenDropdown(false)
-    onNavigationRedirect('LeadsMap')
+    onNavigationRedirect('LeadsMap', { level: suggestionList?.data?.level, address: address })
   }
 
   const handleSearchFocus = () => {
@@ -171,7 +171,7 @@ export const FindLeads = (props) => {
                         _pressed={{
                           backgroundColor: colors.text05
                         }}
-                        onPress={() => handleSelectZipcode()}
+                        onPress={() => handleSelectZipcode(address)}
                       >
                         <HilightTextConvert
                           text={getFullAddressText(address)}
@@ -212,7 +212,7 @@ export const FindLeads = (props) => {
                 _pressed={{
                   backgroundColor: colors.text05
                 }}
-                onPress={() => handleSelectZipcode()}
+                onPress={() => {}}
               >
                 <View style={styles.recentSearchItem}>
                   <HText style={styles.searchsuggestionText}>Los Angeles, CA</HText>
