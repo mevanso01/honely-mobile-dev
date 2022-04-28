@@ -7,6 +7,8 @@ import { HFocusAwareStatusBar } from '../components/Shared'
 const BuyLeads = (props) => {
   const buyLeadsProps = {
     ...props,
+    defaultFilterBy: props.route.params?.filterBy,
+    leads: props.route.params?.leads,
     onNavigationRedirect: (page, params) => {
       if (!page) return
       props.navigation.navigate(page, params);

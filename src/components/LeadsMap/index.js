@@ -65,6 +65,10 @@ export const LeadsMap = (props) => {
     });
   }
 
+  const handleGoToBuyLeads = (filterBy) => {
+    onNavigationRedirect('BuyLeads', { leads: leadsListing, filterBy: filterBy })
+  }
+
   const getFullAddress = () => {
     if (level === 'state') return address.state_short
     else {
@@ -217,7 +221,8 @@ export const LeadsMap = (props) => {
           _pressed={{
             backgroundColor: colors.text05
           }}
-          onPress={() => onNavigationRedirect('BuyLeads')}
+          isDisabled={isLoading}
+          onPress={() => handleGoToBuyLeads('sellers')}
         >
           <View style={styles.sectionContainer}>
             <VStack width='70%'>
@@ -241,7 +246,8 @@ export const LeadsMap = (props) => {
           _pressed={{
             backgroundColor: colors.text05
           }}
-          onPress={() => onNavigationRedirect('BuyLeads')}
+          isDisabled={isLoading}
+          onPress={() => handleGoToBuyLeads('buyers')}
         >
           <View style={styles.sectionContainer}>
             <VStack width='70%'>
@@ -265,7 +271,8 @@ export const LeadsMap = (props) => {
           _pressed={{
             backgroundColor: colors.text05
           }}
-          onPress={() => onNavigationRedirect('BuyLeads')}
+          isDisabled={isLoading}
+          onPress={() => handleGoToBuyLeads('prospective')}
         >
           <View style={styles.sectionContainer}>
             <VStack width='70%'>
@@ -292,7 +299,9 @@ export const LeadsMap = (props) => {
           backgroundColor={colors.darkPrimary}
           widt={(deviceWidth - 36) * 0.9}
           height={60}
-          onPress={() => onNavigationRedirect('BuyLeads')}
+          isDisabled={isLoading}
+          disabledOpacity={0.6}
+          onPress={() => handleGoToBuyLeads(null)}
         />
       </Box>
     </View>

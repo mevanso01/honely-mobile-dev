@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider } from 'native-base'
+import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider, Skeleton } from 'native-base'
 import { HButton, HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
@@ -10,17 +10,69 @@ import { Card } from './Card'
 
 export const BuyLeads = (props) => {
   const {
+    leads,
+    defaultFilterBy,
     navigation,
     onNavigationRedirect
   } = props
   
-  const onSelectFilterBy = () => {
+  const [isBuyers, setIsBuyers] = useState(false)
+  const [isSellers, setIsSellers] = useState(false)
+  const [isProspective, setIsProspective] = useState(false)
+  const [totalLeads, setTotalLeads] = useState(null)
+  const [filteredLeads, setFilteredLeads] = useState(null)
+
+  const onSelectFilterBy = (selected, type) => {
     const options = {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: true
     }
     ReactNativeHapticFeedback.trigger('impactLight', options)
+    switch (type) {
+      case 'buyers':
+        setIsBuyers(selected)
+        break
+      case 'sellers':
+        setIsSellers(selected)
+        break
+      case 'prospective':
+        setIsProspective(selected)
+        break
+    }
   }
+
+  useEffect(() => {
+    const totalBuyers = leads?.buyers?.total || 0
+    const totalSellers = leads?.sellers?.total || 0
+    const totalProspective = leads?.prospective?.total || 0
+    let _total = totalBuyers + totalSellers + totalProspective
+    setTotalLeads(_total)
+    let _filtered = 0
+    if (isBuyers) _filtered += totalBuyers
+    if (isSellers) _filtered += totalSellers
+    if (isProspective) _filtered += totalProspective
+    setFilteredLeads(_filtered)
+  }, [isBuyers, isSellers, isProspective, leads])
+
+  useEffect(() => {
+    if (defaultFilterBy) {
+      switch (defaultFilterBy) {
+        case 'buyers':
+          setIsBuyers(true)
+          break
+        case 'sellers':
+          setIsSellers(true)
+          break
+        case 'prospective':
+          setIsProspective(true)
+          break
+      }
+    } else {
+      setIsBuyers(true)
+      setIsSellers(true)
+      setIsProspective(true)
+    }
+  }, [defaultFilterBy])
 
   return (
     <View style={styles.screenContainer}>
@@ -60,7 +112,11 @@ export const BuyLeads = (props) => {
         <VStack mb='4'>
           <HStack mb='4' justifyContent='space-between'>
             <HText style={styles.filterText}>Filter by:</HText>
-            <HText style={styles.filterText}>32 leads</HText>
+            {!totalLeads ? (
+              <Skeleton h='3' w='16' rounded='sm' ml='7' />
+            ) : (
+              <HText style={styles.filterText}>{totalLeads}/{filteredLeads} leads</HText>
+            )}
           </HStack>
           <HStack justifyContent='center'>
             <Checkbox
@@ -78,7 +134,8 @@ export const BuyLeads = (props) => {
               icon={
                 <Icon as={<Image source={icons.cirlceCheckOn} />} />
               }
-              onChange={selected => onSelectFilterBy(selected)}
+              isChecked={isBuyers}
+              onChange={selected => onSelectFilterBy(selected, 'buyers')}
             >
               <HText style={styles.radioLabel}>Buyers</HText>
             </Checkbox>
@@ -97,7 +154,8 @@ export const BuyLeads = (props) => {
               icon={
                 <Icon as={<Image source={icons.cirlceCheckOn} />} />
               }
-              onChange={selected => onSelectFilterBy(selected)}
+              isChecked={isSellers}
+              onChange={selected => onSelectFilterBy(selected, 'sellers')}
             >
               <HText style={styles.radioLabel}>Sellers</HText>
             </Checkbox>
@@ -115,7 +173,8 @@ export const BuyLeads = (props) => {
               icon={
                 <Icon as={<Image source={icons.cirlceCheckOn} />} />
               }
-              onChange={selected => onSelectFilterBy(selected)}
+              isChecked={isProspective}
+              onChange={selected => onSelectFilterBy(selected, 'prospective')}
             >
               <HText style={styles.radioLabel}>Prospective</HText>
             </Checkbox>
@@ -129,9 +188,38 @@ export const BuyLeads = (props) => {
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.innerContainer}>
-          <Card userTypeValue={1} />
-          <Card userTypeValue={2} />
-          <Card userTypeValue={3} />
+          {isBuyers && leads?.buyers?.leads && (
+            leads.buyers.leads.map((lead, i) => (
+              <Card
+                key={i}
+                userTypeValue={1}
+                lead={lead}
+              />
+            ))
+          )}
+          {isSellers && leads?.sellers?.leads && (
+            leads.sellers.leads.map((lead, i) => (
+              <Card
+                key={i}
+                userTypeValue={2}
+                lead={lead}
+              />
+            ))
+          )}
+          {isProspective && leads?.prospective?.leads && (
+            leads.prospective.leads.map((lead, i) => (
+              <Card
+                key={i}
+                userTypeValue={3}
+                lead={lead}
+              />
+            ))
+          )}
+          {filteredLeads === 0 && (
+            <Box alignItems='center' my='4'>
+              <HText style={styles.radioLabel}>No Leads</HText>
+            </Box>
+          )}
         </View>
       </ScrollView>
       <Divider backgroundColor={colors.primary} opacity={0.7} />

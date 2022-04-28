@@ -7,7 +7,8 @@ import { colors, icons } from '../../utils/styleGuide'
 
 export const Card = (props) => {
   const {
-    userTypeValue
+    userTypeValue,
+    lead
   } = props
   const [isAdded, setIsAdded] = useState()
   const [cartQty, setCartQty] = useState(1)
@@ -38,14 +39,14 @@ export const Card = (props) => {
           <Image source={getUser(userTypeValue)?.icon} style={styles.userIcon} />
           <HText style={styles.cardBigText}>{getUser(userTypeValue)?.content}</HText>
         </HStack>
-        <HText style={styles.cardBigText}>$50</HText>
+        <HText style={styles.cardBigText}>${lead?.lead_price}</HText>
       </HStack>
       <Divider backgroundColor={colors.white} my='4' />
       <HText style={styles.priceDescription}>
         Average Home Price in Zip Code: 90210
       </HText>
       <Box mt='3' mb='2'>
-        <HText style={styles.cardBigText}>$450,000</HText>
+        <HText style={styles.cardBigText}>${lead?.average_home_price}</HText>
       </Box>
       <HStack justifyContent='flex-end'>
         <VStack height='10' alignItems='center'>
