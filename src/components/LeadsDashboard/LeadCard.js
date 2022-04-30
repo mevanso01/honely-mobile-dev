@@ -10,7 +10,8 @@ export const LeadCard = (props) => {
     onNavigationRedirect,
     isLoading,
     type,
-    lead
+    lead,
+    level
   } = props
 
   return (
@@ -75,7 +76,7 @@ export const LeadCard = (props) => {
           disabledOpacity={0.6}
           height={50}
           width={180}
-          onPress={() => onNavigationRedirect('ContactLead', { lead: lead })}
+          onPress={() => onNavigationRedirect('ContactLead', { lead: lead, level: level })}
         />
       </Box>
     </View>

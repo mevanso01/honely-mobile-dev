@@ -35,6 +35,34 @@ exports.doPost = (url, data, onSuccess, onFail, isPut) => {
     });
 }
 
+exports.doPatch = (url, data, onSuccess, onFail) => {
+  const state = store.getState();
+  return fetch(base_url + url, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Origin': '',
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then(async (response) => {
+      if (!response) {
+        throw failureMsg;
+      }
+      !onSuccess || onSuccess(response);
+      return response;
+    })
+    .catch((error) => {
+      !onFail || onFail(error);
+      return {
+        error: 1,
+        msg: failureMsg
+      }
+    });
+}
+
 exports.doDelete = (url, data, onSuccess, onFail) => {
   const state = store.getState();
   // const { jwtAccessToken } = state.currentUser;

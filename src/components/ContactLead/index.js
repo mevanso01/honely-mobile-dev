@@ -1,34 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Image, ScrollView, Linking, Platform } from 'react-native'
-import { HStack, Box, VStack, TextArea, Pressable } from 'native-base'
+import { HStack, Box, VStack, TextArea, Pressable, useToast } from 'native-base'
 import { HText, HButton, HSwitch } from '../Shared'
 import SelectDropdown from 'react-native-select-dropdown'
 import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { TOAST_LENGTH_SHORT } from '../../config'
+import { doPatch } from '../../services/http-client'
+import { setUser } from '../../store/action/setUser'
 
 export const ContactLead = (props) => {
   const {
+    level,
+    defaultLead,
     navigation,
     onNavigationRedirect
   } = props
 
+  const toast = useToast()
+  const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
-
-  const [emailEnabled, setEmailEnabled] = useState(false)
-  const [smsEnabled, setSmsEnabled] = useState(false)
+  const [lead, setLead] = useState(defaultLead)
+  const [emailEnabled, setEmailEnabled] = useState(currentUser?.preset?.use_email || false)
+  const [smsEnabled, setSmsEnabled] = useState(currentUser?.preset?.use_phone_number || false)
   const [isSmsFocus, setIsSmsFocus] = useState(false)
   const [isEmailFocus, setIsEmailFocus] = useState(false)
-  const [statusValue, setStatusValue] = useState(1)
+  const [statusValue, setStatusValue] = useState(0)
   const [emailMessage, setEmailMessage] = useState('')
   const [smsMessage, setSmsMessage] = useState('')
+  const [defaultIndex, setDefaultIndex] = useState(null)
+  const [defaultSMS, setDefaultSMS] = useState('')
+  const [defaultEmailMessage, setDefaultEmailMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const statusOptions = [
-    { value: 1, content: 'New', color: colors.primary },
-    { value: 2, content: 'Attempted Contact', color: colors.green },
-    { value: 3, content: 'Rejected', color: colors.rejected },
-    { value: 4, content: 'Closed Sale', color: colors.green },
-    { value: 5, content: 'Closed Leads', color: colors.green },
+    { value: 0, content: 'New', color: colors.primary },
+    { value: 1, content: 'Attempted Contact', color: colors.green },
+    { value: 2, content: 'Followed Up', color: colors.green },
+    { value: 3, content: 'Pending Sale', color: colors.green },
+    { value: 4, content: 'Closed Leads', color: colors.green },
+    { value: 5, content: 'Rejected', color: colors.rejected }
   ]
 
   const getSelectBgColor = (value) => {
@@ -56,6 +68,67 @@ export const ContactLead = (props) => {
       }
     }
   }
+
+  const handleChangeStatus = async (selectedItem) => {
+    try {
+      setIsLoading(true)
+      setStatusValue(selectedItem.value)
+      const response = await doPatch(`lookup-test/lead/change-status?lead-id=${lead.lead_id}`, { 'status': selectedItem.content })
+      if (response.result !== 'Success') throw response
+      setLead({ ...lead, agent_status: selectedItem.content.toUpperCase() })
+      const _updatedLeads = currentUser.leads[level].leads.map(_lead => {
+        if (_lead.lead_id === lead.lead_id) {
+          _lead.agent_status = selectedItem.content.toUpperCase()
+        }
+        return _lead
+      })
+      const updatedLeads = {
+        ...currentUser.leads,
+        [level]: {
+          total: currentUser.leads[level].total,
+          leads: _updatedLeads
+        }
+      }
+      dispatch(setUser({ leads: updatedLeads }))
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  useEffect(() => {
+    const found = statusOptions.find(option => option.content.toLowerCase() === lead?.agent_status?.toLowerCase())
+    setDefaultIndex(found?.value?.toString() || '0')
+    setStatusValue(found?.value || 0)
+    switch (lead?.agent_status) {
+      case 'NEW':
+        setDefaultSMS(currentUser?.preset?.preset_bayer_text_msg_first || '')
+        setDefaultEmailMessage(currentUser?.preset?.preset_bayer_email_msg_first || '')
+        setEmailEnabled(currentUser?.preset?.use_email || false)
+        setSmsEnabled(currentUser?.preset?.use_phone_number || false)
+        break
+      case 'ATTEMPTED CONTACT':
+        setDefaultSMS(currentUser?.preset?.preset_bayer_text_msg_second || '')
+        setDefaultEmailMessage(currentUser?.preset?.preset_bayer_email_msg_second || '')
+        setEmailEnabled(currentUser?.preset?.use_email || false)
+        setSmsEnabled(currentUser?.preset?.use_phone_number || false)
+        break
+      default:
+        setDefaultSMS('')
+        setDefaultEmailMessage('')
+        setEmailEnabled(false)
+        setSmsEnabled(false)
+        break
+    }
+  }, [lead?.agent_status, currentUser?.preset?.use_email, currentUser?.preset?.use_phone_number])
 
   return (
     <View style={styles.screenContainer}>
@@ -85,9 +158,10 @@ export const ContactLead = (props) => {
           <HText style={styles.statusLabel}>Status:</HText>
           <SelectDropdown
             defaultButtonText='Select an option'
-            defaultValueByIndex='0'
+            defaultValueByIndex={defaultIndex}
             data={statusOptions}
-            onSelect={(selectedItem, index) => setStatusValue(selectedItem.value)}
+            disabled={isLoading}
+            onSelect={handleChangeStatus}
             buttonTextAfterSelection={(selectedItem, index) => { return selectedItem.content }}
             rowTextForSelection={(item, index) => { return item.content }}
             buttonStyle={{
@@ -115,7 +189,7 @@ export const ContactLead = (props) => {
             <View style={styles.contactCardInnerContainer}>
               <HStack>
                 <HText style={styles.label} mRight='12'>From:</HText>
-                <HText style={styles.label}>John Closter</HText>
+                <HText style={styles.label}>{currentUser?.first_name} {currentUser?.last_name}</HText>
               </HStack>
             </View>
           </View>
@@ -125,14 +199,14 @@ export const ContactLead = (props) => {
           <HStack>
             <HText style={styles.label} mRight='12'>To:</HText>
             <VStack space='1'>
-              <HText style={styles.label}>{currentUser?.first_name} {currentUser?.last_name}</HText>
+              <HText style={styles.label}>{lead?.name}</HText>
               <HStack alignItems='center'>
                 <Image source={icons.email} style={styles.contactIcon} />
-                <HText style={styles.contactInfoText}>{currentUser?.email}</HText>
+                <HText style={styles.contactInfoText}>{lead?.email}</HText>
               </HStack>
               <HStack alignItems='center'>
                 <Image source={icons.phone} style={styles.contactIcon} />
-                <HText style={styles.contactInfoText}>{currentUser?.phone_number}</HText>
+                <HText style={styles.contactInfoText}>{lead?.phone_number}</HText>
               </HStack>
             </VStack>
           </HStack>
@@ -157,7 +231,8 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
-              defaultValue={currentUser?.preset?.preset_bayer_text_msg_first || ''}
+              defaultValue={defaultSMS}
+              isDisabled={!smsEnabled}
               onChangeText={e => setSmsMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
@@ -182,7 +257,8 @@ export const ContactLead = (props) => {
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
-              defaultValue={currentUser?.preset?.preset_bayer_email_msg_first || ''}
+              defaultValue={defaultEmailMessage}
+              isDisabled={!emailEnabled}
               onChangeText={e => setEmailMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsEmailFocus(true)}

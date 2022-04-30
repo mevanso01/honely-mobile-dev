@@ -3,20 +3,23 @@ import { ScrollView, Image, View } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import { HText, HButton } from '../Shared'
 import { colors, images, icons } from '../../utils/styleGuide'
-import { HStack, VStack, Box, Checkbox, Icon, Skeleton } from 'native-base'
+import { HStack, VStack, Box, Checkbox, Icon, Skeleton, useToast } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
 import Swiper from 'react-native-swiper'
 import styles from './style'
 import { doGet } from '../../services/http-client'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { LeadCard } from './LeadCard'
+import { setUser } from '../../store/action/setUser'
 
 export const LeadsDashboard = (props) => {
   const {
     onNavigationRedirect
   } = props
 
+  const toast = useToast()
+  const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
   const [isLoading, setIsLoading] = useState(true)
   const [leadsList, setLeadsList] = useState({})
@@ -50,40 +53,45 @@ export const LeadsDashboard = (props) => {
     }, 100)
   }
 
+  const handleLeadsFilter = (response) => {
+    let _leadsList = {}
+    if (response.buyers?.leads) {
+      const buyerLeads = response.buyers?.leads.filter(lead => lead.agent_status === 'NEW')
+      if (buyerLeads.length) {
+        _leadsList.buyers = {
+          total: buyerLeads.length,
+          leads: buyerLeads
+        }
+      }
+    }
+    if (response.sellers?.leads) {
+      const sellerLeads = response.sellers?.leads.filter(lead => lead.agent_status === 'NEW')
+      if (sellerLeads.length) {
+        _leadsList.sellers = {
+          total: sellerLeads.length,
+          leads: sellerLeads
+        }
+      }
+    }
+    if (response.prospective?.leads) {
+      const prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status === 'NEW')
+      if (prospectiveLeads.length) {
+        _leadsList.prospective = {
+          total: prospectiveLeads.length,
+          leads: prospectiveLeads
+        }
+      }
+    }
+    return _leadsList
+  }
+
   const handleGetUserLeads = async () => {
     try {
       setIsLoading(true)
-      const response = await doGet('searches/lead-dashboard', { 'user-id': currentUser?.user_id })
+      const response = await doGet('searches/lead-dashboard', { 'user-id': 465 })
       if (response.result !== 'Success') throw response
-      let _leadsList = {}
-      if (response.data?.buyers?.leads) {
-        const buyerLeads = response.data?.buyers?.leads.filter(lead => lead.agent_status === 'NEW')
-        if (buyerLeads.length) {
-          _leadsList.buyers = {
-            total: buyerLeads.length,
-            leads: buyerLeads
-          }
-        }
-      }
-      if (response.data?.sellers?.leads) {
-        const sellerLeads = response.data?.sellers?.leads.filter(lead => lead.agent_status === 'NEW')
-        if (sellerLeads.length) {
-          _leadsList.sellers = {
-            total: sellerLeads.length,
-            leads: sellerLeads
-          }
-        }
-      }
-      if (response.data?.prospective?.leads) {
-        const prospectiveLeads = response.data?.prospective?.leads.filter(lead => lead.agent_status === 'NEW')
-        if (prospectiveLeads.length) {
-          _leadsList.prospective = {
-            total: prospectiveLeads.length,
-            leads: prospectiveLeads
-          }
-        }
-      }
-      setLeadsList(_leadsList)
+      const _leadsList = handleLeadsFilter(response.data)
+      dispatch(setUser({ leads: _leadsList }))
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
@@ -111,6 +119,11 @@ export const LeadsDashboard = (props) => {
     if (isProspective) _filtered += totalProspective
     setFilteredLeads(_filtered)
   }, [isBuyers, isSellers, isProspective, leadsList, isLoading])
+
+  useEffect(() => {
+    const _leadsList = handleLeadsFilter(currentUser?.leads)
+    setLeadsList(_leadsList)
+  }, [JSON.stringify(currentUser?.leads)])
 
   useEffect(() => {
     handleGetUserLeads()
@@ -224,6 +237,7 @@ export const LeadsDashboard = (props) => {
                     key={i}
                     lead={lead}
                     type='Buyer'
+                    level='buyers'
                     onNavigationRedirect={onNavigationRedirect}
                   />
                 ))}
@@ -232,14 +246,16 @@ export const LeadsDashboard = (props) => {
                     key={i}
                     lead={lead}
                     type='Seller'
+                    level='sellers'
                     onNavigationRedirect={onNavigationRedirect}
                   />
                 ))}
-                {isProspective && leadsList?.prospective?.leads && prospective.prospective.leads.map((lead, i) => (
+                {isProspective && leadsList?.prospective?.leads && leadsList.prospective.leads.map((lead, i) => (
                   <LeadCard
                     key={i}
                     lead={lead}
                     type='Prospective'
+                    level='prospective'
                     onNavigationRedirect={onNavigationRedirect}
                   />
                 ))}

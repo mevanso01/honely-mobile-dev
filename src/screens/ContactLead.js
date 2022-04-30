@@ -14,6 +14,8 @@ const ContactLead = (props) => {
   const insets = useSafeAreaInsets()
   const contactLeadProps = {
     ...props,
+    level: props.route.params?.level,
+    defaultLead: props.route.params?.lead,
     onNavigationRedirect: (page, params) => {
       if (!page) return
       props.navigation.navigate(page, params);
