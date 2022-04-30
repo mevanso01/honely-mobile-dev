@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider, Skeleton } from 'native-base'
+import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider, Skeleton, useToast } from 'native-base'
 import { HButton, HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
 import { Card } from './Card'
+import { doGet } from '../../services/http-client'
+import { useSelector, useDispatch } from 'react-redux'
+import { setUser } from '../../store/action/setUser'
 
 export const BuyLeads = (props) => {
   const {
@@ -17,11 +20,17 @@ export const BuyLeads = (props) => {
     onNavigationRedirect
   } = props
   
+  const toast = useToast()
+  const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.currentUser)
+
   const [isBuyers, setIsBuyers] = useState(false)
   const [isSellers, setIsSellers] = useState(false)
   const [isProspective, setIsProspective] = useState(false)
   const [totalLeads, setTotalLeads] = useState(null)
   const [filteredLeads, setFilteredLeads] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [totalCart, setTotalCart] = useState(0)
 
   const onSelectFilterBy = (selected, type) => {
     const options = {
@@ -75,6 +84,40 @@ export const BuyLeads = (props) => {
     }
   }, [defaultFilterBy])
 
+
+  const handleGetCart = async () => {
+    try {
+      setIsLoading(true)
+      const response = await doGet('lookup-test/cart', { 'user-id': currentUser?.user_id })
+      if (response.result !== 'Success') throw response
+      dispatch(setUser({ cart: response.data }))
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  useEffect(() => {
+    handleGetCart()
+  }, [])
+
+  useEffect(() => {
+    if (!currentUser?.cart) return
+    const totalBuyers = currentUser?.cart?.buyer_leads?.length || 0
+    const totalSellers = currentUser?.cart?.seller_leads?.length || 0
+    const totalProspective = currentUser?.cart?.prospective_leads?.length || 0
+    let _total = totalBuyers + totalSellers + totalProspective
+    setTotalCart(_total)
+  }, [JSON.stringify(currentUser?.cart)])
+
   return (
     <View style={styles.screenContainer}>
       <View style={styles.headerContainer}>
@@ -99,7 +142,7 @@ export const BuyLeads = (props) => {
           >
             <Image source={icons.cart} style={styles.cartIcon} />
             <View style={styles.cartQtyWrapper}>
-              <HText style={styles.cartQty}>12</HText>
+              <HText style={styles.cartQty}>{totalCart}</HText>
             </View>
           </Pressable>
         </View>

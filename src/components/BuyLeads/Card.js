@@ -1,17 +1,26 @@
 import React, { useState } from 'react'
 import { View, Image } from 'react-native'
 import { HText, HButton } from '../Shared'
-import { HStack, Divider, Box, VStack, Pressable } from 'native-base'
+import { HStack, Divider, Box, VStack, Pressable, useToast, Spinner } from 'native-base'
 import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
+import { doPost, doDelete } from '../../services/http-client'
+import { useSelector, useDispatch } from 'react-redux'
+import { setUser } from '../../store/action/setUser'
 
 export const Card = (props) => {
   const {
     userTypeValue,
     lead
   } = props
+
+  const toast = useToast()
+  const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.currentUser)
+
   const [isAdded, setIsAdded] = useState()
   const [cartQty, setCartQty] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
 
   const getUser = (value) => {
     const userTypes = [
@@ -32,6 +41,75 @@ export const Card = (props) => {
     setCartQty(cartQty + 1)
   }
 
+  const handleAddToCart = async () => {
+    try {
+      setIsLoading(true)
+      const response = await doPost(`lookup-test/cart?user-id=${currentUser?.user_id}`, { leads: [lead.lead_id] })
+      if (response.result !== 'Success') throw response
+      setIsAdded(true)
+      const newCart = {
+        lead_id: lead.lead_id,
+        zip_code: lead.zip_code,
+        lead_price: lead.average_home_price
+      }
+      const prevCart = currentUser?.cart || {}
+      let updatedCart = { ...prevCart }
+      if (userTypeValue === 1) {
+        updatedCart.buyer_leads = [...updatedCart?.buyer_leads, newCart]
+      }
+      if (userTypeValue === 2) {
+        updatedCart.seller_leads = [...updatedCart?.seller_leads, newCart]
+      }
+      if (userTypeValue === 3) {
+        updatedCart.prospective_leads = [...updatedCart?.prospective_leads, newCart]
+      }
+      dispatch(setUser({ cart: updatedCart }))      
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  const handleRemoveCart = async () => {
+    try {
+      setIsLoading(true)
+      const response = await doDelete(`lookup-test/cart?user-id=${currentUser?.user_id}&lead-id=${lead.lead_id}`)
+      if (response.result !== 'Success') throw response
+      setIsAdded(false)
+      const prevCart = currentUser?.cart || {}
+      let updatedCart = { ...prevCart }
+      if (userTypeValue === 1) {
+        updatedCart.buyer_leads = updatedCart?.buyer_leads.filter(_lead => _lead.lead_id !== lead.lead_id)
+      }
+      if (userTypeValue === 2) {
+        updatedCart.seller_leads = updatedCart?.seller_leads.filter(_lead => _lead.lead_id !== lead.lead_id)
+      }
+      if (userTypeValue === 3) {
+        updatedCart.prospective_leads = updatedCart?.prospective_leads.filter(_lead => _lead.lead_id !== lead.lead_id)
+      }
+      dispatch(setUser({ cart: updatedCart }))
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
   return (
     <View style={styles.cardContainer}>
       <HStack justifyContent='space-between' alignItems='center'>
@@ -43,7 +121,7 @@ export const Card = (props) => {
       </HStack>
       <Divider backgroundColor={colors.white} my='4' />
       <HText style={styles.priceDescription}>
-        Average Home Price in Zip Code: 90210
+        Average Home Price in Zip Code: {lead.zip_code}
       </HText>
       <Box mt='3' mb='2'>
         <HText style={styles.cardBigText}>${lead?.average_home_price}</HText>
@@ -52,22 +130,31 @@ export const Card = (props) => {
         <VStack height='10' alignItems='center'>
           {isAdded ? (
             <VStack alignItems='flex-end'>
-              <HStack alignItems='center'>
-                <HText style={styles.addedText}>
-                  {userTypeValue === 3 && `${cartQty}x `} Added
-                </HText>
-                <Image source={icons.check} style={styles.checkIcon} />
-              </HStack>
-              <Pressable
-                _pressed={{
-                  opacity: 0.6
-                }}
-                onPress={() => setIsAdded(false)}
-              >
-                <HText style={styles.modifyText}>
-                  {userTypeValue === 3 ? 'Modify Cart' : 'Remove from Cart'}
-                </HText>
-              </Pressable>
+              {isLoading ? (
+                <HStack alignItems='center'>
+                  <HText style={styles.addedText}>Submitting</HText>
+                  <Spinner color={colors.primary} size='lg' ml='2' />
+                </HStack>
+              ) : (
+                <>
+                  <HStack alignItems='center'>
+                    <HText style={styles.addedText}>
+                      {userTypeValue === 3 && `${cartQty}x `} Added
+                    </HText>
+                    <Image source={icons.check} style={styles.checkIcon} />
+                  </HStack>
+                  <Pressable
+                    _pressed={{
+                      opacity: 0.6
+                    }}
+                    onPress={() => handleRemoveCart()}
+                  >
+                    <HText style={styles.modifyText}>
+                      {userTypeValue === 3 ? 'Modify Cart' : 'Remove from Cart'}
+                    </HText>
+                  </Pressable>
+                </>
+              )}
             </VStack>
           ) : (
             <HStack>
@@ -111,7 +198,8 @@ export const Card = (props) => {
                   color: colors.primary,
                   fontSize: 16
                 }}
-                onPress={() => setIsAdded(true)}
+                isLoading={isLoading}
+                onPress={() => handleAddToCart()}
               />
             </HStack>
           )}

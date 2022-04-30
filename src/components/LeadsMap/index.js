@@ -80,7 +80,7 @@ export const LeadsMap = (props) => {
     try {
       setIsLoading(true)
       let params = {}
-      if (level === 'zipcode') {
+      if (level === 'zipcode' || level === 'zip_code') {
         params = {
           level: 'zip_code',
           zip_code: address.zip_code,
@@ -212,7 +212,7 @@ export const LeadsMap = (props) => {
         contentContainerStyle={styles.scrollContent}
       >
         <VStack alignItems='center'>
-          {level === 'zipcode' && (
+          {(level === 'zipcode' || level === 'zip_code') && (
             <>
               <View style={styles.maxDistanceLabelWrapper}>
                 <HText style={styles.labelText}>Maximum distance</HText>
