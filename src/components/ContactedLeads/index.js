@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, ScrollView, Image } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import { HStack, VStack, Box, Checkbox, Icon, Pressable } from 'native-base'
@@ -6,78 +6,125 @@ import { HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-
-const dummyData = [
-  { id: 4, name: 'David Smith', status: 1 },
-  { id: 5, name: 'James Johnson', status: 3 },
-  { id: 2, name: 'James Smith', status: 2 },
-  { id: 1, name: 'Jonathan Shah', status: 3 },
-  { id: 3, name: 'Robert Smith', status: 4 },
-]
+import { useSelector } from 'react-redux'
 
 export const ContactedLeads = (props) => {
   const {
     onNavigationRedirect
   } = props
 
-  const [contactedLeadsList, setContactedLeadsList] = useState(dummyData)
+  const currentUser = useSelector(state => state.currentUser)
+
+  const [isBuyers, setIsBuyers] = useState(true)
+  const [isSellers, setIsSellers] = useState(true)
+  const [isProspective, setIsProspective] = useState(true)
+  const [contactedLeadsList, setContactedLeadsList] = useState([])
   const [isNameAscending, setIsNameAscending] = useState(false)
   const [isStatusAscending, setIsStatusAscending] = useState(false)
   const [isNameSort, setIsNameSort] = useState(true)
 
   const getStatus = (status) => {
     const statuses = [
-      { value: 1, content: 'New', color: colors.primary },
-      { value: 2, content: 'Rejected', color: colors.rejected },
-      { value: 3, content: 'Closed Sale', color: colors.darkGreen },
-      { value: 4, content: 'Attempted Contact', color: colors.green },
+      { value: 0, content: 'New', color: colors.primary },
+      { value: 1, content: 'Attempted Contact', color: colors.green },
+      { value: 2, content: 'Followed Up', color: colors.green },
+      { value: 3, content: 'Pending Sale', color: colors.green },
+      { value: 4, content: 'Closed Leads', color: colors.green },
+      { value: 5, content: 'Rejected', color: colors.rejected }
     ]
-    const objectStatus = statuses.find((o) => o.value === status)
+    const objectStatus = statuses.find((o) => o.content.toLowerCase() === status.toLowerCase())
     return objectStatus && objectStatus
   }
 
-  const handleSortList = (sort) => {
-    const _contactedLeadsList = [...dummyData]
-    if (sort === 'status') {
+  const handleSortList = (leadsList) => {
+    const _contactedLeadsList = [...leadsList]
+    if (!isNameSort) {
       setIsNameSort(false)
       if (isStatusAscending) {
         _contactedLeadsList.sort((a, b) => {
-          return b.status - a.status
+          return getStatus(b.agent_status)?.value - getStatus(a.agent_status)?.value
         })
       } else {
         _contactedLeadsList.sort((a, b) => {
-          return a.status - b.status
+          return getStatus(a.agent_status)?.value - getStatus(b.agent_status)?.value
         })
       }
-      setIsStatusAscending(!isStatusAscending)
     }
-    if (sort === 'name') {
+    if (isNameSort) {
       setIsNameSort(true)
       if (!isNameAscending) {
         _contactedLeadsList.sort(function(a, b){
-          if(a.name > b.name) { return -1; }
-          if(a.name < b.name) { return 1; }
+          if(a.name > b.name) { return 1; }
+          if(a.name < b.name) { return -1; }
           return 0;
         })
       } else {
         _contactedLeadsList.sort(function(a, b){
-          if(a.name < b.name) { return -1; }
-          if(a.name > b.name) { return 1; }
+          if(a.name < b.name) { return 1; }
+          if(a.name > b.name) { return -1; }
           return 0;
         })
       }
-      setIsNameAscending(!isNameAscending)
     }
     setContactedLeadsList(_contactedLeadsList)
   }
 
-  const onSelectFilterBy = () => {
+  const onSelectFilterBy = (selected, type) => {
     const options = {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: true
     }
     ReactNativeHapticFeedback.trigger('impactLight', options)
+    switch (type) {
+      case 'buyers':
+        setIsBuyers(selected)
+        break
+      case 'sellers':
+        setIsSellers(selected)
+        break
+      case 'prospective':
+        setIsProspective(selected)
+        break
+    }
   }
+
+  const handleLeadsFilter = (response) => {
+    let _leadsList = []
+    if (isBuyers && response?.buyers?.leads) {
+      const _buyerLeads = response.buyers?.leads.filter(lead => lead.agent_status !== 'NEW')
+      if (_buyerLeads.length) {
+        const buyerLeads = _buyerLeads.map(lead => {
+          return { ...lead, level: 'buyers' }
+        })
+        _leadsList = [..._leadsList, ...buyerLeads]
+      }
+    }
+    if (isSellers && response?.sellers?.leads) {
+      const _sellerLeads = response.sellers?.leads.filter(lead => lead.agent_status !== 'NEW')
+      if (_sellerLeads.length) {
+        const sellerLeads = _sellerLeads.map(lead => {
+          return { ...lead, level: 'sellers' }
+        })
+        _leadsList = [..._leadsList, ...sellerLeads]
+      }
+    }
+    if (isProspective && response?.prospective?.leads) {
+      const _prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status !== 'NEW')
+      if (_prospectiveLeads.length) {
+        const prospectiveLeads = _prospectiveLeads.map(lead => {
+          return { ...lead, level: 'prospective' }
+        })
+        _leadsList = [..._leadsList, ...prospectiveLeads]
+      }
+    }
+    return _leadsList
+  }
+
+  useEffect(() => {
+    if (!currentUser?.leads) return
+    const _leadsList = handleLeadsFilter(currentUser?.leads)
+    handleSortList(_leadsList)
+  }, [JSON.stringify(currentUser?.leads), isBuyers, isSellers, isProspective, isNameSort, isNameAscending, isStatusAscending])
 
   return (
     <View style={styles.screenContainer}>
@@ -85,7 +132,7 @@ export const ContactedLeads = (props) => {
       <VStack mb='10'>
         <HStack mb='4' justifyContent='space-between'>
           <HText style={styles.filterText}>Filter by:</HText>
-          <HText style={styles.filterText}>420 leads</HText>
+          <HText style={styles.filterText}>{contactedLeadsList?.length} leads</HText>
         </HStack>
         <HStack>
           <Checkbox
@@ -103,7 +150,8 @@ export const ContactedLeads = (props) => {
             icon={
               <Icon as={<Image source={icons.cirlceCheckOn} />} />
             }
-            onChange={selected => onSelectFilterBy(selected)}
+            isChecked={isBuyers}
+            onChange={selected => onSelectFilterBy(selected, 'buyers')}
           >
             <HText style={styles.radioLabel}>Buyers</HText>
           </Checkbox>
@@ -122,7 +170,8 @@ export const ContactedLeads = (props) => {
             icon={
               <Icon as={<Image source={icons.cirlceCheckOn} />} />
             }
-            onChange={selected => onSelectFilterBy(selected)}
+            isChecked={isSellers}
+            onChange={selected => onSelectFilterBy(selected, 'sellers')}
           >
             <HText style={styles.radioLabel}>Sellers</HText>
           </Checkbox>
@@ -140,7 +189,8 @@ export const ContactedLeads = (props) => {
             icon={
               <Icon as={<Image source={icons.cirlceCheckOn} />} />
             }
-            onChange={selected => onSelectFilterBy(selected)}
+            isChecked={isProspective}
+            onChange={selected => onSelectFilterBy(selected, 'prospective')}
           >
             <HText style={styles.radioLabel}>Prospective</HText>
           </Checkbox>
@@ -157,7 +207,10 @@ export const ContactedLeads = (props) => {
               _pressed={{
                 backgroundColor: colors.text05
               }}
-              onPress={() => handleSortList('name')}
+              onPress={() => {
+                setIsNameSort(true)
+                setIsNameAscending(!isNameAscending)
+              }}
             >
               <HStack py='2'>
                 <HText style={isNameSort ? styles.headerNameText : styles.statusText}>Name</HText>
@@ -171,7 +224,10 @@ export const ContactedLeads = (props) => {
               _pressed={{
                 backgroundColor: colors.text05
               }}
-              onPress={() => handleSortList('status')}
+              onPress={() => {
+                setIsNameSort(false)
+                setIsStatusAscending(!isStatusAscending)
+              }}
             >
               <HStack py='2'>
                 <HText style={!isNameSort ? styles.headerNameText : styles.statusText}>Status</HText>
@@ -184,7 +240,7 @@ export const ContactedLeads = (props) => {
           {contactedLeadsList.map(item => (
             <Pressable
               key={item.id}
-              onPress={() => onNavigationRedirect('ContactLead')}
+              onPress={() => onNavigationRedirect('ContactLead', { level: item.level, lead: item })}
               _pressed={{
                 backgroundColor: colors.text05
               }}
@@ -193,9 +249,9 @@ export const ContactedLeads = (props) => {
                 <HText style={styles.contactText}>{item.name}</HText>
                 <HStack alignItems='center' flex='1'>
                   <Box mr='2'>
-                    <MaterialIcons name='circle' color={getStatus(item.status).color} size={8} />
+                    <MaterialIcons name='circle' color={getStatus(item.agent_status).color} size={8} />
                   </Box>
-                  <HText style={styles.contactText}>{getStatus(item.status).content}</HText>
+                  <HText style={styles.contactText}>{getStatus(item.agent_status).content}</HText>
                 </HStack>
               </HStack>
             </Pressable>

@@ -55,7 +55,7 @@ export const LeadsDashboard = (props) => {
 
   const handleLeadsFilter = (response) => {
     let _leadsList = {}
-    if (response.buyers?.leads) {
+    if (response?.buyers?.leads) {
       const buyerLeads = response.buyers?.leads.filter(lead => lead.agent_status === 'NEW')
       if (buyerLeads.length) {
         _leadsList.buyers = {
@@ -64,7 +64,7 @@ export const LeadsDashboard = (props) => {
         }
       }
     }
-    if (response.sellers?.leads) {
+    if (response?.sellers?.leads) {
       const sellerLeads = response.sellers?.leads.filter(lead => lead.agent_status === 'NEW')
       if (sellerLeads.length) {
         _leadsList.sellers = {
@@ -73,7 +73,7 @@ export const LeadsDashboard = (props) => {
         }
       }
     }
-    if (response.prospective?.leads) {
+    if (response?.prospective?.leads) {
       const prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status === 'NEW')
       if (prospectiveLeads.length) {
         _leadsList.prospective = {
@@ -88,10 +88,9 @@ export const LeadsDashboard = (props) => {
   const handleGetUserLeads = async () => {
     try {
       setIsLoading(true)
-      const response = await doGet('searches/lead-dashboard', { 'user-id': 465 })
+      const response = await doGet('searches/lead-dashboard', { 'user-id': currentUser?.user_id })
       if (response.result !== 'Success') throw response
-      const _leadsList = handleLeadsFilter(response.data)
-      dispatch(setUser({ leads: _leadsList }))
+      dispatch(setUser({ leads: response.data }))
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
@@ -121,6 +120,7 @@ export const LeadsDashboard = (props) => {
   }, [isBuyers, isSellers, isProspective, leadsList, isLoading])
 
   useEffect(() => {
+    if (!currentUser?.leads) return
     const _leadsList = handleLeadsFilter(currentUser?.leads)
     setLeadsList(_leadsList)
   }, [JSON.stringify(currentUser?.leads)])
