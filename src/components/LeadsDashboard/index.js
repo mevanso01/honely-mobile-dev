@@ -3,25 +3,118 @@ import { ScrollView, Image, View } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import { HText, HButton } from '../Shared'
 import { colors, images, icons } from '../../utils/styleGuide'
-import { HStack, VStack, Box, Pressable, Checkbox, Icon } from 'native-base'
+import { HStack, VStack, Box, Checkbox, Icon, Skeleton } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
 import Swiper from 'react-native-swiper'
 import styles from './style'
+import { doGet } from '../../services/http-client'
+import { useSelector } from 'react-redux'
+import { TOAST_LENGTH_SHORT } from '../../config'
+import { LeadCard } from './LeadCard'
 
 export const LeadsDashboard = (props) => {
   const {
     onNavigationRedirect
   } = props
 
-  const isNoData = false
+  const currentUser = useSelector(state => state.currentUser)
+  const [isLoading, setIsLoading] = useState(true)
+  const [leadsList, setLeadsList] = useState({})
 
-  const onSelectFilterBy = () => {
+  const [isBuyers, setIsBuyers] = useState(true)
+  const [isSellers, setIsSellers] = useState(true)
+  const [isProspective, setIsProspective] = useState(true)
+  const [totalLeads, setTotalLeads] = useState(null)
+  const [filteredLeads, setFilteredLeads] = useState(null)
+
+  const onSelectFilterBy = (selected, type) => {
     const options = {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: true
     }
     ReactNativeHapticFeedback.trigger('impactLight', options)
+    switch (type) {
+      case 'buyers':
+        setIsBuyers(selected)
+        break
+      case 'sellers':
+        setIsSellers(selected)
+        break
+      case 'prospective':
+        setIsProspective(selected)
+        break
+    }
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 100)
   }
+
+  const handleGetUserLeads = async () => {
+    try {
+      setIsLoading(true)
+      const response = await doGet('searches/lead-dashboard', { 'user-id': currentUser?.user_id })
+      if (response.result !== 'Success') throw response
+      let _leadsList = {}
+      if (response.data?.buyers?.leads) {
+        const buyerLeads = response.data?.buyers?.leads.filter(lead => lead.agent_status === 'NEW')
+        if (buyerLeads.length) {
+          _leadsList.buyers = {
+            total: buyerLeads.length,
+            leads: buyerLeads
+          }
+        }
+      }
+      if (response.data?.sellers?.leads) {
+        const sellerLeads = response.data?.sellers?.leads.filter(lead => lead.agent_status === 'NEW')
+        if (sellerLeads.length) {
+          _leadsList.sellers = {
+            total: sellerLeads.length,
+            leads: sellerLeads
+          }
+        }
+      }
+      if (response.data?.prospective?.leads) {
+        const prospectiveLeads = response.data?.prospective?.leads.filter(lead => lead.agent_status === 'NEW')
+        if (prospectiveLeads.length) {
+          _leadsList.prospective = {
+            total: prospectiveLeads.length,
+            leads: prospectiveLeads
+          }
+        }
+      }
+      setLeadsList(_leadsList)
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (isLoading) return
+    const totalBuyers = leadsList?.buyers?.total || 0
+    const totalSellers = leadsList?.sellers?.total || 0
+    const totalProspective = leadsList?.prospective?.total || 0
+    let _total = totalBuyers + totalSellers + totalProspective
+    setTotalLeads(_total || 0)
+    let _filtered = 0
+    if (isBuyers) _filtered += totalBuyers
+    if (isSellers) _filtered += totalSellers
+    if (isProspective) _filtered += totalProspective
+    setFilteredLeads(_filtered)
+  }, [isBuyers, isSellers, isProspective, leadsList, isLoading])
+
+  useEffect(() => {
+    handleGetUserLeads()
+  }, [])
 
   useEffect(() => {
     SplashScreen.hide()
@@ -32,13 +125,17 @@ export const LeadsDashboard = (props) => {
       <View style={styles.innerContainer}>
         <HText style={styles.title}>Leads Dashboard</HText>
       </View>
-      {!isNoData ? (
+      {(isLoading || totalLeads !== 0) && (
         <View style={styles.leadsContent}>
           <View style={styles.innerContainer}>
             <VStack mb='12'>
               <HStack mb='4' justifyContent='space-between'>
                 <HText style={styles.filterText}>Filter by:</HText>
-                <HText style={styles.filterText}>32 leads</HText>
+                {!totalLeads ? (
+                  <Skeleton h='3' w='16' rounded='sm' ml='7' />
+                ) : (
+                  <HText style={styles.filterText}>{totalLeads}/{filteredLeads} leads</HText>
+                )}
               </HStack>
               <HStack>
                 <Checkbox
@@ -56,7 +153,8 @@ export const LeadsDashboard = (props) => {
                   icon={
                     <Icon as={<Image source={icons.cirlceCheckOn} />} />
                   }
-                  onChange={selected => onSelectFilterBy(selected)}
+                  isChecked={isBuyers}
+                  onChange={selected => onSelectFilterBy(selected, 'buyers')}
                 >
                   <HText style={styles.radioLabel}>Buyers</HText>
                 </Checkbox>
@@ -75,7 +173,8 @@ export const LeadsDashboard = (props) => {
                   icon={
                     <Icon as={<Image source={icons.cirlceCheckOn} />} />
                   }
-                  onChange={selected => onSelectFilterBy(selected)}
+                  isChecked={isSellers}
+                  onChange={selected => onSelectFilterBy(selected, 'sellers')}
                 >
                   <HText style={styles.radioLabel}>Sellers</HText>
                 </Checkbox>
@@ -93,7 +192,8 @@ export const LeadsDashboard = (props) => {
                   icon={
                     <Icon as={<Image source={icons.cirlceCheckOn} />} />
                   }
-                  onChange={selected => onSelectFilterBy(selected)}
+                  isChecked={isProspective}
+                  onChange={selected => onSelectFilterBy(selected, 'prospective')}
                 >
                   <HText style={styles.radioLabel}>Prospective</HText>
                 </Checkbox>
@@ -104,57 +204,52 @@ export const LeadsDashboard = (props) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.container}
           >
-            <Swiper
-              showsButtons={false}
-              loop={true}
-              renderPagination={renderPagination}
-              height={420}
-            >
-              {[...Array(32).keys()].map(i => (
-                <View key={i} style={styles.cardContainer}>
-                  <HStack alignItems='center' borderBottomColor={colors.borderColor} borderBottomWidth='1' pb='5'>
-                    <Image source={icons.location} style={styles.locationIcon}
-                    />
-                    <HText style={styles.locationText}>Los Angeles, CA 92131</HText>
-                  </HStack>
-                  <Box mt='6' mb='6'>
-                    <HText style={styles.nameText}>Jonathan Shah</HText>
-                  </Box>
-                  <HStack justifyContent='space-between'>
-                    <HText style={styles.userTypeText}>Buyer</HText>
-                    <HText style={styles.userTypeText}>
-                      <HText style={[styles.userTypeText, { color: colors.borderColor }]}>Status:</HText> New
-                    </HText>
-                  </HStack>
-                  <HStack mt='6' alignItems='center'>
-                    <Image source={icons.email} style={styles.infoIcon} />
-                    <HText style={styles.infoText}>jonathan@mail.com</HText>
-                  </HStack>
-                  <HStack mt='5' alignItems='center'>
-                    <Image source={icons.phone} style={styles.infoIcon} />
-                    <HText style={styles.infoText}>+1 238 2838 282</HText>
-                  </HStack>
-                  <Box alignItems='center' mt='16'>
-                    <HButton
-                      text='Contact'
-                      borderColor={colors.white}
-                      backgroundColor={colors.white}
-                      textStyle={{
-                        color: colors.primary,
-                        fontSize: 24,
-                        fontWeight: '700'
-                      }}
-                      height={50}
-                      width={180}
-                      onPress={() => onNavigationRedirect('ContactLead')}
-                    />
-                  </Box>
-                </View>
-              ))}
-            </Swiper>
+            {isLoading ? (
+              <LeadCard
+                isLoading={isLoading}
+                onNavigationRedirect={onNavigationRedirect}
+              />
+            ) : (
+              <Swiper
+                showsButtons={false}
+                loop={true}
+                renderPagination={renderPagination}
+                height={420}
+              >
+                {filteredLeads === 0 && (
+                  <HText style={styles.notFoundText}>No Leads, please change filter</HText>
+                )}
+                {isBuyers && leadsList?.buyers?.leads && leadsList.buyers.leads.map((lead, i) => (
+                  <LeadCard
+                    key={i}
+                    lead={lead}
+                    type='Buyer'
+                    onNavigationRedirect={onNavigationRedirect}
+                  />
+                ))}
+                {isSellers && leadsList?.sellers?.leads && leadsList.sellers.leads.map((lead, i) => (
+                  <LeadCard
+                    key={i}
+                    lead={lead}
+                    type='Seller'
+                    onNavigationRedirect={onNavigationRedirect}
+                  />
+                ))}
+                {isProspective && leadsList?.prospective?.leads && prospective.prospective.leads.map((lead, i) => (
+                  <LeadCard
+                    key={i}
+                    lead={lead}
+                    type='Prospective'
+                    onNavigationRedirect={onNavigationRedirect}
+                  />
+                ))}
+              </Swiper>
+            )}
           </ScrollView>
         </View>
-      ) : (
+      )}
+
+      {(totalLeads === 0 && !isLoading) && (
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.container}
@@ -172,7 +267,7 @@ export const LeadsDashboard = (props) => {
               text='Buy Leads'
               borderColor={colors.primary}
               backgroundColor={colors.primary}
-              onPress={() => {}}
+              onPress={() => onNavigationRedirect('BuyLeads')}
             />
           </View>
         </ScrollView>

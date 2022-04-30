@@ -131,5 +131,10 @@ export default StyleSheet.create({
     color: colors.white,
     fontWeight: '500',
     fontSize: 15
+  },
+  notFoundText: {
+    paddingHorizontal: 18,
+    fontSize: 16,
+    color: colors.text01
   }
 })
