@@ -134,5 +134,10 @@ export default StyleSheet.create({
     height: deviceHeight,
     backgroundColor: '#00000080',
     zIndex: 1000
+  },
+  recentAddress: {
+    color: colors.primary,
+    fontSize: 24,
+    lineHeight: 24
   }
 })

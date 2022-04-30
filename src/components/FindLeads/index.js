@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, ScrollView, Image, Platform, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
-import { Input, Pressable, HStack, useToast, Spinner } from 'native-base'
+import { Input, Pressable, HStack, useToast, Spinner, Skeleton, Box } from 'native-base'
 import { HText } from '../Shared'
 import { ScrollView as DropDownContainer } from 'react-native-gesture-handler'
 import { colors, icons } from '../../utils/styleGuide'
@@ -9,12 +9,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import { doGet } from '../../services/http-client'
 import { TOAST_LENGTH_SHORT } from '../../config'
+import { useSelector } from 'react-redux'
+import { getFullAddress } from '../../utils/helper'
+import { useIsFocused } from '@react-navigation/native'
 
 export const FindLeads = (props) => {
   const {
     onNavigationRedirect
   } = props
 
+  const isFocused = useIsFocused()
+  const currentUser = useSelector(state => state.currentUser)
   const toast = useToast()
   const insets = useSafeAreaInsets()
   const statusBarHeight = insets.top
@@ -23,6 +28,8 @@ export const FindLeads = (props) => {
   const [isShowHint, setIsShowHint] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [suggestionList, setSuggestionList] = useState(null)
+  const [isRecentLoading, setIsRecentLoading] = useState(false)
+  const [recentSearches, setRecentSearches] = useState([])
 
   let timeout = null
   let transformY = useRef(new Animated.Value(0)).current
@@ -103,6 +110,31 @@ export const FindLeads = (props) => {
       })
     }
   }
+  
+  const handleGetAgentRecentSearches = async () => {
+    try {
+      setIsRecentLoading(true)
+      const response = await doGet('lookup-test/user_settings', { 'user-email': currentUser.email })
+      if (response.result === 'Error') throw response
+      setRecentSearches(response?.data?.recent_searches || [])
+      setIsRecentLoading(false)
+    } catch {
+      setIsRecentLoading(false)
+      toast.show({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: TOAST_LENGTH_SHORT,
+        marginRight: 4,
+        marginLeft: 4,
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (!isFocused || isShowHint) return
+    handleGetAgentRecentSearches()
+  }, [isFocused, isShowHint])
 
   useEffect(() => {
     Animated.loop(
@@ -206,24 +238,38 @@ export const FindLeads = (props) => {
         >
           <View style={styles.recentSearchContainer}>
             <HText style={styles.recentText}>Recent Searches</HText>
-            {[...Array(3).keys()].map(i => (
-              <Pressable
-                key={i}
-                mb='3'
-                _pressed={{
-                  backgroundColor: colors.text05
-                }}
-                onPress={() => {}}
-              >
-                <View style={styles.recentSearchItem}>
-                  <HText style={styles.searchsuggestionText}>Los Angeles, CA</HText>
-                  <HStack mt='2' alignItems='center' justifyContent='space-between'>
-                    <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
-                    <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
-                  </HStack>
-                </View>
-              </Pressable>
-            ))}
+            {isRecentLoading ? (
+              [...Array(5).keys()].map(i => (
+                <Box key={i} mb='3'>
+                  <View style={styles.recentSearchItem}>
+                    <Skeleton h='6' w='20' rounded='sm' />
+                    <HStack mt='2' alignItems='center' justifyContent='space-between'>
+                      <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
+                      <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
+                    </HStack>
+                  </View>
+                </Box>
+              ))
+            ) : (
+              recentSearches.map((recentSearch, i) => (
+                <Pressable
+                  key={i}
+                  mb='3'
+                  _pressed={{
+                    backgroundColor: colors.text05
+                  }}
+                  onPress={() => onNavigationRedirect('LeadsMap', { level: recentSearch?.level, address: recentSearch?.address })}
+                >
+                  <View style={styles.recentSearchItem}>
+                    <HText style={styles.recentAddress}>{getFullAddress(recentSearch?.level, recentSearch?.address)}</HText>
+                    <HStack mt='2' alignItems='center' justifyContent='space-between'>
+                      <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
+                      <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
+                    </HStack>
+                  </View>
+                </Pressable>
+              ))
+            )}
           </View>
         </ScrollView>
       </View>
