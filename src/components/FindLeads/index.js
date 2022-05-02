@@ -243,10 +243,7 @@ export const FindLeads = (props) => {
                 <Box key={i} mb='3'>
                   <View style={styles.recentSearchItem}>
                     <Skeleton h='6' w='20' rounded='sm' />
-                    <HStack mt='2' alignItems='center' justifyContent='space-between'>
-                      <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
-                      <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
-                    </HStack>
+                    <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
                   </View>
                 </Box>
               ))
@@ -261,11 +258,8 @@ export const FindLeads = (props) => {
                   onPress={() => onNavigationRedirect('LeadsMap', { level: recentSearch?.level, address: recentSearch?.address })}
                 >
                   <View style={styles.recentSearchItem}>
-                    <HText style={styles.recentAddress}>{getFullAddress(recentSearch?.level, recentSearch?.address)}</HText>
-                    <HStack mt='2' alignItems='center' justifyContent='space-between'>
-                      <HText style={styles.searchLeadsText}>(33 leads unclaimed)</HText>
-                      <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
-                    </HStack>
+                    <HText style={styles.recentAddress} numberOfLines={1}>{getFullAddress(recentSearch?.level, recentSearch?.address)}</HText>
+                    <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
                   </View>
                 </Pressable>
               ))

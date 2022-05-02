@@ -50,7 +50,10 @@ export default StyleSheet.create({
     borderColor: colors.primary,
     borderWidth: 1,
     borderRadius: 10,
-    padding: 24
+    padding: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   searchAddressText: {
     color: colors.primary,
@@ -138,6 +141,7 @@ export default StyleSheet.create({
   recentAddress: {
     color: colors.primary,
     fontSize: 24,
-    lineHeight: 24
+    lineHeight: 24,
+    marginRight: 10
   }
 })

@@ -280,10 +280,10 @@ export const LeadsDashboard = (props) => {
             <HText style={styles.subtitle}>No Leads</HText>
             <HText style={styles.description}>Buy leads to see what your consumers are looking for.</HText>
             <HButton
-              text='Buy Leads'
+              text='Find Leads'
               borderColor={colors.primary}
               backgroundColor={colors.primary}
-              onPress={() => onNavigationRedirect('BuyLeads')}
+              onPress={() => onNavigationRedirect('FindLeads')}
             />
           </View>
         </ScrollView>
