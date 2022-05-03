@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Image, ScrollView, Linking, Platform } from 'react-native'
 import { HStack, Box, VStack, TextArea, Pressable, useToast } from 'native-base'
-import { HText, HButton, HSwitch } from '../Shared'
+import { HText, HButton } from '../Shared'
 import SelectDropdown from 'react-native-select-dropdown'
 import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
@@ -10,6 +10,7 @@ import { TOAST_LENGTH_SHORT } from '../../config'
 import { doPatch } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
 import { leadStatuses } from '../../utils/constants'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const ContactLead = (props) => {
   const {
@@ -18,6 +19,8 @@ export const ContactLead = (props) => {
     navigation,
     onNavigationRedirect
   } = props
+
+  const insets = useSafeAreaInsets()
 
   const toast = useToast()
   const dispatch = useDispatch()
@@ -126,7 +129,7 @@ export const ContactLead = (props) => {
   }, [lead?.agent_status, level, currentUser?.preset?.use_email, currentUser?.preset?.use_phone_number])
 
   return (
-    <View style={styles.screenContainer}>
+    <View style={[styles.screenContainer, { paddingBottom: insets.bottom }]}>
       <View style={styles.headerContainer}>
         <Pressable
           onPress={() => navigation.goBack()}
@@ -217,6 +220,7 @@ export const ContactLead = (props) => {
               borderRadius={8}
               borderWidth={0}
               height={120}
+              backgroundColor='transparent'
               padding='4'
               color={colors.text01}
               autoCapitalize='none'
@@ -246,6 +250,7 @@ export const ContactLead = (props) => {
               borderRadius={8}
               borderWidth={0}
               height={120}
+              backgroundColor='transparent'
               padding='4'
               color={colors.text01}
               autoCapitalize='none'

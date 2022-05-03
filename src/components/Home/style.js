@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { colors } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 
@@ -6,6 +6,7 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     alignItems: 'center',
+    paddingTop: Platform.OS === 'ios' ? 10 : 40,
     paddingBottom: 40,
     paddingHorizontal: 18
   },

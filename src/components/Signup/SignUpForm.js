@@ -92,6 +92,7 @@ export const SignUpForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.userName?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
@@ -157,6 +158,7 @@ export const SignUpForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
@@ -231,6 +233,7 @@ export const SignUpForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.password?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
@@ -308,6 +311,7 @@ export const SignUpForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }

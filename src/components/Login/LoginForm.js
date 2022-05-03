@@ -134,6 +134,7 @@ export const LoginForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.email?.message ? colors.error : (value && isLoginClicked) ? colors.lightPrimary : colors.borderColor
                 }
@@ -204,6 +205,7 @@ export const LoginForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.password?.message ? colors.error : (value && isLoginClicked) ? colors.lightPrimary : colors.borderColor
                 }

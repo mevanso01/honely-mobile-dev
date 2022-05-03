@@ -68,6 +68,7 @@ export const BusinessCompanyForm = (props) => {
               borderRadius={8}
               fontWeight='500'
               height={55}
+              backgroundColor='transparent'
               borderColor={
                 errors?.company_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
               }

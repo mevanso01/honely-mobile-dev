@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ContactLead as ContactLeadScreen} from '../components/ContactLead'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
@@ -11,7 +10,6 @@ const KeyboardView = styled.KeyboardAvoidingView`
 `;
 
 const ContactLead = (props) => {
-  const insets = useSafeAreaInsets()
   const contactLeadProps = {
     ...props,
     level: props.route.params?.level,
@@ -25,9 +23,7 @@ const ContactLead = (props) => {
   const styles = StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.backgroundColor,
-      paddingBottom: insets.bottom,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40,
+      backgroundColor: colors.backgroundColor
     }
   })
 

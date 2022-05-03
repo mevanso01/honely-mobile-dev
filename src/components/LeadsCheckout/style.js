@@ -5,7 +5,7 @@ import { deviceWidth } from '../../utils/stylesheet'
 export default StyleSheet.create({
   screenContainer: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 0 : 40
+    paddingTop: Platform.OS === 'ios' ? 10 : 40
   },
   headerContainer: {
     paddingHorizontal: 18,

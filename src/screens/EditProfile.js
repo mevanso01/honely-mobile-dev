@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Platform } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../utils/styleGuide'
 import styled from 'styled-components/native';
 import { EditProfile as EditProfileScreen } from '../components/EditProfile'
@@ -11,7 +10,6 @@ const KeyboardView = styled.KeyboardAvoidingView`
 `;
 
 const EditProfile = (props) => {
-  const insets = useSafeAreaInsets()
   const editProfileProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -23,9 +21,7 @@ const EditProfile = (props) => {
   const styles = StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.backgroundColor,
-      paddingBottom: insets.bottom,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40
+      backgroundColor: colors.backgroundColor
     }
   })
 

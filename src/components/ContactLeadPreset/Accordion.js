@@ -99,6 +99,7 @@ export const Accordion = (props) => {
               borderRadius={8}
               borderWidth={0}
               height={120}
+              backgroundColor='transparent'
               padding='4'
               color={colors.text01}
               autoCapitalize='none'

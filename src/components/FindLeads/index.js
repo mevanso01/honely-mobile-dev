@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, ScrollView, Image, Platform, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
-import { Input, Pressable, HStack, useToast, Spinner, Skeleton, Box } from 'native-base'
+import { Input, Pressable, useToast, Spinner, Skeleton, Box } from 'native-base'
 import { HText } from '../Shared'
 import { ScrollView as DropDownContainer } from 'react-native-gesture-handler'
 import { colors, icons } from '../../utils/styleGuide'
@@ -152,7 +152,7 @@ export const FindLeads = (props) => {
       <View style={styles.screenContainer}>
         <View style={[
           styles.headerContainer,
-          { paddingTop: Platform.OS === 'ios' ? statusBarHeight : 40, }
+          { paddingTop: Platform.OS === 'ios' ? statusBarHeight + 10 : 40, }
         ]}>
           <HText style={styles.title}>Find Leads</HText>
         </View>
@@ -219,7 +219,7 @@ export const FindLeads = (props) => {
           )}
           {isShowHint && (
             <>
-              <View style={[styles.backDrop, { top: Platform.OS === 'ios' ? -(53 + statusBarHeight) : -93 }]} />
+              <View style={[styles.backDrop, { top: Platform.OS === 'ios' ? -(63 + statusBarHeight) : -93 }]} />
               <Animated.View
                 style={[
                   styles.hintContainer,

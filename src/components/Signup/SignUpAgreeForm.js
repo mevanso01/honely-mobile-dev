@@ -55,6 +55,7 @@ export const SignUpAgreeForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.firstName?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
@@ -117,6 +118,7 @@ export const SignUpAgreeForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.lastName?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
@@ -181,6 +183,7 @@ export const SignUpAgreeForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.phonenumber?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }

@@ -189,6 +189,7 @@ export const EditProfile = (props) => {
                   fontSize={14}
                   borderRadius={8}
                   height={55}
+                  backgroundColor='transparent'
                   borderColor={
                     errors?.user_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
@@ -251,6 +252,7 @@ export const EditProfile = (props) => {
                   fontSize={14}
                   borderRadius={8}
                   height={55}
+                  backgroundColor='transparent'
                   borderColor={
                     errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
@@ -319,6 +321,7 @@ export const EditProfile = (props) => {
                   fontSize={14}
                   borderRadius={8}
                   height={55}
+                  backgroundColor='transparent'
                   fontWeight='500'
                   borderColor={
                     errors?.first_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
@@ -384,6 +387,7 @@ export const EditProfile = (props) => {
                   fontSize={14}
                   borderRadius={8}
                   height={55}
+                  backgroundColor='transparent'
                   borderColor={
                     errors?.last_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
@@ -449,6 +453,7 @@ export const EditProfile = (props) => {
                   fontSize={14}
                   borderRadius={8}
                   height={55}
+                  backgroundColor='transparent'
                   borderColor={
                     errors?.phone_number?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
@@ -515,6 +520,7 @@ export const EditProfile = (props) => {
                   borderRadius={8}
                   fontWeight='500'
                   height={55}
+                  backgroundColor='transparent'
                   borderColor={
                     errors?.company_name?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }

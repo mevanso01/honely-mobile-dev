@@ -25,7 +25,6 @@ const Login = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40,
       paddingBottom: insets.bottom,
     }
   })

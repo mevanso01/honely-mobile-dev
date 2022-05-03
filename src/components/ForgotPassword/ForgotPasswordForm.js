@@ -48,6 +48,7 @@ export const ForgotPasswordForm = (props) => {
                 fontSize={16}
                 borderRadius={8}
                 height={55}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.email?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }

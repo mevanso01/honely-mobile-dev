@@ -1,10 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { colors, fonts } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 
 export default StyleSheet.create({
   screenContainer: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 10 : 40,
   },
   innerContainer: {
     paddingHorizontal: 18

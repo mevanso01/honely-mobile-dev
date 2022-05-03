@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { FindLeads as FindLeadsScreen } from '../components/FindLeads'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
@@ -11,7 +10,6 @@ const KeyboardView = styled.KeyboardAvoidingView`
 `;
 
 const FindLeads = (props) => {
-  const insets = useSafeAreaInsets()
   const findLeadsProps = {
     ...props,
     onNavigationRedirect: (page, params) => {
@@ -24,7 +22,6 @@ const FindLeads = (props) => {
     wrapper: {
       flex: 1,
       backgroundColor: colors.backgroundColor,
-      paddingBottom: insets.bottom,
     }
   })
 

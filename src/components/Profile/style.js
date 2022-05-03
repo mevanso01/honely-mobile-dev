@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { colors, fonts } from '../../utils/styleGuide'
 
 export default StyleSheet.create({
@@ -31,6 +31,7 @@ export default StyleSheet.create({
   settingIconContainer: {
     position: 'absolute',
     right: 18,
+    top: Platform.OS === 'ios' ? 10 : 0
   },
   settingIcon: {
     width: 24,

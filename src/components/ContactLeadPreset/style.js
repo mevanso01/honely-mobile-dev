@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { colors } from '../../utils/styleGuide'
 
 export default StyleSheet.create({
   screenContainer: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 10 : 40,
   },
   headerContainer: {
     paddingHorizontal: 18,

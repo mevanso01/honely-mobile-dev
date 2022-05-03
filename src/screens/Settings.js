@@ -20,7 +20,6 @@ const Settings = (props) => {
       flex: 1,
       backgroundColor: colors.backgroundColor,
       paddingBottom: insets.bottom,
-      paddingTop: Platform.OS === 'ios' ? 30 : 40
     }
   })
 

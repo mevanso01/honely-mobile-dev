@@ -24,8 +24,8 @@ export default StyleSheet.create({
   },
   backBtnWrapper: {
     position: 'absolute',
-    top: 45,
-    left: 10
+    top: 50,
+    left: 15
   },
   addressIcon: {
     tintColor: colors.primary,

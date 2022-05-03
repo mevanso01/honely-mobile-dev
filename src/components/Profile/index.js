@@ -77,7 +77,7 @@ export const Profile = (props) => {
     <View style={styles.screenContainer}>
       <View style={[
         styles.headerContainer,
-        { paddingTop: Platform.OS === 'ios' ? statusBarHeight : 40 }
+        { paddingTop: Platform.OS === 'ios' ? statusBarHeight + 10 : 40 }
       ]}>
         <HText style={styles.title}>My Profile</HText>
         <HText style={styles.subTitle}>What your profile looks like to a guest.</HText>

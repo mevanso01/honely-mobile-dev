@@ -72,6 +72,7 @@ export const ResetPasswordForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.new_password?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                 }
@@ -147,6 +148,7 @@ export const ResetPasswordForm = (props) => {
                 fontSize={14}
                 borderRadius={8}
                 height={50}
+                backgroundColor='transparent'
                 borderColor={
                   errors?.confirm_password?.message ? colors.error : (value && isSubmitClicked) ? colors.primary : colors.borderColor
                 }
