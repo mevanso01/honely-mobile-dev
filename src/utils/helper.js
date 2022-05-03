@@ -12,3 +12,11 @@ export const getFullAddress = (level, address) => {
     return fulllAddress
   }
 }
+
+export const groupBy = (array, key) => {
+  if (!array) return {}
+  return array.reduce((result, obj) => {
+    (result[obj[key]] = result[obj[key]] || []).push(obj)
+    return result
+  }, {})
+}

@@ -62,7 +62,7 @@ export const LeadsMap = (props) => {
   }
 
   const getFullAddress = () => {
-    if (level === 'state') return address.state_short
+    if (level === 'state') return address?.state_short || address?.state
     else {
       let fulllAddress = ''
       if (address?.zip_code) {
@@ -111,7 +111,7 @@ export const LeadsMap = (props) => {
       if (level === 'state') {
         params = {
           level: 'state',
-          state: address.state_short,
+          state: address?.state_short || address?.state,
           user_id: currentUser.user_id
         }
       }

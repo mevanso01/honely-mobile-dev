@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider, Skeleton, useToast } from 'native-base'
+import { Pressable, HStack, VStack, Box, Checkbox, Icon, Divider, Skeleton, Spinner } from 'native-base'
 import { HButton, HText } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
 import { Card } from './Card'
-import { doGet } from '../../services/http-client'
-import { useSelector, useDispatch } from 'react-redux'
-import { setUser } from '../../store/action/setUser'
+import { useSelector } from 'react-redux'
+import { groupBy } from '../../utils/helper'
 
 export const BuyLeads = (props) => {
   const {
@@ -20,8 +19,6 @@ export const BuyLeads = (props) => {
     onNavigationRedirect
   } = props
   
-  const toast = useToast()
-  const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
 
   const [isBuyers, setIsBuyers] = useState(false)
@@ -29,8 +26,11 @@ export const BuyLeads = (props) => {
   const [isProspective, setIsProspective] = useState(false)
   const [totalLeads, setTotalLeads] = useState(null)
   const [filteredLeads, setFilteredLeads] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [totalCart, setTotalCart] = useState(0)
+  const [totalCart, setTotalCart] = useState([])
+  const [buyersLeads, setBuyersLeads] = useState({})
+  const [sellersLeads, setSellersLeads] = useState({})
+  const [prospectiveLeads, setProspectiveLeads] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
 
   const onSelectFilterBy = (selected, type) => {
     const options = {
@@ -84,39 +84,21 @@ export const BuyLeads = (props) => {
     }
   }, [defaultFilterBy])
 
-
-  const handleGetCart = async () => {
-    try {
-      setIsLoading(true)
-      const response = await doGet('lookup-test/cart', { 'user-id': currentUser?.user_id })
-      if (response.result !== 'Success') throw response
-      dispatch(setUser({ cart: response.data }))
-      setIsLoading(false)
-    } catch (error) {
-      setIsLoading(false)
-      toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
-      })
-    }
-  }
-
-  useEffect(() => {
-    handleGetCart()
-  }, [])
-
   useEffect(() => {
     if (!currentUser?.cart) return
-    const totalBuyers = currentUser?.cart?.buyer_leads?.length || 0
-    const totalSellers = currentUser?.cart?.seller_leads?.length || 0
-    const totalProspective = currentUser?.cart?.prospective_leads?.length || 0
-    let _total = totalBuyers + totalSellers + totalProspective
+    const totalBuyers = currentUser?.cart?.buyer_leads || []
+    const totalSellers = currentUser?.cart?.seller_leads || []
+    const totalProspective = currentUser?.cart?.prospective_leads || []
+    let _total = [...totalBuyers, ...totalSellers, ...totalProspective]
     setTotalCart(_total)
   }, [JSON.stringify(currentUser?.cart)])
+
+  useEffect(() => {
+    setBuyersLeads(groupBy(leads?.buyers?.leads, 'zip_code'))
+    setSellersLeads(groupBy(leads?.sellers?.leads, 'zip_code'))
+    setProspectiveLeads(groupBy(leads?.prospective?.leads, 'zip_code'))
+    setIsLoading(false)
+  }, [leads])
 
   return (
     <View style={styles.screenContainer}>
@@ -142,7 +124,7 @@ export const BuyLeads = (props) => {
           >
             <Image source={icons.cart} style={styles.cartIcon} />
             <View style={styles.cartQtyWrapper}>
-              <HText style={styles.cartQty}>{totalCart}</HText>
+              <HText style={styles.cartQty}>{totalCart.length}</HText>
             </View>
           </Pressable>
         </View>
@@ -231,40 +213,55 @@ export const BuyLeads = (props) => {
         style={styles.scrollContainer}
         contentContainerStyle={styles.scrollContent}
       >
-        <View style={styles.innerContainer}>
-          {isBuyers && leads?.buyers?.leads && (
-            leads.buyers.leads.map((lead, i) => (
-              <Card
-                key={i}
-                userTypeValue={1}
-                lead={lead}
-              />
-            ))
-          )}
-          {isSellers && leads?.sellers?.leads && (
-            leads.sellers.leads.map((lead, i) => (
-              <Card
-                key={i}
-                userTypeValue={2}
-                lead={lead}
-              />
-            ))
-          )}
-          {isProspective && leads?.prospective?.leads && (
-            leads.prospective.leads.map((lead, i) => (
-              <Card
-                key={i}
-                userTypeValue={3}
-                lead={lead}
-              />
-            ))
-          )}
-          {filteredLeads === 0 && (
-            <Box alignItems='center' my='4'>
-              <HText style={styles.radioLabel}>No Leads</HText>
-            </Box>
-          )}
-        </View>
+        {isLoading ? (
+          <HStack alignItems='center' justifyContent='center' flex='1'>
+            <HStack alignItems='center'>
+              <Spinner color={colors.primary} size='lg' mr='1' />
+              <HText style={styles.radioLabel}>Loading...</HText>
+            </HStack>
+          </HStack>
+        ) : (
+          <View style={styles.innerContainer}>
+            {isBuyers && buyersLeads && (
+              Object.keys(buyersLeads).map(key => (
+                <Card
+                  key={key}
+                  userTypeValue={1}
+                  leadsGroup={buyersLeads[key]}
+                  zipCode={key}
+                  totalCart={totalCart}
+                />
+              ))
+            )}
+            {isSellers && sellersLeads && (
+              Object.keys(sellersLeads).map(key => (
+                <Card
+                  key={key}
+                  userTypeValue={2}
+                  leadsGroup={sellersLeads[key]}
+                  zipCode={key}
+                  totalCart={totalCart}
+                />
+              ))
+            )}
+            {isProspective && prospectiveLeads && (
+              Object.keys(prospectiveLeads).map(key => (
+                <Card
+                  key={key}
+                  userTypeValue={3}
+                  leadsGroup={prospectiveLeads[key]}
+                  zipCode={key}
+                  totalCart={totalCart}
+                />
+              ))
+            )}
+            {filteredLeads === 0 && (
+              <Box alignItems='center' my='4'>
+                <HText style={styles.radioLabel}>No Leads</HText>
+              </Box>
+            )}
+          </View>
+        )}
       </ScrollView>
       <Divider backgroundColor={colors.primary} opacity={0.7} />
       <Box alignItems='center' mt='4' mb='4'>

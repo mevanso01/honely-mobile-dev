@@ -11,16 +11,22 @@ import { setUser } from '../../store/action/setUser'
 export const Card = (props) => {
   const {
     userTypeValue,
-    lead
+    leadsGroup,
+    zipCode,
+    totalCart
   } = props
 
   const toast = useToast()
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
 
-  const [isAdded, setIsAdded] = useState()
-  const [cartQty, setCartQty] = useState(1)
+  const lead = leadsGroup[0]
+  const defaultLeadsIds = leadsGroup.reduce((ids, obj) => [...ids, obj.lead_id], []).filter(leadId => !totalCart.find(_lead => _lead.lead_id === leadId))
+  const maxQuantity = defaultLeadsIds.length
+  const [isAdded, setIsAdded] = useState(maxQuantity === 0 || false)
+  const [cartQty, setCartQty] = useState(maxQuantity)
   const [isLoading, setIsLoading] = useState(false)
+  const [leadsIds, setLeadsIds] = useState(defaultLeadsIds)
 
   const getUser = (value) => {
     const userTypes = [
@@ -35,16 +41,20 @@ export const Card = (props) => {
   const handleDecrement = () => {
     if (cartQty <= 1) return
     setCartQty(cartQty - 1)
+    setLeadsIds(prev => prev.pop())
   }
 
   const handleIncrement = () => {
-    setCartQty(cartQty + 1)
+    if (cartQty < maxQuantity) {
+      setCartQty(cartQty + 1)
+      setLeadsIds(defaultLeadsIds.slice(0, cartQty + 1))
+    }
   }
 
   const handleAddToCart = async () => {
     try {
       setIsLoading(true)
-      const response = await doPost(`lookup-test/cart?user-id=${currentUser?.user_id}`, { leads: [lead.lead_id] })
+      const response = await doPost(`lookup-test/cart?user-id=${currentUser?.user_id}`, { leads: leadsIds })
       if (response.result !== 'Success') throw response
       setIsAdded(true)
       const newCart = {
@@ -121,7 +131,7 @@ export const Card = (props) => {
       </HStack>
       <Divider backgroundColor={colors.white} my='4' />
       <HText style={styles.priceDescription}>
-        Average Home Price in Zip Code: {lead.zip_code}
+        Average Home Price in Zip Code: {zipCode}
       </HText>
       <Box mt='3' mb='2'>
         <HText style={styles.cardBigText}>${lead?.average_home_price}</HText>
@@ -158,7 +168,7 @@ export const Card = (props) => {
             </VStack>
           ) : (
             <HStack>
-              {userTypeValue === 3 && (
+              {maxQuantity > 1 && (
                 <HStack mr='3' alignItems='center'>
                   <HText style={styles.cartQtyLabel}>Qty.</HText>
                   <HStack justifyContent='center'>
@@ -166,6 +176,8 @@ export const Card = (props) => {
                       _pressed={{
                         opacity: 0.6
                       }}
+                      disabled={cartQty === 1}
+                      _disabled={{ opacity: 0.6 }}
                       onPress={() => handleDecrement()}
                     >
                       <View style={styles.minusBtn}>
@@ -179,6 +191,8 @@ export const Card = (props) => {
                       _pressed={{
                         opacity: 0.6
                       }}
+                      disabled={cartQty === maxQuantity}
+                      _disabled={{ opacity: 0.6 }}
                       onPress={() => handleIncrement()}
                     >
                       <View style={styles.plusBtn}>
