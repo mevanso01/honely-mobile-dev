@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { ScrollView, View, Image } from 'react-native'
 import { Pressable, HStack, VStack, Box, useToast } from 'native-base'
-import { HText, HSwitch, HSliderButton } from '../Shared'
+import { HText, HSliderButton } from '../Shared'
 import { icons, images } from '../../utils/styleGuide'
 import { Accordion } from './Accordion'
 import styles from './style'
@@ -18,11 +18,8 @@ export const ContactLeadPreset = (props) => {
 
   const toast = useToast()
   const dispatch = useDispatch()
-
   const currentUser = useSelector(state => state.currentUser)
 
-  const [phoneEnabled, setPhoneEnabled] = useState(true)
-  const [emailEnabled, setEmailEnabled] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [formState, setFormState] = useState(currentUser?.preset || {})
   const [selectedUserType, setSelectedUserType] = useState('buyer')
@@ -114,17 +111,6 @@ export const ContactLeadPreset = (props) => {
     }
   }
 
-  const handleEnableSwitch = (val, isEmail) => {
-    let params = null
-    if (isEmail) {
-      params = { ...formState, use_email: val }
-    } else {
-      params = { ...formState, use_phone_number: val  }
-    }
-    setFormState(params)
-    handleUpdatePreset(params)
-  }
-
   return (
     <View style={styles.screenContainer}>
       <View style={styles.headerContainer}>
@@ -160,22 +146,6 @@ export const ContactLeadPreset = (props) => {
                           <HText style={styles.infoDescription}>Use my email to contact any lead</HText>
                           <HText style={styles.infoText}>{currentUser?.email}</HText>
                         </Box>
-                      </VStack>
-                      <VStack ml='2' justifyContent='space-between'>
-                        <View style={{ opacity: isLoading ? 0.6 : 1 }}>
-                          <HSwitch
-                            value={formState?.use_phone_number || false}
-                            disabled={isLoading}
-                            onValueChange={val => handleEnableSwitch(val, false)}
-                          />
-                        </View>
-                        <View style={{ opacity: isLoading ? 0.6 : 1 }}>
-                          <HSwitch
-                            value={formState?.use_email || false}
-                            disabled={isLoading}
-                            onValueChange={val => handleEnableSwitch(val, true)}
-                          />
-                        </View>
                       </VStack>
                     </HStack>
                   </VStack>

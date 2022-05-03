@@ -23,8 +23,6 @@ export const ContactLead = (props) => {
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
   const [lead, setLead] = useState(defaultLead)
-  const [emailEnabled, setEmailEnabled] = useState(currentUser?.preset?.use_email || false)
-  const [smsEnabled, setSmsEnabled] = useState(currentUser?.preset?.use_phone_number || false)
   const [isSmsFocus, setIsSmsFocus] = useState(false)
   const [isEmailFocus, setIsEmailFocus] = useState(false)
   const [statusValue, setStatusValue] = useState(0)
@@ -40,24 +38,23 @@ export const ContactLead = (props) => {
     return found?.color
   }
 
-  const handleOpenMessage = async () => {
-    if (smsEnabled) {
-      const phone = '+123456789'
-      const url = (Platform.OS === 'android')
-        ? `sms:${phone}?body=${smsMessage}`
-        : `sms:${phone}&body=${smsMessage}`;
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      }
+  const handleOpenSms = async () => {
+    const phone = lead?.phone_number
+    const url = (Platform.OS === 'android')
+      ? `sms:${phone}?body=${smsMessage}`
+      : `sms:${phone}&body=${smsMessage}`;
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
     }
-    if (emailEnabled) {
-      const recipient = 'jonathan@mail.com'
-      const url = `mailto:${recipient}?body=${emailMessage}`
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      }
+  }
+
+  const handleOpenEmail = async () => {
+    const recipient = lead?.email
+    const url = `mailto:${recipient}?body=${emailMessage}`
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
     }
   }
 
@@ -102,25 +99,31 @@ export const ContactLead = (props) => {
     setStatusValue(found?.value || 0)
     switch (lead?.agent_status) {
       case 'NEW':
-        setDefaultSMS(currentUser?.preset?.preset_bayer_text_msg_first || '')
-        setDefaultEmailMessage(currentUser?.preset?.preset_bayer_email_msg_first || '')
-        setEmailEnabled(currentUser?.preset?.use_email || false)
-        setSmsEnabled(currentUser?.preset?.use_phone_number || false)
+        if (level === 'buyers') {
+          setDefaultSMS(currentUser?.preset?.preset_bayer_text_msg_first || '')
+          setDefaultEmailMessage(currentUser?.preset?.preset_bayer_email_msg_first || '')
+        }
+        if (level === 'sellers') {
+          setDefaultSMS(currentUser?.preset?.preset_seller_text_msg_first || '')
+          setDefaultEmailMessage(currentUser?.preset?.preset_seller_email_msg_first || '')
+        }
         break
-      case 'ATTEMPTED CONTACT':
-        setDefaultSMS(currentUser?.preset?.preset_bayer_text_msg_second || '')
-        setDefaultEmailMessage(currentUser?.preset?.preset_bayer_email_msg_second || '')
-        setEmailEnabled(currentUser?.preset?.use_email || false)
-        setSmsEnabled(currentUser?.preset?.use_phone_number || false)
+      case 'ATTEMPTED_CONTACT':
+        if (level === 'buyers') {
+          setDefaultSMS(currentUser?.preset?.preset_bayer_text_msg_second || '')
+          setDefaultEmailMessage(currentUser?.preset?.preset_bayer_email_msg_second || '')
+        }
+        if (level === 'sellers') {
+          setDefaultSMS(currentUser?.preset?.preset_seller_text_msg_second || '')
+          setDefaultEmailMessage(currentUser?.preset?.preset_seller_email_msg_second || '')
+        }
         break
       default:
         setDefaultSMS('')
         setDefaultEmailMessage('')
-        setEmailEnabled(false)
-        setSmsEnabled(false)
         break
     }
-  }, [lead?.agent_status, currentUser?.preset?.use_email, currentUser?.preset?.use_phone_number])
+  }, [lead?.agent_status, level, currentUser?.preset?.use_email, currentUser?.preset?.use_phone_number])
 
   return (
     <View style={styles.screenContainer}>
@@ -204,14 +207,8 @@ export const ContactLead = (props) => {
           </HStack>
         </View>
 
-        <VStack mt='6'>
-          <HStack justifyContent='space-between'>
-            <HText style={styles.label}>SMS Message</HText>
-            <HSwitch
-              value={smsEnabled}
-              onValueChange={val => setSmsEnabled(val)}
-            />
-          </HStack>
+        <VStack mt='10'>
+          <HText style={styles.label}>SMS Message</HText>
           <View
             style={[styles.textArearWrapper, { borderColor: isSmsFocus ? colors.primary : colors.borderColor }]}
           >
@@ -224,20 +221,23 @@ export const ContactLead = (props) => {
               color={colors.text01}
               autoCapitalize='none'
               defaultValue={defaultSMS}
-              isDisabled={!smsEnabled}
               onChangeText={e => setSmsMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
               onBlur={() => setIsSmsFocus(false)}
             />
           </View>
-          <HStack justifyContent='space-between' mt='4'>
-            <HText style={styles.label}>Email Message</HText>
-            <HSwitch
-              value={emailEnabled}
-              onValueChange={val => setEmailEnabled(val)}
+          <Box alignItems='center' mt='5'>
+            <HButton
+              text='Send SMS'
+              borderColor={colors.primary}
+              backgroundColor={colors.primary}
+              onPress={() => handleOpenSms()}
             />
-          </HStack>
+          </Box>
+        </VStack>
+        <VStack mt='8'>
+          <HText style={styles.label}>Email Message</HText>
           <View
             style={[styles.textArearWrapper, { borderColor: isEmailFocus ? colors.primary : colors.borderColor }]}
           >
@@ -250,23 +250,21 @@ export const ContactLead = (props) => {
               color={colors.text01}
               autoCapitalize='none'
               defaultValue={defaultEmailMessage}
-              isDisabled={!emailEnabled}
               onChangeText={e => setEmailMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsEmailFocus(true)}
               onBlur={() => setIsEmailFocus(false)}
             />
           </View>
+          <Box alignItems='center' mt='5' mb='8'>
+            <HButton
+              text='Send Email'
+              borderColor={colors.primary}
+              backgroundColor={colors.primary}
+              onPress={() => handleOpenEmail()}
+            />
+          </Box>
         </VStack>
-        <Box alignItems='center' mt='5' mb='8'>
-          <HButton
-            text='Send'
-            borderColor={colors.primary}
-            backgroundColor={colors.primary}
-            isDisabled={!(emailEnabled || smsEnabled)}
-            onPress={() => handleOpenMessage()}
-          />
-        </Box>
       </ScrollView>
     </View>
   )
