@@ -41,7 +41,7 @@ export const Card = (props) => {
   const handleDecrement = () => {
     if (cartQty <= 1) return
     setCartQty(cartQty - 1)
-    setLeadsIds(prev => prev.pop())
+    setLeadsIds(defaultLeadsIds.slice(0, cartQty - 1))
   }
 
   const handleIncrement = () => {
@@ -60,7 +60,7 @@ export const Card = (props) => {
       const newCart = {
         lead_id: lead.lead_id,
         zip_code: lead.zip_code,
-        lead_price: lead.average_home_price
+        lead_price: lead.lead_price
       }
       const prevCart = currentUser?.cart || {}
       let updatedCart = { ...prevCart }
