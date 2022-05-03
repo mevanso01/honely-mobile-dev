@@ -48,5 +48,21 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     tintColor: colors.black,
     marginLeft: 6
-  }
+  },
+  statusListContainer: {
+    position: 'relative',
+    flex: 1
+  },
+  dropDownListContainer: {
+    position: 'absolute',
+    width: '100%',
+    top: 35,
+    left: 0,
+    backgroundColor: colors.white,
+    zIndex: 10,
+    borderColor: colors.borderColor,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+
 })
