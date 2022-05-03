@@ -89,6 +89,7 @@ export const LeadsDashboard = (props) => {
     try {
       setIsLoading(true)
       const response = await doGet('searches/lead-dashboard', { 'user-id': currentUser?.user_id })
+      // The endpoint supports filter by statues.
       if (response.result !== 'Success') throw response
       dispatch(setUser({ leads: response.data }))
       setIsLoading(false)
