@@ -4,6 +4,7 @@ import { HText, HButton } from '../Shared'
 import { colors,  icons } from '../../utils/styleGuide'
 import { HStack, Box, Skeleton } from 'native-base'
 import styles from './style'
+import { leadStatuses } from '../../utils/constants'
 
 export const LeadCard = (props) => {
   const {
@@ -13,6 +14,11 @@ export const LeadCard = (props) => {
     lead,
     level
   } = props
+
+  const getStatus = (status) => {
+    const objectStatus = leadStatuses.find((o) => o.key === status)
+    return objectStatus && objectStatus
+  }
 
   return (
     <View style={styles.cardContainer}>
@@ -42,7 +48,7 @@ export const LeadCard = (props) => {
           <Skeleton h='4' w='24' rounded='sm' />
         ) : (
           <HText style={styles.userTypeText}>
-            <HText style={[styles.userTypeText, { color: colors.borderColor }]}>Status:</HText> {lead?.agent_status}
+            <HText style={[styles.userTypeText, { color: colors.borderColor }]}>Status:</HText> {getStatus(lead?.agent_status)?.content}
           </HText>
         )}
       </HStack>

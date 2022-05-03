@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { doPatch } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
+import { leadStatuses } from '../../utils/constants'
 
 export const ContactLead = (props) => {
   const {
@@ -34,17 +35,8 @@ export const ContactLead = (props) => {
   const [defaultEmailMessage, setDefaultEmailMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const statusOptions = [
-    { value: 0, content: 'New', color: colors.primary },
-    { value: 1, content: 'Attempted Contact', color: colors.green },
-    { value: 2, content: 'Followed Up', color: colors.green },
-    { value: 3, content: 'Pending Sale', color: colors.green },
-    { value: 4, content: 'Closed Leads', color: colors.green },
-    { value: 5, content: 'Rejected', color: colors.rejected }
-  ]
-
   const getSelectBgColor = (value) => {
-    const found = statusOptions.find(item => item.value === value)
+    const found = leadStatuses.find(item => item.value === value)
     return found?.color
   }
 
@@ -73,12 +65,12 @@ export const ContactLead = (props) => {
     try {
       setIsLoading(true)
       setStatusValue(selectedItem.value)
-      const response = await doPatch(`lookup-test/lead/change-status?lead-id=${lead.lead_id}`, { 'status': selectedItem.content })
+      const response = await doPatch(`lookup-test/lead/change-status?lead-id=${lead.lead_id}`, { 'status': selectedItem.key })
       if (response.result !== 'Success') throw response
-      setLead({ ...lead, agent_status: selectedItem.content.toUpperCase() })
+      setLead({ ...lead, agent_status: selectedItem.key })
       const _updatedLeads = currentUser.leads[level].leads.map(_lead => {
         if (_lead.lead_id === lead.lead_id) {
-          _lead.agent_status = selectedItem.content.toUpperCase()
+          _lead.agent_status = selectedItem.key
         }
         return _lead
       })
@@ -105,7 +97,7 @@ export const ContactLead = (props) => {
   }
 
   useEffect(() => {
-    const found = statusOptions.find(option => option.content.toLowerCase() === lead?.agent_status?.toLowerCase())
+    const found = leadStatuses.find(option => option.key === lead?.agent_status)
     setDefaultIndex(found?.value?.toString() || '0')
     setStatusValue(found?.value || 0)
     switch (lead?.agent_status) {
@@ -159,7 +151,7 @@ export const ContactLead = (props) => {
           <SelectDropdown
             defaultButtonText='Select an option'
             defaultValueByIndex={defaultIndex}
-            data={statusOptions}
+            data={leadStatuses}
             disabled={isLoading}
             onSelect={handleChangeStatus}
             buttonTextAfterSelection={(selectedItem, index) => { return selectedItem.content }}

@@ -7,6 +7,7 @@ import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useSelector } from 'react-redux'
+import { leadStatuses } from '../../utils/constants'
 
 export const ContactedLeads = (props) => {
   const {
@@ -24,15 +25,7 @@ export const ContactedLeads = (props) => {
   const [isNameSort, setIsNameSort] = useState(true)
 
   const getStatus = (status) => {
-    const statuses = [
-      { value: 0, content: 'New', color: colors.primary },
-      { value: 1, content: 'Attempted Contact', color: colors.green },
-      { value: 2, content: 'Followed Up', color: colors.green },
-      { value: 3, content: 'Pending Sale', color: colors.green },
-      { value: 4, content: 'Closed Leads', color: colors.green },
-      { value: 5, content: 'Rejected', color: colors.rejected }
-    ]
-    const objectStatus = statuses.find((o) => o.content.toLowerCase() === status.toLowerCase())
+    const objectStatus = leadStatuses.find((o) => o.key === status)
     return objectStatus && objectStatus
   }
 
