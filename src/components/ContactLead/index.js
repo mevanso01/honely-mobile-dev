@@ -29,8 +29,6 @@ export const ContactLead = (props) => {
   const [isSmsFocus, setIsSmsFocus] = useState(false)
   const [isEmailFocus, setIsEmailFocus] = useState(false)
   const [statusValue, setStatusValue] = useState(0)
-  const [emailMessage, setEmailMessage] = useState('')
-  const [smsMessage, setSmsMessage] = useState('')
   const [defaultIndex, setDefaultIndex] = useState(null)
   const [defaultSMS, setDefaultSMS] = useState('')
   const [defaultEmailMessage, setDefaultEmailMessage] = useState('')
@@ -44,8 +42,8 @@ export const ContactLead = (props) => {
   const handleOpenSms = async () => {
     const phone = lead?.phone_number
     const url = (Platform.OS === 'android')
-      ? `sms:${phone}?body=${smsMessage}`
-      : `sms:${phone}&body=${smsMessage}`;
+      ? `sms:${phone}?body=${defaultSMS}`
+      : `sms:${phone}&body=${defaultSMS}`;
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
@@ -54,7 +52,7 @@ export const ContactLead = (props) => {
 
   const handleOpenEmail = async () => {
     const recipient = lead?.email
-    const url = `mailto:${recipient}?body=${emailMessage}`
+    const url = `mailto:${recipient}?body=${defaultEmailMessage}`
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
@@ -225,7 +223,7 @@ export const ContactLead = (props) => {
               color={colors.text01}
               autoCapitalize='none'
               defaultValue={defaultSMS}
-              onChangeText={e => setSmsMessage(e)}
+              onChangeText={e => setDefaultSMS(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
               onBlur={() => setIsSmsFocus(false)}
@@ -255,7 +253,7 @@ export const ContactLead = (props) => {
               color={colors.text01}
               autoCapitalize='none'
               defaultValue={defaultEmailMessage}
-              onChangeText={e => setEmailMessage(e)}
+              onChangeText={e => setDefaultEmailMessage(e)}
               blurOnSubmit={false}
               onFocus={() => setIsEmailFocus(true)}
               onBlur={() => setIsEmailFocus(false)}

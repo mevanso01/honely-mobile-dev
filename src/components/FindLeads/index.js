@@ -26,7 +26,7 @@ export const FindLeads = (props) => {
   const [searchValue, setSearchValue] = useState('')
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [isShowHint, setIsShowHint] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [suggestionList, setSuggestionList] = useState(null)
   const [isRecentLoading, setIsRecentLoading] = useState(true)
   const [recentSearches, setRecentSearches] = useState([])
