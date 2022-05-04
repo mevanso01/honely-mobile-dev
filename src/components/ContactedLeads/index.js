@@ -181,7 +181,7 @@ export const ContactedLeads = (props) => {
           contentContainerStyle={styles.scrollContainer}
         >
           <VStack>
-            <HStack>
+            <HStack zIndex={100}>
               <Pressable
                 flex='1'
                 _pressed={{
