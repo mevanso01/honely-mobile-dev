@@ -40,13 +40,15 @@ export const Card = (props) => {
   }
 
   const handleDecrement = () => {
-    if (cartQty <= 1) return
+    if (cartQty <= 0) return
+    setIsModify(true)
     setCartQty(cartQty - 1)
     setLeadsIds(defaultLeadsIds.slice(0, cartQty - 1))
   }
 
   const handleIncrement = () => {
     if (cartQty < maxQuantity) {
+      setIsModify(true)
       setCartQty(cartQty + 1)
       setLeadsIds(defaultLeadsIds.slice(0, cartQty + 1))
     }
@@ -57,9 +59,7 @@ export const Card = (props) => {
       const buyerLeadCart = (currentUser?.cart?.buyer_leads || []).find(_lead => _lead.zip_code === zipCode)?.cart || []
       if (buyerLeadCart.length > leadsIds.length) {
         let difference = buyerLeadCart.filter(x => !leadsIds.includes(x))
-        await Promise.all(difference.map(async (leadId) => {
-          await handleRemoveCart(leadId)
-        }))
+        await handleRemoveCart(difference)
       }
       if (buyerLeadCart.length < leadsIds.length) {
         let difference = leadsIds.filter(x => !buyerLeadCart.includes(x))
@@ -70,9 +70,7 @@ export const Card = (props) => {
       const sellerLeadCart = (currentUser?.cart?.seller_leads || []).find(_lead => _lead.zip_code === zipCode)?.cart || []
       if (sellerLeadCart.length > leadsIds.length) {
         let difference = sellerLeadCart.filter(x => !leadsIds.includes(x))
-        await Promise.all(difference.map(async (leadId) => {
-          await handleRemoveCart(leadId)
-        }))
+        await handleRemoveCart(difference)
       }
       if (sellerLeadCart.length < leadsIds.length) {
         let difference = leadsIds.filter(x => !sellerLeadCart.includes(x))
@@ -83,13 +81,11 @@ export const Card = (props) => {
       const prospectiveLeadCart = (currentUser?.cart?.prospective_leads || []).find(_lead => _lead.zip_code === zipCode)?.cart || []
       if (prospectiveLeadCart.length > leadsIds.length) {
         let difference = prospectiveLeadCart.filter(x => !leadsIds.includes(x))
-        await Promise.all(difference.map(async (leadId) => {
-          await handleRemoveCart(leadId)
-        }))
+        await handleRemoveCart(difference)
       }
       if (prospectiveLeadCart.length < leadsIds.length) {
         let difference = leadsIds.filter(x => !prospectiveLeadCart.includes(x))
-        handleAddToCart(difference)
+        await handleAddToCart(difference)
       }
     }
 
@@ -138,31 +134,31 @@ export const Card = (props) => {
     }
   }
 
-  const handleRemoveCart = async (leadId) => {
+  const handleRemoveCart = async (leadsIds) => {
     try {
       setIsLoading(true)
-      const response = await doDelete(`lookup-test/cart?user-id=${currentUser?.user_id}&lead-id=${leadId}`)
+      const response = await doDelete(`lookup-test/cart?user-id=${currentUser?.user_id}`, { leads: leadsIds })
       if (response.result !== 'Success') throw response
       setIsAdded(false)
       const prevCart = currentUser?.cart || {}
       let updatedCart = { ...prevCart }
       if (userTypeValue === 1) {
         updatedCart.buyer_leads = updatedCart?.buyer_leads.filter(_lead => {
-          _lead.cart = _lead.cart.filter(id => id !== leadId)
+          _lead.cart = _lead.cart.filter(id => !leadsIds.includes(id))
           if (_lead.cart.length) return true
           return false
         })
       }
       if (userTypeValue === 2) {
         updatedCart.seller_leads = updatedCart?.seller_leads.filter(_lead => {
-          _lead.cart = _lead.cart.filter(id => id !== leadId)
+          _lead.cart = _lead.cart.filter(id => !leadsIds.includes(id))
           if (_lead.cart.length) return true
           return false
         })
       }
       if (userTypeValue === 3) {
         updatedCart.prospective_leads = updatedCart?.prospective_leads.filter(_lead => {
-          _lead.cart = _lead.cart.filter(id => id !== leadId)
+          _lead.cart = _lead.cart.filter(id => !leadsIds.includes(id))
           if (_lead.cart.length) return true
           return false
         })
@@ -183,6 +179,7 @@ export const Card = (props) => {
   }
 
   useEffect(() => {
+    if (isModify || isLoading) return
     let _cart = 0
     defaultLeadsIds.forEach(id => {
       const found = totalCart.find(_lead => _lead.cart.includes(id))
@@ -191,7 +188,7 @@ export const Card = (props) => {
     setCartQty(_cart)
     if (_cart) setIsAdded(true)
     else setIsAdded(false)
-  }, [totalCart, defaultLeadsIds])
+  }, [totalCart, defaultLeadsIds, isModify, isLoading])
 
   return (
     <View style={styles.cardContainer}>
@@ -231,7 +228,7 @@ export const Card = (props) => {
                       opacity: 0.6
                     }}
                     onPress={() => {
-                      maxQuantity > 1 ? setIsModify(true) : handleRemoveCart(lead.lead_id)
+                      maxQuantity > 1 ? setIsModify(true) : handleRemoveCart([lead.lead_id])
                     }}
                   >
                     <HText style={styles.modifyText}>
@@ -251,7 +248,7 @@ export const Card = (props) => {
                       _pressed={{
                         opacity: 0.6
                       }}
-                      disabled={cartQty === 1}
+                      disabled={cartQty === 0}
                       _disabled={{ opacity: 0.6 }}
                       onPress={() => handleDecrement()}
                     >

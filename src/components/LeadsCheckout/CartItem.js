@@ -21,7 +21,7 @@ export const CartItem = (props) => {
 
   const totalLeadsIds = [...lead.cart, ...lead.available]
   const maxQuantity = totalLeadsIds.length
-  const [cartQty, setCartQty] = useState(maxQuantity)
+  const [cartQty, setCartQty] = useState(lead.cart.length)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleUpdateCart = (updatedLead) => {
@@ -107,7 +107,7 @@ export const CartItem = (props) => {
       setIsLoading(true)
       let leadCart = [...lead.cart]
       const removedCartId = leadCart.pop()
-      const response = await doDelete(`lookup-test/cart?user-id=${currentUser?.user_id}&lead-id=${removedCartId}`)
+      const response = await doDelete(`lookup-test/cart?user-id=${currentUser?.user_id}`, { leads: [removedCartId] })
       if (response.result !== 'Success') throw response
       const updatedLead = {
         ...lead,
