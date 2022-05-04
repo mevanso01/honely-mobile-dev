@@ -25,10 +25,10 @@ export const FindLeads = (props) => {
   const statusBarHeight = insets.top
   const [searchValue, setSearchValue] = useState('')
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
-  const [isShowHint, setIsShowHint] = useState(true)
+  const [isShowHint, setIsShowHint] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [suggestionList, setSuggestionList] = useState(null)
-  const [isRecentLoading, setIsRecentLoading] = useState(false)
+  const [isRecentLoading, setIsRecentLoading] = useState(true)
   const [recentSearches, setRecentSearches] = useState([])
 
   let timeout = null
@@ -132,9 +132,14 @@ export const FindLeads = (props) => {
   }
 
   useEffect(() => {
-    if (!isFocused || isShowHint) return
+    if (isRecentLoading) return
+    if (recentSearches.length === 0) setIsShowHint(true)
+  }, [recentSearches, isRecentLoading])
+
+  useEffect(() => {
+    if (!isFocused) return
     handleGetAgentRecentSearches()
-  }, [isFocused, isShowHint])
+  }, [isFocused])
 
   useEffect(() => {
     Animated.loop(
@@ -241,9 +246,9 @@ export const FindLeads = (props) => {
             {isRecentLoading ? (
               [...Array(5).keys()].map(i => (
                 <Box key={i} mb='3'>
-                  <View style={styles.recentSearchItem}>
-                    <Skeleton h='6' w='20' rounded='sm' />
-                    <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
+                  <View style={[styles.recentSearchItem, { borderColor: colors.borderColor }]}>
+                    <Skeleton h='6' w='24' rounded='sm' />
+                    <FeatherIcons name='arrow-right' size={20} color={colors.borderColor} />
                   </View>
                 </Box>
               ))

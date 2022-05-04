@@ -266,7 +266,7 @@ export const BuyLeads = (props) => {
       <Divider backgroundColor={colors.primary} opacity={0.7} />
       <Box alignItems='center' mt='4' mb='4'>
         <HButton
-          text='(3) Proceed to Checkout'
+          text={`(${totalCart.length}) Proceed to Checkout`}
           width={deviceWidth - 48}
           borderColor={colors.primary}
           backgroundColor={colors.white}
