@@ -26,7 +26,7 @@ export const FindLeads = (props) => {
   const [searchValue, setSearchValue] = useState('')
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [isShowHint, setIsShowHint] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [suggestionList, setSuggestionList] = useState(null)
   const [isRecentLoading, setIsRecentLoading] = useState(true)
   const [recentSearches, setRecentSearches] = useState([])
@@ -137,7 +137,10 @@ export const FindLeads = (props) => {
   }, [recentSearches, isRecentLoading])
 
   useEffect(() => {
-    if (!isFocused) return
+    if (!isFocused) {
+      setIsRecentLoading(true)
+      return
+    }
     handleGetAgentRecentSearches()
   }, [isFocused])
 

@@ -90,9 +90,6 @@ export default StyleSheet.create({
     color: colors.white,
     lineHeight: 24,
     paddingBottom: 7,
-    marginLeft: 20,
-    borderBottomColor: colors.white,
-    borderBottomWidth: 1,
     flex: 1
   },
   sheetContent: {

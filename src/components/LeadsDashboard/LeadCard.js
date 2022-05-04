@@ -57,7 +57,9 @@ export const LeadCard = (props) => {
         {isLoading ? (
           <Skeleton h='4' w='32' rounded='sm' ml='2' />
         ) : (
-          <HText style={styles.infoText}>{lead?.email}</HText>
+          <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
+            <HText style={styles.infoText}>{lead?.email}</HText>
+          </HStack>
         )}
       </HStack>
       <HStack mt='5' alignItems='center'>
@@ -65,10 +67,12 @@ export const LeadCard = (props) => {
         {isLoading ? (
           <Skeleton h='4' w='32' rounded='sm' ml='2' />
         ) : (
-          <HText style={styles.infoText}>{lead?.phone_number}</HText>
+          <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
+            <HText style={styles.infoText}>{lead?.phone_number}</HText>
+          </HStack>
         )}
       </HStack>
-      <Box alignItems='center' mt='16'>
+      <Box alignItems='center' mt='10'>
         <HButton
           text='Contact'
           borderColor={colors.white}
