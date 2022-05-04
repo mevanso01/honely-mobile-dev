@@ -75,7 +75,7 @@ export default StyleSheet.create({
   thumbWrapper: {
     alignItems: 'center',
     width: 80,
-    top: 12,
+    marginTop: 22,
     left: 12
   },
   maxDistanceLabelWrapper: {
