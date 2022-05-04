@@ -141,7 +141,7 @@ export const BuyLeads = (props) => {
             {!totalLeads ? (
               <Skeleton h='3' w='16' rounded='sm' ml='7' />
             ) : (
-              <HText style={styles.filterText}>{totalLeads}/{filteredLeads} leads</HText>
+              <HText style={styles.filterText}>{filteredLeads}/{totalLeads} leads</HText>
             )}
           </HStack>
           <HStack justifyContent='center'>
