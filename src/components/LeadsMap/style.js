@@ -75,7 +75,8 @@ export default StyleSheet.create({
   thumbWrapper: {
     alignItems: 'center',
     width: 80,
-    marginTop: 12
+    top: 12,
+    left: 12
   },
   maxDistanceLabelWrapper: {
     paddingBottom: 21
@@ -84,7 +85,8 @@ export default StyleSheet.create({
     tintColor: colors.primary,
     width: 16,
     height: 16,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    marginRight: 10
   },
   leadsQtyContainer: {
     width: '100%',

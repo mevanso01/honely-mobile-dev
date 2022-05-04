@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Image } from 'react-native'
 import { HText, HButton } from '../Shared'
 import { HStack, Divider, Box, VStack, Pressable, useToast, Spinner } from 'native-base'
@@ -21,10 +21,11 @@ export const Card = (props) => {
   const currentUser = useSelector(state => state.currentUser)
 
   const lead = leadsGroup[0]
-  const defaultLeadsIds = leadsGroup.reduce((ids, obj) => [...ids, obj.lead_id], []).filter(leadId => !totalCart.find(_lead => _lead.lead_id === leadId))
+  const defaultLeadsIds = leadsGroup.reduce((ids, obj) => [...ids, obj.lead_id], [])
   const maxQuantity = defaultLeadsIds.length
-  const [isAdded, setIsAdded] = useState(maxQuantity === 0 || false)
-  const [cartQty, setCartQty] = useState(maxQuantity)
+  const [isAdded, setIsAdded] = useState(false)
+  const [isModify, setIsModify] = useState(false)
+  const [cartQty, setCartQty] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [leadsIds, setLeadsIds] = useState(defaultLeadsIds)
 
@@ -51,28 +52,77 @@ export const Card = (props) => {
     }
   }
 
-  const handleAddToCart = async () => {
+  const handleModifyCart = async () => {
+    if (userTypeValue === 1) {
+      const buyerLeadCart = (currentUser?.cart?.buyer_leads || []).find(_lead => _lead.zip_code === zipCode)?.cart || []
+      if (buyerLeadCart.length > leadsIds.length) {
+        let difference = buyerLeadCart.filter(x => !leadsIds.includes(x))
+        await Promise.all(difference.map(async (leadId) => {
+          await handleRemoveCart(leadId)
+        }))
+      }
+      if (buyerLeadCart.length < leadsIds.length) {
+        let difference = leadsIds.filter(x => !buyerLeadCart.includes(x))
+        handleAddToCart(difference)
+      }
+    }
+    if (userTypeValue === 2) {
+      const sellerLeadCart = (currentUser?.cart?.seller_leads || []).find(_lead => _lead.zip_code === zipCode)?.cart || []
+      if (sellerLeadCart.length > leadsIds.length) {
+        let difference = sellerLeadCart.filter(x => !leadsIds.includes(x))
+        await Promise.all(difference.map(async (leadId) => {
+          await handleRemoveCart(leadId)
+        }))
+      }
+      if (sellerLeadCart.length < leadsIds.length) {
+        let difference = leadsIds.filter(x => !sellerLeadCart.includes(x))
+        handleAddToCart(difference)
+      }
+    }
+    if (userTypeValue === 3) {
+      const prospectiveLeadCart = (currentUser?.cart?.prospective_leads || []).find(_lead => _lead.zip_code === zipCode)?.cart || []
+      if (prospectiveLeadCart.length > leadsIds.length) {
+        let difference = prospectiveLeadCart.filter(x => !leadsIds.includes(x))
+        await Promise.all(difference.map(async (leadId) => {
+          await handleRemoveCart(leadId)
+        }))
+      }
+      if (prospectiveLeadCart.length < leadsIds.length) {
+        let difference = leadsIds.filter(x => !prospectiveLeadCart.includes(x))
+        handleAddToCart(difference)
+      }
+    }
+
+    setIsModify(false)
+  }
+
+  const handleAddToCart = async (leadsIds) => {
     try {
       setIsLoading(true)
       const response = await doPost(`lookup-test/cart?user-id=${currentUser?.user_id}`, { leads: leadsIds })
       if (response.result !== 'Success') throw response
       setIsAdded(true)
       const newCart = {
-        lead_id: lead.lead_id,
         zip_code: lead.zip_code,
-        lead_price: lead.lead_price
+        price: lead.lead_price,
+        cart: leadsIds,
+        available: []
       }
       const prevCart = currentUser?.cart || {}
       let updatedCart = { ...prevCart }
+      const totalBuyers = currentUser?.cart?.buyer_leads || []
+      const totalSellers = currentUser?.cart?.seller_leads || []
+      const totalProspective = currentUser?.cart?.prospective_leads || []
       if (userTypeValue === 1) {
-        updatedCart.buyer_leads = [...updatedCart?.buyer_leads, newCart]
+        updatedCart.buyer_leads = [...totalBuyers, newCart]
       }
       if (userTypeValue === 2) {
-        updatedCart.seller_leads = [...updatedCart?.seller_leads, newCart]
+        updatedCart.seller_leads = [...totalSellers, newCart]
       }
       if (userTypeValue === 3) {
-        updatedCart.prospective_leads = [...updatedCart?.prospective_leads, newCart]
+        updatedCart.prospective_leads = [...totalProspective, newCart]
       }
+
       dispatch(setUser({ cart: updatedCart }))      
       setIsLoading(false)
     } catch (error) {
@@ -88,22 +138,34 @@ export const Card = (props) => {
     }
   }
 
-  const handleRemoveCart = async () => {
+  const handleRemoveCart = async (leadId) => {
     try {
       setIsLoading(true)
-      const response = await doDelete(`lookup-test/cart?user-id=${currentUser?.user_id}&lead-id=${lead.lead_id}`)
+      const response = await doDelete(`lookup-test/cart?user-id=${currentUser?.user_id}&lead-id=${leadId}`)
       if (response.result !== 'Success') throw response
       setIsAdded(false)
       const prevCart = currentUser?.cart || {}
       let updatedCart = { ...prevCart }
       if (userTypeValue === 1) {
-        updatedCart.buyer_leads = updatedCart?.buyer_leads.filter(_lead => _lead.lead_id !== lead.lead_id)
+        updatedCart.buyer_leads = updatedCart?.buyer_leads.filter(_lead => {
+          _lead.cart = _lead.cart.filter(id => id !== leadId)
+          if (_lead.cart.length) return true
+          return false
+        })
       }
       if (userTypeValue === 2) {
-        updatedCart.seller_leads = updatedCart?.seller_leads.filter(_lead => _lead.lead_id !== lead.lead_id)
+        updatedCart.seller_leads = updatedCart?.seller_leads.filter(_lead => {
+          _lead.cart = _lead.cart.filter(id => id !== leadId)
+          if (_lead.cart.length) return true
+          return false
+        })
       }
       if (userTypeValue === 3) {
-        updatedCart.prospective_leads = updatedCart?.prospective_leads.filter(_lead => _lead.lead_id !== lead.lead_id)
+        updatedCart.prospective_leads = updatedCart?.prospective_leads.filter(_lead => {
+          _lead.cart = _lead.cart.filter(id => id !== leadId)
+          if (_lead.cart.length) return true
+          return false
+        })
       }
       dispatch(setUser({ cart: updatedCart }))
       setIsLoading(false)
@@ -119,6 +181,17 @@ export const Card = (props) => {
       })
     }
   }
+
+  useEffect(() => {
+    let _cart = 0
+    defaultLeadsIds.forEach(id => {
+      const found = totalCart.find(_lead => _lead.cart.includes(id))
+      if (found) _cart += 1
+    })
+    setCartQty(_cart)
+    if (_cart) setIsAdded(true)
+    else setIsAdded(false)
+  }, [totalCart, defaultLeadsIds])
 
   return (
     <View style={styles.cardContainer}>
@@ -138,7 +211,7 @@ export const Card = (props) => {
       </Box>
       <HStack justifyContent='flex-end'>
         <VStack height='10' alignItems='center'>
-          {isAdded ? (
+          {(isAdded && !isModify) ? (
             <VStack alignItems='flex-end'>
               {isLoading ? (
                 <HStack alignItems='center'>
@@ -149,7 +222,7 @@ export const Card = (props) => {
                 <>
                   <HStack alignItems='center'>
                     <HText style={styles.addedText}>
-                      {userTypeValue === 3 && `${cartQty}x `} Added
+                      {maxQuantity > 1 && `${cartQty}x `} Added
                     </HText>
                     <Image source={icons.check} style={styles.checkIcon} />
                   </HStack>
@@ -157,10 +230,12 @@ export const Card = (props) => {
                     _pressed={{
                       opacity: 0.6
                     }}
-                    onPress={() => handleRemoveCart()}
+                    onPress={() => {
+                      maxQuantity > 1 ? setIsModify(true) : handleRemoveCart(lead.lead_id)
+                    }}
                   >
                     <HText style={styles.modifyText}>
-                      {userTypeValue === 3 ? 'Modify Cart' : 'Remove from Cart'}
+                      {maxQuantity > 1 ? 'Modify Cart' : 'Remove from Cart'}
                     </HText>
                   </Pressable>
                 </>
@@ -203,7 +278,7 @@ export const Card = (props) => {
                 </HStack>
               )}
               <HButton
-                text='Add to Cart'
+                text={(isAdded && maxQuantity > 1) ? 'Update cart' : 'Add to Cart'}
                 width={156}
                 height={36}
                 backgroundColor={colors.white}
@@ -213,7 +288,7 @@ export const Card = (props) => {
                   fontSize: 16
                 }}
                 isLoading={isLoading}
-                onPress={() => handleAddToCart()}
+                onPress={() => maxQuantity > 1 ? handleModifyCart() : handleAddToCart(leadsIds)}
               />
             </HStack>
           )}

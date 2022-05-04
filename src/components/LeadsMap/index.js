@@ -225,11 +225,12 @@ export const LeadsMap = (props) => {
                   size="lg"
                   onChange={val => setMaxDistance(Math.floor(val))}
                   onChangeEnd={val => handleGetLeads(level, address, Math.floor(val))}
+                  _interactionBox={{ opacity: 0 }}
                 >
                   <Slider.Track bg={colors.lightGray}>
                     <Slider.FilledTrack bg={colors.primary_100} />
                   </Slider.Track>
-                  <Slider.Thumb borderWidth={0} bg={colors.white}>
+                  <Slider.Thumb borderWidth={0} bg='transparent'>
                     <View style={styles.thumbWrapper}>
                       <Image source={icons.sliderThumb} style={styles.thumbIcon} />
                       <HText numberOfLines={1} style={styles.labelText}>{maxDistance} mi</HText>
