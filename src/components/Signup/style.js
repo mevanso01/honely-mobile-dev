@@ -133,15 +133,5 @@ export default StyleSheet.create({
   },
   underlineStyleHighLighted: {
     borderColor: colors.primary,
-  },
-  circleWrapper: {
-    backgroundColor: colors.red,
-    width: deviceWidth * 0.75,
-    height: deviceWidth * 0.75,
-    borderRadius: deviceWidth * 0.75 / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: 0.55,
-    position: 'absolute'
   }
 })

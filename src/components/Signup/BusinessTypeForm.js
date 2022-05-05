@@ -19,7 +19,7 @@ export const BusinessTypeForm = (props) => {
 
   const types = [
     {
-      value: 'Realtor',
+      value: 'Agent/Broker',
       text: 'Agent/Broker'
     },
     {

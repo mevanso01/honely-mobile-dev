@@ -42,30 +42,32 @@ export const handleCreateAccount = () => async (dispatch, getState) => {
 
     let siteLeads = "FALSE"
     let userType = ''
-    if (formState.userType === 'Service Provider') {
+    // if (formState.userType === 'Service Provider') {
       siteLeads = "TRUE"
       userType = (formState.serviceProviderType).join(',')
-    }
-    if (formState.userType === 'Homeowner') {
-      userType = (formState.homeOwnerType).join(',')
-    }
+    // }
+    // if (formState.userType === 'Homeowner') {
+    //   userType = (formState.homeOwnerType).join(',')
+    // }
   
     const params = {
-      user_name: formState.userName,
-      first_name: formState.firstName,
-      last_name: formState.lastName,
-      email: formState.email,
-      phone_number: fullPhone,
-      membership_type: 'FREE',
-      promo_code: '',
-      email_consent: formState.emailConsent ? 'TRUE' : 'FALSE',
-      user_type: userType,
-      site_leads: siteLeads,
       button_leads: "FALSE",
-      home_url: null,
-      interested_zip_codes: '',
+      company_name: '',
+      email: formState.email,
+      email_consent: formState.emailConsent ? 'TRUE' : 'FALSE',
+      first_name: formState.firstName,
       home_address: '',
       home_zip_code: '',
+      interested_zip_codes: '',
+      last_name: formState.lastName,
+      membership_type: 'FREE',
+      phone_number: fullPhone,
+      site_leads: siteLeads,
+      user_name: formState.userName,
+      user_type: userType,
+      
+      // promo_code: '',
+      // home_url: null,
     }
 
     dispatch(setParams(params))
@@ -77,7 +79,8 @@ export const handleCreateAccount = () => async (dispatch, getState) => {
 
     const handleUnconfirmedUserAddition = async (params) => {
       try {
-        await doPost('lookup/unconfirmed_user_addition', params)
+        const response = await doPost('lookup/unconfirmed_user_addition', params)
+        if (response.result === 'Failure.') throw response
         dispatch(setLoading(false))
         return true
       } catch (error) {
@@ -95,7 +98,7 @@ export const handleCreateAccount = () => async (dispatch, getState) => {
           phone_number: params.phone_number
         }
       }))
-      handleUnconfirmedUserAddition(params)
+      await handleUnconfirmedUserAddition(params)
     } catch (error) {
       dispatch(setLoading(false))
       return Promise.reject(error)
@@ -154,7 +157,13 @@ export const handleLogin = (username, password, email) => async (dispatch, getSt
 
     await dispatch(cognitoSignIn({ username: username, password: password }))
     try {
-      await doPost('lookup/register_service', params)
+      const body = {
+        ...params,
+        promo_code: '',
+        home_url: null,
+      }
+      const response = await doPost('lookup/register_service', body)
+      if (response.result !== 'Success') throw response
     } catch (error) {
       return Promise.reject(error)
     }
@@ -162,8 +171,8 @@ export const handleLogin = (username, password, email) => async (dispatch, getSt
     const getUserProfile = async () => {
       try {
         const response = await doGet('lookup-test/user_profile', { email: email })
-        if (response.error) {
-          throw response
+        if (response?.result) {
+          throw { message: response.result }
         }
         dispatch(resetState())
         dispatch(setUser({ ...response, isLoggedIn: true }))

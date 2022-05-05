@@ -20,7 +20,6 @@ export const Success = (props) => {
           style={styles.logoWrapper}
         />
         <HText style={styles.congratsText}>Weclome {formState?.firstName} {formState?.lastName}</HText>
-        <View style={styles.circleWrapper} />
       </View>
       <Box mb='8' alignItems='center'>
         <HText style={styles.loadingText}>
