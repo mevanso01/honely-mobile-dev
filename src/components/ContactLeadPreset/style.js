@@ -24,7 +24,6 @@ export default StyleSheet.create({
     color: colors.black,
     fontSize: 14,
     fontFamily: fonts.regular,
-    marginBottom: 2
   },
   headerTitle: {
     fontSize: 22,
