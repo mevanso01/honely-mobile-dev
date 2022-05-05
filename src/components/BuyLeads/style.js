@@ -187,5 +187,26 @@ export default StyleSheet.create({
     color: colors.white,
     fontSize: 18,
     fontWeight: '500',
+  },
+  filterContainer: {
+    position: 'relative',
+    zIndex: 100
+  },
+  filterWrapper: {
+    position: 'absolute',
+    overflow: 'hidden',
+    right: 0,
+    top: 30,
+    width: 142,
+    shadowColor: colors.text02,
+    backgroundColor: colors.text02,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.17,
+    shadowRadius: 8,
+    elevation: 3,
+    borderRadius: 8,
   }
 })

@@ -8,6 +8,7 @@ import HScreenHeader from './HScreenHeader'
 import HFocusAwareStatusBar from './HFocusAwareStatusBar'
 import HSwitch from './HSwitch'
 import HToast from './HToast'
+import HUserFilterBy from './HUserFilterBy'
 
 export {
   HButton,
@@ -19,5 +20,6 @@ export {
   HScreenHeader,
   HFocusAwareStatusBar,
   HSwitch,
-  HToast
+  HToast,
+  HUserFilterBy
 }
