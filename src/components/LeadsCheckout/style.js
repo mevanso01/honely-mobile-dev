@@ -29,7 +29,7 @@ export default StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     color: colors.primary,
-    marginBottom: 72
+    marginBottom: 32
   },
   scrollContent: {
     flexGrow: 1,

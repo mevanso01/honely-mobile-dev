@@ -24,7 +24,6 @@ export const LeadsCheckout = (props) => {
   const [buyersLeads, setBuyersLeads] = useState([])
   const [sellersLeads, setSellersLeads] = useState([])
   const [prospectiveLeads, setProspectiveLeads] = useState([])
-  const [totalCart, setTotalCart] = useState([])
   const [totalLeadCount, setTotalLeadCount] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
 
@@ -39,7 +38,6 @@ export const LeadsCheckout = (props) => {
     setProspectiveLeads(totalProspective)
 
     const _total = [...totalBuyers, ...totalSellers, ...totalProspective]
-    setTotalCart(_total)
     const _totalLeadCount = _total.reduce((count, obj) => count + obj.cart.length, 0)
     setTotalLeadCount(_totalLeadCount)
     const _totalPrice = _total.reduce((price, obj) => price + obj.price * obj.cart.length, 0)
@@ -115,14 +113,14 @@ export const LeadsCheckout = (props) => {
             userTypeValue={3}
           />
         ))}
-        <Box mb='10' mt='8' alignItems='center'>
-          <HText style={styles.textStyle}>{totalLeadCount} total leads</HText>
-        </Box>
-        <Box alignItems='center' mb='10'>
-          <HText style={styles.textStyle}>Total: ${totalPrice.toFixed(2)}</HText>
-        </Box>
       </ScrollView>
-      <Box alignItems='center' mt='4' mb='4'>
+      <Box mb='4' mt='4' alignItems='center'>
+        <HText style={styles.textStyle}>{totalLeadCount} total leads</HText>
+      </Box>
+      <Box alignItems='center'>
+        <HText style={styles.textStyle}>Total: ${totalPrice.toFixed(2)}</HText>
+      </Box>
+      <Box alignItems='center' mt='8' mb='4'>
         <HButton
           text='Place Order'
           backgroundColor={colors.darkPrimary}
