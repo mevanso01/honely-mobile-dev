@@ -120,7 +120,7 @@ export const ContactLeadPreset = (props) => {
         >
           <HStack alignItems='center'>
             <Image source={icons.arrowLeft} style={styles.backIcon} />
-            <HText>Back</HText>
+            <HText style={styles.backText}>Back</HText>
           </HStack>
         </Pressable>
       </View>

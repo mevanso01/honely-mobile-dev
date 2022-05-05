@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native'
-import { colors } from '../../utils/styleGuide'
+import { colors, fonts } from '../../utils/styleGuide'
 
 export default StyleSheet.create({
   screenContainer: {
@@ -14,15 +14,17 @@ export default StyleSheet.create({
     marginBottom: 14
   },
   backIcon: {
-    width: 24,
-    height: 24,
+    width: 21,
+    height: 21,
     resizeMode: 'contain',
     tintColor: colors.black,
   },
   backText: {
-    fontSize: 15,
-    fontWeight: '500',
-    marginLeft: 6
+    marginLeft: 2,
+    color: colors.black,
+    fontSize: 14,
+    fontFamily: fonts.regular,
+    marginBottom: 2
   },
   settingIcon: {
     width: 24,

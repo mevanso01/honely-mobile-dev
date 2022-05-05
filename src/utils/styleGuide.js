@@ -75,5 +75,6 @@ export const icons = {
 }
 
 export const fonts = {
-  bold: 'Brown-Bold'
+  bold: 'Brown-Bold',
+  regular: 'Brown-Regular'
 }
