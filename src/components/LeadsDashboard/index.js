@@ -47,10 +47,6 @@ export const LeadsDashboard = (props) => {
         setIsProspective(selected)
         break
     }
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 100)
   }
 
   const handleLeadsFilter = (response) => {
@@ -236,27 +232,27 @@ export const LeadsDashboard = (props) => {
                 {filteredLeads === 0 && (
                   <HText style={styles.notFoundText}>No Leads, please change filter</HText>
                 )}
-                {isBuyers && leadsList?.buyers?.leads && leadsList.buyers.leads.map((lead, i) => (
+                {isBuyers && leadsList?.buyers?.leads && leadsList.buyers.leads.map(lead => (
                   <LeadCard
-                    key={i}
+                    key={lead?.lead_id}
                     lead={lead}
                     type='Buyer'
                     level='buyers'
                     onNavigationRedirect={onNavigationRedirect}
                   />
                 ))}
-                {isSellers && leadsList?.sellers?.leads && leadsList.sellers.leads.map((lead, i) => (
+                {isSellers && leadsList?.sellers?.leads && leadsList.sellers.leads.map(lead => (
                   <LeadCard
-                    key={i}
+                    key={lead?.lead_id}
                     lead={lead}
                     type='Seller'
                     level='sellers'
                     onNavigationRedirect={onNavigationRedirect}
                   />
                 ))}
-                {isProspective && leadsList?.prospective?.leads && leadsList.prospective.leads.map((lead, i) => (
+                {isProspective && leadsList?.prospective?.leads && leadsList.prospective.leads.map(lead => (
                   <LeadCard
-                    key={i}
+                    key={lead?.lead_id}
                     lead={lead}
                     type='Prospective'
                     level='prospective'
