@@ -47,6 +47,12 @@ export const ContactLead = (props) => {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
+      if (lead?.agent_status === 'NEW') {
+        handleChangeStatus(leadStatuses[1])
+      }
+      if (lead?.agent_status === 'ATTEMPTED_CONTACT') {
+        handleChangeStatus(leadStatuses[2])
+      }
     }
   }
 
@@ -56,6 +62,12 @@ export const ContactLead = (props) => {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
+      if (lead?.agent_status === 'NEW') {
+        handleChangeStatus(leadStatuses[1])
+      }
+      if (lead?.agent_status === 'ATTEMPTED_CONTACT') {
+        handleChangeStatus(leadStatuses[2])
+      }
     }
   }
 
