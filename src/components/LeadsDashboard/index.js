@@ -167,6 +167,7 @@ export const LeadsDashboard = (props) => {
                   icon={
                     <Icon as={<Image source={icons.cirlceCheckOn} />} />
                   }
+                  isDisabled={!isSellers && !isProspective}
                   isChecked={isBuyers}
                   onChange={selected => onSelectFilterBy(selected, 'buyers')}
                 >
@@ -187,6 +188,7 @@ export const LeadsDashboard = (props) => {
                   icon={
                     <Icon as={<Image source={icons.cirlceCheckOn} />} />
                   }
+                  isDisabled={!isBuyers && !isProspective}
                   isChecked={isSellers}
                   onChange={selected => onSelectFilterBy(selected, 'sellers')}
                 >
@@ -206,6 +208,7 @@ export const LeadsDashboard = (props) => {
                   icon={
                     <Icon as={<Image source={icons.cirlceCheckOn} />} />
                   }
+                  isDisabled={!isSellers && !isBuyers}
                   isChecked={isProspective}
                   onChange={selected => onSelectFilterBy(selected, 'prospective')}
                 >
