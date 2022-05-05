@@ -25,6 +25,7 @@ export const LeadsCheckout = (props) => {
   const [sellersLeads, setSellersLeads] = useState([])
   const [prospectiveLeads, setProspectiveLeads] = useState([])
   const [totalCart, setTotalCart] = useState([])
+  const [totalLeadCount, setTotalLeadCount] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
@@ -39,6 +40,8 @@ export const LeadsCheckout = (props) => {
 
     const _total = [...totalBuyers, ...totalSellers, ...totalProspective]
     setTotalCart(_total)
+    const _totalLeadCount = _total.reduce((count, obj) => count + obj.cart.length, 0)
+    setTotalLeadCount(_totalLeadCount)
     const _totalPrice = _total.reduce((price, obj) => price + obj.price * obj.cart.length, 0)
     setTotalPrice(_totalPrice)
   }, [JSON.stringify(currentUser?.cart), isLoading])
@@ -113,7 +116,7 @@ export const LeadsCheckout = (props) => {
           />
         ))}
         <Box mb='10' mt='8' alignItems='center'>
-          <HText style={styles.textStyle}>{totalCart.length} total leads</HText>
+          <HText style={styles.textStyle}>{totalLeadCount} total leads</HText>
         </Box>
         <Box alignItems='center' mb='10'>
           <HText style={styles.textStyle}>Total: ${totalPrice.toFixed(2)}</HText>
