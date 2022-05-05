@@ -27,6 +27,8 @@ export const LeadsMap = (props) => {
 
   const currentUser = useSelector(state => state.currentUser)
   const toast = useToast()
+
+  const stepSize = 5
   const [maxDistance, setMaxDistance] = useState(0)
   const mapRef = useRef(null)
   const [region, setRegion] = useState({
@@ -221,10 +223,10 @@ export const LeadsMap = (props) => {
                 <Image source={icons.location} style={styles.maxDistanceIcon} />
                 <Slider
                   defaultValue={maxDistance}
-                  maxValue={50}
+                  maxValue={10}
                   size="lg"
                   onChange={val => setMaxDistance(Math.floor(val))}
-                  onChangeEnd={val => handleGetLeads(level, address, Math.floor(val))}
+                  onChangeEnd={val => handleGetLeads(level, address, Math.floor(val * stepSize))}
                   _interactionBox={{ opacity: 0 }}
                 >
                   <Slider.Track bg={colors.lightGray}>
@@ -233,7 +235,7 @@ export const LeadsMap = (props) => {
                   <Slider.Thumb borderWidth={0} bg='transparent'>
                     <View style={styles.thumbWrapper}>
                       <Image source={icons.sliderThumb} style={styles.thumbIcon} />
-                      <HText numberOfLines={1} style={styles.labelText}>{maxDistance} mi</HText>
+                      <HText numberOfLines={1} style={styles.labelText}>{maxDistance * stepSize} mi</HText>
                     </View>
                   </Slider.Thumb>
                 </Slider>
