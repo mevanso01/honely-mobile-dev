@@ -144,7 +144,7 @@ export const LeadsDashboard = (props) => {
                 {!totalLeads ? (
                   <Skeleton h='3' w='16' rounded='sm' ml='7' />
                 ) : (
-                  <HText style={styles.filterText}>{totalLeads}/{filteredLeads} leads</HText>
+                  <HText style={styles.filterText}>{filteredLeads}/{totalLeads} leads</HText>
                 )}
               </HStack>
               <HStack>
@@ -223,43 +223,46 @@ export const LeadsDashboard = (props) => {
                 onNavigationRedirect={onNavigationRedirect}
               />
             ) : (
-              <Swiper
-                showsButtons={false}
-                loop={true}
-                renderPagination={renderPagination}
-                height={420}
-              >
-                {filteredLeads === 0 && (
+              <>
+                {filteredLeads === 0 ? (
                   <HText style={styles.notFoundText}>No Leads, please change filter</HText>
+                ) : (
+                  <Swiper
+                    showsButtons={false}
+                    loop={true}
+                    renderPagination={renderPagination}
+                    height={420}
+                  >
+                    {isBuyers && leadsList?.buyers?.leads && leadsList.buyers.leads.map(lead => (
+                      <LeadCard
+                        key={lead?.lead_id}
+                        lead={lead}
+                        type='Buyer'
+                        level='buyers'
+                        onNavigationRedirect={onNavigationRedirect}
+                      />
+                    ))}
+                    {isSellers && leadsList?.sellers?.leads && leadsList.sellers.leads.map(lead => (
+                      <LeadCard
+                        key={lead?.lead_id}
+                        lead={lead}
+                        type='Seller'
+                        level='sellers'
+                        onNavigationRedirect={onNavigationRedirect}
+                      />
+                    ))}
+                    {isProspective && leadsList?.prospective?.leads && leadsList.prospective.leads.map(lead => (
+                      <LeadCard
+                        key={lead?.lead_id}
+                        lead={lead}
+                        type='Prospective'
+                        level='prospective'
+                        onNavigationRedirect={onNavigationRedirect}
+                      />
+                    ))}
+                  </Swiper>
                 )}
-                {isBuyers && leadsList?.buyers?.leads && leadsList.buyers.leads.map(lead => (
-                  <LeadCard
-                    key={lead?.lead_id}
-                    lead={lead}
-                    type='Buyer'
-                    level='buyers'
-                    onNavigationRedirect={onNavigationRedirect}
-                  />
-                ))}
-                {isSellers && leadsList?.sellers?.leads && leadsList.sellers.leads.map(lead => (
-                  <LeadCard
-                    key={lead?.lead_id}
-                    lead={lead}
-                    type='Seller'
-                    level='sellers'
-                    onNavigationRedirect={onNavigationRedirect}
-                  />
-                ))}
-                {isProspective && leadsList?.prospective?.leads && leadsList.prospective.leads.map(lead => (
-                  <LeadCard
-                    key={lead?.lead_id}
-                    lead={lead}
-                    type='Prospective'
-                    level='prospective'
-                    onNavigationRedirect={onNavigationRedirect}
-                  />
-                ))}
-              </Swiper>
+              </>
             )}
           </ScrollView>
         </View>
