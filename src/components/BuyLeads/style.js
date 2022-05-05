@@ -182,4 +182,9 @@ export default StyleSheet.create({
     color: colors.white,
     marginRight: 7
   },
+  homePriceText: {
+    color: colors.white,
+    fontSize: 18,
+    fontWeight: '500',
+  }
 })

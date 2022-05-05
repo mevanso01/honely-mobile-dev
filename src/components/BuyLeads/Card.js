@@ -204,7 +204,7 @@ export const Card = (props) => {
         Average Home Price in Zip Code: {zipCode}
       </HText>
       <Box mt='3' mb='2'>
-        <HText style={styles.cardBigText}>${lead?.average_home_price}</HText>
+        <HText style={styles.homePriceText}>${lead?.average_home_price}</HText>
       </Box>
       <HStack justifyContent='flex-end'>
         <VStack height='10' alignItems='center'>
