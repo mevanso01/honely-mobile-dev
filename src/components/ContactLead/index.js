@@ -212,10 +212,12 @@ export const ContactLead = (props) => {
                 <Image source={icons.email} style={styles.contactIcon} />
                 <HText style={styles.contactInfoText}>{lead?.email}</HText>
               </HStack>
-              <HStack alignItems='center'>
-                <Image source={icons.phone} style={styles.contactIcon} />
-                <HText style={styles.contactInfoText}>{lead?.phone_number}</HText>
-              </HStack>
+              {lead?.phone_number && (
+                <HStack alignItems='center'>
+                  <Image source={icons.phone} style={styles.contactIcon} />
+                  <HText style={styles.contactInfoText}>{lead?.phone_number}</HText>
+                </HStack>
+              )}
             </VStack>
           </HStack>
         </View>
