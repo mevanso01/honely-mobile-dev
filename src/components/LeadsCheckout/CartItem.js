@@ -7,6 +7,7 @@ import SpinnerOverlay from 'react-native-loading-spinner-overlay';
 import { doPost, doDelete } from '../../services/http-client'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from '../../store/action/setUser'
+import { parsePrice } from '../../utils/helper'
 
 export const CartItem = (props) => {
   const {
@@ -167,7 +168,7 @@ export const CartItem = (props) => {
         </HStack>
         <HText style={styles.textStyle}>@</HText>
         <HStack>
-          <HText style={styles.textStyle}>${(lead.price * cartQty).toFixed(2)}</HText>
+          <HText style={styles.textStyle}>{parsePrice(lead.price * cartQty)}</HText>
           <HText style={styles.upperText}>ea.</HText>
         </HStack>
       </HStack>

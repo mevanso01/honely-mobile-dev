@@ -9,7 +9,8 @@ import { CartItem } from './CartItem'
 import { useSelector, useDispatch } from 'react-redux'
 import { doGet } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
-import SpinnerOverlay from 'react-native-loading-spinner-overlay';
+import SpinnerOverlay from 'react-native-loading-spinner-overlay'
+import { parsePrice } from '../../utils/helper'
 
 export const LeadsCheckout = (props) => {
   const {
@@ -118,7 +119,7 @@ export const LeadsCheckout = (props) => {
         <HText style={styles.textStyle}>{totalLeadCount} total leads</HText>
       </Box>
       <Box alignItems='center'>
-        <HText style={styles.textStyle}>Total: ${totalPrice.toFixed(2)}</HText>
+        <HText style={styles.textStyle}>Total: {parsePrice(totalPrice, true)}</HText>
       </Box>
       <Box alignItems='center' mt='8' mb='4'>
         <HButton

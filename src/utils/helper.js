@@ -20,3 +20,8 @@ export const groupBy = (array, key) => {
     return result
   }, {})
 }
+
+export const parsePrice = (number, isFixed = false) => {
+  const fixedNumber = isFixed ? Number.parseFloat(number).toFixed(2) : Number.parseFloat(number) 
+  return '$' + String(fixedNumber).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}

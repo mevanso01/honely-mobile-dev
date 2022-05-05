@@ -7,6 +7,7 @@ import { colors, icons } from '../../utils/styleGuide'
 import { doPost, doDelete } from '../../services/http-client'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from '../../store/action/setUser'
+import { parsePrice } from '../../utils/helper'
 
 export const Card = (props) => {
   const {
@@ -197,14 +198,14 @@ export const Card = (props) => {
           <Image source={getUser(userTypeValue)?.icon} style={styles.userIcon} />
           <HText style={styles.cardBigText}>{getUser(userTypeValue)?.content}</HText>
         </HStack>
-        <HText style={styles.cardBigText}>${lead?.lead_price}</HText>
+        <HText style={styles.cardBigText}>{parsePrice(lead?.lead_price)}</HText>
       </HStack>
       <Divider backgroundColor={colors.white} my='4' />
       <HText style={styles.priceDescription}>
         Average Home Price in Zip Code: {zipCode}
       </HText>
       <Box mt='3' mb='2'>
-        <HText style={styles.homePriceText}>${lead?.average_home_price}</HText>
+        <HText style={styles.homePriceText}>{parsePrice(lead?.average_home_price)}</HText>
       </Box>
       <HStack justifyContent='flex-end'>
         <VStack height='10' alignItems='center'>
