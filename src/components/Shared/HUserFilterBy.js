@@ -45,7 +45,7 @@ const HUserFilterBy = (props) => {
   }
 
   return (
-    <VStack py='2' px='2' backgroundColor={colors.white} borderRadius='2'>
+    <VStack py='2' px='2' backgroundColor={colors.white} borderRadius='8'>
       <Divider backgroundColor={colors.primary} my='2' />
       <Checkbox
         size='md'

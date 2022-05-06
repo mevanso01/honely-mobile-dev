@@ -195,9 +195,8 @@ export default StyleSheet.create({
   },
   filterWrapper: {
     position: 'absolute',
-    overflow: 'hidden',
     right: 0,
-    top: 30,
+    top: 25,
     width: 142,
     shadowColor: colors.text02,
     backgroundColor: colors.text02,
@@ -209,5 +208,6 @@ export default StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     borderRadius: 8,
+    zIndex: 100
   }
 })

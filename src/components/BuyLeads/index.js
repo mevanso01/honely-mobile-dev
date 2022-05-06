@@ -104,7 +104,7 @@ export const BuyLeads = (props) => {
           </View>
         </View>
 
-        <View style={styles.innerContainer}>
+        <View style={[styles.innerContainer, { zIndex: 100 }]}>
           <HStack mb='4' alignItems='center'>
             <Image source={icons.location} style={styles.addressIcon} />
             <HText style={styles.addressText}>{fullAddres}</HText>
