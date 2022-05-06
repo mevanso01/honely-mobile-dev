@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { Pressable, HStack, VStack, Box, Divider, Skeleton, Spinner } from 'native-base'
-import { HButton, HText, HUserFilterBy } from '../Shared'
+import { HButton, HText, HUserFilterBy, HCartButton } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
@@ -98,17 +98,9 @@ export const BuyLeads = (props) => {
         <View style={styles.titleContainer}>
           <HText style={styles.headerTitle}>Buy leads</HText>
           <View style={styles.cartIconContainer}>
-            <Pressable
-              _pressed={{
-                opacity: 0.6
-              }}
+            <HCartButton
               onPress={() => onNavigationRedirect('LeadsCheckout')}
-            >
-              <Image source={icons.cart} style={styles.cartIcon} />
-              <View style={styles.cartQtyWrapper}>
-                <HText style={styles.cartQty}>{totalCart.length}</HText>
-              </View>
-            </Pressable>
+            />
           </View>
         </View>
 
@@ -128,7 +120,9 @@ export const BuyLeads = (props) => {
                     _pressed={{ opacity: 0.6 }}
                     onPress={() => setOpenFilter(!openFilter)}
                   >
-                    <HText style={styles.filterText}>{filteredLeads}/{totalLeads} leads</HText>
+                    <HText style={styles.filterText}>
+                      {isBuyers && isSellers && isProspective ? totalLeads: `${filteredLeads}/${totalLeads}`} leads
+                    </HText>
                   </Pressable>
                 )}
                 {openFilter && (

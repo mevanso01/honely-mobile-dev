@@ -192,8 +192,8 @@ export const LeadsMap = (props) => {
         <Pressable
           backgroundColor={colors.primary}
           borderRadius={30}
-          width='7'
-          height='7'
+          width='10'
+          height='10'
           alignItems='center'
           justifyContent='center'
           onPress={() => navigation.goBack()}

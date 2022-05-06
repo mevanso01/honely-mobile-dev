@@ -8,14 +8,22 @@ export default StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: colors.primary,
+    paddingBottom: 20,
+  },
+  headerWrapper: {
+    position: 'relative',
+    justifyContent: 'center',
+  },
+  cartIconWrapper: {
+    position: 'absolute',
+    right: 18
   },
   title: {
     fontSize: 27,
-    fontWeight: '700',
     lineHeight: 33,
-    marginBottom: 20,
     textAlign: 'center',
-    color: colors.white
+    color: colors.white,
+    fontFamily: fonts.regular
   },
   zipIcon: {
     tintColor: colors.primary,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, ScrollView, Image, Platform, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
 import { Input, Pressable, useToast, Spinner, Skeleton, Box } from 'native-base'
-import { HText } from '../Shared'
+import { HText, HCartButton } from '../Shared'
 import { ScrollView as DropDownContainer } from 'react-native-gesture-handler'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
@@ -162,7 +162,17 @@ export const FindLeads = (props) => {
           styles.headerContainer,
           { paddingTop: Platform.OS === 'ios' ? statusBarHeight + 10 : 40, }
         ]}>
-          <HText style={styles.title}>Find Leads</HText>
+          <View style={styles.headerWrapper}>
+            <HText style={styles.title}>Find Leads</HText>
+            <View style={styles.cartIconWrapper}>
+              <HCartButton
+                onPress={() => onNavigationRedirect('LeadsCheckout')}
+                countWrapperStyle={{ backgroundColor: colors.white, borderWidth: 0 }}
+                countTextStyle={{ color: colors.primary }}
+                iconStyle={{ tintColor: colors.white }}
+              />
+            </View>
+          </View>
         </View>
         <View style={styles.searchBoxWrapper}>
           <Input

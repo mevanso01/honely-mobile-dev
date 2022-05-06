@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import { HText, HButton } from '../Shared'
-import { Pressable, HStack, Box, useToast } from 'native-base'
+import { Pressable, HStack, Box, useToast, Divider } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
@@ -115,13 +115,14 @@ export const LeadsCheckout = (props) => {
           />
         ))}
       </ScrollView>
-      <Box mb='4' mt='4' alignItems='center'>
-        <HText style={styles.textStyle}>{totalLeadCount} total leads</HText>
+      <Divider backgroundColor={colors.primary} my='4' />
+      <Box mb='3' alignItems='center'>
+        <HText style={styles.textStyle}>Total leads ({totalLeadCount}):</HText>
       </Box>
       <Box alignItems='center'>
-        <HText style={styles.textStyle}>Total: {parsePrice(totalPrice, true)}</HText>
+        <HText style={styles.textStyle}>{parsePrice(totalPrice, true)}</HText>
       </Box>
-      <Box alignItems='center' mt='8' mb='4'>
+      <Box alignItems='center' mt='6' mb='4'>
         <HButton
           text='Place Order'
           backgroundColor={colors.darkPrimary}

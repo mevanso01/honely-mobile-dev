@@ -8,12 +8,21 @@ export default StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 10 : 40,
   },
   innerContainer: {
-    paddingHorizontal: 18
+    paddingHorizontal: 18,
+    justifyContent: 'center'
+  },
+  headerContainer: {
+    position: 'relative',
+    justifyContent: 'center',
+    marginBottom: 32,
+  },
+  cartIconWrapper: {
+    position: 'absolute',
+    right: 18
   },
   title: {
     fontSize: 27,
     lineHeight: 33,
-    marginBottom: 32,
     textAlign: 'center',
     color: colors.black,
     fontFamily: fonts.bold

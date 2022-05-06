@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, Image, View } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HCartButton } from '../Shared'
 import { colors, images, icons } from '../../utils/styleGuide'
 import { HStack, VStack, Box, Checkbox, Icon, Skeleton, useToast } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
@@ -132,8 +132,15 @@ export const LeadsDashboard = (props) => {
 
   return (
     <View style={styles.screenContainer}>
-      <View style={styles.innerContainer}>
+      <View style={[styles.innerContainer, styles.headerContainer]}>
         <HText style={styles.title}>Leads Dashboard</HText>
+        <View style={styles.cartIconWrapper}>
+          <HCartButton
+            onPress={() => onNavigationRedirect('LeadsCheckout')}
+            countWrapperStyle={{ backgroundColor: colors.primary, borderWidth: 0 }}
+            countTextStyle={{ color: colors.white }}
+          />
+        </View>
       </View>
       {(isLoading || totalLeads !== 0) && (
         <View style={styles.leadsContent}>

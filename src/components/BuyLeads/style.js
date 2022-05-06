@@ -29,6 +29,7 @@ export default StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     color: colors.primary,
+    fontFamily: fonts.regular
   },
   cartIcon: {
     width: 25,

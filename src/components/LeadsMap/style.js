@@ -16,15 +16,15 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   backIcon: {
-    width: 24,
-    height: 24,
+    width: 28,
+    height: 28,
     resizeMode: 'contain',
     tintColor: colors.white,
     marginRight: 2
   },
   backBtnWrapper: {
     position: 'absolute',
-    top: 50,
+    top: 40,
     left: 15
   },
   addressIcon: {

@@ -9,6 +9,7 @@ import HFocusAwareStatusBar from './HFocusAwareStatusBar'
 import HSwitch from './HSwitch'
 import HToast from './HToast'
 import HUserFilterBy from './HUserFilterBy'
+import HCartButton from './HCartButton'
 
 export {
   HButton,
@@ -21,5 +22,6 @@ export {
   HFocusAwareStatusBar,
   HSwitch,
   HToast,
-  HUserFilterBy
+  HUserFilterBy,
+  HCartButton
 }
