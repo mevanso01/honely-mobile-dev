@@ -26,6 +26,7 @@ export const BuyLeads = (props) => {
   const [totalLeads, setTotalLeads] = useState(null)
   const [filteredLeads, setFilteredLeads] = useState(null)
   const [totalCart, setTotalCart] = useState([])
+  const [totalLeadCount, setTotalLeadCount] = useState(0)
   const [buyersLeads, setBuyersLeads] = useState({})
   const [sellersLeads, setSellersLeads] = useState({})
   const [prospectiveLeads, setProspectiveLeads] = useState({})
@@ -71,6 +72,8 @@ export const BuyLeads = (props) => {
     const totalSellers = currentUser?.cart?.seller_leads || []
     const totalProspective = currentUser?.cart?.prospective_leads || []
     let _total = [...totalBuyers, ...totalSellers, ...totalProspective]
+    const _totalLeadCount = _total.reduce((count, obj) => count + obj.cart.length, 0)
+    setTotalLeadCount(_totalLeadCount)
     setTotalCart(_total)
   }, [JSON.stringify(currentUser?.cart)])
 
@@ -200,7 +203,7 @@ export const BuyLeads = (props) => {
         <Divider backgroundColor={colors.primary} opacity={0.7} />
         <Box alignItems='center' mt='4' mb='4'>
           <HButton
-            text={`(${totalCart.length}) Proceed to Checkout`}
+            text={`(${totalLeadCount}) Proceed to Checkout`}
             width={deviceWidth - 48}
             borderColor={colors.primary}
             backgroundColor={colors.white}

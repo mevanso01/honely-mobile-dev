@@ -43,7 +43,7 @@ const HCartButton = (props) => {
   })
 
   const currentUser = useSelector(state => state.currentUser)
-  const [totalCart, setTotalCart] = useState([])
+  const [totalCartCount, setTotalCartCount] = useState([])
 
   useEffect(() => {
     if (!currentUser?.cart) return
@@ -51,7 +51,8 @@ const HCartButton = (props) => {
     const totalSellers = currentUser?.cart?.seller_leads || []
     const totalProspective = currentUser?.cart?.prospective_leads || []
     let _total = [...totalBuyers, ...totalSellers, ...totalProspective]
-    setTotalCart(_total)
+    const _totalLeadCount = _total.reduce((count, obj) => count + obj.cart.length, 0)
+    setTotalCartCount(_totalLeadCount)
   }, [JSON.stringify(currentUser?.cart)])
 
   return (
@@ -64,7 +65,7 @@ const HCartButton = (props) => {
       <View style={styles.cartContainer}>
         <Image source={icons.cart} style={[styles.cartIcon, props.iconStyle]} />
         <View style={[styles.cartQtyWrapper, props.countWrapperStyle]}>
-          <HText style={[styles.cartQty, props.countTextStyle]}>{totalCart.length}</HText>
+          <HText style={[styles.cartQty, props.countTextStyle]}>{totalCartCount}</HText>
         </View>
       </View>
     </Pressable>
