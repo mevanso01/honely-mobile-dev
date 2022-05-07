@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { doPost } from '../../services/http-client'
+import { doPost, doPatch } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
 
 export const doUpdateUserProfile = (formValues) => async (dispatch, getState) => {
@@ -32,33 +32,31 @@ export const doUpdateUserProfile = (formValues) => async (dispatch, getState) =>
   }
 }
 
-export const doUpdateAgentProfile = () => async (dispatch, getState) => {
+export const doUpdateAgentProfile = (values) => async (dispatch, getState) => {
   const { screens: { editprofile: { formState, agentProfile } } } = getState()
   try {
-    // const infoList = ['first_name', 'last_name', 'phone_number', 'company_name', 'home_url']
-    const infoList = ['company_name', 'home_url']
     let body = {
       agent_id: agentProfile.agent_id,
-      information: infoList,
-      // first_name_value: agentProfile.first_name,
-      // last_name_value: agentProfile.last_name,
-      // phone_number_value: agentProfile.phone_number,
-      company_name_value: formState.company_name,
-      home_url_value: agentProfile.home_url,
+      first_name: agentProfile.first_name,
+      last_name: agentProfile.last_name,
+      phone_number: agentProfile.phone_number,
+      company_name: values.company_name,
+      home_url: agentProfile.home_url,
+      license_number: '',
+      user_name: formState.user_name
     }
     if (formState.imageFileData) {
-      infoList.push('image')
-      body.user_name = formState.user_name
-      body.base64 = formState.imageFileData
-      body.extension = formState.imageFileExt
+      body.image = formState.imageFileData
     }
-    const response = await doPost('lookup-test/agent_profile_modification', body)
+    const response = await doPatch('searches/agent_profile_modification', body)
     if (response?.error) {
       throw response.msg
     }
     if (formState.imageFileData) {
-      const image_url = 'https://honely-files-public.s3.amazonaws.com/images/' + formState.user_name + '.' + formState.imageFileExt
-      dispatch(setUser({ image_url: image_url }))
+      const image_url = 'https://honely-files-public.s3.amazonaws.com/images/' + agentProfile.agent_id + '_001.jpg'
+      dispatch(setUser({ image_url: image_url, company_name: values.company_name }))
+    } else {
+      dispatch(setUser({ company_name: values.company_name }))
     }
     return response
   } catch (error) {

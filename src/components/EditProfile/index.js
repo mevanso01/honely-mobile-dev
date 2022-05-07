@@ -44,7 +44,7 @@ export const EditProfile = (props) => {
     try {
       dispatch(setLoading(true))
       await dispatch(doUpdateUserProfile(values))
-      const updatedAgent = await dispatch(doUpdateAgentProfile())
+      const updatedAgent = await dispatch(doUpdateAgentProfile(values))
       dispatch(setLoading(false))
       setIsSubmitClicked(false)
       if (updatedAgent.result === 'Success') {
@@ -561,9 +561,9 @@ export const EditProfile = (props) => {
                   defaultValue=''
                 />
               )}
-              // rules={{
-              //   required: { value: true, message: 'The company name is required' },
-              // }}
+              rules={{
+                required: { value: true, message: 'The company name is required' },
+              }}
             />
             {errors?.company_name?.message && (
               <View style={styles.errorTextWrapper}>

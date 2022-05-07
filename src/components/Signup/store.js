@@ -52,7 +52,7 @@ export const handleCreateAccount = () => async (dispatch, getState) => {
   
     const params = {
       button_leads: "FALSE",
-      company_name: '',
+      company_name: formState.company_name,
       email: formState.email,
       email_consent: formState.emailConsent ? 'TRUE' : 'FALSE',
       first_name: formState.firstName,
