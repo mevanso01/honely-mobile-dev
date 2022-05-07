@@ -63,8 +63,8 @@ export default StyleSheet.create({
     fontFamily: fonts.bold
   },
   thumbIcon: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     resizeMode: 'contain'
   },
   sliderWrapper: {
@@ -74,9 +74,14 @@ export default StyleSheet.create({
   },
   thumbWrapper: {
     alignItems: 'center',
-    width: 80,
-    marginTop: 22,
-    left: 12
+    left: 0,
+    position: 'relative',
+  },
+  thumbTextWrapper: {
+    position: 'absolute',
+    top: 30,
+    width: 50,
+    alignItems: 'center'
   },
   maxDistanceLabelWrapper: {
     paddingBottom: 21

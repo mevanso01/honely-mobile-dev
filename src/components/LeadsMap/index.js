@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
-import { Pressable, Box, HStack, VStack, Slider, Divider, useToast, Skeleton } from 'native-base'
+import { Pressable, Box, HStack, VStack, Divider, useToast, Skeleton } from 'native-base'
 import { HText, HButton } from '../Shared'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import styles from './style'
@@ -10,6 +10,7 @@ import FeatherIcons from 'react-native-vector-icons/Feather'
 import { doGet } from '../../services/http-client'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { useSelector } from 'react-redux'
+import {Slider} from '@miblanchard/react-native-slider'
 
 const DEFAULT_PADDING = { top: 20, right: 20, bottom: 20, left: 20 }
 const location = {
@@ -29,7 +30,6 @@ export const LeadsMap = (props) => {
   const toast = useToast()
 
   const stepSize = 5
-  const [maxDistance, setMaxDistance] = useState(0)
   const mapRef = useRef(null)
   const [region, setRegion] = useState({
     latitude: location.lat,
@@ -41,6 +41,7 @@ export const LeadsMap = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [leadsListing, setLeadsListing] = useState({})
   const [isCentered, setIsCentered] = useState(false)
+  const [sliderValue, setSliderValue] = useState(0)
 
   const fitAllMarkers = () => {
     if (markers.length === 0) {
@@ -222,23 +223,25 @@ export const LeadsMap = (props) => {
               <View style={styles.sliderWrapper}>
                 <Image source={icons.location} style={styles.maxDistanceIcon} />
                 <Slider
-                  defaultValue={maxDistance}
-                  maxValue={10}
-                  size="lg"
-                  onChange={val => setMaxDistance(Math.floor(val))}
-                  onChangeEnd={val => handleGetLeads(level, address, Math.floor(val * stepSize))}
-                  _interactionBox={{ opacity: 0 }}
-                >
-                  <Slider.Track bg={colors.lightGray}>
-                    <Slider.FilledTrack bg={colors.primary_100} />
-                  </Slider.Track>
-                  <Slider.Thumb borderWidth={0} bg='transparent'>
+                  containerStyle={{width: 300, height: 40}}
+                  minimumValue={0}
+                  maximumValue={1}
+                  step={0.1}
+                  value={sliderValue}
+                  onValueChange={value => setSliderValue(value)}
+                  onSlidingComplete={value => handleGetLeads(level, address, Math.floor(value * 10) * stepSize)}
+                  minimumTrackTintColor={colors.primary_100}
+                  maximumTrackTintColor={colors.lightGray}
+                  renderThumbComponent={() => (
                     <View style={styles.thumbWrapper}>
                       <Image source={icons.sliderThumb} style={styles.thumbIcon} />
-                      <HText numberOfLines={1} style={styles.labelText}>{maxDistance * stepSize} mi</HText>
+                      <View style={styles.thumbTextWrapper}>
+                        <HText numberOfLines={1} style={styles.labelText}>{Math.floor(sliderValue * 10) * stepSize} mi</HText>
+                      </View>
                     </View>
-                  </Slider.Thumb>
-                </Slider>
+                  )}
+                  trackStyle={{ height: 8, borderRadius: 10 }}                  
+                />
               </View>
             </>
           )}
