@@ -232,7 +232,7 @@ export const LeadsDashboard = (props) => {
             ) : (
               <>
                 {filteredLeads === 0 ? (
-                  <HText style={styles.notFoundText}>No Leads, please change filter</HText>
+                  <HText style={styles.notFoundText}>No leads found, please adjust filtering</HText>
                 ) : (
                   <Swiper
                     showsButtons={false}

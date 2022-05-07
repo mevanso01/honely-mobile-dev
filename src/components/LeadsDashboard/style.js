@@ -142,6 +142,7 @@ export default StyleSheet.create({
   notFoundText: {
     paddingHorizontal: 18,
     fontSize: 16,
-    color: colors.text01
+    color: colors.text01,
+    textAlign: 'center'
   }
 })
