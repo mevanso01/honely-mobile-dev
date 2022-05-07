@@ -68,9 +68,10 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   sliderWrapper: {
-    width: (deviceWidth - 36) * 0.7,
+    width: (deviceWidth - 36) * 0.8,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   thumbWrapper: {
     alignItems: 'center',
@@ -91,7 +92,6 @@ export default StyleSheet.create({
     width: 16,
     height: 16,
     resizeMode: 'contain',
-    marginRight: 10
   },
   leadsQtyContainer: {
     width: '100%',

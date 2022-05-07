@@ -223,7 +223,7 @@ export const LeadsMap = (props) => {
               <View style={styles.sliderWrapper}>
                 <Image source={icons.location} style={styles.maxDistanceIcon} />
                 <Slider
-                  containerStyle={{width: 300, height: 40}}
+                  containerStyle={{ width: (deviceWidth - 36) * 0.8 - 20, height: 40 }}
                   minimumValue={0}
                   maximumValue={1}
                   step={0.1}
