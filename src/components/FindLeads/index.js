@@ -133,7 +133,15 @@ export const FindLeads = (props) => {
 
   useEffect(() => {
     if (isRecentLoading) return
-    if (recentSearches.length === 0) setIsShowHint(true)
+    if (recentSearches.length === 0){
+      setIsShowHint(true)
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(transformY, { toValue: 1, duration: 1000, useNativeDriver: true }),
+          Animated.timing(transformY, { toValue: 0, duration: 1000, useNativeDriver: true })
+        ])
+      ).start()
+    }
   }, [recentSearches, isRecentLoading])
 
   useEffect(() => {
@@ -143,15 +151,6 @@ export const FindLeads = (props) => {
     }
     handleGetAgentRecentSearches()
   }, [isFocused])
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(transformY, { toValue: 1, duration: 1000, useNativeDriver: true }),
-        Animated.timing(transformY, { toValue: 0, duration: 1000, useNativeDriver: true })
-      ])
-    ).start()
-  }, [])
 
   return (
     <TouchableWithoutFeedback
