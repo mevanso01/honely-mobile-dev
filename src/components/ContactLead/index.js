@@ -246,6 +246,8 @@ export const ContactLead = (props) => {
           <Box alignItems='center' mt='5'>
             <HButton
               text='Send SMS'
+              isDisabled={isLoading}
+              disabledOpacity={0.6}
               borderColor={colors.primary}
               backgroundColor={colors.primary}
               onPress={() => handleOpenSms()}
@@ -276,6 +278,8 @@ export const ContactLead = (props) => {
           <Box alignItems='center' mt='5' mb='8'>
             <HButton
               text='Send Email'
+              isDisabled={isLoading}
+              disabledOpacity={0.6}
               borderColor={colors.primary}
               backgroundColor={colors.primary}
               onPress={() => handleOpenEmail()}
