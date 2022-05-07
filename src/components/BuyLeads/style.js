@@ -209,5 +209,12 @@ export default StyleSheet.create({
     elevation: 3,
     borderRadius: 8,
     zIndex: 100
-  }
+  },
+  arrowDownIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    tintColor: colors.primary,
+    marginLeft: 10
+  },
 })

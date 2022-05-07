@@ -108,24 +108,26 @@ export const BuyLeads = (props) => {
         </View>
 
         <View style={[styles.innerContainer, { zIndex: 100 }]}>
-          <HStack mb='4' alignItems='center'>
+          <HStack mb='1' alignItems='center'>
             <Image source={icons.location} style={styles.addressIcon} />
             <HText style={styles.addressText}>{fullAddres}</HText>
           </HStack>
           <VStack mb='5'>
-            <HStack justifyContent='space-between'>
-              <HText style={styles.filterText}>Filter by:</HText>
+            <HStack justifyContent='flex-end'>
               <View style={styles.filterContainer}>
-                {!totalLeads ? (
+                {totalLeads === null ? (
                   <Skeleton h='3' w='16' rounded='sm' ml='7' />
                 ) : (
                   <Pressable
                     _pressed={{ opacity: 0.6 }}
                     onPress={() => setOpenFilter(!openFilter)}
                   >
-                    <HText style={styles.filterText}>
-                      {isBuyers && isSellers && isProspective ? totalLeads: `${filteredLeads}/${totalLeads}`} leads
-                    </HText>
+                    <HStack>
+                      <HText style={styles.filterText}>
+                        {isBuyers && isSellers && isProspective ? totalLeads: `${filteredLeads} of ${totalLeads}`} leads
+                      </HText>
+                      <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: !openFilter ? '0deg': '180deg' }] }]} />
+                    </HStack>
                   </Pressable>
                 )}
                 {openFilter && (
