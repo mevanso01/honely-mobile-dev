@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import { HStack, VStack, Box, Checkbox, Icon, Pressable } from 'native-base'
-import { HText } from '../Shared'
+import { HText, HUserFilterBy } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -23,6 +23,8 @@ export const ContactedLeads = (props) => {
   const [isNameAscending, setIsNameAscending] = useState(false)
   const [isOpenStatusList, setIsOpenStatusList] = useState(false)
   const [selectedStatuses, setSelectedStatuses] = useState(['ATTEMPTED_CONTACT', 'FOLLOWED_UP', 'PENDING_SALE', 'CLOSED_LEADS', 'REJECTED'])
+  const [openFilter, setOpenFilter] = useState(false)
+  const [totalLeads, setTotalLeads] = useState(0)
 
   const getStatus = (status) => {
     const objectStatus = leadStatuses.find((o) => o.key === status)
@@ -47,55 +49,40 @@ export const ContactedLeads = (props) => {
     setContactedLeadsList(_contactedLeadsList)
   }
 
-  const onSelectFilterBy = (selected, type) => {
-    setIsOpenStatusList(false)
-    const options = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: true
-    }
-    ReactNativeHapticFeedback.trigger('impactLight', options)
-    switch (type) {
-      case 'buyers':
-        setIsBuyers(selected)
-        break
-      case 'sellers':
-        setIsSellers(selected)
-        break
-      case 'prospective':
-        setIsProspective(selected)
-        break
-    }
-  }
-
   const handleLeadsFilter = (response) => {
     let _leadsList = []
-    if (isBuyers && response?.buyers?.leads) {
+    let _totalLead = 0
+    if (response?.buyers?.leads) {
       const _buyerLeads = response.buyers?.leads.filter(lead => lead.agent_status !== 'NEW' && selectedStatuses.includes(lead.agent_status))
-      if (_buyerLeads.length) {
+      _totalLead += _buyerLeads.length
+      if (_buyerLeads.length && isBuyers) {
         const buyerLeads = _buyerLeads.map(lead => {
           return { ...lead, level: 'buyers' }
         })
         _leadsList = [..._leadsList, ...buyerLeads]
       }
     }
-    if (isSellers && response?.sellers?.leads) {
+    if (response?.sellers?.leads) {
       const _sellerLeads = response.sellers?.leads.filter(lead => lead.agent_status !== 'NEW' && selectedStatuses.includes(lead.agent_status))
-      if (_sellerLeads.length) {
+      _totalLead += _sellerLeads.length
+      if (_sellerLeads.length && isSellers) {
         const sellerLeads = _sellerLeads.map(lead => {
           return { ...lead, level: 'sellers' }
         })
         _leadsList = [..._leadsList, ...sellerLeads]
       }
     }
-    if (isProspective && response?.prospective?.leads) {
+    if (response?.prospective?.leads) {
       const _prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status !== 'NEW' && selectedStatuses.includes(lead.agent_status))
-      if (_prospectiveLeads.length) {
+      _totalLead += _prospectiveLeads.length
+      if (_prospectiveLeads.length && isProspective) {
         const prospectiveLeads = _prospectiveLeads.map(lead => {
           return { ...lead, level: 'prospective' }
         })
         _leadsList = [..._leadsList, ...prospectiveLeads]
       }
     }
+    setTotalLeads(_totalLead)
     return _leadsList
   }
 
@@ -106,78 +93,38 @@ export const ContactedLeads = (props) => {
   }, [JSON.stringify(currentUser?.leads), isBuyers, isSellers, isProspective, isNameAscending, selectedStatuses])
 
   return (
-    <TouchableWithoutFeedback onPress={() => setIsOpenStatusList(false)}>
+    <TouchableWithoutFeedback onPress={() => {
+      setIsOpenStatusList(false)
+      setOpenFilter(false)
+    }}>
       <View style={styles.screenContainer}>
         <HText style={styles.title}>Contacted Leads</HText>
-        <VStack mb='10'>
-          <HStack mb='4' justifyContent='space-between'>
-            <HText style={styles.filterText}>Filter by:</HText>
-            <HText style={styles.filterText}>{contactedLeadsList?.length} leads</HText>
-          </HStack>
-          <HStack>
-            <Checkbox
-              size='md'
-              mr='8'
-              borderRadius={15}
-              borderColor={colors.primary}
-              _checked={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-              }}
-              _interactionBox={{
-                opacity: 0
-              }}
-              icon={
-                <Icon as={<Image source={icons.cirlceCheckOn} />} />
-              }
-              isDisabled={!isSellers && !isProspective}
-              isChecked={isBuyers}
-              onChange={selected => onSelectFilterBy(selected, 'buyers')}
+        <VStack mb='5' zIndex={100}>
+          <View style={styles.filterContainer}>
+            <Pressable
+              _pressed={{ opacity: 0.6 }}
+              onPress={() => setOpenFilter(!openFilter)}
             >
-              <HText style={styles.radioLabel}>Buyers</HText>
-            </Checkbox>
-            <Checkbox
-              size='md'
-              mr='8'
-              borderRadius={15}
-              borderColor={colors.primary}
-              _checked={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-              }}
-              _interactionBox={{
-                opacity: 0
-              }}
-              icon={
-                <Icon as={<Image source={icons.cirlceCheckOn} />} />
-              }
-              isDisabled={!isBuyers && !isProspective}
-              isChecked={isSellers}
-              onChange={selected => onSelectFilterBy(selected, 'sellers')}
-            >
-              <HText style={styles.radioLabel}>Sellers</HText>
-            </Checkbox>
-            <Checkbox
-              size='md'
-              borderRadius={15}
-              borderColor={colors.primary}
-              _checked={{
-                backgroundColor: colors.white,
-                borderColor: colors.primary,
-              }}
-              _interactionBox={{
-                opacity: 0
-              }}
-              icon={
-                <Icon as={<Image source={icons.cirlceCheckOn} />} />
-              }
-              isDisabled={!isSellers && !isBuyers}
-              isChecked={isProspective}
-              onChange={selected => onSelectFilterBy(selected, 'prospective')}
-            >
-              <HText style={styles.radioLabel}>Prospective</HText>
-            </Checkbox>
-          </HStack>
+              <HStack alignItems='center'>
+                <HText style={styles.filterText}>
+                  {contactedLeadsList?.length} of {totalLeads} leads
+                </HText>
+                <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: !openFilter ? '0deg': '180deg' }] }]} />
+              </HStack>
+            </Pressable>
+            {openFilter && (
+              <View style={styles.filterWrapper}>
+                <HUserFilterBy
+                  isBuyers={isBuyers}
+                  setIsBuyers={setIsBuyers}
+                  isSellers={isSellers}
+                  setIsSellers={setIsSellers}
+                  isProspective={isProspective}
+                  setIsProspective={setIsProspective}
+                />
+              </View>
+            )}
+          </View>
         </VStack>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -193,6 +140,7 @@ export const ContactedLeads = (props) => {
                 onPress={() => {
                   setIsOpenStatusList(false)
                   setIsNameAscending(!isNameAscending)
+                  setOpenFilter(false)
                 }}
               >
                 <HStack py='2'>

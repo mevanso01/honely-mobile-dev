@@ -31,25 +31,6 @@ export const LeadsDashboard = (props) => {
   const [filteredLeads, setFilteredLeads] = useState(null)
   const [openFilter, setOpenFilter] = useState(false)
 
-  const onSelectFilterBy = (selected, type) => {
-    const options = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: true
-    }
-    ReactNativeHapticFeedback.trigger('impactLight', options)
-    switch (type) {
-      case 'buyers':
-        setIsBuyers(selected)
-        break
-      case 'sellers':
-        setIsSellers(selected)
-        break
-      case 'prospective':
-        setIsProspective(selected)
-        break
-    }
-  }
-
   const handleLeadsFilter = (response) => {
     let _leadsList = {}
     if (response?.buyers?.leads) {
@@ -158,7 +139,7 @@ export const LeadsDashboard = (props) => {
                       _pressed={{ opacity: 0.6 }}
                       onPress={() => setOpenFilter(!openFilter)}
                     >
-                      <HStack>
+                      <HStack alignItems='center'>
                         <HText style={styles.filterText}>{filteredLeads} of {totalLeads} leads</HText>
                         <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: !openFilter ? '0deg': '180deg' }] }]} />
                       </HStack>

@@ -122,7 +122,7 @@ export const BuyLeads = (props) => {
                     _pressed={{ opacity: 0.6 }}
                     onPress={() => setOpenFilter(!openFilter)}
                   >
-                    <HStack>
+                    <HStack alignItems='center'>
                       <HText style={styles.filterText}>
                         {isBuyers && isSellers && isProspective ? totalLeads: `${filteredLeads} of ${totalLeads}`} leads
                       </HText>
