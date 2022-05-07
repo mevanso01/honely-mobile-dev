@@ -148,7 +148,7 @@ export const LeadsDashboard = (props) => {
         </View>
         {(isLoading || totalLeads !== 0) && (
           <View style={styles.leadsContent}>
-            <View style={styles.innerContainer}>
+            <View style={[styles.innerContainer, { zIndex: 100 }]}>
               <HStack mb='8' justifyContent='flex-end'>
                 <View style={styles.filterContainer}>
                   {!totalLeads ? (
