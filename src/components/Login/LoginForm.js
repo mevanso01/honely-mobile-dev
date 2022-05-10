@@ -10,6 +10,7 @@ import { TOAST_LENGTH_SHORT } from '../../config'
 import { useDispatch, useSelector } from 'react-redux'
 import { cognitoSignIn } from '../../store/reducer/cognitoUser'
 import { setUser } from '../../store/action/setUser'
+import { isServiceProvider } from '../../utils/helper'
 import styles from './style'
 
 export const LoginForm = (props) => {
@@ -68,7 +69,11 @@ export const LoginForm = (props) => {
       if (response?.message) {
         throw response
       }
-      dispatch(setUser({ ...response, isLoggedIn: true }))
+      if (isServiceProvider(response?.user_type)) {
+        dispatch(setUser({ ...response, isLoggedIn: true }))
+      } else {
+        throw { message: 'You do not have permission.' }
+      }
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)

@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import { setAgentProfile } from '../EditProfile/store'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FitImage from 'react-native-fit-image';
+import { isServiceProvider } from '../../utils/helper'
 
 export const Profile = (props) => {
   const {
@@ -30,18 +31,6 @@ export const Profile = (props) => {
       return currentUser.image_url + '?random_number=' + new Date().getTime()
     } else {
       return defaultImg
-    }
-  }
-
-  const isServiceProvider = (data) => {
-    if (data) {
-      if (data.toLowerCase() == 'agent/broker' || data.toLowerCase() == 'lender' || data.toLowerCase() == 'general contractor') {
-        return true
-      } else {
-        return false
-      }
-    } else {
-      return false
     }
   }
 

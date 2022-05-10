@@ -25,3 +25,15 @@ export const parsePrice = (number, isFixed = false) => {
   const fixedNumber = isFixed ? Number.parseFloat(number).toFixed(2) : Number.parseFloat(number) 
   return '$' + String(fixedNumber).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
+
+export const isServiceProvider = (data) => {
+  if (data) {
+    if (data.toLowerCase().indexOf('agent/broker') !== -1 || data.toLowerCase().indexOf('lender') !== -1 || data.toLowerCase().indexOf('general contractor') !== -1) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+}
