@@ -85,138 +85,120 @@ export const BuyLeads = (props) => {
   }, [leads])
 
   return (
-    <TouchableWithoutFeedback onPress={() => setOpenFilter(false)}>
-      <View style={styles.screenContainer}>
-        <View style={styles.headerContainer}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            _pressed={{ opacity: 0.7 }}
-          >
-            <HStack alignItems='center'>
-              <Image source={icons.arrowLeft} style={styles.backIcon} />
-              <HText style={styles.backText}>Back</HText>
-            </HStack>
-          </Pressable>
-        </View>
-        <View style={styles.titleContainer}>
-          <HText style={styles.headerTitle}>Buy leads</HText>
-          <View style={styles.cartIconContainer}>
-            <HCartButton
-              onPress={() => onNavigationRedirect('LeadsCheckout')}
-            />
-          </View>
-        </View>
-
-        <View style={[styles.innerContainer, { zIndex: 100 }]}>
-          <HStack mb='1' alignItems='center'>
-            <Image source={icons.location} style={styles.addressIcon} />
-            <HText style={styles.addressText}>{fullAddres}</HText>
-          </HStack>
-          <VStack mb='5'>
-            <HStack justifyContent='flex-end'>
-              <View style={styles.filterContainer}>
-                {totalLeads === null ? (
-                  <Skeleton h='3' w='16' rounded='sm' ml='7' />
-                ) : (
-                  <Pressable
-                    _pressed={{ opacity: 0.6 }}
-                    onPress={() => setOpenFilter(!openFilter)}
-                  >
-                    <HStack alignItems='center'>
-                      <HText style={styles.filterText}>
-                        {isBuyers && isSellers && isProspective ? totalLeads: `${filteredLeads} of ${totalLeads}`} leads
-                      </HText>
-                      <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: !openFilter ? '0deg': '180deg' }] }]} />
-                    </HStack>
-                  </Pressable>
-                )}
-                {openFilter && (
-                  <View style={styles.filterWrapper}>
-                    <HUserFilterBy
-                      isBuyers={isBuyers}
-                      setIsBuyers={setIsBuyers}
-                      isSellers={isSellers}
-                      setIsSellers={setIsSellers}
-                      isProspective={isProspective}
-                      setIsProspective={setIsProspective}
-                    />
-                  </View>
-                )}
-              </View>
-            </HStack>
-          </VStack>
-        </View>
-        <Divider backgroundColor={colors.primary} opacity={0.7} />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
+    <View style={styles.screenContainer}>
+      <View style={styles.headerContainer}>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          _pressed={{ opacity: 0.7 }}
         >
-          {isLoading ? (
-            <HStack alignItems='center' justifyContent='center' flex='1'>
-              <HStack alignItems='center'>
-                <Spinner color={colors.primary} size='lg' mr='1' />
-                <HText style={styles.radioLabel}>Loading...</HText>
-              </HStack>
-            </HStack>
-          ) : (
-            <View style={styles.innerContainer}>
-              {isBuyers && buyersLeads && (
-                Object.keys(buyersLeads).map(key => (
-                  <Card
-                    key={key}
-                    userTypeValue={1}
-                    leadsGroup={buyersLeads[key]}
-                    zipCode={key}
-                    totalCart={totalCart}
-                  />
-                ))
-              )}
-              {isSellers && sellersLeads && (
-                Object.keys(sellersLeads).map(key => (
-                  <Card
-                    key={key}
-                    userTypeValue={2}
-                    leadsGroup={sellersLeads[key]}
-                    zipCode={key}
-                    totalCart={totalCart}
-                  />
-                ))
-              )}
-              {isProspective && prospectiveLeads && (
-                Object.keys(prospectiveLeads).map(key => (
-                  <Card
-                    key={key}
-                    userTypeValue={3}
-                    leadsGroup={prospectiveLeads[key]}
-                    zipCode={key}
-                    totalCart={totalCart}
-                  />
-                ))
-              )}
-              {filteredLeads === 0 && (
-                <Box alignItems='center' my='4'>
-                  <HText style={styles.radioLabel}>No Leads</HText>
-                </Box>
-              )}
-            </View>
-          )}
-        </ScrollView>
-        <Divider backgroundColor={colors.primary} opacity={0.7} />
-        <Box alignItems='center' mt='4' mb='4'>
-          <HButton
-            text={`(${totalLeadCount}) Proceed to Checkout`}
-            width={deviceWidth - 48}
-            borderColor={colors.primary}
-            backgroundColor={colors.white}
-            borderWidth={1}
-            textStyle={{
-              color: colors.primary
-            }}
+          <HStack alignItems='center'>
+            <Image source={icons.arrowLeft} style={styles.backIcon} />
+            <HText style={styles.backText}>Back</HText>
+          </HStack>
+        </Pressable>
+      </View>
+      <View style={styles.titleContainer}>
+        <HText style={styles.headerTitle}>Buy leads</HText>
+        <View style={styles.cartIconContainer}>
+          <HCartButton
             onPress={() => onNavigationRedirect('LeadsCheckout')}
           />
-        </Box>
+        </View>
       </View>
-    </TouchableWithoutFeedback>
+
+      <View style={[styles.innerContainer, { zIndex: 100 }]}>
+        <HStack mb='1' alignItems='center'>
+          <Image source={icons.location} style={styles.addressIcon} />
+          <HText style={styles.addressText}>{fullAddres}</HText>
+        </HStack>
+        <VStack mb='5'>
+          <HStack justifyContent='flex-end'>
+            {totalLeads === null ? (
+              <Skeleton h='3' w='16' rounded='sm' ml='7' />
+            ) : (
+              <HUserFilterBy
+                headerTitle={`${isBuyers && isSellers && isProspective ? totalLeads: `${filteredLeads} of ${totalLeads}`} leads`}
+                isBuyers={isBuyers}
+                setIsBuyers={setIsBuyers}
+                isSellers={isSellers}
+                setIsSellers={setIsSellers}
+                isProspective={isProspective}
+                setIsProspective={setIsProspective}
+              />
+            )}
+          </HStack>
+        </VStack>
+      </View>
+      <Divider backgroundColor={colors.primary} opacity={0.7} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {isLoading ? (
+          <HStack alignItems='center' justifyContent='center' flex='1'>
+            <HStack alignItems='center'>
+              <Spinner color={colors.primary} size='lg' mr='1' />
+              <HText style={styles.radioLabel}>Loading...</HText>
+            </HStack>
+          </HStack>
+        ) : (
+          <View style={styles.innerContainer}>
+            {isBuyers && buyersLeads && (
+              Object.keys(buyersLeads).map(key => (
+                <Card
+                  key={key}
+                  userTypeValue={1}
+                  leadsGroup={buyersLeads[key]}
+                  zipCode={key}
+                  totalCart={totalCart}
+                />
+              ))
+            )}
+            {isSellers && sellersLeads && (
+              Object.keys(sellersLeads).map(key => (
+                <Card
+                  key={key}
+                  userTypeValue={2}
+                  leadsGroup={sellersLeads[key]}
+                  zipCode={key}
+                  totalCart={totalCart}
+                />
+              ))
+            )}
+            {isProspective && prospectiveLeads && (
+              Object.keys(prospectiveLeads).map(key => (
+                <Card
+                  key={key}
+                  userTypeValue={3}
+                  leadsGroup={prospectiveLeads[key]}
+                  zipCode={key}
+                  totalCart={totalCart}
+                />
+              ))
+            )}
+            {filteredLeads === 0 && (
+              <Box alignItems='center' my='4'>
+                <HText style={styles.radioLabel}>No Leads</HText>
+              </Box>
+            )}
+          </View>
+        )}
+      </ScrollView>
+      <Divider backgroundColor={colors.primary} opacity={0.7} />
+      <Box alignItems='center' mt='4' mb='4'>
+        <HButton
+          text={`(${totalLeadCount}) Proceed to Checkout`}
+          width={deviceWidth - 48}
+          borderColor={colors.primary}
+          backgroundColor={colors.white}
+          borderWidth={1}
+          textStyle={{
+            color: colors.primary
+          }}
+          onPress={() => onNavigationRedirect('LeadsCheckout')}
+        />
+      </Box>
+    </View>
   )
 }

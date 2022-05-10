@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Image, View, TouchableWithoutFeedback } from 'react-native'
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import { ScrollView, Image, View } from 'react-native'
 import { HText, HButton, HCartButton, HUserFilterBy } from '../Shared'
-import { colors, images, icons } from '../../utils/styleGuide'
-import { HStack, Box, Skeleton, useToast, Pressable } from 'native-base'
+import { colors, images } from '../../utils/styleGuide'
+import { HStack, Box, Skeleton, useToast } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
 import Swiper from 'react-native-swiper'
 import styles from './style'
@@ -29,7 +28,6 @@ export const LeadsDashboard = (props) => {
   const [isProspective, setIsProspective] = useState(true)
   const [totalLeads, setTotalLeads] = useState(null)
   const [filteredLeads, setFilteredLeads] = useState(null)
-  const [openFilter, setOpenFilter] = useState(false)
 
   const handleLeadsFilter = (response) => {
     let _leadsList = {}
@@ -113,133 +111,113 @@ export const LeadsDashboard = (props) => {
   }, [])
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => setOpenFilter(false)}
-    >
-      <View style={styles.screenContainer}>
-        <View style={[styles.innerContainer, styles.headerContainer]}>
-          <HText style={styles.title}>Leads Dashboard</HText>
-          <View style={styles.cartIconWrapper}>
-            <HCartButton
-              onPress={() => onNavigationRedirect('LeadsCheckout')}
-              countWrapperStyle={{ backgroundColor: colors.primary, borderWidth: 0 }}
-              countTextStyle={{ color: colors.white }}
-            />
-          </View>
+    <View style={styles.screenContainer}>
+      <View style={[styles.innerContainer, styles.headerContainer]}>
+        <HText style={styles.title}>Leads Dashboard</HText>
+        <View style={styles.cartIconWrapper}>
+          <HCartButton
+            onPress={() => onNavigationRedirect('LeadsCheckout')}
+          />
         </View>
-        {(isLoading || totalLeads !== 0) && (
-          <View style={styles.leadsContent}>
-            <View style={[styles.innerContainer, { zIndex: 100 }]}>
-              <HStack mb='8' justifyContent='flex-end'>
-                <View style={styles.filterContainer}>
-                  {!totalLeads ? (
-                    <Skeleton h='3' w='16' rounded='sm' ml='7' />
-                  ) : (
-                    <Pressable
-                      _pressed={{ opacity: 0.6 }}
-                      onPress={() => setOpenFilter(!openFilter)}
-                    >
-                      <HStack alignItems='center'>
-                        <HText style={styles.filterText}>{filteredLeads} of {totalLeads} leads</HText>
-                        <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: !openFilter ? '0deg': '180deg' }] }]} />
-                      </HStack>
-                    </Pressable>
-                  )}
-                  {openFilter && (
-                    <View style={styles.filterWrapper}>
-                      <HUserFilterBy
-                        isBuyers={isBuyers}
-                        setIsBuyers={setIsBuyers}
-                        isSellers={isSellers}
-                        setIsSellers={setIsSellers}
-                        isProspective={isProspective}
-                        setIsProspective={setIsProspective}
-                      />
-                    </View>
-                  )}
-                </View>
-              </HStack>
-            </View>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.container}
-            >
-              {isLoading ? (
-                <LeadCard
-                  isLoading={isLoading}
-                  onNavigationRedirect={onNavigationRedirect}
-                />
+      </View>
+      {(isLoading || totalLeads !== 0) && (
+        <View style={styles.leadsContent}>
+          <View style={[styles.innerContainer, { zIndex: 100 }]}>
+            <HStack mb='8' justifyContent='flex-end'>
+              {!totalLeads ? (
+                <Skeleton h='3' w='16' rounded='sm' ml='7' />
               ) : (
-                <>
-                  {filteredLeads === 0 ? (
-                    <HText style={styles.notFoundText}>No leads found, please adjust filtering</HText>
-                  ) : (
-                    <Swiper
-                      showsButtons={false}
-                      loop={true}
-                      renderPagination={renderPagination}
-                      height={420}
-                    >
-                      {isBuyers && leadsList?.buyers?.leads && leadsList.buyers.leads.map(lead => (
-                        <LeadCard
-                          key={lead?.lead_id}
-                          lead={lead}
-                          type='Buyer'
-                          level='buyers'
-                          onNavigationRedirect={onNavigationRedirect}
-                        />
-                      ))}
-                      {isSellers && leadsList?.sellers?.leads && leadsList.sellers.leads.map(lead => (
-                        <LeadCard
-                          key={lead?.lead_id}
-                          lead={lead}
-                          type='Seller'
-                          level='sellers'
-                          onNavigationRedirect={onNavigationRedirect}
-                        />
-                      ))}
-                      {isProspective && leadsList?.prospective?.leads && leadsList.prospective.leads.map(lead => (
-                        <LeadCard
-                          key={lead?.lead_id}
-                          lead={lead}
-                          type='Prospective'
-                          level='prospective'
-                          onNavigationRedirect={onNavigationRedirect}
-                        />
-                      ))}
-                    </Swiper>
-                  )}
-                </>
+                <HUserFilterBy
+                  headerTitle={`${filteredLeads} of ${totalLeads} leads`}
+                  isBuyers={isBuyers}
+                  setIsBuyers={setIsBuyers}
+                  isSellers={isSellers}
+                  setIsSellers={setIsSellers}
+                  isProspective={isProspective}
+                  setIsProspective={setIsProspective}
+                />
               )}
-            </ScrollView>
+            </HStack>
           </View>
-        )}
-
-        {(totalLeads === 0 && !isLoading) && (
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.container}
           >
-            <View style={styles.bottomContainer}>
-              <View style={[styles.imageWrapper, { aspectRatio: 221 / 240 }]}>
-                <Image
-                  source={images.leadsBg}
-                  style={styles.image}
-                />
-              </View>
-              <HText style={styles.subtitle}>No Leads</HText>
-              <HText style={styles.description}>Buy leads to see what your consumers are looking for.</HText>
-              <HButton
-                text='Find Leads'
-                borderColor={colors.primary}
-                backgroundColor={colors.primary}
-                onPress={() => onNavigationRedirect('FindLeads')}
+            {isLoading ? (
+              <LeadCard
+                isLoading={isLoading}
+                onNavigationRedirect={onNavigationRedirect}
+              />
+            ) : (
+              <>
+                {filteredLeads === 0 ? (
+                  <HText style={styles.notFoundText}>No leads found, please adjust filtering</HText>
+                ) : (
+                  <Swiper
+                    showsButtons={false}
+                    loop={true}
+                    renderPagination={renderPagination}
+                    height={420}
+                  >
+                    {isBuyers && leadsList?.buyers?.leads && leadsList.buyers.leads.map(lead => (
+                      <LeadCard
+                        key={lead?.lead_id}
+                        lead={lead}
+                        type='Buyer'
+                        level='buyers'
+                        onNavigationRedirect={onNavigationRedirect}
+                      />
+                    ))}
+                    {isSellers && leadsList?.sellers?.leads && leadsList.sellers.leads.map(lead => (
+                      <LeadCard
+                        key={lead?.lead_id}
+                        lead={lead}
+                        type='Seller'
+                        level='sellers'
+                        onNavigationRedirect={onNavigationRedirect}
+                      />
+                    ))}
+                    {isProspective && leadsList?.prospective?.leads && leadsList.prospective.leads.map(lead => (
+                      <LeadCard
+                        key={lead?.lead_id}
+                        lead={lead}
+                        type='Prospective'
+                        level='prospective'
+                        onNavigationRedirect={onNavigationRedirect}
+                      />
+                    ))}
+                  </Swiper>
+                )}
+              </>
+            )}
+          </ScrollView>
+        </View>
+      )}
+
+      {(totalLeads === 0 && !isLoading) && (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.container}
+        >
+          <View style={styles.bottomContainer}>
+            <View style={[styles.imageWrapper, { aspectRatio: 221 / 240 }]}>
+              <Image
+                source={images.leadsBg}
+                style={styles.image}
               />
             </View>
-          </ScrollView>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+            <HText style={styles.subtitle}>No Leads</HText>
+            <HText style={styles.description}>Buy leads to see what your consumers are looking for.</HText>
+            <HButton
+              text='Find Leads'
+              borderColor={colors.primary}
+              backgroundColor={colors.primary}
+              onPress={() => onNavigationRedirect('FindLeads')}
+            />
+          </View>
+        </ScrollView>
+      )}
+    </View>
   )
 }
 

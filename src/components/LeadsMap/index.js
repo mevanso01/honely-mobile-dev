@@ -332,12 +332,12 @@ export const LeadsMap = (props) => {
           </View>
         </Pressable>
       </ScrollView>
-      <Box alignItems='center' mt='4' mb='4'>
+      <Box alignItems='center' mt='6' mb='4'>
         <HButton
           text='View All Leads'
           borderColor={colors.darkPrimary}
           backgroundColor={colors.darkPrimary}
-          widt={(deviceWidth - 36) * 0.9}
+          width={deviceWidth - 48}
           height={60}
           isDisabled={isLoading}
           disabledOpacity={0.6}

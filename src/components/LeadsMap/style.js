@@ -52,7 +52,7 @@ export default StyleSheet.create({
     top: 160
   },
   scrollContainer: {
-    marginTop: 250
+    marginTop: 245
   },
   scrollContent: {
     flexGrow: 1
@@ -85,7 +85,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   maxDistanceLabelWrapper: {
-    paddingBottom: 21
+    paddingBottom: 12
   },
   maxDistanceIcon: {
     tintColor: colors.primary,
@@ -96,7 +96,7 @@ export default StyleSheet.create({
   leadsQtyContainer: {
     width: '100%',
     paddingHorizontal: 18,
-    paddingTop: 40,
+    paddingTop: 30,
     paddingBottom: 13
   },
   userTypeText: {

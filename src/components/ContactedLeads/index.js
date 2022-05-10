@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native'
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import { HStack, VStack, Box, Checkbox, Icon, Pressable } from 'native-base'
-import { HText, HUserFilterBy } from '../Shared'
+import { HStack, VStack, Box, Checkbox, Pressable } from 'native-base'
+import { HText, HUserFilterBy, HCartButton } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -23,7 +22,6 @@ export const ContactedLeads = (props) => {
   const [isNameAscending, setIsNameAscending] = useState(false)
   const [isOpenStatusList, setIsOpenStatusList] = useState(false)
   const [selectedStatuses, setSelectedStatuses] = useState(['ATTEMPTED_CONTACT', 'FOLLOWED_UP', 'PENDING_SALE', 'CLOSED_LEADS', 'REJECTED'])
-  const [openFilter, setOpenFilter] = useState(false)
   const [totalLeads, setTotalLeads] = useState(0)
 
   const getStatus = (status) => {
@@ -95,35 +93,27 @@ export const ContactedLeads = (props) => {
   return (
     <TouchableWithoutFeedback onPress={() => {
       setIsOpenStatusList(false)
-      setOpenFilter(false)
     }}>
       <View style={styles.screenContainer}>
-        <HText style={styles.title}>Contacted Leads</HText>
-        <VStack mb='5' zIndex={100}>
+        <View style={styles.headerContainer}>
+          <HText style={styles.title}>Contacted Leads</HText>
+          <View style={styles.cartIconWrapper}>
+            <HCartButton
+              onPress={() => onNavigationRedirect('LeadsCheckout')}
+            />
+          </View>
+        </View>
+        <VStack mb='5'>
           <View style={styles.filterContainer}>
-            <Pressable
-              _pressed={{ opacity: 0.6 }}
-              onPress={() => setOpenFilter(!openFilter)}
-            >
-              <HStack alignItems='center'>
-                <HText style={styles.filterText}>
-                  {contactedLeadsList?.length} of {totalLeads} leads
-                </HText>
-                <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: !openFilter ? '0deg': '180deg' }] }]} />
-              </HStack>
-            </Pressable>
-            {openFilter && (
-              <View style={styles.filterWrapper}>
-                <HUserFilterBy
-                  isBuyers={isBuyers}
-                  setIsBuyers={setIsBuyers}
-                  isSellers={isSellers}
-                  setIsSellers={setIsSellers}
-                  isProspective={isProspective}
-                  setIsProspective={setIsProspective}
-                />
-              </View>
-            )}
+            <HUserFilterBy
+              headerTitle={`${contactedLeadsList?.length} of ${totalLeads} leads`}
+              isBuyers={isBuyers}
+              setIsBuyers={setIsBuyers}
+              isSellers={isSellers}
+              setIsSellers={setIsSellers}
+              isProspective={isProspective}
+              setIsProspective={setIsProspective}
+            />
           </View>
         </VStack>
         <ScrollView
@@ -140,7 +130,6 @@ export const ContactedLeads = (props) => {
                 onPress={() => {
                   setIsOpenStatusList(false)
                   setIsNameAscending(!isNameAscending)
-                  setOpenFilter(false)
                 }}
               >
                 <HStack py='2'>

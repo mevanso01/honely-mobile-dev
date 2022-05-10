@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet, Platform } from 'react-native'
 import { Pressable } from 'native-base'
 import { icons, colors, fonts } from '../../utils/styleGuide'
 import { useSelector } from 'react-redux'
@@ -38,7 +38,8 @@ const HCartButton = (props) => {
     cartQty: {
       fontSize: 10,
       color: colors.primary,
-      fontFamily: fonts.bold
+      fontFamily: fonts.bold,
+      marginTop: Platform.OS === 'ios' ? 2 : 0
     },
   })
 

@@ -168,7 +168,7 @@ export const CartItem = (props) => {
         </HStack>
         <HText style={styles.textStyle}>@</HText>
         <HStack>
-          <HText style={styles.textStyle}>{parsePrice(lead.price * cartQty)}</HText>
+          <HText style={styles.textStyle}>{parsePrice(lead.price)}</HText>
           <HText style={styles.upperText}>ea.</HText>
         </HStack>
       </HStack>
