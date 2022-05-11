@@ -1,3 +1,8 @@
+import React from 'react'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { Image } from 'react-native'
+import { icons } from './styleGuide'
+
 export const getFullAddress = (level, address) => {
   if (level === 'state') return address.state_short || address.state
   else {
@@ -35,5 +40,55 @@ export const isServiceProvider = (data) => {
     }
   } else {
     return false
+  }
+}
+
+export const getIconCard = (brand) => {
+  const value = brand?.toLowerCase()
+  switch (value) {
+    case 'visa':
+      return (
+        <Image source={icons.visa} style={{ width: 41, height: 13, resizeMode: 'contain' }} />
+      )
+    case 'mastercard':
+      return (
+        <Image source={icons.mastercard} style={{ width: 37, height: 24, resizeMode: 'contain' }} />
+      )
+    case 'amex':
+      return (
+        <Image source={icons.americanExpress} style={{ width: 37, height: 24, resizeMode: 'contain' }} />
+      )
+    case 'discover':
+      return (
+        FontAwesome && <FontAwesome
+          name='cc-discover'
+          size={26}
+          color={'#000'}
+        />
+      )
+    case 'jcb':
+      return (
+        FontAwesome && <FontAwesome
+          name='cc-jcb'
+          size={26}
+          color={'#000'}
+        />
+      )
+    case 'diners-club':
+      return (
+        FontAwesome && <FontAwesome
+          name='cc-diners-club'
+          size={26}
+          color={'#000'}
+        />
+      )
+    default:
+      return (
+        FontAwesome && <FontAwesome
+          name='credit-card-alt'
+          size={26}
+          color={'#000'}
+        />
+      )
   }
 }

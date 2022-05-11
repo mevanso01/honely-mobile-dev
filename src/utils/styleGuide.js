@@ -72,6 +72,9 @@ export const icons = {
   sliderThumb: require('../assets/icons/slider-thumb.png'),
   cart: require('../assets/icons/cart.png'),
   groupUser: require('../assets/icons/group-user.png'),
+  visa: require('../assets/icons/visa.png'),
+  mastercard: require('../assets/icons/mastercard.png'),
+  americanExpress: require('../assets/icons/american-express.png'),
 }
 
 export const fonts = {

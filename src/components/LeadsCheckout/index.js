@@ -11,10 +11,12 @@ import { doGet } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
 import SpinnerOverlay from 'react-native-loading-spinner-overlay'
 import { parsePrice } from '../../utils/helper'
+import { TOAST_LENGTH_SHORT } from '../../config'
 
 export const LeadsCheckout = (props) => {
   const {
-    navigation
+    navigation,
+    onNavigationRedirect
   } = props
 
   const toast = useToast()
@@ -131,6 +133,7 @@ export const LeadsCheckout = (props) => {
           textStyle={{
             fontSize: 24
           }}
+          onPress={() => onNavigationRedirect('BillingInfo', { totalPrice: totalPrice })}
         />
       </Box>
     </View>

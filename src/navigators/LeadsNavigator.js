@@ -8,6 +8,7 @@ import ContactLeadPreset from '../screens/ContactLeadPreset'
 import LeadsMap from '../screens/LeadsMap'
 import BuyLeads from '../screens/BuyLeads'
 import LeadsCheckout from '../screens/LeadsCheckout'
+import BillingInfo from '../screens/BillingInfo'
 
 const LeadsNavigator = () => {
   return (
@@ -40,6 +41,11 @@ const LeadsNavigator = () => {
       <Stack.Screen
         name='LeadsCheckout'
         component={LeadsCheckout}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='BillingInfo'
+        component={BillingInfo}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
