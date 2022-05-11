@@ -10,11 +10,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { doGet, doPost } from '../../services/http-client'
 import { getIconCard, parsePrice } from '../../utils/helper'
 import { TOAST_LENGTH_SHORT } from '../../config'
+import { setUser } from '../../store/action/setUser'
 
 export const BillingInfo = (props) => {
   const {
     totalPrice,
-    navigation
+    navigation,
+    onNavigationRedirect
   } = props
 
   const toast = useToast()
@@ -27,6 +29,7 @@ export const BillingInfo = (props) => {
   const [selectedPaymethodId, setSelectedPaymethodId] = useState(null)
   const { initPaymentSheet, presentPaymentSheet } = useStripe()
   const [paymentProcessing, setPaymentProcessing] = useState(false)
+  const [isDefault, setIsDefault] = useState(false)
 
   const fetchPaymentSheetParams = async () => {
     try {
@@ -120,7 +123,10 @@ export const BillingInfo = (props) => {
   const handleConfirmPay = async () => {
     try {
       setPaymentProcessing(true)
-      const response = await doPost(`lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice}&pm-id=${selectedPaymethodId}`)
+      const fetchUrl = isDefault
+        ? `lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice}&pm-id=${selectedPaymethodId}&default-pm=true`
+        : `lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice}&pm-id=${selectedPaymethodId}`
+      const response = await doPost(fetchUrl)
       if (response.result === 'Error') throw response
       toast.show({
         title: 'Success',
@@ -130,7 +136,9 @@ export const BillingInfo = (props) => {
         marginRight: 4,
         marginLeft: 4,
       })
+      dispatch(setUser({ cart: {} }))
       setPaymentProcessing(false)
+      onNavigationRedirect('Leads')
     } catch (error) {
       setPaymentProcessing(false)
       toast.show({
@@ -201,7 +209,9 @@ export const BillingInfo = (props) => {
                   <HText style={styles.cardLastText}>●●●● ●●●● ●●●● {paymethod.last4}</HText>
                 </HStack>
               ))}
-              <HText style={styles.orPayWithText}>or pay using</HText>
+              {selectedPaymethodId && paymethodsList.find(paymethod => !paymethod.default) && (
+                <HText style={styles.orPayWithText}>or pay using</HText>
+              )}
               {paymethodsList.filter(paymethod => !paymethod.default).map(paymethod => (
                 <HStack key={paymethod.id} my='3' alignItems='center' width='full' justifyContent='space-between'>
                   <Radio
@@ -246,13 +256,15 @@ export const BillingInfo = (props) => {
             borderColor: colors.primary
           }}
           _interactionBox={{ opacity: 0 }}
+          isChecked={isDefault}
+          onChange={checked => setIsDefault(checked)}
         />
         <HText style={styles.saveCardText}>Save this card as default.</HText>
       </View>
       <Divider backgroundColor={colors.primary} opacity={0.6} />
       <Box pt='5' pb='8' alignItems='center'>
         <HButton
-          text={`Pay ${parsePrice(totalPrice)}`}
+          text={`Pay ${parsePrice(totalPrice, true)}`}
           isDisabled={!selectedPaymethodId}
           disabledOpacity={0.6}
           onPress={handleConfirmPay}
