@@ -54,9 +54,10 @@ export const doUpdateAgentProfile = (values) => async (dispatch, getState) => {
     }
     if (formState.imageFileData) {
       const image_url = 'https://honely-files-public.s3.amazonaws.com/images/' + agentProfile.agent_id + '_001.jpg'
-      dispatch(setUser({ image_url: image_url, company_name: values.company_name }))
+      dispatch(setUser({ image_url: image_url }))
+      dispatch(setAgentProfile({ company_name: values.company_name }))
     } else {
-      dispatch(setUser({ company_name: values.company_name }))
+      dispatch(setAgentProfile({ company_name: values.company_name }))
     }
     return response
   } catch (error) {
