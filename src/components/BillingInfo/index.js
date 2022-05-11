@@ -124,8 +124,8 @@ export const BillingInfo = (props) => {
     try {
       setPaymentProcessing(true)
       const fetchUrl = isDefault
-        ? `lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice}&pm-id=${selectedPaymethodId}&default-pm=true`
-        : `lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice}&pm-id=${selectedPaymethodId}`
+        ? `lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice * 100}&pm-id=${selectedPaymethodId}&default-pm=true`
+        : `lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice * 100}&pm-id=${selectedPaymethodId}`
       const response = await doPost(fetchUrl)
       if (response.result === 'Error') throw response
       toast.show({
