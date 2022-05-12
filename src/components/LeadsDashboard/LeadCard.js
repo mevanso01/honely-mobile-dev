@@ -10,14 +10,28 @@ export const LeadCard = (props) => {
   const {
     onNavigationRedirect,
     isLoading,
-    type,
-    lead,
-    level
+    lead
   } = props
 
   const getStatus = (status) => {
     const objectStatus = leadStatuses.find((o) => o.key === status)
     return objectStatus && objectStatus
+  }
+
+  const getType = (level) => {
+    let type = ''
+    switch (level) {
+      case 'buyers':
+        type = 'Buyer'
+        break
+      case 'sellers':
+        type = 'Seller'
+        break
+      case 'prospective':
+        type = 'Prospective'
+        break
+    }
+    return type
   }
 
   return (
@@ -42,7 +56,7 @@ export const LeadCard = (props) => {
         {isLoading ? (
           <Skeleton h='4' w='20' rounded='sm' />
         ) : (
-          <HText style={styles.userTypeText}>{type}</HText>
+          <HText style={styles.userTypeText}>{getType(lead.level)}</HText>
         )}
         {isLoading ? (
           <Skeleton h='4' w='24' rounded='sm' />
@@ -86,7 +100,7 @@ export const LeadCard = (props) => {
           disabledOpacity={0.6}
           height={50}
           width={180}
-          onPress={() => onNavigationRedirect('ContactLead', { lead: lead, level: level })}
+          onPress={() => onNavigationRedirect('ContactLead', { lead: lead, level: lead.level })}
         />
       </Box>
     </View>
