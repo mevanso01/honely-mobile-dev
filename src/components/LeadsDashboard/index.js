@@ -131,7 +131,7 @@ export const LeadsDashboard = (props) => {
                     showsButtons={false}
                     loop={true}
                     renderPagination={renderPagination}
-                    height={360}
+                    height={400}
                   >
                     {filteredLeadsList.map(lead => (
                       <LeadCard
