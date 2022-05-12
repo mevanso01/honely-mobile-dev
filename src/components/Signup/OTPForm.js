@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HToast } from '../Shared'
 import { Box, HStack, ScrollView, useToast } from 'native-base'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -27,15 +27,11 @@ export const OTPForm = (props) => {
         setTimeout(() => {
           doLogin()
         }, 3000)
-
       } catch (error) {
         toast.show({
-          title: 'Error',
-          description: error.message,
-          status: 'error',
-          duration: TOAST_LENGTH_SHORT,
-          marginRight: 4,
-          marginLeft: 4,
+          render: () => <HToast status='error' message={error.message} />,
+          placement: 'top',
+          duration: TOAST_LENGTH_SHORT
         })
       }
     } else {
@@ -48,12 +44,9 @@ export const OTPForm = (props) => {
       dispatch(handleLogin(formState.userName, formState.password, formState.email))
     } catch (error) {
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
       handleGoToLogin()
     }
@@ -63,21 +56,15 @@ export const OTPForm = (props) => {
     try {
       await dispatch(handleResendCode(formState.email, formState.userName))
       toast.show({
-        title: 'Success',
-        description: 'Resent Email Verification Code!',
-        status: 'success',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='success' message='Resent Email Verification Code!' />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     } catch (error) {
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

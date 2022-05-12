@@ -1,52 +1,54 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { colors } from '../../utils/styleGuide'
+import { View, Text, StyleSheet, Image } from 'react-native'
+import { colors, fonts, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const HToast = (props) => {
   const {
     message,
-    type
+    status
   } = props
-  const insets = useSafeAreaInsets()
 
-  let backgroundColor = '#333333'
-  switch (type) {
-    case 'info':
-      backgroundColor = '#6ba4ff'
-      break
-    case 'error':
-      backgroundColor = '#D83520'
-      break
-    case 'success':
-      backgroundColor = '#5db85c'
-      break
-    default:
-      backgroundColor = '#333333'
-  }
+  const insets = useSafeAreaInsets()
 
   const styles = StyleSheet.create({
     container: {
-      width: deviceWidth,
-      backgroundColor: backgroundColor,
-      paddingHorizontal: 18,
-      paddingVertical: 15,
-      bottom: insets.bottom ? -18 : -50
+      alignItems: 'center',
+      width: deviceWidth - 36,
+      backgroundColor: colors.primary_100,
+      paddingHorizontal: 32,
+      paddingVertical: 25,
+      borderRadius: 10,
+      top: insets.top ? -18 : -46
     },
     messageText: {
       color: colors.white,
-      fontSize: 14
+      fontSize: 29,
+      fontFamily: fonts.bold,
+      textAlign: 'center',
+      lineHeight: 34
+    },
+    emojiStyle: {
+      width: 42,
+      height: 36,
+      resizeMode: 'contain',
+      tintColor: colors.white,
+      marginBottom: 16
     }
   })
 
+  const getIcon = (status) => {
+    if (status === 'success') return icons.toastSuccess
+    return icons.toastError
+  }
+
   return (
     <View style={styles.container}>
+      <Image source={getIcon(status)} style={styles.emojiStyle} />
       <Text style={styles.messageText}>{message}</Text>
     </View>
   )
 }
-
-
 
 export default HToast

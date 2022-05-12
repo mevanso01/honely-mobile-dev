@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { ScrollView, Image, View, Keyboard } from 'react-native'
-import { HButton, HText } from '../Shared'
+import { HButton, HText, HToast } from '../Shared'
 import { Box, Input, FormControl, Icon, HStack, Pressable, useToast } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useForm, Controller } from 'react-hook-form'
@@ -37,12 +37,9 @@ export const SignUpForm = (props) => {
     const checkExist = await dispatch(handleCheckUserNameExist(values))
     if (checkExist) {
       toast.show({
-        title: 'Error',
-        description: 'Username already exists',
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message='Username already exists' />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     } else {
       handleNextStep()

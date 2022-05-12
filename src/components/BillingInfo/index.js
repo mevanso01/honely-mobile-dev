@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HToast } from '../Shared'
 import { Pressable, HStack, Box, useToast, Divider, Radio, Skeleton, Checkbox, VStack } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
@@ -61,15 +61,11 @@ export const BillingInfo = (props) => {
       if (!error) {
         setPaymentSheetLoaded(true)
       }
-
     } catch (error) {
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -78,22 +74,16 @@ export const BillingInfo = (props) => {
     const { error } = await presentPaymentSheet()
     if (error) {
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     } else {
       handleGetUserPaymethods()
       toast.show({
-        title: 'Success',
-        description: 'Your payment method is successfully set up for future payments!',
-        status: 'success',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='success' message='Your payment method is successfully set up for future payments!' />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -110,12 +100,9 @@ export const BillingInfo = (props) => {
     } catch (error) {
       setPaymethodsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -129,12 +116,9 @@ export const BillingInfo = (props) => {
       const response = await doPost(fetchUrl)
       if (response.result === 'Error') throw response
       toast.show({
-        title: 'Success',
-        description: 'Payment success!',
-        status: 'success',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='success' message='Payment success!' />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
       dispatch(setUser({ cart: {} }))
       setPaymentProcessing(false)
@@ -142,12 +126,9 @@ export const BillingInfo = (props) => {
     } catch (error) {
       setPaymentProcessing(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

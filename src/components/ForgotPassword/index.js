@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { HScreenHeader } from '../Shared'
+import { HScreenHeader, HToast } from '../Shared'
 import styles from './style'
 import { ForgotPasswordForm } from './ForgotPasswordForm'
 import { OTPForm } from './OTPForm'
@@ -32,12 +32,9 @@ export const ForgotPassword = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -57,12 +54,9 @@ export const ForgotPassword = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -76,12 +70,9 @@ export const ForgotPassword = (props) => {
       setFormStep('success')
     } catch (error) {
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     } finally {
       setIsLoading(false)

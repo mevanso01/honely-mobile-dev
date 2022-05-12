@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image } from 'react-native'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HToast } from '../Shared'
 import { HStack, Divider, Box, VStack, Pressable, useToast, Spinner } from 'native-base'
 import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
@@ -125,12 +125,9 @@ export const Card = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -169,12 +166,9 @@ export const Card = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

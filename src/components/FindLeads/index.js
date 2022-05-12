@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, ScrollView, Image, Platform, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
 import { Input, Pressable, useToast, Spinner, Skeleton, Box } from 'native-base'
-import { HText, HCartButton } from '../Shared'
+import { HText, HCartButton, HToast } from '../Shared'
 import { ScrollView as DropDownContainer } from 'react-native-gesture-handler'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
@@ -101,12 +101,9 @@ export const FindLeads = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -121,12 +118,9 @@ export const FindLeads = (props) => {
     } catch {
       setIsRecentLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

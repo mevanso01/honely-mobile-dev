@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { HText } from '../Shared'
+import { HText, HToast } from '../Shared'
 import { Pressable, HStack, Box, useToast } from 'native-base'
 import styles from './style'
 import SpinnerOverlay from 'react-native-loading-spinner-overlay';
@@ -93,12 +93,9 @@ export const CartItem = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -124,12 +121,9 @@ export const CartItem = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

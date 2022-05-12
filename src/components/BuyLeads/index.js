@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { View, Image, ScrollView } from 'react-native'
 import { Pressable, HStack, VStack, Box, Divider, Skeleton, Spinner } from 'native-base'
 import { HButton, HText, HUserFilterBy, HCartButton } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Image, ScrollView, Keyboard } from 'react-native'
-import { HText, HButton, HCricleProgress } from '../Shared'
+import { HText, HButton, HCricleProgress, HToast } from '../Shared'
 import { Box, HStack, Input, FormControl, Icon, useToast } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import { useForm, Controller } from 'react-hook-form'
@@ -31,12 +31,9 @@ export const BusinessCompanyForm = (props) => {
       setSignUpFormStep('otp')
     } catch (error) {
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

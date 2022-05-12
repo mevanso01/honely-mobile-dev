@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { View, Image, ScrollView, Keyboard } from 'react-native'
 import { Box, Input, FormControl, Pressable, useToast, Icon } from 'native-base'
 import { useForm, Controller } from 'react-hook-form'
-import { HText, HScreenHeader, HButton } from '../Shared'
+import { HText, HScreenHeader, HButton, HToast } from '../Shared'
 import { icons, colors } from '../../utils/styleGuide'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { launchImageLibrary } from 'react-native-image-picker'
@@ -49,24 +49,18 @@ export const EditProfile = (props) => {
       setIsSubmitClicked(false)
       if (updatedAgent.result === 'Success') {
         toast.show({
-          title: 'Success',
-          description: 'Profile updated',
-          status: 'success',
-          duration: TOAST_LENGTH_SHORT,
-          marginRight: 4,
-          marginLeft: 4,
+          render: () => <HToast status='success' message='Profile updated' />,
+          placement: 'top',
+          duration: TOAST_LENGTH_SHORT
         })
       }
     } catch (error) {
       dispatch(setLoading(false))
       setIsSubmitClicked(false)
       toast.show({
-        title: 'Error',
-        description: error,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -83,12 +77,9 @@ export const EditProfile = (props) => {
       } else if (response.errorMessage) {
         console.log('ImagePicker Error: ', response.errorMessage);
         toast.show({
-          title: 'Error',
-          description: response.errorMessage,
-          status: 'error',
-          duration: TOAST_LENGTH_SHORT,
-          marginRight: 4,
-          marginLeft: 4,
+          render: () => <HToast status='error' message={response.errorMessage} />,
+          placement: 'top',
+          duration: TOAST_LENGTH_SHORT
         })
       } else {
         if (response?.assets) {
@@ -100,12 +91,9 @@ export const EditProfile = (props) => {
           }))
         } else {
           toast.show({
-            title: 'Error',
-            description: 'Image not found',
-            status: 'error',
-            duration: TOAST_LENGTH_SHORT,
-            marginRight: 4,
-            marginLeft: 4,
+            render: () => <HToast status='error' message='Image not found' />,
+            placement: 'top',
+            duration: TOAST_LENGTH_SHORT
           })
         }
       }

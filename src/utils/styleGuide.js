@@ -75,6 +75,8 @@ export const icons = {
   visa: require('../assets/icons/visa.png'),
   mastercard: require('../assets/icons/mastercard.png'),
   americanExpress: require('../assets/icons/american-express.png'),
+  toastSuccess: require('../assets/icons/toast-success.png'),
+  toastError: require('../assets/icons/toast-error.png'),
 }
 
 export const fonts = {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, Image, View } from 'react-native'
-import { HText, HButton, HCartButton, HUserFilterBy } from '../Shared'
+import { HText, HButton, HCartButton, HUserFilterBy, HToast } from '../Shared'
 import { colors, images } from '../../utils/styleGuide'
 import { HStack, Box, Skeleton, useToast } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
@@ -27,6 +27,7 @@ export const LeadsDashboard = (props) => {
   const [isBuyers, setIsBuyers] = useState(true)
   const [isSellers, setIsSellers] = useState(true)
   const [isProspective, setIsProspective] = useState(true)
+  const [isLoadedData, setIsLoadedData] = useState(false)
 
   const handleLeadsFilter = (response) => {
     let _leadsList = []
@@ -55,12 +56,9 @@ export const LeadsDashboard = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -72,6 +70,7 @@ export const LeadsDashboard = (props) => {
     if (!isSellers) _leadsList = _leadsList.filter(lead => lead.level !== 'sellers')
     if (!isProspective) _leadsList = _leadsList.filter(lead => lead.level !== 'prospective')
     setFilteredLeadsList(_leadsList)
+    setIsLoadedData(true)
   }, [isBuyers, isSellers, isProspective, leadsList, isLoading])
 
   useEffect(() => {
@@ -118,9 +117,9 @@ export const LeadsDashboard = (props) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.container}
           >
-            {isLoading ? (
+            {(isLoading || !isLoadedData) ? (
               <LeadCard
-                isLoading={isLoading}
+                isLoading
                 onNavigationRedirect={onNavigationRedirect}
               />
             ) : (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ScrollView, View, Image } from 'react-native'
 import { Pressable, HStack, VStack, Box, useToast } from 'native-base'
-import { HText, HSliderButton } from '../Shared'
+import { HText, HSliderButton, HToast } from '../Shared'
 import { icons, images } from '../../utils/styleGuide'
 import { Accordion } from './Accordion'
 import styles from './style'
@@ -87,12 +87,9 @@ export const ContactLeadPreset = (props) => {
       if (response.result === 'Success') {
         dispatch(setUser({ preset: formState }))
         toast.show({
-          title: 'Success',
-          description: 'Preset updated',
-          status: 'success',
-          duration: TOAST_LENGTH_SHORT,
-          marginRight: 4,
-          marginLeft: 4,
+          render: () => <HToast status='success' message='Preset updated' />,
+          placement: 'top',
+          duration: TOAST_LENGTH_SHORT
         })
       } else {
         throw { message: 'Something went wrong' }
@@ -101,12 +98,9 @@ export const ContactLeadPreset = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

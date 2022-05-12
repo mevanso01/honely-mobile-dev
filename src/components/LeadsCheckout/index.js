@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HToast } from '../Shared'
 import { Pressable, HStack, Box, useToast, Divider } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
@@ -57,12 +57,9 @@ export const LeadsCheckout = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

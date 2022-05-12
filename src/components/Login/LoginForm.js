@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { View, Keyboard, Image, ScrollView } from 'react-native'
-import { HButton, HText, HPressableText } from '../Shared'
+import { HButton, HText, HPressableText, HToast } from '../Shared'
 import { Box, Input, FormControl, Icon, HStack, Pressable, useToast } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors, icons } from '../../utils/styleGuide'
@@ -42,23 +42,17 @@ export const LoginForm = (props) => {
       } catch (error) {
         setIsLoading(false)
         toast.show({
-          title: 'Error',
-          description: error.message,
-          status: 'error',
-          duration: TOAST_LENGTH_SHORT,
-          marginRight: 4,
-          marginLeft: 4,
+          render: () => <HToast status='error' message={error.message} />,
+          placement: 'top',
+          duration: TOAST_LENGTH_SHORT
         })
       }
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -78,12 +72,9 @@ export const LoginForm = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
@@ -97,12 +88,9 @@ export const LoginForm = (props) => {
       dispatch(setUser({ preset: response.data }))
     } catch (error) {
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

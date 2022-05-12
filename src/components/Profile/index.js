@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, ScrollView, Image } from 'react-native'
 import { useSelector } from 'react-redux'
 import { Box, Divider, Pressable, VStack, useToast } from 'native-base'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HToast } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import { TOAST_LENGTH_SHORT } from '../../config'
@@ -46,12 +46,9 @@ export const Profile = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }

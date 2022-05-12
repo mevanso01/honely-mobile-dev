@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { View, ScrollView, Image, Keyboard } from 'react-native'
-import { HScreenHeader, HText, HButton } from '../Shared'
-import { Pressable, VStack, HStack, Box, Input, FormControl, Icon, useToast } from 'native-base'
+import { HScreenHeader, HText, HButton, HToast } from '../Shared'
+import { Pressable, HStack, Box, Input, FormControl, Icon, useToast } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useForm, Controller } from 'react-hook-form'
@@ -36,12 +36,9 @@ export const ChangePassword = (props) => {
       const user = await Auth.currentAuthenticatedUser()
       await Auth.changePassword(user, oldPassword, newPassword)
       toast.show({
-        title: 'Success',
-        description: 'Password Changed Succesfully.',
-        status: 'success',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='success' message='Password Changed Succesfully.' />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     } catch (err) {
       let errorMessage = ''
@@ -58,12 +55,9 @@ export const ChangePassword = (props) => {
         errorMessage = "Password Change Failed. Please check your network connection and try again"
       }
       toast.show({
-        title: 'Error',
-        description: errorMessage,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={errorMessage} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     } finally {
       setIsLoading(false)

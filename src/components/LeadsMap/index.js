@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import { Pressable, Box, HStack, VStack, Divider, useToast, Skeleton } from 'native-base'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HToast } from '../Shared'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
@@ -125,12 +125,9 @@ export const LeadsMap = (props) => {
     } catch (error) {
       setIsLoading(false)
       toast.show({
-        title: 'Error',
-        description: error.message,
-        status: 'error',
-        duration: TOAST_LENGTH_SHORT,
-        marginRight: 4,
-        marginLeft: 4,
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
       })
     }
   }
