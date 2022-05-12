@@ -31,7 +31,6 @@ export const BuyLeads = (props) => {
   const [sellersLeads, setSellersLeads] = useState({})
   const [prospectiveLeads, setProspectiveLeads] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [openFilter, setOpenFilter] = useState(false)
 
   useEffect(() => {
     const totalBuyers = leads?.buyers?.total || 0

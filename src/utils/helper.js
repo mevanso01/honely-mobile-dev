@@ -60,28 +60,20 @@ export const getIconCard = (brand) => {
       )
     case 'discover':
       return (
-        FontAwesome && <FontAwesome
-          name='cc-discover'
-          size={26}
-          color={'#000'}
-        />
+        <Image source={icons.discover} style={{ width: 37, height: 24, resizeMode: 'contain' }} />
       )
     case 'jcb':
       return (
-        FontAwesome && <FontAwesome
-          name='cc-jcb'
-          size={26}
-          color={'#000'}
-        />
+        <Image source={icons.jcb} style={{ width: 40, height: 24, resizeMode: 'contain' }} />
       )
     case 'diners-club':
       return (
-        FontAwesome && <FontAwesome
-          name='cc-diners-club'
-          size={26}
-          color={'#000'}
-        />
+        <Image source={icons.dinersClub} style={{ width: 38, height: 24, resizeMode: 'contain' }} />
       )
+    case 'cup':
+      return (
+        <Image source={icons.cup} style={{ width: 38, height: 24, resizeMode: 'contain' }} />
+      )      
     default:
       return (
         FontAwesome && <FontAwesome

@@ -280,6 +280,8 @@ export const Card = (props) => {
                   fontSize: 16
                 }}
                 isLoading={isLoading}
+                isDisabled={!cartQty && !isAdded && maxQuantity > 1}
+                disabledOpacity={0.6}
                 onPress={() => maxQuantity > 1 ? handleModifyCart() : handleAddToCart(leadsIds)}
               />
             </HStack>

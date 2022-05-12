@@ -113,7 +113,7 @@ const HUserFilterBy = (props) => {
                   <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: '180deg' }]}]} />
                 </HStack>
               </Pressable>
-              <Divider backgroundColor={colors.lightPrimary} my='2' />
+              <Divider backgroundColor={colors.lightPrimary} my='2' opacity={0.6} />
               <Checkbox
                 size='md'
                 mr='8'
@@ -135,7 +135,7 @@ const HUserFilterBy = (props) => {
               >
                 <HText style={styles.radioLabel}>Buyers</HText>
               </Checkbox>
-              <Divider backgroundColor={colors.lightPrimary} my='2' />
+              <Divider backgroundColor={colors.lightPrimary} my='2' opacity={0.6} />
               <Checkbox
                 size='md'
                 mr='8'
@@ -157,7 +157,7 @@ const HUserFilterBy = (props) => {
               >
                 <HText style={styles.radioLabel}>Sellers</HText>
               </Checkbox>
-              <Divider backgroundColor={colors.lightPrimary} my='2' />
+              <Divider backgroundColor={colors.lightPrimary} my='2' opacity={0.6} />
               <Checkbox
                 size='md'
                 borderRadius={15}
@@ -178,7 +178,7 @@ const HUserFilterBy = (props) => {
               >
                 <HText style={styles.radioLabel}>Prospective</HText>
               </Checkbox>
-              <Divider backgroundColor={colors.lightPrimary} my='2' />
+              <Divider backgroundColor={colors.lightPrimary} my='2' opacity={0.6} />
             </VStack>
           </View>
         </View>

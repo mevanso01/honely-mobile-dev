@@ -131,7 +131,7 @@ export const LeadsDashboard = (props) => {
                     showsButtons={false}
                     loop={true}
                     renderPagination={renderPagination}
-                    height={420}
+                    height={360}
                   >
                     {filteredLeadsList.map(lead => (
                       <LeadCard
@@ -177,7 +177,7 @@ export const LeadsDashboard = (props) => {
 
 const renderPagination = (index, total, context) => {
   return (
-    <Box alignItems='center'>
+    <Box alignItems='center' flex='1'>
       <HText style={styles.paginationText}>{index + 1}/{total}</HText>
     </Box>
   )

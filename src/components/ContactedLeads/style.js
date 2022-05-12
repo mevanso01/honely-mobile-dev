@@ -4,7 +4,7 @@ import { colors, fonts } from '../../utils/styleGuide'
 export default StyleSheet.create({
   screenContainer: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 20 : 40,
+    paddingTop: Platform.OS === 'ios' ? 30 : 40,
     paddingHorizontal: 18
   },
   headerContainer: {
