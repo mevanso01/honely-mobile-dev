@@ -46,7 +46,7 @@ const HToast = (props) => {
   return (
     <View style={styles.container}>
       <Image source={getIcon(status)} style={styles.emojiStyle} />
-      <Text style={styles.messageText}>{message}</Text>
+      <Text style={styles.messageText} numberOfLines={5}>{message}</Text>
     </View>
   )
 }
