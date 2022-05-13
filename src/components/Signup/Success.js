@@ -19,7 +19,7 @@ export const Success = (props) => {
           source={images.logoGreen}
           style={styles.logoWrapper}
         />
-        <HText style={styles.congratsText}>Weclome {formState?.firstName} {formState?.lastName}</HText>
+        <HText style={styles.congratsText}>Welcome {formState?.firstName} {formState?.lastName}</HText>
       </View>
       <Box mb='8' alignItems='center'>
         <HText style={styles.loadingText}>

@@ -80,11 +80,6 @@ export const BillingInfo = (props) => {
       })
     } else {
       handleGetUserPaymethods()
-      toast.show({
-        render: () => <HToast status='success' message='Your payment method is successfully set up for future payments!' />,
-        placement: 'top',
-        duration: TOAST_LENGTH_SHORT
-      })
     }
   }
 
@@ -115,14 +110,16 @@ export const BillingInfo = (props) => {
         : `lookup-test/lead/payment-intent?user-id=${currentUser?.user_id}&amount=${totalPrice * 100}&pm-id=${selectedPaymethodId}`
       const response = await doPost(fetchUrl)
       if (response.result === 'Error') throw response
-      toast.show({
-        render: () => <HToast status='success' message='Payment success!' />,
-        placement: 'top',
-        duration: TOAST_LENGTH_SHORT
-      })
-      dispatch(setUser({ cart: {} }))
-      setPaymentProcessing(false)
-      onNavigationRedirect('Leads')
+      setTimeout(() => {
+        toast.show({
+          render: () => <HToast status='success' message='Payment success!' />,
+          placement: 'top',
+          duration: TOAST_LENGTH_SHORT
+        })
+        dispatch(setUser({ cart: {} }))
+        setPaymentProcessing(false)
+        onNavigationRedirect('Leads')
+      }, 2000)
     } catch (error) {
       setPaymentProcessing(false)
       toast.show({

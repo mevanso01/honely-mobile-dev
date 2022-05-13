@@ -37,10 +37,10 @@ export const Settings = (props) => {
             text='Change Password'
             onPress={() => onNavigationRedirect('ChangePassword')}
           />
-          <OptionItem
+          {/* <OptionItem
             text='Notifications'
             onPress={() => {}}
-          />
+          /> */}
           <OptionItem
             text='Contact Lead Preset'
             onPress={() => onNavigationRedirect('ContactLeadPreset')}
@@ -50,7 +50,7 @@ export const Settings = (props) => {
             onPress={() => {}}
           />
         </VStack>
-        <VStack mt='8'>
+        {/* <VStack mt='8'>
           <HText style={styles.sectionTitle}>Switch</HText>
           <Box mt='2'>
             <OptionItem
@@ -58,7 +58,7 @@ export const Settings = (props) => {
               onPress={() => {}}
             />
           </Box>
-        </VStack>
+        </VStack> */}
         <VStack mt='8'>
           <HText style={styles.sectionTitle}>Legal</HText>
           <VStack mt='2'>
