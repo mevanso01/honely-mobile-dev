@@ -129,6 +129,7 @@ const HUserFilterBy = (props) => {
                 icon={
                   <Icon as={<Image source={icons.cirlceCheckOn} />} />
                 }
+                _disabled={{ opacity: 1 }}
                 isDisabled={!isSellers && !isProspective}
                 isChecked={isBuyers}
                 onChange={selected => onSelectFilterBy(selected, 'buyers')}
@@ -151,6 +152,7 @@ const HUserFilterBy = (props) => {
                 icon={
                   <Icon as={<Image source={icons.cirlceCheckOn} />} />
                 }
+                _disabled={{ opacity: 1 }}
                 isDisabled={!isBuyers && !isProspective}
                 isChecked={isSellers}
                 onChange={selected => onSelectFilterBy(selected, 'sellers')}
@@ -172,6 +174,7 @@ const HUserFilterBy = (props) => {
                 icon={
                   <Icon as={<Image source={icons.cirlceCheckOn} />} />
                 }
+                _disabled={{ opacity: 1 }}
                 isDisabled={!isSellers && !isBuyers}
                 isChecked={isProspective}
                 onChange={selected => onSelectFilterBy(selected, 'prospective')}

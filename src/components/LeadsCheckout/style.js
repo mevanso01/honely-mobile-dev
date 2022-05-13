@@ -26,10 +26,12 @@ export default StyleSheet.create({
     fontFamily: fonts.regular,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 27,
+    lineHeight: 33,
     textAlign: 'center',
     color: colors.primary,
-    marginBottom: 32
+    marginBottom: 32,
+    fontFamily: fonts.bold
   },
   scrollContent: {
     flexGrow: 1,

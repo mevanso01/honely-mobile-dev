@@ -234,6 +234,7 @@ export const ContactLead = (props) => {
               color={colors.text01}
               autoCapitalize='none'
               defaultValue={defaultSMS}
+              isDisabled={!lead?.phone_number}
               onChangeText={e => setDefaultSMS(e)}
               blurOnSubmit={false}
               onFocus={() => setIsSmsFocus(true)}
@@ -243,7 +244,7 @@ export const ContactLead = (props) => {
           <Box alignItems='center' mt='5'>
             <HButton
               text='Send SMS'
-              isDisabled={isLoading}
+              isDisabled={isLoading || !lead?.phone_number}
               disabledOpacity={0.6}
               borderColor={colors.primary}
               backgroundColor={colors.primary}

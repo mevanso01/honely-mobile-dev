@@ -160,7 +160,7 @@ export const FindLeads = (props) => {
             <View style={styles.cartIconWrapper}>
               <HCartButton
                 onPress={() => onNavigationRedirect('LeadsCheckout')}
-                countWrapperStyle={{ backgroundColor: colors.white, borderWidth: 0 }}
+                countWrapperStyle={{ backgroundColor: colors.white }}
                 countTextStyle={{ color: colors.primary }}
                 iconStyle={{ tintColor: colors.white }}
               />

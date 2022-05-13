@@ -51,7 +51,7 @@ export const ContactedLeads = (props) => {
     let _leadsList = []
     let _totalLead = 0
     if (response?.buyers?.leads) {
-      const _buyerLeads = response.buyers?.leads.filter(lead => lead.agent_status !== 'NEW' && selectedStatuses.includes(lead.agent_status))
+      const _buyerLeads = response.buyers?.leads.filter(lead => lead.agent_status !== 'NEW' && (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
       _totalLead += _buyerLeads.length
       if (_buyerLeads.length && isBuyers) {
         const buyerLeads = _buyerLeads.map(lead => {
@@ -61,7 +61,7 @@ export const ContactedLeads = (props) => {
       }
     }
     if (response?.sellers?.leads) {
-      const _sellerLeads = response.sellers?.leads.filter(lead => lead.agent_status !== 'NEW' && selectedStatuses.includes(lead.agent_status))
+      const _sellerLeads = response.sellers?.leads.filter(lead => lead.agent_status !== 'NEW' && (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
       _totalLead += _sellerLeads.length
       if (_sellerLeads.length && isSellers) {
         const sellerLeads = _sellerLeads.map(lead => {
@@ -71,7 +71,7 @@ export const ContactedLeads = (props) => {
       }
     }
     if (response?.prospective?.leads) {
-      const _prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status !== 'NEW' && selectedStatuses.includes(lead.agent_status))
+      const _prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status !== 'NEW' && (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
       _totalLead += _prospectiveLeads.length
       if (_prospectiveLeads.length && isProspective) {
         const prospectiveLeads = _prospectiveLeads.map(lead => {

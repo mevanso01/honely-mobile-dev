@@ -11,12 +11,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { LeadCard } from './LeadCard'
 import { setUser } from '../../store/action/setUser'
+import { useIsFocused } from '@react-navigation/native'
 
 export const LeadsDashboard = (props) => {
   const {
     onNavigationRedirect
   } = props
 
+  const isFocused = useIsFocused()
   const toast = useToast()
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
@@ -48,7 +50,6 @@ export const LeadsDashboard = (props) => {
 
   const handleGetUserLeads = async () => {
     try {
-      setIsLoading(true)
       const response = await doGet('searches/lead-dashboard', { 'user-id': currentUser?.user_id })
       if (response.result !== 'Success') throw response
       dispatch(setUser({ leads: response.data }))
@@ -81,8 +82,11 @@ export const LeadsDashboard = (props) => {
 
   useEffect(() => {
     SplashScreen.hide()
-    handleGetUserLeads()
   }, [])
+
+  useEffect(() => {
+    handleGetUserLeads()
+  }, [isFocused])
 
   return (
     <View style={styles.screenContainer}>
