@@ -496,7 +496,14 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs:
     - CocoaAsyncSocket
+    - Flipper
+    - Flipper-Boost-iOSX
+    - Flipper-DoubleConversion
     - Flipper-Fmt
+    - Flipper-Folly
+    - Flipper-Glog
+    - Flipper-PeerTalk
+    - Flipper-RSocket
     - FlipperKit
     - fmt
     - Google-Maps-iOS-Utils
@@ -509,16 +516,6 @@ SPEC REPOS:
     - StripeCore
     - StripeUICore
     - YogaKit
-  https://github.com/CocoaPods/Specs.git:
-    - Flipper
-    - Flipper-Boost-iOSX
-    - Flipper-DoubleConversion
-    - Flipper-Folly
-    - Flipper-Glog
-    - Flipper-PeerTalk
-    - Flipper-RSocket
-    - Google-Maps-iOS-Utils
-    - GoogleMaps
 
 EXTERNAL SOURCES:
   boost:

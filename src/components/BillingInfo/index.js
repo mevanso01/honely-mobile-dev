@@ -71,15 +71,16 @@ export const BillingInfo = (props) => {
   }
 
   const openPaymentSheet = async () => {
-    const { error } = await presentPaymentSheet()
-    if (error) {
+    try {
+      const { error } = await presentPaymentSheet()
+      if (error) throw error
+      handleGetUserPaymethods()
+    } catch (error) {
       toast.show({
         render: () => <HToast status='error' message={error.message} />,
         placement: 'top',
         duration: TOAST_LENGTH_SHORT
       })
-    } else {
-      handleGetUserPaymethods()
     }
   }
 

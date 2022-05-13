@@ -139,6 +139,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 8,
+    height: 50
   },
   phoneInput: {
     color: colors.text01,
