@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { View, ScrollView, Image } from 'react-native'
 import { useSelector } from 'react-redux'
-import { Box, Divider, Pressable, VStack, useToast } from 'native-base'
-import { HText, HButton, HToast } from '../Shared'
+import { Box, Divider, Pressable, VStack } from 'native-base'
+import { HText, HButton } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
-import { TOAST_LENGTH_SHORT } from '../../config'
-import { doGet } from '../../services/http-client'
-import { useDispatch } from 'react-redux'
-import { setAgentProfile } from '../EditProfile/store'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FitImage from 'react-native-fit-image';
-import { isServiceProvider } from '../../utils/helper'
 
 export const Profile = (props) => {
   const {
@@ -21,10 +16,9 @@ export const Profile = (props) => {
   const insets = useSafeAreaInsets()
   const statusBarHeight = insets.top
 
-  const toast = useToast()
-  const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
-  const [isLoading, setIsLoading] = useState(false)
+  const { agentProfile } = useSelector(({ screens }) => screens.editprofile)
+
   const fetchImage = () => {
     const defaultImg = 'https://honely-files-public.s3.amazonaws.com/images/avatar/avatar_user_01.png'
     if (currentUser?.image_url) {
@@ -33,31 +27,6 @@ export const Profile = (props) => {
       return defaultImg
     }
   }
-
-  const fetchAgentProfile = async () => {
-    try {
-      setIsLoading(true)
-      const response = await doGet('lookup-test/agent_profile', { agent_email: currentUser.email })
-      if (response?.message) {
-        throw response
-      }
-      dispatch(setAgentProfile({ ...response }))
-      setIsLoading(false)
-    } catch (error) {
-      setIsLoading(false)
-      toast.show({
-        render: () => <HToast status='error' message={error.message} />,
-        placement: 'top',
-        duration: TOAST_LENGTH_SHORT
-      })
-    }
-  }
-
-  useEffect(() => {
-    if (isServiceProvider(currentUser.user_type)) {
-      fetchAgentProfile()
-    }
-  }, [])
 
   return (
     <View style={styles.screenContainer}>
@@ -95,13 +64,12 @@ export const Profile = (props) => {
           <VStack mt='8'>
             <HText style={styles.nameText}>{currentUser?.first_name} {currentUser?.last_name}</HText>
             <Divider backgroundColor={colors.white} width='full' />
-            <HText style={styles.nameDetail}>Keller Willaims Realty</HText>
+            <HText style={styles.nameDetail}>{agentProfile?.company_name}</HText>
           </VStack>
         </View>
         <Box mt='5' mb='10' alignItems='center'>
           <HButton
             text='Edit Profile'
-            isDisabled={isLoading}
             disabledOpacity={0.6}
             onPress={() => onNavigationRedirect('EditProfile')}
           />
