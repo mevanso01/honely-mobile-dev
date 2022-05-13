@@ -45,6 +45,7 @@
     "react-native-switch": "^1.5.1",
     "react-native-three-dots-loader": "^1.0.1",
     "react-native-vector-icons": "^9.1.0",
+    "react-phone-number-input": "^3.1.52",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",

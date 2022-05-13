@@ -133,5 +133,16 @@ export default StyleSheet.create({
   },
   underlineStyleHighLighted: {
     borderColor: colors.primary,
+  },
+  phoneInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 8,
+  },
+  phoneInput: {
+    color: colors.text01,
+    fontSize: 14,
+    flex: 1
   }
 })

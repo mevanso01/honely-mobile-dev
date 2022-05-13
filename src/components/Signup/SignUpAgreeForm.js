@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react'
 import { ScrollView, Image, View, Keyboard } from 'react-native'
 import { HButton, HText } from '../Shared'
-import { Box, Input, FormControl, Icon, HStack, Pressable, Checkbox } from 'native-base'
+import { Box, Input, FormControl, Icon, HStack, Checkbox } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useForm, Controller } from 'react-hook-form'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
+import PhoneInput from 'react-phone-number-input/react-native-input'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setFormState } from './store'
@@ -176,57 +177,51 @@ export const SignUpAgreeForm = (props) => {
             name='phonenumber'
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Input
-                placeholder='e.g +1 234 2892 2892'
-                placeholderTextColor={colors.text03}
-                keyboardType="number-pad"
-                fontSize={14}
-                borderRadius={8}
-                height={50}
-                backgroundColor='transparent'
-                borderColor={
-                  errors?.phonenumber?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
-                }
-                autoCapitalize='none'
-                autoCorrect={false}
-                returnKeyType='done'
-                isDisabled={isLoading}
-                value={value}
-                onChangeText={val => onChange(val)}
-                ref={phonenumberRef}
-                blurOnSubmit={false}
-                onSubmitEditing={() => Keyboard.dismiss()}
-                InputLeftElement={
-                  <Image
-                    source={icons.phone}
-                    style={[
-                      styles.inputIcon,
-                      {tintColor: `${
-                        errors?.phonenumber?.message
-                          ? colors.error
-                          : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
-                        }`
-                      }
-                    ]}
+              <View
+                style={[
+                  styles.phoneInputContainer,
+                  {
+                    borderColor: errors?.phonenumber?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
+                  }
+                ]}
+              >
+                <Image
+                  source={icons.phone}
+                  style={[
+                    styles.inputIcon,
+                    {tintColor: `${
+                      errors?.phonenumber?.message
+                        ? colors.error
+                        : (value && isSubmitClicked) ? colors.lightPrimary : colors.text04
+                      }`,
+                      marginRight: 8
+                    }
+                  ]}
+                />
+                <PhoneInput
+                  ref={phonenumberRef}
+                  defaultCountry='US'
+                  country='US'
+                  placeholder='e.g (555) 123-4444'
+                  placeholderTextColor={colors.text03}
+                  keyboardType='phone-pad'
+                  value={value && value.indexOf('+1') === -1 ? `+1${value}` : value}
+                  onChange={number => onChange(number && number.indexOf('+1') !== -1 ? number.split('+1')[1] : number)}
+                  style={[styles.phoneInput]}
+                />
+                {(!errors?.phonenumber?.message && isSubmitClicked) && (
+                  <Icon
+                    as={<MaterialIcons name="check" />}
+                    size={5} mr="4"
+                    color={colors.lightPrimary}
                   />
-                }
-                InputRightElement={
-                  (!errors?.phonenumber?.message && isSubmitClicked) && (
-                    <Icon
-                      as={<MaterialIcons name="check" />}
-                      size={5} mr="4"
-                      color={colors.lightPrimary}
-                    />
-                  )
-                }
-                _focus={{
-                  borderColor: !errors?.phonenumber?.message ? colors.lightPrimary : colors.error
-                }}
-              />
+                )}
+              </View>
             )}
             rules={{
               required: { value: true, message: 'The field phone number is required' },
               minLength: { value: 10, message: 'Phone number must contain 10 digits' },
+              maxLength: { value: 10, message: 'Phone number must contain 10 digits' },
             }}
           />
           {errors?.phonenumber?.message && (
