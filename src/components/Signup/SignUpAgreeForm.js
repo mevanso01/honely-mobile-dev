@@ -23,6 +23,7 @@ export const SignUpAgreeForm = (props) => {
     defaultValues: formState
   })
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
+  const [phoneNumberFocus, setPhoneNumberFocus] = useState(false)
 
   const lastNameRef = useRef()
   const phonenumberRef = useRef()
@@ -181,7 +182,9 @@ export const SignUpAgreeForm = (props) => {
                 style={[
                   styles.phoneInputContainer,
                   {
-                    borderColor: errors?.phonenumber?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
+                    borderColor: phoneNumberFocus
+                      ? !errors?.phonenumber?.message ? colors.lightPrimary : colors.error
+                      : errors?.phonenumber?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
                   }
                 ]}
               >
@@ -208,6 +211,8 @@ export const SignUpAgreeForm = (props) => {
                   value={value && value.indexOf('+1') === -1 ? `+1${value}` : value}
                   onChange={number => onChange(number && number.indexOf('+1') !== -1 ? number.split('+1')[1] : number)}
                   style={[styles.phoneInput]}
+                  onFocus={() => setPhoneNumberFocus(true)}
+                  onBlur={() => setPhoneNumberFocus(false)}
                 />
                 {(!errors?.phonenumber?.message && isSubmitClicked) && (
                   <Icon
