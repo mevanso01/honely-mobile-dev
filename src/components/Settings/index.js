@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, ScrollView, Image } from 'react-native'
+import { View, ScrollView, Image, Linking } from 'react-native'
 import { HScreenHeader, HText, HButton } from '../Shared'
 import { Pressable, VStack, HStack, Box } from 'native-base'
 import { useDispatch } from 'react-redux'
 import { signoutUser } from '../../store/action/setUser'
 import { resetProfileInfo } from '../EditProfile/store'
 import { colors, icons } from '../../utils/styleGuide'
+import { URL_PRIVACY_POLICY, URL_TERMS_SERVICE } from '../../utils/constants'
 import styles from './style'
 
 export const Settings = (props) => {
@@ -45,10 +46,10 @@ export const Settings = (props) => {
             text='Contact Lead Preset'
             onPress={() => onNavigationRedirect('ContactLeadPreset')}
           />
-          <OptionItem
+          {/* <OptionItem
             text='Privacy and Sharing'
             onPress={() => {}}
-          />
+          /> */}
         </VStack>
         {/* <VStack mt='8'>
           <HText style={styles.sectionTitle}>Switch</HText>
@@ -64,11 +65,11 @@ export const Settings = (props) => {
           <VStack mt='2'>
             <OptionItem
               text='Terms of Service'
-              onPress={() => {}}
+              onPress={() => { Linking.openURL(URL_TERMS_SERVICE) }}
             />
             <OptionItem
               text='Privacy Policy'
-              onPress={() => {}}
+              onPress={() => { Linking.openURL(URL_PRIVACY_POLICY) }}
             />
           </VStack>
         </VStack>

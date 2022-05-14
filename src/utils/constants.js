@@ -8,3 +8,6 @@ export const leadStatuses = [
   { value: 4, key: 'CLOSED_LEADS', content: 'Closed Leads', color: colors.green },
   { value: 5, key: 'REJECTED', content: 'Rejected', color: colors.rejected }
 ]
+
+export const URL_PRIVACY_POLICY   = 'https://www.honely.com/privacy';
+export const URL_TERMS_SERVICE    = 'https://www.honely.com/terms';
