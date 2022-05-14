@@ -44,7 +44,7 @@ const HCartButton = (props) => {
   })
 
   const currentUser = useSelector(state => state.currentUser)
-  const [totalCartCount, setTotalCartCount] = useState([])
+  const [totalCartCount, setTotalCartCount] = useState(0)
 
   useEffect(() => {
     if (!currentUser?.cart) return
