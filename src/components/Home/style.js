@@ -20,7 +20,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 16,
-    marginBottom: 24
+    marginBottom: 32
   },
   title: {
     textAlign: 'center',

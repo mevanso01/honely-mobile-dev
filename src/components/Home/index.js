@@ -65,7 +65,7 @@ export const Home = (props) => {
           </View>
         ))}
       </Swiper>
-      <Box mt='4'>
+      <Box mt='5'>
         <HButton
           text='Log in'
           onPress={() => onNavigationRedirect('Login')}
