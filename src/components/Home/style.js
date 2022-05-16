@@ -39,6 +39,7 @@ export default StyleSheet.create({
   slideImage: {
     resizeMode: 'contain',
     flex: 1,
+    width: (deviceWidth - 36) * 0.8
   },
   paginationStyle: {
     bottom: 0
