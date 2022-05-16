@@ -13,13 +13,14 @@ export default StyleSheet.create({
   logo: {
     width: 187,
     height: 70,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   slide: {
-    flex: 0,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 50,
+    marginTop: 16,
+    marginBottom: 24
   },
   title: {
     textAlign: 'center',
@@ -27,7 +28,7 @@ export default StyleSheet.create({
     fontWeight: '700',
     marginBottom: 16,
     color: colors.text01,
-    marginTop: 40
+    marginTop: 20
   },
   description: {
     textAlign: 'center',
@@ -36,8 +37,10 @@ export default StyleSheet.create({
     lineHeight: 17
   },
   slideImage: {
-    width: deviceWidth * 0.7,
-    height: deviceWidth * 0.7,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
+    flex: 1,
   },
+  paginationStyle: {
+    bottom: 0
+  }
 })

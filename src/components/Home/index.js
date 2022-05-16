@@ -50,6 +50,7 @@ export const Home = (props) => {
         loop={true}
         dotColor={colors.borderColor}
         activeDotColor={colors.primary}
+        paginationStyle={styles.paginationStyle}
       >
         {data.map(item => (
           <View
