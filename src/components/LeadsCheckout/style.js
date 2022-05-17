@@ -66,5 +66,11 @@ export default StyleSheet.create({
     color: colors.primary,
     fontSize: 14,
     marginLeft: 3
+  },
+  emptyCartImage: {
+    tintColor: colors.primary,
+    width: 200,
+    height: 200,
+    resizeMode: 'contain'
   }
 })

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import { HText, HButton, HToast } from '../Shared'
-import { Pressable, HStack, Box, useToast, Divider } from 'native-base'
+import { Pressable, HStack, Box, useToast, Divider, VStack } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
@@ -84,53 +84,74 @@ export const LeadsCheckout = (props) => {
           </HStack>
         </Pressable>
       </View>
-      <HText style={styles.headerTitle}>Place your order</HText>
+      <HText style={styles.headerTitle}>
+        {totalLeadCount ? 'Place your order' : 'Your cart is empty'}
+      </HText>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {buyersLeads.map(lead => (
-          <CartItem
-            key={lead.zip_code}
-            title={`Buyers (${lead.zip_code})`}
-            lead={lead}
-            userTypeValue={1}
-          />
-        ))}
-        {sellersLeads.map(lead => (
-          <CartItem
-            key={lead.zip_code}
-            title={`Sellers (${lead.zip_code})`}
-            lead={lead}
-            userTypeValue={2}
-          />
-        ))}
-        {prospectiveLeads.map(lead => (
-          <CartItem
-            key={lead.zip_code}
-            title={`Prospective (${lead.zip_code})`}
-            lead={lead}
-            userTypeValue={3}
-          />
-        ))}
+        {totalLeadCount ? (
+          <>
+            {buyersLeads.map(lead => (
+              <CartItem
+                key={lead.zip_code}
+                title={`Buyers (${lead.zip_code})`}
+                lead={lead}
+                userTypeValue={1}
+              />
+            ))}
+            {sellersLeads.map(lead => (
+              <CartItem
+                key={lead.zip_code}
+                title={`Sellers (${lead.zip_code})`}
+                lead={lead}
+                userTypeValue={2}
+              />
+            ))}
+            {prospectiveLeads.map(lead => (
+              <CartItem
+                key={lead.zip_code}
+                title={`Prospective (${lead.zip_code})`}
+                lead={lead}
+                userTypeValue={3}
+              />
+            ))}
+          </>
+        ) : (
+          <VStack alignItems='center' justifyContent='center' flex='1' opacity='0.5'>
+            <Image source={icons.cart} style={styles.emptyCartImage}  />
+          </VStack>
+        )}
       </ScrollView>
-      <Divider backgroundColor={colors.primary} my='4' />
-      <Box mb='3' alignItems='center'>
-        <HText style={styles.textStyle}>Total leads ({totalLeadCount}):</HText>
-      </Box>
-      <Box alignItems='center'>
-        <HText style={styles.textStyle}>{parsePrice(totalPrice, true)}</HText>
-      </Box>
+      {totalLeadCount ? (
+        <>
+          <Divider backgroundColor={colors.primary} my='4' />
+          <Box mb='3' alignItems='center'>
+            <HText style={styles.textStyle}>Total leads ({totalLeadCount}):</HText>
+          </Box>
+          <Box alignItems='center'>
+            <HText style={styles.textStyle}>{parsePrice(totalPrice, true)}</HText>
+          </Box>
+        </>
+      ) : (
+        <Box mt='4' mb='2' alignItems='center'>
+          <HText style={styles.textStyle}>Use the search page to find leads.</HText>
+        </Box>
+      )}
       <Box alignItems='center' mt='6' mb='4'>
         <HButton
-          text='Place Order'
+          text={totalLeadCount ? 'Place Order' : 'Find Leads'}
           backgroundColor={colors.darkPrimary}
           width={(deviceWidth - 36) * 0.9}
           height={61}
           textStyle={{
             fontSize: 24
           }}
-          onPress={() => onNavigationRedirect('BillingInfo', { totalPrice: totalPrice })}
+          onPress={() => totalLeadCount
+            ? onNavigationRedirect('BillingInfo', { totalPrice: totalPrice })
+            : onNavigationRedirect('FindLeads')
+          }
         />
       </Box>
     </View>
