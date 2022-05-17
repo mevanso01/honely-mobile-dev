@@ -118,13 +118,13 @@ export const BusinessCompanyForm = (props) => {
         )}
       </FormControl>
       <View style={styles.stepButtonContainer}>
-        <HStack mb='6' alignItems='center'>
+        {/* <HStack mb='6' alignItems='center'>
           <HCricleProgress
             isShowChecked={companyName}
             fill={100}
           />
           <HText style={styles.stepTitle}>Step 2/2</HText>
-        </HStack>
+        </HStack> */}
 
         <Box alignItems='center'>
           <HButton

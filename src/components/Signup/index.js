@@ -41,17 +41,12 @@ export const SignUpScreen = (props) => {
       )}
       {signUpFormStep === 'signUpAgree' && (
         <SignUpAgreeForm
-          handleNextStep={() => setSignUpFormStep('businessType')}
+          handleNextStep={() => setSignUpFormStep('businessCompany')}
         />
       )}
       {signUpFormStep === 'describe' && (
         <DescribeForm
           handleNextStep={handleDescibeNextStep}
-        />
-      )}
-      {signUpFormStep === 'businessType' && (
-        <BusinessTypeForm
-          handleNextStep={handleBusinessTypeNextStep}
         />
       )}
       {signUpFormStep === 'businessCompany' && (

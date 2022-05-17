@@ -41,10 +41,10 @@ export const handleCreateAccount = () => async (dispatch, getState) => {
     fullPhone = fullPhone.replace(/-/g, "")
 
     let siteLeads = "FALSE"
-    let userType = ''
+    let userType = 'Agent/Broker'
     // if (formState.userType === 'Service Provider') {
       siteLeads = "TRUE"
-      userType = (formState.serviceProviderType).join(',')
+      // userType = (formState.serviceProviderType).join(',')
     // }
     // if (formState.userType === 'Homeowner') {
     //   userType = (formState.homeOwnerType).join(',')
