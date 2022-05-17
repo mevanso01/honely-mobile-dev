@@ -41,7 +41,7 @@ export default StyleSheet.create({
     tintColor: colors.text04,
   },
   signUpFormWrapper: {
-    marginVertical: 32
+    marginTop: 32
   },
   subtitle: {
     fontSize: 25,
@@ -80,6 +80,7 @@ export default StyleSheet.create({
     lineHeight: 18,
     fontWeight: '500',
     marginLeft: 8,
+    flex: 1
   },
   underlineText: {
     color: colors.primary,

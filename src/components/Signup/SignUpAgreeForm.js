@@ -291,7 +291,7 @@ export const SignUpAgreeForm = (props) => {
           </HText>
         </HStack>
       </View>
-      <Box alignItems='center' mt='8' mb='6'>
+      <Box alignItems='center' mt='8' mb='8'>
         <HButton
           text='Sign Up'
           onPress={handleSubmitClick}

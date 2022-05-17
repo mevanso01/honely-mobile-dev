@@ -371,7 +371,7 @@ export const SignUpForm = (props) => {
         </FormControl>
       </View>
 
-      <Box alignItems='center' mt='8' mb='6'>
+      <Box alignItems='center' mt='8' mb='8'>
         <HButton
           text='Next'
           onPress={handleSubmitClick}

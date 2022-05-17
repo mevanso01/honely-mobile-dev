@@ -112,7 +112,8 @@ export const OTPForm = (props) => {
           backgroundColor={colors.white}
           borderColor={colors.white}
           textStyle={{
-            color: colors.primary
+            color: colors.primary,
+            fontSize: 16
           }}
           shadow={null}
           onPress={() => doResendCode()}
