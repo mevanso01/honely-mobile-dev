@@ -3,7 +3,7 @@ import { View, ScrollView, Image } from 'react-native'
 import { useSelector } from 'react-redux'
 import { Box, Divider, Pressable, VStack } from 'native-base'
 import { HText, HButton } from '../Shared'
-import { colors, icons } from '../../utils/styleGuide'
+import { colors, icons, images } from '../../utils/styleGuide'
 import styles from './style'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FitImage from 'react-native-fit-image';
@@ -20,12 +20,7 @@ export const Profile = (props) => {
   const { agentProfile } = useSelector(({ screens }) => screens.editprofile)
 
   const fetchImage = () => {
-    const defaultImg = 'https://honely-files-public.s3.amazonaws.com/images/avatar/avatar_user_01.png'
-    if (currentUser?.image_url) {
-      return currentUser.image_url + '?random_number=' + new Date().getTime()
-    } else {
-      return defaultImg
-    }
+    return currentUser.image_url + '?random_number=' + new Date().getTime()
   }
 
   return (
@@ -41,7 +36,10 @@ export const Profile = (props) => {
             _pressed={{ opacity: 0.7 }}
             onPress={() => onNavigationRedirect('Settings')}
           >
-            <Image source={icons.setting} style={styles.settingIcon} />
+            <Image
+              source={icons.setting}
+              style={styles.settingIcon}
+            />
           </Pressable>
         </View>
       </View>
@@ -52,13 +50,25 @@ export const Profile = (props) => {
         <View style={styles.imageContainer}>
           <Box alignItems='center'>
             <View style={styles.photoWrapper}>
-              <FitImage
-                source={{ uri: fetchImage() }}
-                indicatorSize='large'
-                indicatorColor={colors.white}
-                resizeMode='cover'
-                style={styles.image}
-              />
+              {currentUser.image_url ? (
+                <FitImage
+                  key={1}
+                  source={{ uri: fetchImage() }}
+                  indicatorSize='large'
+                  indicatorColor={colors.primary}
+                  resizeMode='cover'
+                  style={styles.image}
+                />
+              ) : (
+                <FitImage
+                  key={2}
+                  source={images.dummyAvatar}
+                  indicatorSize='large'
+                  indicatorColor={colors.primary}
+                  resizeMode='contain'
+                  style={styles.defaultImage}
+                />
+              )}
             </View>
           </Box>
           <VStack mt='8'>

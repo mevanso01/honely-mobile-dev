@@ -8,7 +8,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import styles from './style'
-import FitImage from 'react-native-fit-image';
+import FitImage from 'react-native-fit-image'
+import PhoneInput from 'react-phone-number-input/react-native-input'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setFormState, doUpdateUserProfile, doUpdateAgentProfile } from './store'
@@ -28,6 +29,7 @@ export const EditProfile = (props) => {
   const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm({
     defaultValues: formState
   })
+  const [phoneNumberFocus, setPhoneNumberFocus] = useState(false)
 
   const firstNameRef = useRef()
   const lastNameRef = useRef()
@@ -432,59 +434,56 @@ export const EditProfile = (props) => {
               name='phone_number'
               control={control}
               render={({ field: { onChange, value } }) => (
-                <Input
-                  placeholder='e.g +1 234 2892 2892'
-                  placeholderTextColor={colors.text03}
-                  color={colors.text01}
-                  keyboardType="number-pad"
-                  fontWeight='500'
-                  fontSize={14}
-                  borderRadius={8}
-                  height={55}
-                  backgroundColor='transparent'
-                  borderColor={
-                    errors?.phone_number?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
-                  }
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  returnKeyType='next'
-                  isDisabled={isLoading}
-                  value={value}
-                  onChangeText={val => onChange(val)}
-                  ref={phoneNumberRef}
-                  blurOnSubmit={false}
-                  onSubmitEditing={() => companyNameRef.current?.focus()}
-                  InputLeftElement={
-                    <Image
-                      source={icons.phone}
-                      style={[
-                        styles.inputIcon,
-                        {tintColor: `${
-                          errors?.phone_number?.message
-                            ? colors.error : value ? colors.lightPrimary : colors.text04
-                          }`
-                        }
-                      ]}
+                <View
+                  style={[
+                    styles.phoneInputContainer,
+                    {
+                      borderColor: phoneNumberFocus
+                        ? !errors?.phone_number?.message ? colors.lightPrimary : colors.error
+                        :  errors?.phone_number?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
+                    }
+                  ]}
+                >
+                  <Image
+                    source={icons.phone}
+                    style={[
+                      styles.inputIcon,
+                      {tintColor: `${
+                        errors?.phone_number?.message
+                          ? colors.error : value ? colors.lightPrimary : colors.text04
+                        }`
+                      }
+                    ]}
+                  />
+                  <PhoneInput
+                    ref={phoneNumberRef}
+                    defaultCountry='US'
+                    country='US'
+                    placeholder='e.g (555) 123-4444'
+                    placeholderTextColor={colors.text03}
+                    keyboardType='phone-pad'
+                    value={value && value.indexOf('+1') === -1 ? `+1${value}` : value}
+                    onChange={number => onChange(number && number.indexOf('+1') !== -1 ? number.split('+1')[1] : number)}
+                    style={[styles.phoneInput]}
+                    onFocus={() => setPhoneNumberFocus(true)}
+                    onBlur={() => setPhoneNumberFocus(false)}
+                    returnKeyType='next'
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => companyNameRef.current?.focus()}
+                  />
+                  {(!errors?.phone_number?.message && isSubmitClicked) && (
+                    <Icon
+                      as={<MaterialIcons name="check" />}
+                      size={5} mr="4"
+                      color={colors.lightPrimary}
                     />
-                  }
-                  InputRightElement={
-                    (!errors?.phone_number?.message && isSubmitClicked) && (
-                      <Icon
-                        as={<MaterialIcons name="check" />}
-                        size={5} mr="4"
-                        color={colors.lightPrimary}
-                        onPress={() => setPasswordSee(!passwordSee)}
-                      />
-                    )
-                  }
-                  _focus={{
-                    borderColor: !errors?.phone_number?.message ? colors.lightPrimary : colors.error
-                  }}
-                />
+                  )}
+                </View>
               )}
               rules={{
                 required: { value: true, message: 'The field phone number is required' },
-                // minLength: { value: 10, message: 'Phone number must contain 10 digits' },
+                minLength: { value: 10, message: 'Phone number must contain 10 digits' },
+                maxLength: { value: 10, message: 'Invalid Phone number' },
               }}
             />
             {errors?.phone_number?.message && (

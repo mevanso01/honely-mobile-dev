@@ -70,5 +70,17 @@ export default StyleSheet.create({
     height: 16,
     resizeMode: 'contain',
     tintColor: colors.white
+  },
+  phoneInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 8,
+    height: 55
+  },
+  phoneInput: {
+    color: colors.text01,
+    fontSize: 14,
+    flex: 1
   }
 })

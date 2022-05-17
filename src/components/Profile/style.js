@@ -55,12 +55,18 @@ export default StyleSheet.create({
     width: 153,
     height: 153,
     borderRadius: 80,
-    backgroundColor: colors.text05,
+    backgroundColor: colors.white,
     overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   image: {
     width: 153,
     height: 153,
+  },
+  defaultImage: {
+    width: 83,
+    height: 104
   },
   nameText: {
     fontSize: 27,
