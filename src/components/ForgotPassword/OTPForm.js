@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
-import { HText, HButton } from '../Shared'
-import { Box, HStack, ScrollView } from 'native-base'
+import { HText, HButton, HToast } from '../Shared'
+import { Box, HStack, ScrollView, useToast } from 'native-base'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../utils/styleGuide'
+import { doGet } from '../../services/http-client'
+import { cognitoResendSignUp } from '../../store/reducer/cognitoUser'
+import { TOAST_LENGTH_SHORT } from '../../config'
+import { useDispatch } from 'react-redux'
+
 import styles from './style'
 
 export const OTPForm = (props) => {
@@ -13,8 +18,12 @@ export const OTPForm = (props) => {
     handleNextStep
   } = props
 
+  const toast = useToast()
+  const dispatch = useDispatch()
+
   const [error, setError] = useState(null)
   const [code, setCode] = useState(null)
+  const [isResending, setIsResending] = useState(false)
 
   const handleSubmitClick = () => {
     if (code) {
@@ -25,6 +34,38 @@ export const OTPForm = (props) => {
       handleNextStep()
     } else {
       setError('The OTP code is required.')
+    }
+  }
+
+  const handleResendCode = async (email, username) => {
+    try {
+      const onSuccess = () => {
+        throw { message: 'Too much time has elapsed. Please sign up again.' }
+      }
+      setIsResending(true)
+      const getRequestCode = async () => {
+        try {
+          await dispatch(cognitoResendSignUp(username))
+          setIsResending(false)
+          toast.show({
+            render: () => <HToast status='success' message='Resent Email Verification Code!' />,
+            placement: 'top',
+            duration: TOAST_LENGTH_SHORT
+          })
+        } catch (error) {
+          setIsResending(false)
+          throw error
+        }
+      }
+    
+      await doGet('lookup-test/email_verification_service', { email: email }, onSuccess, getRequestCode)
+    } catch (error) {
+      setIsResending(false)
+      toast.show({
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
+      })
     }
   }
 
@@ -61,6 +102,21 @@ export const OTPForm = (props) => {
         <HButton
           text='Submit'
           onPress={handleSubmitClick}
+        />
+      </Box>
+      <Box alignItems='center' mt='8'>
+        <HButton
+          text='Resend Code'
+          backgroundColor={colors.white}
+          borderColor={colors.white}
+          textStyle={{
+            color: colors.primary,
+            fontSize: 16
+          }}
+          shadow={null}
+          onPress={() => handleResendCode(formState?.email, formState?.userName)}
+          isLoadingText='Please wait...'
+          isLoading={isResending}
         />
       </Box>
     </ScrollView>
