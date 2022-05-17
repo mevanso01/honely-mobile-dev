@@ -16,7 +16,7 @@ export const Login = (props) => {
   const [isSignUpScreen, setIsSignUpScreen] = useState(isSignUp || false)
   const [isShowSliderButton, setIsShowSliderButton] = useState(true)
 
-  const [signUpFormStep, setSignUpFormStep] = useState('signUp')
+  const [signUpFormStep, setSignUpFormStep] = useState('success')
 
   const handleGoBack = () => {
     if (isSignUpScreen) {
