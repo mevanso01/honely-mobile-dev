@@ -16,7 +16,7 @@ export const Success = (props) => {
       <HText style={styles.signupCompleteTitle}>Sign Up Complete</HText>
       <View style={styles.successWrapper}>
         <Image
-          source={images.logoGreen}
+          source={images.logo}
           style={styles.logoWrapper}
         />
         <HText style={styles.congratsText}>Welcome {formState?.firstName} {formState?.lastName}</HText>

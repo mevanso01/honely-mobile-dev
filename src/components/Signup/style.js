@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../utils/styleGuide'
+import { colors, fonts } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 
 export default StyleSheet.create({
@@ -94,14 +94,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   signupCompleteTitle: {
-    fontSize: 16,
-    fontWeight: '500',
-    lineHeight: 24,
-    textAlign: 'center'
+    fontSize: 17,
+    textAlign: 'center',
+    fontFamily: fonts.bold
   },
   logoWrapper: {
-    width: 181,
-    height: 65,
+    width: 187,
+    height: 70,
     resizeMode: 'contain',
     marginBottom: 24
   },
