@@ -20,7 +20,7 @@ const HToast = (props) => {
       paddingHorizontal: 32,
       paddingVertical: 25,
       borderRadius: 10,
-      top: insets.top ? 0 : -40
+      top: insets.top ? 35 : 20
     },
     messageText: {
       color: colors.white,
