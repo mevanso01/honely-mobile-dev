@@ -49,7 +49,7 @@ export const LeadCard = (props) => {
         {isLoading ? (
           <Skeleton h='6' w='32' rounded='sm' />
         ) : (
-          <HText style={styles.nameText}>{lead?.name}</HText>
+          <HText style={styles.nameText} selectable>{lead?.name}</HText>
         )}
       </Box>
       <HStack justifyContent='space-between'>
@@ -72,7 +72,7 @@ export const LeadCard = (props) => {
           <Skeleton h='4' w='32' rounded='sm' ml='2' />
         ) : (
           <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
-            <HText style={styles.infoText}>{lead?.email}</HText>
+            <HText style={styles.infoText} selectable>{lead?.email}</HText>
           </HStack>
         )}
       </HStack>
@@ -82,7 +82,7 @@ export const LeadCard = (props) => {
           <Skeleton h='4' w='32' rounded='sm' ml='2' />
         ) : (
           <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
-            <HText style={styles.infoText}>{lead?.phone_number}</HText>
+            <HText style={styles.infoText} selectable>{lead?.phone_number}</HText>
           </HStack>
         )}
       </HStack>
