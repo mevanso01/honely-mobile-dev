@@ -34,7 +34,7 @@ export default StyleSheet.create({
   subtitle: {
     fontSize: 22,
     color: colors.text01,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     lineHeight: 22,
     textAlign: 'center',
     marginTop: 32

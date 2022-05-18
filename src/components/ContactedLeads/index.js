@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native'
 import { HStack, VStack, Box, Checkbox, Pressable } from 'native-base'
 import { HText, HUserFilterBy, HCartButton } from '../Shared'
-import { colors, icons } from '../../utils/styleGuide'
+import { colors, icons, images } from '../../utils/styleGuide'
 import styles from './style'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useSelector, useDispatch } from 'react-redux'
@@ -98,96 +98,98 @@ export const ContactedLeads = (props) => {
       setIsOpenStatusList(false)
     }}>
       <View style={styles.screenContainer}>
-        <View style={styles.headerContainer}>
-          <HText style={styles.title}>Contacted Leads</HText>
-          <View style={styles.cartIconWrapper}>
-            <HCartButton
-              onPress={() => onNavigationRedirect('LeadsCheckout')}
-            />
+        <View style={{ paddingHorizontal: 18 }}>
+          <View style={styles.headerContainer}>
+            <HText style={styles.title}>Contacted Leads</HText>
+            <View style={styles.cartIconWrapper}>
+              <HCartButton
+                onPress={() => onNavigationRedirect('LeadsCheckout')}
+              />
+            </View>
           </View>
+          <VStack mb='5'>
+            <View style={styles.filterContainer}>
+              <HUserFilterBy
+                headerTitle={`${contactedLeadsList?.length} of ${totalLeads} leads`}
+                isBuyers={isBuyers}
+                setIsBuyers={setIsBuyers}
+                isSellers={isSellers}
+                setIsSellers={setIsSellers}
+                isProspective={isProspective}
+                setIsProspective={setIsProspective}
+              />
+            </View>
+          </VStack>
+          <HStack zIndex={100}>
+            <Pressable
+              flex='1'
+              _pressed={{
+                backgroundColor: colors.text05
+              }}
+              onPress={() => {
+                setIsOpenStatusList(false)
+                setIsNameAscending(!isNameAscending)
+              }}
+            >
+              <HStack py='2'>
+                <HText style={styles.headerNameText}>Name</HText>
+                <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isNameAscending ? '0deg': '180deg' }] }]} />
+              </HStack>
+            </Pressable>
+            <View style={styles.statusListContainer}>
+              <Pressable
+                _pressed={{
+                  backgroundColor: colors.text05
+                }}
+                onPress={() => setIsOpenStatusList(!isOpenStatusList)}
+              >
+                <HStack py='2'>
+                  <HText style={styles.statusText}>Status</HText>
+                  <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isOpenStatusList ? '180deg' : '0deg' }] }]} />
+                </HStack>
+              </Pressable>
+              {isOpenStatusList && (
+                <View style={styles.dropDownListContainer}>
+                  <Checkbox.Group
+                    defaultValue={selectedStatuses}
+                    onChange={values => {
+                      setSelectedStatuses(values || []);
+                    }}
+                  >
+                    {leadStatuses.filter(lead => lead.key !== 'NEW').map(lead => (
+                      <HStack
+                        key={lead.key}
+                        alignItems='center'
+                        p='2'
+                      >
+                        <Checkbox
+                          size='sm'
+                          borderColor={colors.primary}
+                          _checked={{
+                            backgroundColor: colors.primary,
+                            borderColor: colors.primary
+                          }}
+                          _interactionBox={{
+                            opacity: 0
+                          }}
+                          mr='1'
+                          value={lead.key}
+                        >
+                          <HText style={styles.radioLabel}>{lead.content}</HText>
+                        </Checkbox>
+                      </HStack>
+                    ))}
+                  </Checkbox.Group>
+                </View>
+              )}
+            </View>
+          </HStack>
         </View>
-        <VStack mb='5'>
-          <View style={styles.filterContainer}>
-            <HUserFilterBy
-              headerTitle={`${contactedLeadsList?.length} of ${totalLeads} leads`}
-              isBuyers={isBuyers}
-              setIsBuyers={setIsBuyers}
-              isSellers={isSellers}
-              setIsSellers={setIsSellers}
-              isProspective={isProspective}
-              setIsProspective={setIsProspective}
-            />
-          </View>
-        </VStack>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContainer}
         >
           <VStack>
-            <HStack zIndex={100}>
-              <Pressable
-                flex='1'
-                _pressed={{
-                  backgroundColor: colors.text05
-                }}
-                onPress={() => {
-                  setIsOpenStatusList(false)
-                  setIsNameAscending(!isNameAscending)
-                }}
-              >
-                <HStack py='2'>
-                  <HText style={styles.headerNameText}>Name</HText>
-                  <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isNameAscending ? '0deg': '180deg' }] }]} />
-                </HStack>
-              </Pressable>
-              <View style={styles.statusListContainer}>
-                <Pressable
-                  _pressed={{
-                    backgroundColor: colors.text05
-                  }}
-                  onPress={() => setIsOpenStatusList(!isOpenStatusList)}
-                >
-                  <HStack py='2'>
-                    <HText style={styles.statusText}>Status</HText>
-                    <Image source={icons.arrowDown} style={[styles.arrowDownIcon, { transform: [{ rotate: isOpenStatusList ? '180deg' : '0deg' }] }]} />
-                  </HStack>
-                </Pressable>
-                {isOpenStatusList && (
-                  <View style={styles.dropDownListContainer}>
-                    <Checkbox.Group
-                      defaultValue={selectedStatuses}
-                      onChange={values => {
-                        setSelectedStatuses(values || []);
-                      }}
-                    >
-                      {leadStatuses.filter(lead => lead.key !== 'NEW').map(lead => (
-                        <HStack
-                          key={lead.key}
-                          alignItems='center'
-                          p='2'
-                        >
-                          <Checkbox
-                            size='sm'
-                            borderColor={colors.primary}
-                            _checked={{
-                              backgroundColor: colors.primary,
-                              borderColor: colors.primary
-                            }}
-                            _interactionBox={{
-                              opacity: 0
-                            }}
-                            mr='1'
-                            value={lead.key}
-                          >
-                            <HText style={styles.radioLabel}>{lead.content}</HText>
-                          </Checkbox>
-                        </HStack>
-                      ))}
-                    </Checkbox.Group>
-                  </View>
-                )}
-              </View>
-            </HStack>
             {contactedLeadsList.map(item => (
               <Pressable
                 key={item.id}
@@ -211,6 +213,15 @@ export const ContactedLeads = (props) => {
               </Pressable>
             ))}
           </VStack>
+          {totalLeads === 0 && (
+            <VStack alignItems='center' flex='1' justifyContent='center'>
+              <Image source={images.dummyAvatar} style={styles.avatarWrapper} />
+              <VStack mt='12'>
+                <HText style={styles.subtitle}>No Contacted Leads</HText>
+                <HText style={styles.description}>You will need to first contact a lead to see them here.</HText>
+              </VStack>
+            </VStack>
+          )}
         </ScrollView>
       </View>
     </TouchableWithoutFeedback>

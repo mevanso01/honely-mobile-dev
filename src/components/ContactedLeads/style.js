@@ -5,7 +5,6 @@ export default StyleSheet.create({
   screenContainer: {
     flex: 1,
     paddingTop: Platform.OS === 'ios' ? 30 : 40,
-    paddingHorizontal: 18
   },
   headerContainer: {
     position: 'relative',
@@ -25,7 +24,9 @@ export default StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    paddingBottom: 30
+    paddingBottom: 30,
+    backgroundColor: colors.backgroundColor,
+    paddingHorizontal: 18,
   },
   filterText: {
     fontSize: 13,
@@ -75,5 +76,26 @@ export default StyleSheet.create({
   },
   filterContainer: {
     alignItems: 'flex-end',
-  }
+  },
+  avatarWrapper: {
+    width: 129,
+    height: 163,
+    resizeMode: 'contain'
+  },
+  subtitle: {
+    fontSize: 22,
+    color: colors.text01,
+    lineHeight: 22,
+    textAlign: 'center',
+    fontFamily: fonts.bold
+  },
+  description: {
+    fontSize: 14,
+    color: colors.text02,
+    lineHeight: 21,
+    fontWeight: '500',
+    marginTop: 8,
+    marginBottom: 24,
+    textAlign: 'center'
+  },
 })

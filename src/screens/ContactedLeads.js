@@ -16,7 +16,7 @@ const ContactedLeads = (props) => {
   const styles = StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.backgroundColor
+      backgroundColor: colors.backgroundLightGray
     }
   })
 
