@@ -29,7 +29,8 @@ export default StyleSheet.create({
   },
   container: {
     flexGrow: 1,
-    paddingBottom: 30
+    paddingBottom: 30,
+    backgroundColor: colors.backgroundColor
   },
   subtitle: {
     fontSize: 22,
