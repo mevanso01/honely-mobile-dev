@@ -122,9 +122,15 @@ export const BillingInfo = (props) => {
         onNavigationRedirect('Leads')
       }, 2000)
     } catch (error) {
+      let toastMessage = ''
+      if (typeof error.message === 'string') {
+        toastMessage = error.message
+      } else {
+        toastMessage = error.message?.message
+      }
       setPaymentProcessing(false)
       toast.show({
-        render: () => <HToast status='error' message={error.message} />,
+        render: () => <HToast status='error' message={toastMessage} />,
         placement: 'top',
         duration: TOAST_LENGTH_SHORT
       })
