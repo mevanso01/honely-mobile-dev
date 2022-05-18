@@ -46,8 +46,8 @@ function MyTabBar({ state, descriptors, navigation }) {
     barStyle: {
       flexDirection: 'row',
       backgroundColor: colors.tint02,
-      height: 80,
-      marginBottom: insets.bottom
+      height: 80 + insets.bottom,
+      paddingBottom: insets.bottom
     },
     tabButton: {
       flex: 1,

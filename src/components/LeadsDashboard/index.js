@@ -164,7 +164,7 @@ export const LeadsDashboard = (props) => {
                 style={styles.image}
               />
             </View>
-            <HText style={styles.subtitle}>No Leads</HText>
+            <HText style={styles.subtitle}>No New Leads</HText>
             <HText style={styles.description}>Buy leads to see what your consumers are looking for.</HText>
             <HButton
               text='Find Leads'
