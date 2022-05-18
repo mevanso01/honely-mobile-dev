@@ -80,7 +80,8 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     paddingLeft: 8,
-    color: colors.white
+    color: colors.white,
+    flex: 1
   },
   infoIcon: {
     width: 24,
