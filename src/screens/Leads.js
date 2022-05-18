@@ -23,7 +23,7 @@ const Leads = (props) => {
   return (
     <SafeAreaView style={styles.wrapper}>
       <HFocusAwareStatusBar
-        backgroundColor={colors.white}
+        backgroundColor={colors.backgroundLightGray}
         barStyle='dark-content'
       />
       <LeadsDashboard {...leadsProps} />

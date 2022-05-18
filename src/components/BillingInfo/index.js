@@ -27,9 +27,11 @@ export const BillingInfo = (props) => {
   const [stripePublishableKey, setStripePublishableKey] = useState(null)
   const [paymethodsList, setPaymethodsList] = useState([])
   const [selectedPaymethodId, setSelectedPaymethodId] = useState(null)
+  const [defaultPaymethodId, setDefaultPaymethodId] = useState(null)
   const { initPaymentSheet, presentPaymentSheet } = useStripe()
   const [paymentProcessing, setPaymentProcessing] = useState(false)
   const [isDefault, setIsDefault] = useState(false)
+  const [noCards, setNoCards] = useState(false)
 
   const fetchPaymentSheetParams = async () => {
     try {
@@ -91,7 +93,10 @@ export const BillingInfo = (props) => {
       if (response.result === 'Error') throw response
       setPaymethodsList(response?.data || [])
       const defaultId = response?.data.find(paymethod => paymethod.default)?.id
-      setSelectedPaymethodId(defaultId)
+      if (defaultId) {
+        setDefaultPaymethodId(defaultId)
+        setSelectedPaymethodId(defaultId)
+      }
       setPaymethodsLoading(false)
     } catch (error) {
       setPaymethodsLoading(false)
@@ -136,6 +141,12 @@ export const BillingInfo = (props) => {
       })
     }
   }
+
+  useEffect(() => {
+    if (!paymentSheetLoaded || paymethodsLoading || paymethodsList.length) return
+    openPaymentSheet()
+    setNoCards(true)
+  }, [paymethodsLoading, paymethodsList, paymentSheetLoaded])
 
   useEffect(() => {
     handleGetUserPaymethods()
@@ -218,34 +229,38 @@ export const BillingInfo = (props) => {
             </Radio.Group>
           )}
         </VStack>
-        <StripeProvider
-          publishableKey={stripePublishableKey}
-          merchantIdentifier='merchant.com.'
-        >
-          <Pressable
-            onPress={openPaymentSheet}
-            disabled={!paymentSheetLoaded}
-            _disabled={{ opacity: 0.6 }}
-            _pressed={{ opacity: 0.6 }}
+        {!noCards && (
+          <StripeProvider
+            publishableKey={stripePublishableKey}
+            merchantIdentifier='merchant.com.'
           >
-            <HText style={styles.addCardText}>ADD ANOTHER CARD</HText>
-          </Pressable>
-        </StripeProvider>
+            <Pressable
+              onPress={openPaymentSheet}
+              disabled={!paymentSheetLoaded}
+              _disabled={{ opacity: 0.6 }}
+              _pressed={{ opacity: 0.6 }}
+            >
+              <HText style={styles.addCardText}>ADD ANOTHER CARD</HText>
+            </Pressable>
+          </StripeProvider>
+        )}
       </ScrollView>
-      <View style={styles.saveCheckBoxContainer}>
-        <Checkbox
-          size='md'
-          borderColor={colors.text01}
-          _checked={{
-            backgroundColor: colors.primary,
-            borderColor: colors.primary
-          }}
-          _interactionBox={{ opacity: 0 }}
-          isChecked={isDefault}
-          onChange={checked => setIsDefault(checked)}
-        />
-        <HText style={styles.saveCardText}>Save this card as default.</HText>
-      </View>
+      {defaultPaymethodId !== selectedPaymethodId && (
+        <View style={styles.saveCheckBoxContainer}>
+          <Checkbox
+            size='md'
+            borderColor={colors.text01}
+            _checked={{
+              backgroundColor: colors.primary,
+              borderColor: colors.primary
+            }}
+            _interactionBox={{ opacity: 0 }}
+            isChecked={isDefault}
+            onChange={checked => setIsDefault(checked)}
+          />
+          <HText style={styles.saveCardText}>Save this card as default.</HText>
+        </View>
+      )}
       <Divider backgroundColor={colors.primary} opacity={0.6} />
       <Box pt='5' pb='8' alignItems='center'>
         <HButton
