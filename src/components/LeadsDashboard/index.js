@@ -30,6 +30,7 @@ export const LeadsDashboard = (props) => {
   const [isSellers, setIsSellers] = useState(true)
   const [isProspective, setIsProspective] = useState(true)
   const [isLoadedData, setIsLoadedData] = useState(false)
+  const [leadsSwiperKey, setLeadsSwiperKey] = useState(0)
 
   const handleLeadsFilter = (response) => {
     let _leadsList = []
@@ -71,6 +72,7 @@ export const LeadsDashboard = (props) => {
     if (!isSellers) _leadsList = _leadsList.filter(lead => lead.level !== 'sellers')
     if (!isProspective) _leadsList = _leadsList.filter(lead => lead.level !== 'prospective')
     setFilteredLeadsList(_leadsList)
+    setLeadsSwiperKey(leadsSwiperKey + 1)
     setIsLoadedData(true)
   }, [isBuyers, isSellers, isProspective, leadsList, isLoading])
 
@@ -118,6 +120,7 @@ export const LeadsDashboard = (props) => {
             </HStack>
           </View>
           <ScrollView
+            key={leadsSwiperKey}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.container}
           >
