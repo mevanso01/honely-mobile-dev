@@ -5,8 +5,9 @@ import { HText, HUserFilterBy, HCartButton } from '../Shared'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { leadStatuses } from '../../utils/constants'
+import { setUser } from '../../store/action/setUser'
 
 export const ContactedLeads = (props) => {
   const {
@@ -14,6 +15,7 @@ export const ContactedLeads = (props) => {
   } = props
 
   const currentUser = useSelector(state => state.currentUser)
+  const dispatch = useDispatch()
 
   const [isBuyers, setIsBuyers] = useState(true)
   const [isSellers, setIsSellers] = useState(true)
@@ -80,6 +82,7 @@ export const ContactedLeads = (props) => {
         _leadsList = [..._leadsList, ...prospectiveLeads]
       }
     }
+    dispatch(setUser({ contactedLeadCount: _totalLead }))
     setTotalLeads(_totalLead)
     return _leadsList
   }
