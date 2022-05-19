@@ -20,15 +20,18 @@ export const BusinessTypeForm = (props) => {
   const types = [
     {
       value: 'Agent/Broker',
-      text: 'Agent/Broker'
+      text: 'Agent/Broker',
+      disabled: false
     },
     {
       value: 'Lender',
-      text: 'Lender'
+      text: 'Lender',
+      disabled: true
     },
     {
       value: 'General Contractor',
-      text: 'Contractor'
+      text: 'Contractor',
+      disabled: true
     }
   ]
 
@@ -69,6 +72,8 @@ export const BusinessTypeForm = (props) => {
             shadow='0'
             width={deviceWidth - 36}
             height={100}
+            isDisabled={type.disabled}
+            disabledOpacity={0.6}
             onPress={() => handleServiceProviderType(type.value)}
           />
         </Box>
