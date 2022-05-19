@@ -24,8 +24,11 @@ export const Login = (props) => {
         case 'signUpAgree':
           setSignUpFormStep('signUp')
           break
-        case 'businessCompany':
+        case 'businessType':
           setSignUpFormStep('signUpAgree')
+          break
+        case 'businessCompany':
+          setSignUpFormStep('businessType')
           break
         case 'otp':
           setSignUpFormStep('businessCompany')
