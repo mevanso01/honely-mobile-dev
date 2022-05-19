@@ -96,6 +96,7 @@ export const LeadsDashboard = (props) => {
         <HText style={styles.title}>Leads Dashboard</HText>
         <View style={styles.cartIconWrapper}>
           <HCartButton
+            countWrapperStyle={{ backgroundColor: colors.backgroundLightGray }}
             onPress={() => onNavigationRedirect('LeadsCheckout')}
           />
         </View>
