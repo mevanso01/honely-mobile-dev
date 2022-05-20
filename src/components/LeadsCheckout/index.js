@@ -135,8 +135,8 @@ export const LeadsCheckout = (props) => {
           </Box>
         </>
       ) : (
-        <Box mt='4' mb='2' alignItems='center'>
-          <HText style={styles.textStyle}>Use the search page to find leads.</HText>
+        <Box mt='4' mb='2' px='5' alignItems='center'>
+          <HText style={[styles.textStyle, { textAlign: 'center' }]}>Use the search page to find leads.</HText>
         </Box>
       )}
       <Box alignItems='center' mt='6' mb='4'>
