@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import { HText, HButton, HToast } from '../Shared'
 import { Pressable, HStack, Box, useToast, Divider, VStack } from 'native-base'
-import { colors, icons } from '../../utils/styleGuide'
+import { colors, icons, images } from '../../utils/styleGuide'
 import { deviceWidth } from '../../utils/stylesheet'
 import styles from './style'
 import { CartItem } from './CartItem'
@@ -120,7 +120,7 @@ export const LeadsCheckout = (props) => {
           </>
         ) : (
           <VStack alignItems='center' justifyContent='center' flex='1' opacity='0.5'>
-            <Image source={icons.cart} style={styles.emptyCartImage}  />
+            <Image source={images.cart} style={styles.emptyCartImage}  />
           </VStack>
         )}
       </ScrollView>

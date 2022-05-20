@@ -42,6 +42,7 @@ export const images = {
   logo: require('../assets/images/logo.png'),
   logoGreen: require('../assets/images/logo-green.png'),
   dummyAvatar: require('../assets/images/dummy-avatar.png'),
+  cart: require('../assets/icons/cart.png'),
 }
 
 export const icons = {
