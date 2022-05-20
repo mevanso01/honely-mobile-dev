@@ -1,13 +1,9 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Platform } from 'react-native'
+import { StyleSheet, SafeAreaView } from 'react-native'
 import { ContactLead as ContactLeadScreen} from '../components/ContactLead'
 import { colors } from '../utils/styleGuide'
 import { HFocusAwareStatusBar } from '../components/Shared'
-import styled from 'styled-components/native';
-
-const KeyboardView = styled.KeyboardAvoidingView`
-  flex: 1;
-`;
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const ContactLead = (props) => {
   const contactLeadProps = {
@@ -33,12 +29,9 @@ const ContactLead = (props) => {
         backgroundColor={colors.white}
         barStyle='dark-content'
       />
-      <KeyboardView
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+      <KeyboardAwareScrollView style={{ flex: 1 }}>
         <ContactLeadScreen {...contactLeadProps} />
-      </KeyboardView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }
