@@ -2,8 +2,9 @@ import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { colors, icons } from '../utils/styleGuide'
-import { useSelector } from 'react-redux'
+import { colors, icons, fonts } from '../utils/styleGuide'
+import { useSelector, useDispatch } from 'react-redux'
+import { setUser } from '../store/action/setUser'
 
 import Leads from '../screens/Leads'
 import FindLeads from '../screens/FindLeads'
@@ -13,15 +14,13 @@ import ProfileNavigator from './ProfileNavigator'
 const Tab = createBottomTabNavigator();
 
 const BottomNavigator = () => {
-  const currentUser = useSelector(state => state.currentUser)
-
   return (
     <Tab.Navigator
       initialRouteName='Leads'
       screenOptions={{
         headerShown: false
       }}
-      tabBar={props => <MyTabBar {...props} contactedLeadCount={currentUser?.contactedLeadCount || 0} />}
+      tabBar={props => <MyTabBar {...props} />}
     >
       <Tab.Screen
         name="Leads"
@@ -43,7 +42,10 @@ const BottomNavigator = () => {
   )
 }
 
-function MyTabBar({ state, descriptors, navigation, contactedLeadCount }) {
+function MyTabBar({ state, descriptors, navigation }) {
+  const currentUser = useSelector(state => state.currentUser)
+  const dispatch = useDispatch()
+  const newContactedLeadCount = currentUser?.newContactedLeadCount || 0
   const insets = useSafeAreaInsets()
   const styles = StyleSheet.create({
     barStyle: {
@@ -64,21 +66,23 @@ function MyTabBar({ state, descriptors, navigation, contactedLeadCount }) {
     },
     bageIcon: {
       position: 'absolute',
-      top: -10,
-      right: -10,
-      backgroundColor: colors.primary,
-      borderRadius: 10,
-      width: 20,
-      height: 20,
+      top: -22,
+      right: -15,
+      backgroundColor: colors.white,
+      borderRadius: 30,
+      width: 30,
+      height: 30,
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 10,
       borderWidth: 1,
-      borderColor: colors.tint02
+      borderColor: colors.primary
     },
     bageText: {
-      fontSize: 10,
-      color: colors.white
+      fontSize: 18,
+      color: colors.primary,
+      fontFamily: fonts.regular,
+      marginTop: 2
     }
   })
   const getActiveIcon = (name) => {
@@ -125,6 +129,9 @@ function MyTabBar({ state, descriptors, navigation, contactedLeadCount }) {
           if (!isFocused && !event.defaultPrevented) {
             // The `merge: true` option makes sure that the params inside the tab screen are preserved
             navigation.navigate({ name: route.name, merge: true });
+            if (newContactedLeadCount > 0 && route.name === 'ContactedLeads') {
+              dispatch(setUser({ newContactedLeadCount: 0 }))
+            }
           }
         };
 
@@ -146,9 +153,9 @@ function MyTabBar({ state, descriptors, navigation, contactedLeadCount }) {
             style={styles.tabButton}
           >
             <View>
-              {contactedLeadCount > 0 && route.name === 'ContactedLeads' && (
+              {newContactedLeadCount > 0 && route.name === 'ContactedLeads' && (
                 <View style={styles.bageIcon}>
-                  <Text style={styles.bageText}>{contactedLeadCount}</Text>
+                  <Text style={styles.bageText}>{newContactedLeadCount}</Text>
                 </View>
               )}
               <Image
