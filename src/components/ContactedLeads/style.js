@@ -98,4 +98,14 @@ export default StyleSheet.create({
     marginBottom: 24,
     textAlign: 'center'
   },
+  statusWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    position: 'relative'
+  },
+  statusDot: {
+    position: 'absolute',
+    zIndex: 100
+  }
 })

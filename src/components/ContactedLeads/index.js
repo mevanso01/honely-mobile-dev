@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native'
-import { HStack, VStack, Box, Checkbox, Pressable } from 'native-base'
+import { HStack, VStack, Checkbox, Pressable } from 'native-base'
 import { HText, HUserFilterBy, HCartButton } from '../Shared'
 import { colors, icons, images } from '../../utils/styleGuide'
 import styles from './style'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useSelector } from 'react-redux'
 import { leadStatuses } from '../../utils/constants'
+import { StatusSelector } from './StatusSelector'
 
 export const ContactedLeads = (props) => {
   const {
@@ -23,11 +23,6 @@ export const ContactedLeads = (props) => {
   const [isOpenStatusList, setIsOpenStatusList] = useState(false)
   const [selectedStatuses, setSelectedStatuses] = useState(['ATTEMPTED_CONTACT', 'FOLLOWED_UP', 'PENDING_SALE', 'CLOSED_LEADS', 'REJECTED'])
   const [totalLeads, setTotalLeads] = useState(0)
-
-  const getStatus = (status) => {
-    const objectStatus = leadStatuses.find((o) => o.key === status)
-    return objectStatus && objectStatus
-  }
 
   const handleSortList = (leadsList) => {
     const _contactedLeadsList = [...leadsList]
@@ -189,26 +184,24 @@ export const ContactedLeads = (props) => {
         >
           <VStack>
             {contactedLeadsList.map(item => (
-              <Pressable
-                key={item.id}
-                onPress={() => {
-                  setIsOpenStatusList(false)
-                  onNavigationRedirect('ContactLead', { level: item.level, lead: item })
-                }}
-                _pressed={{
-                  backgroundColor: colors.text05
-                }}
-              >
-                <HStack py='4' borderBottomColor={colors.borderColor} borderBottomWidth={1}>
+              <HStack key={item.id} borderBottomColor={colors.borderColor} borderBottomWidth={1}>
+                <Pressable
+                  onPress={() => {
+                    setIsOpenStatusList(false)
+                    onNavigationRedirect('ContactLead', { level: item.level, lead: item })
+                  }}
+                  flex='1' py='4'
+                  _pressed={{
+                    backgroundColor: colors.text05
+                  }}
+                >
                   <HText style={styles.contactText}>{item.name}</HText>
-                  <HStack alignItems='center' flex='1'>
-                    <Box mr='2'>
-                      <MaterialIcons name='circle' color={getStatus(item.agent_status).color} size={8} />
-                    </Box>
-                    <HText style={styles.contactText}>{getStatus(item.agent_status).content}</HText>
-                  </HStack>
-                </HStack>
-              </Pressable>
+                </Pressable>
+                <StatusSelector
+                  defaultLead={item}
+                  level={item.level}
+                />
+              </HStack>
             ))}
           </VStack>
           {totalLeads === 0 && (
