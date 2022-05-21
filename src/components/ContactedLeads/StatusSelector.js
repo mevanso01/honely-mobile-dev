@@ -90,7 +90,6 @@ export const StatusSelector = (props) => {
         buttonTextStyle={{
           color: colors.black,
           fontSize: 14,
-          fontWeight: '700',
           textAlign: 'left'
         }}
         dropdownStyle={{

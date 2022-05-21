@@ -26,9 +26,7 @@ export const EditProfile = (props) => {
   const toast = useToast()
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
   const [agentPhoto, setAgentPhoto] = useState(null)
-  const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm({
-    defaultValues: formState
-  })
+  const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm()
   const [phoneNumberFocus, setPhoneNumberFocus] = useState(false)
 
   const firstNameRef = useRef()
