@@ -57,14 +57,14 @@ export const LeadCard = (props) => {
         {isLoading ? (
           <Skeleton h='5' w='24' rounded='sm' ml='2' />
         ) : (
-          <HText style={styles.locationText} numberOfLines={1}>{lead?.searched_address}</HText>
+          <HText style={styles.locationText} numberOfLines={1}>{lead?.searched_address || lead?.full_address}</HText>
         )}
       </HStack>
       <Box mt='6' mb='6'>
         {isLoading ? (
           <Skeleton h='6' w='32' rounded='sm' />
         ) : (
-          <HText style={styles.nameText}>{lead?.name}</HText>
+          <HText style={styles.nameText}>{lead?.name || lead?.full_name}</HText>
         )}
       </Box>
       <HStack justifyContent='space-between'>
@@ -88,13 +88,15 @@ export const LeadCard = (props) => {
         ) : (
           <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
             <HText style={styles.infoText}>{lead?.email}</HText>
-            <Pressable
-              style={{ transform: [{ rotateY: '180deg' }] }}
-              _pressed={{ opacity: 0.6 }}
-              onPress={() => copyToClipboard(lead?.email)}
-            >
-              <MaterialIcons name='content-copy' color={colors.white} size={14} />
-            </Pressable>
+            {lead?.email && (
+              <Pressable
+                style={{ transform: [{ rotateY: '180deg' }] }}
+                _pressed={{ opacity: 0.6 }}
+                onPress={() => copyToClipboard(lead?.email)}
+              >
+                <MaterialIcons name='content-copy' color={colors.white} size={14} />
+              </Pressable>
+            )}
           </HStack>
         )}
       </HStack>

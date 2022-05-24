@@ -22,6 +22,7 @@ export const LeadsDashboard = (props) => {
   const toast = useToast()
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
+  const { agentProfile } = useSelector(({ screens }) => screens.editprofile)
   const [isLoading, setIsLoading] = useState(true)
   const [leadsList, setLeadsList] = useState([])
   const [filteredLeadsList, setFilteredLeadsList] = useState([])
@@ -43,7 +44,7 @@ export const LeadsDashboard = (props) => {
       _leadsList = [..._leadsList, ...sellerLeads]
     }
     if (response?.prospective?.leads) {
-      const prospectiveLeads = response.prospective?.filter(lead => lead.agent_status === 'NEW').reduce((leads, lead) => [...leads, { ...lead, level: 'prospective' } ], [])
+      const prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status === 'NEW').reduce((leads, lead) => [...leads, { ...lead, level: 'prospective' } ], [])
       _leadsList = [..._leadsList, ...prospectiveLeads]
     }
     return _leadsList
@@ -51,8 +52,8 @@ export const LeadsDashboard = (props) => {
 
   const handleGetUserLeads = async () => {
     try {
-      const response = await doGet('searches/lead-dashboard', { 'user-id': currentUser?.user_id })
-      if (response.result !== 'Success') throw response
+      const response = await doGet('v1/lead', { 'agent-id': agentProfile?.agent_id })
+      if (response.result === 'Error') throw response
       dispatch(setUser({ leads: response.data }))
       setIsLoading(false)
     } catch (error) {
@@ -87,8 +88,9 @@ export const LeadsDashboard = (props) => {
   }, [])
 
   useEffect(() => {
+    if (!agentProfile?.agent_id) return
     handleGetUserLeads()
-  }, [isFocused])
+  }, [isFocused, agentProfile?.agent_id])
 
   return (
     <View style={styles.screenContainer}>
