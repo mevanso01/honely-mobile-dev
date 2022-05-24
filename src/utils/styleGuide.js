@@ -23,7 +23,7 @@ export const colors = {
   disabled: "#6F6F6F",
   rejected: "#C4C4C4",
   leadsCardBg: "#646bffe0",
-  backgroundLightGray: "#efefef",
+  backgroundLightGray: "#DEDEDE21",
 
   tint: "#e0e1f9",
   tint02: "#FBFCFE",
