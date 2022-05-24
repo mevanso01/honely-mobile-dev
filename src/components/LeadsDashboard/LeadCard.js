@@ -1,10 +1,13 @@
 import React from 'react'
 import { Image, View } from 'react-native'
-import { HText, HButton } from '../Shared'
+import { HText, HButton, HToast } from '../Shared'
 import { colors,  icons } from '../../utils/styleGuide'
-import { HStack, Box, Skeleton } from 'native-base'
+import { HStack, Box, Skeleton, Pressable, useToast } from 'native-base'
 import styles from './style'
 import { leadStatuses } from '../../utils/constants'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Clipboard from '@react-native-community/clipboard'
+import { TOAST_LENGTH_SHORT } from '../../config'
 
 export const LeadCard = (props) => {
   const {
@@ -12,6 +15,8 @@ export const LeadCard = (props) => {
     isLoading,
     lead
   } = props
+
+  const toast = useToast()
 
   const getStatus = (status) => {
     const objectStatus = leadStatuses.find((o) => o.key === status)
@@ -34,6 +39,16 @@ export const LeadCard = (props) => {
     return type
   }
 
+  const copyToClipboard = (text) => {
+    if (!text) return
+    Clipboard.setString(text)
+    toast.show({
+      render: () => <HToast status='success' message='Copied!' />,
+      placement: 'top',
+      duration: TOAST_LENGTH_SHORT
+    })
+  }
+
   return (
     <View style={styles.cardContainer}>
       <HStack alignItems='center' borderBottomColor={colors.borderColor} borderBottomWidth='1' pb='5'>
@@ -49,7 +64,7 @@ export const LeadCard = (props) => {
         {isLoading ? (
           <Skeleton h='6' w='32' rounded='sm' />
         ) : (
-          <HText style={styles.nameText} selectable>{lead?.name}</HText>
+          <HText style={styles.nameText}>{lead?.name}</HText>
         )}
       </Box>
       <HStack justifyContent='space-between'>
@@ -72,7 +87,14 @@ export const LeadCard = (props) => {
           <Skeleton h='4' w='32' rounded='sm' ml='2' />
         ) : (
           <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
-            <HText style={styles.infoText} selectable>{lead?.email}</HText>
+            <HText style={styles.infoText}>{lead?.email}</HText>
+            <Pressable
+              style={{ transform: [{ rotateY: '180deg' }] }}
+              _pressed={{ opacity: 0.6 }}
+              onPress={() => copyToClipboard(lead?.email)}
+            >
+              <MaterialIcons name='content-copy' color={colors.white} size={14} />
+            </Pressable>
           </HStack>
         )}
       </HStack>
@@ -82,7 +104,16 @@ export const LeadCard = (props) => {
           <Skeleton h='4' w='32' rounded='sm' ml='2' />
         ) : (
           <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
-            <HText style={styles.infoText} selectable>{lead?.phone_number}</HText>
+            <HText style={styles.infoText}>{lead?.phone_number}</HText>
+            {lead?.phone_number && (
+              <Pressable
+                style={{ transform: [{ rotateY: '180deg' }] }}
+                _pressed={{ opacity: 0.6 }}
+                onPress={() => copyToClipboard(lead?.phone_number)}
+              >
+                <MaterialIcons name='content-copy' color={colors.white} size={14} />
+              </Pressable>
+            )}
           </HStack>
         )}
       </HStack>

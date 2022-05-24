@@ -10,6 +10,7 @@ import { setUser } from './store/action/setUser'
 import { isServiceProvider } from './utils/helper'
 import { setAgentProfile } from './components/EditProfile/store'
 import { HToast } from './components/Shared'
+import { TOAST_LENGTH_SHORT } from './config'
 
 const AppContainer = () => {
   const toast = useToast()
