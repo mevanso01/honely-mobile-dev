@@ -53,7 +53,7 @@ export const LeadsDashboard = (props) => {
   const handleGetUserLeads = async () => {
     try {
       const response = await doGet('v1/lead', { 'agent-id': agentProfile?.agent_id })
-      if (response.result === 'Error') throw response
+      if (response.error) throw { message: response.error }
       dispatch(setUser({ leads: response.data }))
       setIsLoading(false)
     } catch (error) {
