@@ -86,10 +86,10 @@ export const LeadsMap = (props) => {
       if (level === 'zipcode' || level === 'zip_code') {
         params = {
           level: 'zip_code',
-          zip_code: address.zip_code,
+          'zip-code': address.zip_code,
           city: address?.city,
           state: address.state,
-          user_id: currentUser.user_id
+          'user-id': currentUser.user_id
         }
         if (mile) {
           params.mile = mile
@@ -101,13 +101,13 @@ export const LeadsMap = (props) => {
             level: 'city',
             city: address.city,
             state: address.state,
-            user_id: currentUser.user_id
+            'user-id': currentUser.user_id
           }
         } else {
           params = {
             level: 'state',
             state: address.state,
-            user_id: currentUser.user_id
+            'user-id': currentUser.user_id
           }
         }
       }
@@ -115,11 +115,11 @@ export const LeadsMap = (props) => {
         params = {
           level: 'state',
           state: address?.state_short || address?.state,
-          user_id: currentUser.user_id
+          'user-id': currentUser.user_id
         }
       }
-      const response = await doGet('searches/leads', params)
-      if (response.result === 'Error') throw response
+      const response = await doGet('v1/lead/search', params)
+      if (response.error) throw { message: response.error }
       setLeadsListing(response.data)
       setIsLoading(false)
     } catch (error) {
@@ -148,7 +148,7 @@ export const LeadsMap = (props) => {
     if (leadsListing?.sellers?.leads) allLeads = [...allLeads, ...leadsListing?.sellers?.leads]
     if (leadsListing?.buyers?.leads) allLeads = [...allLeads, ...leadsListing?.buyers?.leads]
     if (leadsListing?.prospective?.leads) allLeads = [...allLeads, ...leadsListing?.prospective?.leads]
-    const _markers = allLeads.reduce((locations, lead) => [...locations, { latitude: lead.latitude, longitude: lead.longitude }], [])
+    const _markers = allLeads.reduce((locations, lead) => [...locations, { latitude: Number(lead.latitude), longitude: Number(lead.longitude) }], [])
     setMarkers(_markers)
   }, [leadsListing])
 
