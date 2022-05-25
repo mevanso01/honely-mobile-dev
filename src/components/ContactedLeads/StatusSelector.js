@@ -14,7 +14,7 @@ import { setUser } from '../../store/action/setUser'
 
 export const StatusSelector = (props) => {
   const {
-    defaultLead,
+    lead,
     level
   } = props
 
@@ -23,7 +23,6 @@ export const StatusSelector = (props) => {
   const currentUser = useSelector(state => state.currentUser)
   const [statusValue, setStatusValue] = useState(0)
 
-  const [lead, setLead] = useState(defaultLead)
   const [defaultIndex, setDefaultIndex] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -38,7 +37,6 @@ export const StatusSelector = (props) => {
       setStatusValue(selectedItem.value)
       const response = await doPatch(`v1/lead/${lead.lead_id}`, { 'agent_status': selectedItem.key })
       if (response.error) throw { message: response.error }
-      setLead({ ...lead, agent_status: selectedItem.key })
       const _updatedLeads = currentUser.leads[level].leads.map(_lead => {
         if (_lead.lead_id === lead.lead_id) {
           _lead.agent_status = selectedItem.key

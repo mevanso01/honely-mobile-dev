@@ -197,7 +197,7 @@ export const ContactedLeads = (props) => {
                   <HText style={styles.contactText}>{item.name}</HText>
                 </Pressable>
                 <StatusSelector
-                  defaultLead={item}
+                  lead={item}
                   level={item.level}
                 />
               </HStack>
