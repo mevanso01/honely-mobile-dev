@@ -30,7 +30,8 @@ export default StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingBottom: 30,
-    backgroundColor: colors.backgroundColor
+    backgroundColor: colors.backgroundColor,
+    paddingTop: 20
   },
   subtitle: {
     fontSize: 22,
@@ -101,7 +102,6 @@ export default StyleSheet.create({
     color: colors.white,
     lineHeight: 24,
     paddingBottom: 7,
-    flex: 1
   },
   sheetContent: {
     paddingHorizontal: 10,
@@ -147,4 +147,17 @@ export default StyleSheet.create({
     color: colors.text01,
     textAlign: 'center'
   },
+  copyTextWrapper: {
+    position: 'absolute',
+    backgroundColor: colors.white500,
+    width: '100%',
+    height: '100%',
+    borderRadius: 5,
+    justifyContent: 'center',
+    paddingLeft: 15
+  },
+  copyText: {
+    color: colors.text01,
+    fontSize: 14
+  }
 })

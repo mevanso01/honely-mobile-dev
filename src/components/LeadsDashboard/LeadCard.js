@@ -1,13 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, View } from 'react-native'
-import { HText, HButton, HToast } from '../Shared'
+import { HText, HButton } from '../Shared'
 import { colors,  icons } from '../../utils/styleGuide'
-import { HStack, Box, Skeleton, Pressable, useToast } from 'native-base'
+import { HStack, Box, Skeleton, Pressable } from 'native-base'
 import styles from './style'
 import { leadStatuses } from '../../utils/constants'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Clipboard from '@react-native-community/clipboard'
-import { TOAST_LENGTH_SHORT } from '../../config'
 
 export const LeadCard = (props) => {
   const {
@@ -16,7 +14,8 @@ export const LeadCard = (props) => {
     lead
   } = props
 
-  const toast = useToast()
+  const [emailCopied, setEmailCopied] = useState(false)
+  const [phoneCopied, setPhoneCopied] = useState(false)
 
   const getStatus = (status) => {
     const objectStatus = leadStatuses.find((o) => o.key === status)
@@ -39,14 +38,20 @@ export const LeadCard = (props) => {
     return type
   }
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text, type) => {
     if (!text) return
     Clipboard.setString(text)
-    toast.show({
-      render: () => <HToast status='success' message='Copied!' />,
-      placement: 'top',
-      duration: TOAST_LENGTH_SHORT
-    })
+    if (type === 'email') {
+      setEmailCopied(true)
+      setTimeout(() => {
+        setEmailCopied(false)
+      }, 1000)
+    } else {
+      setPhoneCopied(true)
+      setTimeout(() => {
+        setPhoneCopied(false)
+      }, 1000)
+    }
   }
 
   return (
@@ -81,47 +86,56 @@ export const LeadCard = (props) => {
           </HText>
         )}
       </HStack>
-      <HStack mt='6' alignItems='center'>
-        <Image source={icons.email} style={styles.infoIcon} />
-        {isLoading ? (
-          <Skeleton h='4' w='32' rounded='sm' ml='2' />
-        ) : (
-          <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
-            <HText style={styles.infoText}>{lead?.email}</HText>
-            {lead?.email && (
+      {(lead?.email && lead?.email !== 'None' || isLoading) && (
+        <HStack mt='6' alignItems='center'>
+          <Image source={icons.email} style={styles.infoIcon} />
+          {isLoading ? (
+            <Skeleton h='4' w='32' rounded='sm' ml='2' />
+          ) : (
+            <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1' position='relative'>
               <Pressable
-                style={{ transform: [{ rotateY: '180deg' }] }}
+                flex='1'
                 _pressed={{ opacity: 0.6 }}
-                onPress={() => copyToClipboard(lead?.email)}
+                onPress={() => copyToClipboard(lead?.email, 'email')}
               >
-                <MaterialIcons name='content-copy' color={colors.white} size={14} />
+                <HText style={styles.infoText}>{lead?.email}</HText>
               </Pressable>
-            )}
-          </HStack>
-        )}
-      </HStack>
-      <HStack mt='5' alignItems='center'>
-        <Image source={icons.phone} style={styles.infoIcon} />
-        {isLoading ? (
-          <Skeleton h='4' w='32' rounded='sm' ml='2' />
-        ) : (
-          <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1'>
-            <HText style={styles.infoText}>{lead?.phone_number}</HText>
-            {lead?.phone_number && (
+              {emailCopied && (
+                <View style={styles.copyTextWrapper}>
+                  <HText style={styles.copyText}>Copied</HText>
+                </View>
+              )}
+            </HStack>
+          )}
+        </HStack>
+      )}
+      {(lead?.phone_number || isLoading) && (
+        <HStack mt='5' alignItems='center'>
+          <Image source={icons.phone} style={styles.infoIcon} />
+          {isLoading ? (
+            <Skeleton h='4' w='32' rounded='sm' ml='2' />
+          ) : (
+            <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1' position='relative'>
               <Pressable
-                style={{ transform: [{ rotateY: '180deg' }] }}
+                flex='1'
                 _pressed={{ opacity: 0.6 }}
-                onPress={() => copyToClipboard(lead?.phone_number)}
+                onPress={() => copyToClipboard(lead?.phone_number, 'phone')}
               >
-                <MaterialIcons name='content-copy' color={colors.white} size={14} />
+                <HText style={styles.infoText}>{lead?.phone_number}</HText>
               </Pressable>
-            )}
-          </HStack>
-        )}
-      </HStack>
+              {phoneCopied && (
+                <View style={styles.copyTextWrapper}>
+                  <HText style={styles.copyText}>Copied</HText>
+                </View>
+              )}
+            </HStack>
+          )}
+        </HStack>
+      )}
       <Box alignItems='center' mt='10'>
         <HButton
           text='Contact'
+          shadow={3}
           borderColor={colors.white}
           backgroundColor={colors.white}
           textStyle={{

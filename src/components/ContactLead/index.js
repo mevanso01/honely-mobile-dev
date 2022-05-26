@@ -107,6 +107,13 @@ export const ContactLead = (props) => {
     }
   }
 
+  const handlePhoneCall = () => {
+    const phoneNumber = Platform.OS === 'ios'
+      ? `telprompt:${lead?.phone_number}`
+      : `tel:${lead?.phone_number}`
+    Linking.openURL(phoneNumber)
+  }
+
   useEffect(() => {
     const found = leadStatuses.find(option => option.key === lead?.agent_status)
     setDefaultIndex(found?.value?.toString() || '0')
@@ -209,10 +216,12 @@ export const ContactLead = (props) => {
             <HText style={styles.label} mRight='12'>To:</HText>
             <VStack space='1'>
               <HText style={styles.label}>{lead?.name}</HText>
-              <HStack alignItems='center'>
-                <Image source={icons.email} style={styles.contactIcon} />
-                <HText style={styles.contactInfoText}>{lead?.email}</HText>
-              </HStack>
+              {lead?.email && lead?.email !== 'None' && (
+                <HStack alignItems='center'>
+                  <Image source={icons.email} style={styles.contactIcon} />
+                  <HText style={styles.contactInfoText}>{lead?.email}</HText>
+                </HStack>
+              )}
               {lead?.phone_number && (
                 <HStack alignItems='center'>
                   <Image source={icons.phone} style={styles.contactIcon} />
@@ -223,71 +232,87 @@ export const ContactLead = (props) => {
           </HStack>
         </View>
 
-        <VStack mt='10'>
-          <HText style={styles.label}>SMS Message</HText>
-          <View
-            style={[styles.textArearWrapper, { borderColor: isSmsFocus ? colors.primary : colors.borderColor }]}
-          >
-            <TextArea
-              fontSize={16}
-              borderRadius={8}
-              borderWidth={0}
-              height={120}
-              backgroundColor='transparent'
-              padding='4'
-              color={colors.text01}
-              autoCapitalize='none'
-              defaultValue={defaultSMS}
-              isDisabled={!lead?.phone_number}
-              onChangeText={e => setDefaultSMS(e)}
-              blurOnSubmit={false}
-              onFocus={() => setIsSmsFocus(true)}
-              onBlur={() => setIsSmsFocus(false)}
-            />
-          </View>
-          <Box alignItems='center' mt='5'>
+        {level !== 'prospective' ? (
+          <>
+            <VStack mt='10'>
+              <HText style={styles.label}>SMS Message</HText>
+              <View
+                style={[styles.textArearWrapper, { borderColor: isSmsFocus ? colors.primary : colors.borderColor }]}
+              >
+                <TextArea
+                  fontSize={16}
+                  borderRadius={8}
+                  borderWidth={0}
+                  height={120}
+                  backgroundColor='transparent'
+                  padding='4'
+                  color={colors.text01}
+                  autoCapitalize='none'
+                  defaultValue={defaultSMS}
+                  isDisabled={!lead?.phone_number}
+                  onChangeText={e => setDefaultSMS(e)}
+                  blurOnSubmit={false}
+                  onFocus={() => setIsSmsFocus(true)}
+                  onBlur={() => setIsSmsFocus(false)}
+                />
+              </View>
+              <Box alignItems='center' mt='5'>
+                <HButton
+                  text='Send SMS'
+                  isDisabled={isLoading || !lead?.phone_number}
+                  disabledOpacity={0.6}
+                  borderColor={colors.primary}
+                  backgroundColor={colors.primary}
+                  onPress={() => handleOpenSms()}
+                />
+              </Box>
+            </VStack>
+            <VStack mt='8'>
+              <HText style={styles.label}>Email Message</HText>
+              <View
+                style={[styles.textArearWrapper, { borderColor: isEmailFocus ? colors.primary : colors.borderColor }]}
+              >
+                <TextArea
+                  fontSize={16}
+                  borderRadius={8}
+                  borderWidth={0}
+                  height={120}
+                  backgroundColor='transparent'
+                  padding='4'
+                  color={colors.text01}
+                  autoCapitalize='none'
+                  defaultValue={defaultEmailMessage}
+                  onChangeText={e => setDefaultEmailMessage(e)}
+                  blurOnSubmit={false}
+                  onFocus={() => setIsEmailFocus(true)}
+                  onBlur={() => setIsEmailFocus(false)}
+                />
+              </View>
+              <Box alignItems='center' mt='5' mb='8'>
+                <HButton
+                  text='Send Email'
+                  isDisabled={isLoading}
+                  disabledOpacity={0.6}
+                  borderColor={colors.primary}
+                  backgroundColor={colors.primary}
+                  onPress={() => handleOpenEmail()}
+                />
+              </Box>
+            </VStack>
+          </>
+        ) : (
+          <Box flex={1} alignItems='center' mt='5' mb='8' justifyContent='flex-end'>
             <HButton
-              text='Send SMS'
-              isDisabled={isLoading || !lead?.phone_number}
-              disabledOpacity={0.6}
-              borderColor={colors.primary}
-              backgroundColor={colors.primary}
-              onPress={() => handleOpenSms()}
-            />
-          </Box>
-        </VStack>
-        <VStack mt='8'>
-          <HText style={styles.label}>Email Message</HText>
-          <View
-            style={[styles.textArearWrapper, { borderColor: isEmailFocus ? colors.primary : colors.borderColor }]}
-          >
-            <TextArea
-              fontSize={16}
-              borderRadius={8}
-              borderWidth={0}
-              height={120}
-              backgroundColor='transparent'
-              padding='4'
-              color={colors.text01}
-              autoCapitalize='none'
-              defaultValue={defaultEmailMessage}
-              onChangeText={e => setDefaultEmailMessage(e)}
-              blurOnSubmit={false}
-              onFocus={() => setIsEmailFocus(true)}
-              onBlur={() => setIsEmailFocus(false)}
-            />
-          </View>
-          <Box alignItems='center' mt='5' mb='8'>
-            <HButton
-              text='Send Email'
+              text='Call'
+              shadow={2}
               isDisabled={isLoading}
               disabledOpacity={0.6}
               borderColor={colors.primary}
               backgroundColor={colors.primary}
-              onPress={() => handleOpenEmail()}
+              onPress={() => handlePhoneCall()}
             />
           </Box>
-        </VStack>
+        )}
       </ScrollView>
     </View>
   )

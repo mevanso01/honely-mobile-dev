@@ -19,7 +19,7 @@ const ContactLead = (props) => {
   const styles = StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.backgroundColor
+      backgroundColor: colors.backgroundColor,
     }
   })
 
@@ -29,7 +29,7 @@ const ContactLead = (props) => {
         backgroundColor={colors.white}
         barStyle='dark-content'
       />
-      <KeyboardAwareScrollView style={{ flex: 1 }}>
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
         <ContactLeadScreen {...contactLeadProps} />
       </KeyboardAwareScrollView>
     </SafeAreaView>

@@ -66,12 +66,12 @@ function MyTabBar({ state, descriptors, navigation }) {
     },
     bageIcon: {
       position: 'absolute',
-      top: -22,
-      right: -15,
+      top: -13,
+      right: -13,
       backgroundColor: colors.white,
       borderRadius: 30,
-      width: 30,
-      height: 30,
+      width: 21,
+      height: 21,
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 10,
@@ -79,9 +79,9 @@ function MyTabBar({ state, descriptors, navigation }) {
       borderColor: colors.primary
     },
     bageText: {
-      fontSize: 18,
+      fontSize: 10,
       color: colors.primary,
-      fontFamily: fonts.regular,
+      fontFamily: fonts.bold,
       marginTop: 2
     }
   })
