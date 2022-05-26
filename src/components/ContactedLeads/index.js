@@ -183,7 +183,7 @@ export const ContactedLeads = (props) => {
         >
           <VStack>
             {contactedLeadsList.map(item => (
-              <HStack key={item.id} borderBottomColor={colors.borderColor} borderBottomWidth={1}>
+              <HStack key={item.lead_id} borderBottomColor={colors.borderColor} borderBottomWidth={1}>
                 <Pressable
                   onPress={() => {
                     setIsOpenStatusList(false)
