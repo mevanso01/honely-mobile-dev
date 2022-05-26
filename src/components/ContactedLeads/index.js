@@ -23,6 +23,7 @@ export const ContactedLeads = (props) => {
   const [isOpenStatusList, setIsOpenStatusList] = useState(false)
   const [selectedStatuses, setSelectedStatuses] = useState(['ATTEMPTED_CONTACT', 'FOLLOWED_UP', 'PENDING_SALE', 'CLOSED_LEADS', 'REJECTED'])
   const [totalLeads, setTotalLeads] = useState(0)
+  const [filteredLeadsCount, setFilteredLeadsCount] = useState(0)
 
   const handleSortList = (leadsList) => {
     const _contactedLeadsList = [...leadsList]
@@ -45,10 +46,13 @@ export const ContactedLeads = (props) => {
   const handleLeadsFilter = (response) => {
     let _leadsList = []
     let _totalLead = 0
+    let _filtered = 0
     if (response?.buyers?.leads) {
-      const _buyerLeads = response.buyers?.leads.filter(lead => lead.agent_status !== 'NEW' && (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
-      _totalLead += _buyerLeads.length
+      const totalBuyerLeads = response.buyers?.leads.filter(lead => lead.agent_status !== 'NEW')
+      _totalLead += totalBuyerLeads.length
+      const _buyerLeads = totalBuyerLeads.filter(lead => (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
       if (_buyerLeads.length && isBuyers) {
+        _filtered += _buyerLeads.length
         const buyerLeads = _buyerLeads.map(lead => {
           return { ...lead, level: 'buyers' }
         })
@@ -56,9 +60,11 @@ export const ContactedLeads = (props) => {
       }
     }
     if (response?.sellers?.leads) {
-      const _sellerLeads = response.sellers?.leads.filter(lead => lead.agent_status !== 'NEW' && (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
-      _totalLead += _sellerLeads.length
+      const totalSellerLeads = response.sellers?.leads.filter(lead => lead.agent_status !== 'NEW')
+      _totalLead += totalSellerLeads.length
+      const _sellerLeads = totalSellerLeads.filter(lead => (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
       if (_sellerLeads.length && isSellers) {
+        _filtered += _sellerLeads.length
         const sellerLeads = _sellerLeads.map(lead => {
           return { ...lead, level: 'sellers' }
         })
@@ -66,9 +72,11 @@ export const ContactedLeads = (props) => {
       }
     }
     if (response?.prospective?.leads) {
-      const _prospectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status !== 'NEW' && (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
-      _totalLead += _prospectiveLeads.length
+      const totalProspectiveLeads = response.prospective?.leads.filter(lead => lead.agent_status !== 'NEW')
+      _totalLead += totalProspectiveLeads.length
+      const _prospectiveLeads = totalProspectiveLeads.filter(lead => (selectedStatuses.includes(lead.agent_status) || !selectedStatuses.length))
       if (_prospectiveLeads.length && isProspective) {
+        _filtered += _prospectiveLeads.length
         const prospectiveLeads = _prospectiveLeads.map(lead => {
           return { ...lead, level: 'prospective' }
         })
@@ -76,6 +84,7 @@ export const ContactedLeads = (props) => {
       }
     }
     setTotalLeads(_totalLead)
+    setFilteredLeadsCount(_filtered)
     return _leadsList
   }
 
@@ -203,7 +212,7 @@ export const ContactedLeads = (props) => {
               </HStack>
             ))}
           </VStack>
-          {totalLeads === 0 && (
+          {filteredLeadsCount === 0 && (
             <VStack alignItems='center' flex='1' justifyContent='center'>
               <Image source={images.dummyAvatar} style={styles.avatarWrapper} />
               <VStack mt='12'>
