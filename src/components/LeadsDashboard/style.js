@@ -158,6 +158,7 @@ export default StyleSheet.create({
   },
   copyText: {
     color: colors.text01,
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: fonts.bold
   }
 })
