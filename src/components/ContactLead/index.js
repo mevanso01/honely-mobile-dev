@@ -112,6 +112,12 @@ export const ContactLead = (props) => {
       ? `telprompt:${lead?.phone_number}`
       : `tel:${lead?.phone_number}`
     Linking.openURL(phoneNumber)
+    if (lead?.agent_status === 'NEW') {
+      handleChangeStatus(leadStatuses[1])
+    }
+    if (lead?.agent_status === 'ATTEMPTED_CONTACT') {
+      handleChangeStatus(leadStatuses[2])
+    }
   }
 
   useEffect(() => {
