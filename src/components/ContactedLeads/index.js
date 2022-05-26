@@ -90,7 +90,7 @@ export const ContactedLeads = (props) => {
       setIsOpenStatusList(false)
     }}>
       <View style={styles.screenContainer}>
-        <View style={{ paddingHorizontal: 18 }}>
+        <View style={{ paddingHorizontal: 18, zIndex: 100 }}>
           <View style={styles.headerContainer}>
             <HText style={styles.title}>Contacted Leads</HText>
             <View style={styles.cartIconWrapper}>
@@ -112,7 +112,7 @@ export const ContactedLeads = (props) => {
               />
             </View>
           </VStack>
-          <HStack zIndex={100}>
+          <HStack>
             <Pressable
               flex='1'
               _pressed={{
