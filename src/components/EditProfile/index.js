@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Image, ScrollView, Keyboard } from 'react-native'
-import { Box, Input, FormControl, Pressable, useToast, Icon } from 'native-base'
+import { Box, Input, FormControl, Pressable, Icon, Toast } from 'native-base'
 import { useForm, Controller } from 'react-hook-form'
 import { HText, HScreenHeader, HButton, HToast } from '../Shared'
 import { icons, colors } from '../../utils/styleGuide'
@@ -23,7 +23,6 @@ export const EditProfile = (props) => {
   const currentUser = useSelector(state => state.currentUser)
   const { isLoading, formState, agentProfile } = useSelector(({ screens }) => screens.editprofile)
 
-  const toast = useToast()
   const [isSubmitClicked, setIsSubmitClicked] = useState(false)
   const [agentPhoto, setAgentPhoto] = useState(null)
   const { control, handleSubmit, formState: { errors, isValid }, setValue } = useForm()
@@ -48,7 +47,7 @@ export const EditProfile = (props) => {
       dispatch(setLoading(false))
       setIsSubmitClicked(false)
       if (updatedAgent.result === 'Success') {
-        toast.show({
+        Toast.show({
           render: () => <HToast status='success' message='Profile updated' />,
           placement: 'top',
           duration: TOAST_LENGTH_SHORT
@@ -57,7 +56,7 @@ export const EditProfile = (props) => {
     } catch (error) {
       dispatch(setLoading(false))
       setIsSubmitClicked(false)
-      toast.show({
+      Toast.show({
         render: () => <HToast status='error' message={error} />,
         placement: 'top',
         duration: TOAST_LENGTH_SHORT
@@ -76,7 +75,7 @@ export const EditProfile = (props) => {
         console.log('User cancelled image picker');
       } else if (response.errorMessage) {
         console.log('ImagePicker Error: ', response.errorMessage);
-        toast.show({
+        Toast.show({
           render: () => <HToast status='error' message={response.errorMessage} />,
           placement: 'top',
           duration: TOAST_LENGTH_SHORT
@@ -90,7 +89,7 @@ export const EditProfile = (props) => {
             imageFileExt: response.assets[0].type.replace('image/', '')
           }))
         } else {
-          toast.show({
+          Toast.show({
             render: () => <HToast status='error' message='Image not found' />,
             placement: 'top',
             duration: TOAST_LENGTH_SHORT
