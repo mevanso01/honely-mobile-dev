@@ -92,7 +92,7 @@ export const LeadsMap = (props) => {
           'user-id': currentUser.user_id
         }
         if (mile) {
-          params.mile = mile
+          params.miles = mile
         }
       }
       if (level === 'city') {

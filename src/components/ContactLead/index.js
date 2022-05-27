@@ -222,13 +222,13 @@ export const ContactLead = (props) => {
             <HText style={styles.label} mRight='12'>To:</HText>
             <VStack space='1'>
               <HText style={styles.label}>{lead?.name}</HText>
-              {lead?.email && lead?.email !== 'None' && (
+              {!!lead?.email && lead?.email !== 'None' && (
                 <HStack alignItems='center'>
                   <Image source={icons.email} style={styles.contactIcon} />
                   <HText style={styles.contactInfoText}>{lead?.email}</HText>
                 </HStack>
               )}
-              {lead?.phone_number && (
+              {!!lead?.phone_number && (
                 <HStack alignItems='center'>
                   <Image source={icons.phone} style={styles.contactIcon} />
                   <HText style={styles.contactInfoText}>{lead?.phone_number}</HText>
