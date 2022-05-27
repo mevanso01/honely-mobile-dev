@@ -83,7 +83,7 @@ export const LeadCard = (props) => {
             <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1' position='relative'>
               <Pressable
                 flex='1'
-                _pressed={{ opacity: 0.4, backgroundColor: colors.white }}
+                _pressed={{ opacity: 1, backgroundColor: colors.white100 }}
                 onPress={() => copyToClipboard(lead?.email, 'email')}
               >
                 <HText style={styles.infoText}>{lead?.email}</HText>
@@ -101,7 +101,7 @@ export const LeadCard = (props) => {
             <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1' position='relative'>
               <Pressable
                 flex='1'
-                _pressed={{ opacity: 0.4, backgroundColor: colors.white }}
+                _pressed={{ opacity: 1, backgroundColor: colors.white100 }}
                 onPress={() => copyToClipboard(lead?.phone_number, 'phone')}
               >
                 <HText style={styles.infoText}>{lead?.phone_number}</HText>

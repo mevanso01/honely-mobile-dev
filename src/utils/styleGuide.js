@@ -25,6 +25,7 @@ export const colors = {
   leadsCardBg: "#646bffe0",
   backgroundLightGray: "#FBFCFE",
   white500: "#ffffffb3",
+  white100: "#ffffff20",
 
   tint: "#e0e1f9",
   tint02: "#FBFCFE",
