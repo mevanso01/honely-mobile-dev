@@ -438,7 +438,8 @@ export const EditProfile = (props) => {
                     {
                       borderColor: phoneNumberFocus
                         ? !errors?.phone_number?.message ? colors.lightPrimary : colors.error
-                        :  errors?.phone_number?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor
+                        :  errors?.phone_number?.message ? colors.error : (value && isSubmitClicked) ? colors.lightPrimary : colors.borderColor,
+                      opacity: isLoading ? 0.6 : 1
                     }
                   ]}
                 >
@@ -461,7 +462,7 @@ export const EditProfile = (props) => {
                     placeholderTextColor={colors.text03}
                     keyboardType='phone-pad'
                     value={value && value.indexOf('+1') === -1 ? `+1${value}` : value}
-                    onChange={number => onChange(number && number.indexOf('+1') !== -1 ? number.split('+1')[1] : number)}
+                    onChange={number => onChange(number)}
                     style={[styles.phoneInput]}
                     onFocus={() => setPhoneNumberFocus(true)}
                     onBlur={() => setPhoneNumberFocus(false)}
@@ -480,8 +481,8 @@ export const EditProfile = (props) => {
               )}
               rules={{
                 required: { value: true, message: 'The field phone number is required' },
-                minLength: { value: 10, message: 'Phone number must contain 10 digits' },
-                maxLength: { value: 10, message: 'Invalid Phone number' },
+                minLength: { value: 12, message: 'Phone number must contain 10 digits' },
+                maxLength: { value: 12, message: 'Invalid Phone number' },
               }}
             />
             {errors?.phone_number?.message && (
