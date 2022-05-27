@@ -12,6 +12,7 @@ import { TOAST_LENGTH_SHORT } from '../../config'
 import { LeadCard } from './LeadCard'
 import { setUser } from '../../store/action/setUser'
 import { useIsFocused } from '@react-navigation/native'
+import { CopyToast } from './CopyToast'
 
 export const LeadsDashboard = (props) => {
   const {
@@ -32,6 +33,7 @@ export const LeadsDashboard = (props) => {
   const [isProspective, setIsProspective] = useState(true)
   const [isLoadedData, setIsLoadedData] = useState(false)
   const [leadsSwiperKey, setLeadsSwiperKey] = useState(0)
+  const [toastCount, setToastCount] = useState(0)
 
   const handleLeadsFilter = (response) => {
     let _leadsList = []
@@ -147,6 +149,7 @@ export const LeadsDashboard = (props) => {
                         key={lead?.lead_id}
                         lead={lead}
                         onNavigationRedirect={onNavigationRedirect}
+                        showToast={() => setToastCount(toastCount + 1)}
                       />
                     ))}
                   </Swiper>
@@ -180,6 +183,11 @@ export const LeadsDashboard = (props) => {
           </View>
         </ScrollView>
       )}
+      <CopyToast
+        toastCount={toastCount}
+        setToastCount={setToastCount}
+        hideToast={() => setToastCount(0)}
+      />
     </View>
   )
 }

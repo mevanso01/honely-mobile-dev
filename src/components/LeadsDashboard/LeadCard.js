@@ -11,11 +11,9 @@ export const LeadCard = (props) => {
   const {
     onNavigationRedirect,
     isLoading,
-    lead
+    lead,
+    showToast
   } = props
-
-  const [emailCopied, setEmailCopied] = useState(false)
-  const [phoneCopied, setPhoneCopied] = useState(false)
 
   const getStatus = (status) => {
     const objectStatus = leadStatuses.find((o) => o.key === status)
@@ -41,17 +39,7 @@ export const LeadCard = (props) => {
   const copyToClipboard = (text, type) => {
     if (!text) return
     Clipboard.setString(text)
-    if (type === 'email') {
-      setEmailCopied(true)
-      setTimeout(() => {
-        setEmailCopied(false)
-      }, 1000)
-    } else {
-      setPhoneCopied(true)
-      setTimeout(() => {
-        setPhoneCopied(false)
-      }, 1000)
-    }
+    showToast()
   }
 
   return (
@@ -95,16 +83,11 @@ export const LeadCard = (props) => {
             <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1' position='relative'>
               <Pressable
                 flex='1'
-                _pressed={{ opacity: 0.6 }}
+                _pressed={{ opacity: 0.4, backgroundColor: colors.white }}
                 onPress={() => copyToClipboard(lead?.email, 'email')}
               >
                 <HText style={styles.infoText}>{lead?.email}</HText>
               </Pressable>
-              {emailCopied && (
-                <View style={styles.copyTextWrapper}>
-                  <HText style={styles.copyText}>Copied</HText>
-                </View>
-              )}
             </HStack>
           )}
         </HStack>
@@ -118,16 +101,11 @@ export const LeadCard = (props) => {
             <HStack ml='5' mr='6' borderBottomColor={colors.borderColor} borderBottomWidth='1' position='relative'>
               <Pressable
                 flex='1'
-                _pressed={{ opacity: 0.6 }}
+                _pressed={{ opacity: 0.4, backgroundColor: colors.white }}
                 onPress={() => copyToClipboard(lead?.phone_number, 'phone')}
               >
                 <HText style={styles.infoText}>{lead?.phone_number}</HText>
               </Pressable>
-              {phoneCopied && (
-                <View style={styles.copyTextWrapper}>
-                  <HText style={styles.copyText}>Copied</HText>
-                </View>
-              )}
             </HStack>
           )}
         </HStack>

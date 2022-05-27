@@ -6,6 +6,7 @@ export default StyleSheet.create({
   screenContainer: {
     flex: 1,
     paddingTop: Platform.OS === 'ios' ? 30 : 40,
+    position: 'relative',
   },
   innerContainer: {
     paddingHorizontal: 18,
@@ -146,19 +147,5 @@ export default StyleSheet.create({
     fontSize: 16,
     color: colors.text01,
     textAlign: 'center'
-  },
-  copyTextWrapper: {
-    position: 'absolute',
-    backgroundColor: colors.white500,
-    width: '100%',
-    height: '100%',
-    borderRadius: 5,
-    justifyContent: 'center',
-    paddingLeft: 15
-  },
-  copyText: {
-    color: colors.text01,
-    fontSize: 14,
-    fontFamily: fonts.bold
   }
 })
