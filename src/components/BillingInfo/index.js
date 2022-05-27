@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, ScrollView } from 'react-native'
 import { HText, HButton, HToast } from '../Shared'
-import { Pressable, HStack, Box, useToast, Divider, Radio, Skeleton, Checkbox, VStack } from 'native-base'
+import { Pressable, HStack, Box, Toast, Divider, Radio, Skeleton, Checkbox, VStack } from 'native-base'
 import { colors, icons } from '../../utils/styleGuide'
 import styles from './style'
 
@@ -19,7 +19,6 @@ export const BillingInfo = (props) => {
     onNavigationRedirect
   } = props
 
-  const toast = useToast()
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
   const [paymethodsLoading, setPaymethodsLoading] = useState(true)
@@ -64,7 +63,7 @@ export const BillingInfo = (props) => {
         setPaymentSheetLoaded(true)
       }
     } catch (error) {
-      toast.show({
+      Toast.show({
         render: () => <HToast status='error' message={error.message} />,
         placement: 'top',
         duration: TOAST_LENGTH_SHORT
@@ -78,7 +77,7 @@ export const BillingInfo = (props) => {
       // if (error) throw error
       handleGetUserPaymethods()
     } catch (error) {
-      toast.show({
+      Toast.show({
         render: () => <HToast status='error' message={error.message} />,
         placement: 'top',
         duration: TOAST_LENGTH_SHORT
@@ -100,7 +99,7 @@ export const BillingInfo = (props) => {
       setPaymethodsLoading(false)
     } catch (error) {
       setPaymethodsLoading(false)
-      toast.show({
+      Toast.show({
         render: () => <HToast status='error' message={error.message} />,
         placement: 'top',
         duration: TOAST_LENGTH_SHORT
@@ -117,7 +116,7 @@ export const BillingInfo = (props) => {
       const response = await doPost(fetchUrl)
       if (response.result === 'Error') throw response
       setTimeout(() => {
-        toast.show({
+        Toast.show({
           render: () => <HToast status='success' message='Payment success!' />,
           placement: 'top',
           duration: TOAST_LENGTH_SHORT
@@ -134,7 +133,7 @@ export const BillingInfo = (props) => {
         toastMessage = error.message?.message
       }
       setPaymentProcessing(false)
-      toast.show({
+      Toast.show({
         render: () => <HToast status='error' message={toastMessage} />,
         placement: 'top',
         duration: TOAST_LENGTH_SHORT
