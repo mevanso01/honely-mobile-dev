@@ -150,6 +150,7 @@ export default StyleSheet.create({
     color: colors.primary,
     fontSize: 24,
     lineHeight: 24,
-    marginRight: 10
+    marginRight: 10,
+    flex: 1
   }
 })
