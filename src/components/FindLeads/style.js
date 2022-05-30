@@ -5,9 +5,9 @@ import { deviceWidth, deviceHeight } from '../../utils/stylesheet'
 export default StyleSheet.create({
   screenContainer: {
     flex: 1,
+    backgroundColor: colors.primary,
   },
   headerContainer: {
-    backgroundColor: colors.primary,
     paddingBottom: 20,
   },
   headerWrapper: {
@@ -34,9 +34,9 @@ export default StyleSheet.create({
   },
   scrollViewContainer: {
     flexGrow: 1,
+    backgroundColor: colors.backgroundColor
   },
   searchBoxWrapper: {
-    backgroundColor: colors.primary,
     paddingBottom: 27,
     paddingHorizontal: 18,
     position: 'relative',
@@ -152,5 +152,12 @@ export default StyleSheet.create({
     lineHeight: 24,
     marginRight: 10,
     flex: 1
+  },
+  searchBackDropContainer: {
+    width: '100%',
+    height: deviceHeight,
+    position: 'absolute',
+    top: 0,
+    zIndex: 10
   }
 })

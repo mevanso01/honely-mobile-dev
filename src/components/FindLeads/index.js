@@ -41,8 +41,6 @@ export const FindLeads = (props) => {
   const handleBackgoundClick = () => {
     Keyboard.dismiss()
     setIsOpenDropdown(false)
-    transformY.stopAnimation()
-    setIsShowHint(false)
   }
 
   const onChangeSearch = (value) => {
@@ -147,138 +145,150 @@ export const FindLeads = (props) => {
   }, [isFocused])
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => handleBackgoundClick()}
-    >
-      <View style={styles.screenContainer}>
-        <View style={[
-          styles.headerContainer,
-          { paddingTop: Platform.OS === 'ios' ? statusBarHeight + 10 : 40, }
-        ]}>
-          <View style={styles.headerWrapper}>
-            <HText style={styles.title}>Find Leads</HText>
-            <View style={styles.cartIconWrapper}>
-              <HCartButton
-                onPress={() => onNavigationRedirect('LeadsCheckout')}
-                countWrapperStyle={{ backgroundColor: colors.white }}
-                countTextStyle={{ color: colors.primary }}
-                iconStyle={{ tintColor: colors.white }}
-              />
-            </View>
+    <View style={styles.screenContainer}>
+      <View style={[
+        styles.headerContainer,
+        { paddingTop: Platform.OS === 'ios' ? statusBarHeight + 10 : 40, }
+      ]}>
+        <View style={styles.headerWrapper}>
+          <HText style={styles.title}>Find Leads</HText>
+          <View style={styles.cartIconWrapper}>
+            <HCartButton
+              onPress={() => onNavigationRedirect('LeadsCheckout')}
+              countWrapperStyle={{ backgroundColor: colors.white }}
+              countTextStyle={{ color: colors.primary }}
+              iconStyle={{ tintColor: colors.white }}
+            />
           </View>
         </View>
-        <View style={styles.searchBoxWrapper}>
-          <Input
-            placeholder='Enter City, or Zip Code'
-            placeholderTextColor={colors.primary}
-            backgroundColor={colors.white}
-            fontSize={27}
-            height={60}
-            borderRadius={30}
-            paddingRight={17}
-            zIndex={1100}
-            color={colors.primary}
-            borderColor={isOpenDropdown ? colors.white : colors.primary}
-            autoCapitalize='none'
-            returnKeyType='done'
-            blurOnSubmit
-            onChangeText={val => onChangeSearch(val)}
-            _focus={{
-              borderColor: isOpenDropdown ? colors.white : colors.primary
-            }}
-            onFocus={() => handleSearchFocus()}
-            InputLeftElement={
-              <Image
-                source={icons.location}
-                style={styles.zipIcon}
-              />
-            }
-            InputRightElement={
-              isLoading && <Spinner color={colors.primary} size='lg' mr='4' ml='4' />
-            }
-          />
-          {isOpenDropdown && suggestionList && (
-            <View style={styles.searchListContainer}>
-              <DropDownContainer
-                showsVerticalScrollIndicator={false}
-                style={styles.dropDownContainer}
-                contentContainerStyle={styles.dropDownContent}
-              >
-                {suggestionList?.result === 'Error' ? (
-                  <HText style={styles.noSuggestionText}>{suggestionList?.message}</HText>
-                ) : (
-                  <>
-                    {suggestionList?.data?.addresses.map((address, i) => (
-                      <Pressable
-                        key={i}
-                        _pressed={{
-                          backgroundColor: colors.text05
-                        }}
-                        py='1'
-                        onPress={() => handleSelectZipcode(address)}
-                      >
-                        <HilightTextConvert
-                          text={getFullAddressText(address)}
-                          highlight={searchValue}
-                        />
-                      </Pressable>
-                    ))}
-                  </>
-                )}
-              </DropDownContainer>
-            </View>
-          )}
-          {isShowHint && (
-            <>
-              <View style={[styles.backDrop, { top: Platform.OS === 'ios' ? -(63 + statusBarHeight) : -93 }]} />
-              <Animated.View
-                style={[
-                  styles.hintContainer,
-                  { transform: [{ translateY: animatedY }] }
-                ]}
-              >
-                <Image source={icons.hintArrowUp} style={styles.hintArrow} />
-                <HText style={styles.hintText}>Search by zip code to find leads.</HText>
-              </Animated.View>
-            </>
-          )}
-        </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContainer}
-        >
-          <View style={styles.recentSearchContainer}>
-            <HText style={styles.recentText}>Recent Searches</HText>
-            {isRecentLoading ? (
-              [...Array(5).keys()].map(i => (
-                <Box key={i} mb='3'>
-                  <View style={[styles.recentSearchItem, { borderColor: colors.borderColor }]}>
-                    <Skeleton h='6' w='24' rounded='sm' />
-                    <FeatherIcons name='arrow-right' size={20} color={colors.borderColor} />
-                  </View>
-                </Box>
-              ))
-            ) : (
-              recentSearches.map((recentSearch, i) => (
-                <Pressable
-                  key={i}
-                  mb='3'
-                  _pressed={{
-                    backgroundColor: colors.text05
-                  }}
-                  onPress={() => onNavigationRedirect('LeadsMap', { level: recentSearch?.level, address: recentSearch?.address })}
-                >
-                  <View style={styles.recentSearchItem}>
-                    <HText style={styles.recentAddress} numberOfLines={1}>{getFullAddress(recentSearch?.level, recentSearch?.address)}</HText>
-                    <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
-                  </View>
-                </Pressable>
-              ))
-            )}
-          </View>
-        </ScrollView>
       </View>
-    </TouchableWithoutFeedback>
+
+      <View style={styles.searchBoxWrapper}>
+        <Input
+          placeholder='Enter City, or Zip Code'
+          placeholderTextColor={colors.primary}
+          backgroundColor={colors.white}
+          fontSize={27}
+          height={60}
+          borderRadius={30}
+          paddingRight={17}
+          zIndex={1100}
+          color={colors.primary}
+          borderColor={isOpenDropdown ? colors.white : colors.primary}
+          autoCapitalize='none'
+          returnKeyType='done'
+          blurOnSubmit
+          onChangeText={val => onChangeSearch(val)}
+          _focus={{
+            borderColor: isOpenDropdown ? colors.white : colors.primary
+          }}
+          onFocus={() => handleSearchFocus()}
+          InputLeftElement={
+            <Image
+              source={icons.location}
+              style={styles.zipIcon}
+            />
+          }
+          InputRightElement={
+            isLoading && <Spinner color={colors.primary} size='lg' mr='4' ml='4' />
+          }
+        />
+        {isOpenDropdown && suggestionList && (
+          <View style={styles.searchListContainer}>
+            <DropDownContainer
+              showsVerticalScrollIndicator={false}
+              style={styles.dropDownContainer}
+              contentContainerStyle={styles.dropDownContent}
+            >
+              {suggestionList?.result === 'Error' ? (
+                <HText style={styles.noSuggestionText}>{suggestionList?.message}</HText>
+              ) : (
+                <>
+                  {suggestionList?.data?.addresses.map((address, i) => (
+                    <Pressable
+                      key={i}
+                      _pressed={{
+                        backgroundColor: colors.text05
+                      }}
+                      py='1'
+                      onPress={() => handleSelectZipcode(address)}
+                    >
+                      <HilightTextConvert
+                        text={getFullAddressText(address)}
+                        highlight={searchValue}
+                      />
+                    </Pressable>
+                  ))}
+                </>
+              )}
+            </DropDownContainer>
+          </View>
+        )}
+        {isShowHint && (
+          <>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                transformY.stopAnimation()
+                setIsShowHint(false)
+              }}
+            >
+              <View style={[styles.backDrop, { top: Platform.OS === 'ios' ? -(63 + statusBarHeight) : -93 }]} />
+            </TouchableWithoutFeedback>
+            <Animated.View
+              style={[
+                styles.hintContainer,
+                { transform: [{ translateY: animatedY }] }
+              ]}
+            >
+              <Image source={icons.hintArrowUp} style={styles.hintArrow} />
+              <HText style={styles.hintText}>Search by zip code to find leads.</HText>
+            </Animated.View>
+          </>
+        )}
+      </View>
+      {(isOpenDropdown && suggestionList) && (
+        <TouchableWithoutFeedback
+          onPress={() => handleBackgoundClick()}
+        >
+          <View style={styles.searchBackDropContainer} />
+        </TouchableWithoutFeedback>
+      )}
+      
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContainer}
+      >
+        <View style={styles.recentSearchContainer}>
+          <HText style={styles.recentText}>Recent Searches</HText>
+          {isRecentLoading ? (
+            [...Array(5).keys()].map(i => (
+              <Box key={i} mb='3'>
+                <View style={[styles.recentSearchItem, { borderColor: colors.borderColor }]}>
+                  <Skeleton h='6' w='24' rounded='sm' />
+                  <FeatherIcons name='arrow-right' size={20} color={colors.borderColor} />
+                </View>
+              </Box>
+            ))
+          ) : (
+            recentSearches.map((recentSearch, i) => (
+              <Pressable
+                key={i}
+                mb='3'
+                _pressed={{
+                  backgroundColor: colors.text05
+                }}
+                onPress={() => onNavigationRedirect('LeadsMap', { level: recentSearch?.level, address: recentSearch?.address })}
+              >
+                <View style={styles.recentSearchItem}>
+                  <HText style={styles.recentAddress} numberOfLines={1}>{getFullAddress(recentSearch?.level, recentSearch?.address)}</HText>
+                  <FeatherIcons name='arrow-right' size={20} color={colors.primary} />
+                </View>
+              </Pressable>
+            ))
+          )}
+        </View>
+      </ScrollView>
+    </View>
   )
 }
 
