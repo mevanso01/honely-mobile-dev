@@ -35,7 +35,7 @@ export const StatusSelector = (props) => {
     try {
       setIsLoading(true)
       setStatusValue(selectedItem.value)
-      const response = await doPatch(`v1/lead/${lead.lead_id}`, { 'agent_status': selectedItem.key })
+      const response = await doPatch(`dev/lead/${lead.lead_id}`, { 'agent_status': selectedItem.key })
       if (response.error) throw { message: response.error }
       const _updatedLeads = currentUser.leads[level].leads.map(_lead => {
         if (_lead.lead_id === lead.lead_id) {

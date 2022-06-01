@@ -88,8 +88,7 @@ export const LeadsMap = (props) => {
           level: 'zip_code',
           'zip-code': address.zip_code,
           city: address?.city,
-          state: address.state,
-          'user-id': currentUser.user_id
+          state: address.state
         }
         if (mile) {
           params.miles = mile
@@ -100,25 +99,22 @@ export const LeadsMap = (props) => {
           params = {
             level: 'city',
             city: address.city,
-            state: address.state,
-            'user-id': currentUser.user_id
+            state: address.state
           }
         } else {
           params = {
             level: 'state',
-            state: address.state,
-            'user-id': currentUser.user_id
+            state: address.state
           }
         }
       }
       if (level === 'state') {
         params = {
           level: 'state',
-          state: address?.state_short || address?.state,
-          'user-id': currentUser.user_id
+          state: address?.state_short || address?.state
         }
       }
-      const response = await doGet('v1/lead/search', params)
+      const response = await doGet('dev/lead/search', params)
       if (response.error) throw { message: response.error }
       setLeadsListing(response.data)
       setIsLoading(false)

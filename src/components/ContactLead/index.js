@@ -75,7 +75,7 @@ export const ContactLead = (props) => {
     try {
       setIsLoading(true)
       setStatusValue(selectedItem.value)
-      const response = await doPatch(`v1/lead/${lead.lead_id}`, { 'agent_status': selectedItem.key })
+      const response = await doPatch(`dev/lead/${lead.lead_id}`, { 'agent_status': selectedItem.key })
       if (response.error) throw { message: response.error }
       if (defaultLead?.agent_status === 'NEW' && lead?.agent_status === 'NEW' && selectedItem?.key !== 'NEW') {
         const previousCount = currentUser?.newContactedLeadCount || 0

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { doGet, doPost, doDelete } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
-import { cognitoSignIn, cognitoSignup, cognitoResendSignUp, cognitoConfirmSignUp } from '../../store/reducer/cognitoUser'
+import { cognitoSignIn, cognitoCurrentSession, cognitoSignup, cognitoResendSignUp, cognitoConfirmSignUp } from '../../store/reducer/cognitoUser'
 
 export const handleCheckUserNameExist = (values) => async (dispatch, getState) => {
   try {
@@ -156,6 +156,8 @@ export const handleLogin = (username, password, email) => async (dispatch, getSt
     const { screens: { signup: { params } } } = getState()
 
     await dispatch(cognitoSignIn({ username: username, password: password }))
+    await dispatch(cognitoCurrentSession())
+
     try {
       const body = {
         ...params,

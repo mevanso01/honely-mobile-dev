@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { doGet } from '../../services/http-client'
 import { TOAST_LENGTH_SHORT } from '../../config'
 import { useDispatch, useSelector } from 'react-redux'
-import { cognitoSignIn } from '../../store/reducer/cognitoUser'
+import { cognitoSignIn, cognitoCurrentSession } from '../../store/reducer/cognitoUser'
 import { setUser } from '../../store/action/setUser'
 import { isServiceProvider } from '../../utils/helper'
 import styles from './style'
@@ -37,6 +37,7 @@ export const LoginForm = (props) => {
       }
       try {
         await dispatch(cognitoSignIn({ username: response.user_name, password: values.password }))
+        await dispatch(cognitoCurrentSession())
         await getPresetData(values.email)
         await getUserProfile(values.email)
       } catch (error) {

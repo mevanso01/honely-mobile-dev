@@ -4,7 +4,6 @@ import { HText, HButton, HCartButton, HUserFilterBy, HToast } from '../Shared'
 import { colors, images } from '../../utils/styleGuide'
 import { HStack, Box, Skeleton, useToast } from 'native-base'
 import SplashScreen from 'react-native-splash-screen'
-import Swiper from 'react-native-swiper'
 import styles from './style'
 import { doGet } from '../../services/http-client'
 import { useSelector, useDispatch } from 'react-redux'
@@ -57,7 +56,7 @@ export const LeadsDashboard = (props) => {
 
   const handleGetUserLeads = async () => {
     try {
-      const response = await doGet('v1/lead', { 'agent-id': agentProfile?.agent_id })
+      const response = await doGet('dev/lead', { 'agent-id': agentProfile?.agent_id })
       if (response.error) throw { message: response.error }
       dispatch(setUser({ leads: response.data }))
       setIsLoading(false)
