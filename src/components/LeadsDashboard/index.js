@@ -13,8 +13,6 @@ import { LeadCard } from './LeadCard'
 import { setUser } from '../../store/action/setUser'
 import { useIsFocused } from '@react-navigation/native'
 import { CopyToast } from './CopyToast'
-import Carousel from 'react-native-snap-carousel'
-import { deviceWidth } from '../../utils/stylesheet'
 
 export const LeadsDashboard = (props) => {
   const {
@@ -36,7 +34,6 @@ export const LeadsDashboard = (props) => {
   const [isLoadedData, setIsLoadedData] = useState(false)
   const [leadsSwiperKey, setLeadsSwiperKey] = useState(0)
   const [toastCount, setToastCount] = useState(0)
-  const [swiperIndex, setSwiperIndex] = useState(0)
 
   const handleLeadsFilter = (response) => {
     let _leadsList = []
@@ -73,7 +70,6 @@ export const LeadsDashboard = (props) => {
 
   useEffect(() => {
     if (isLoading) return
-    setSwiperIndex(0)
     let _leadsList = [...leadsList]
     if (!isBuyers) _leadsList = _leadsList.filter(lead => lead.level !== 'buyers')
     if (!isSellers) _leadsList = _leadsList.filter(lead => lead.level !== 'sellers')
@@ -97,15 +93,6 @@ export const LeadsDashboard = (props) => {
     if (!agentProfile?.agent_id) return
     handleGetUserLeads()
   }, [isFocused, agentProfile?.agent_id])
-
-  const _renderItem = ({ item }) => {
-    return <LeadCard
-      key={item?.lead_id}
-      lead={item}
-      onNavigationRedirect={onNavigationRedirect}
-      showToast={() => setToastCount(toastCount + 1)}
-    />
-  }
 
   return (
     <View style={styles.screenContainer}>
@@ -151,24 +138,21 @@ export const LeadsDashboard = (props) => {
                 {filteredLeadsList.length === 0 ? (
                   <HText style={styles.notFoundText}>No leads found, please adjust filtering</HText>
                 ) : (
-                  <>
-                    <Carousel
-                      key={leadsSwiperKey}
-                      data={filteredLeadsList}
-                      layout={'default'}
-                      sliderWidth={deviceWidth}
-                      itemWidth={deviceWidth}
-                      inactiveSlideScale={1}
-                      inactiveSlideOpacity={1}
-                      loop={true}
-                      renderItem={_renderItem}
-                      enableMomentum={true}
-                      onSnapToItem={(index) => setSwiperIndex(index)}
-                    />
-                    <Box alignItems='center' flex='1'>
-                      <HText style={styles.paginationText}>{swiperIndex + 1}/{filteredLeadsList.length}</HText>
-                    </Box>
-                  </>
+                  <Swiper
+                    showsButtons={false}
+                    loop={true}
+                    renderPagination={renderPagination}
+                    height={400}
+                  >
+                    {filteredLeadsList.map(lead => (
+                      <LeadCard
+                        key={lead?.lead_id}
+                        lead={lead}
+                        onNavigationRedirect={onNavigationRedirect}
+                        showToast={() => setToastCount(toastCount + 1)}
+                      />
+                    ))}
+                  </Swiper>
                 )}
               </>
             )}
