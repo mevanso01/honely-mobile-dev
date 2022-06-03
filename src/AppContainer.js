@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Platform, Alert, Linking, AppState } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './navigators/RootNavigator'
 import LeadsNavigator from './navigators/LeadsNavigator'
@@ -11,11 +12,75 @@ import { isServiceProvider } from './utils/helper'
 import { setAgentProfile } from './components/EditProfile/store'
 import { HToast } from './components/Shared'
 import { TOAST_LENGTH_SHORT } from './config'
+import { ANDROID_VERSION, IOS_VERSION, URL_APP_STORE, URL_GOOGLE_PLAY } from './utils/constants'
+import { signoutUser } from './store/action/setUser'
+import { resetProfileInfo } from './components/EditProfile/store'
 
 const AppContainer = () => {
   const toast = useToast()
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.currentUser)
+  const [appState, setAppState] = useState(AppState.currentState)
+
+  const handleLogout = () => {
+    dispatch(resetProfileInfo())
+    dispatch(signoutUser())
+  }
+
+  const handleCheckAppVersion = async () => {
+    try {
+      const response = await doGet('dev/mobile/version')
+      if (response.result === 'Error.') {
+        throw response;
+      }
+      if (Platform.OS === 'ios' && parseFloat(IOS_VERSION) < parseFloat(response.data.app_store)) {
+        Alert.alert(
+          "Alert",
+          "New version of the app is available. Please upgrade to the latest version.",
+          [
+            {
+              text: "Cancel",
+              onPress: () => handleLogout(),
+              style: "cancel"
+            },
+            {
+              text: "OK",
+              onPress: () => {
+                Linking.openURL(URL_APP_STORE)
+                handleLogout()
+              }
+            }
+          ]
+        )
+      }
+      if (Platform.OS === 'android' && parseFloat(ANDROID_VERSION) < parseFloat(response.data.google_play)) {
+        Alert.alert(
+          "Alert",
+          "New version of the app is available. Please upgrade to the latest version.",
+          [
+            {
+              text: "Cancel",
+              onPress: () => handleLogout(),
+              style: "cancel"
+            },
+            {
+              text: "OK",
+              onPress: () => {
+                Linking.openURL(URL_GOOGLE_PLAY)
+                handleLogout()
+              }
+            }
+          ]
+        )
+      }
+    } catch (error) {
+      toast.show({
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
+      })
+    }
+  }
 
   const handleGetUserCart = async () => {
     try {
@@ -46,6 +111,22 @@ const AppContainer = () => {
       })
     }
   }
+
+  useEffect(() => {
+    if (appState === 'active' && currentUser.isLoggedIn) {
+      handleCheckAppVersion()
+    }
+  }, [appState, currentUser.isLoggedIn])
+
+  useEffect(() => {
+    const appStateListener = AppState.addEventListener(
+      'change',
+      nextAppState => { setAppState(nextAppState) },
+    );
+    return () => {
+      appStateListener?.remove();
+    };
+  }, [])
 
   useEffect(() => {
     if (!currentUser.isLoggedIn || !currentUser?.user_type) return
