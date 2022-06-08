@@ -19,6 +19,7 @@ export const colors = {
   darkGreen : "#007515",
   gray: "#9C9E9D",
   lightGray: "#F3F3F3",
+  darkGray: "#6E6E6E",
   info100: "#7484fc1a",
   disabled: "#6F6F6F",
   rejected: "#C4C4C4",

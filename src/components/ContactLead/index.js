@@ -7,7 +7,7 @@ import styles from './style'
 import { colors, icons } from '../../utils/styleGuide'
 import { useSelector, useDispatch } from 'react-redux'
 import { TOAST_LENGTH_SHORT } from '../../config'
-import { doPatch } from '../../services/http-client'
+import { doPatch, doGet } from '../../services/http-client'
 import { setUser } from '../../store/action/setUser'
 import { leadStatuses } from '../../utils/constants'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -33,6 +33,7 @@ export const ContactLead = (props) => {
   const [defaultSMS, setDefaultSMS] = useState('')
   const [defaultEmailMessage, setDefaultEmailMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [propertyId, setPropertyId] = useState(null)
 
   const getSelectBgColor = (value) => {
     const found = leadStatuses.find(item => item.value === value)
@@ -120,6 +121,20 @@ export const ContactLead = (props) => {
     }
   }
 
+  const handleGetLeadDetails = async () => {
+    try {
+      const response = await doGet(`v1/lead/${lead.lead_id}`)
+      if (response.error) throw { message: response.error }
+      setPropertyId(response?.data?.lead?.property_id)
+    } catch (error) {
+      toast.show({
+        render: () => <HToast status='error' message={error.message} />,
+        placement: 'top',
+        duration: TOAST_LENGTH_SHORT
+      })
+    }
+  }
+
   useEffect(() => {
     const found = leadStatuses.find(option => option.key === lead?.agent_status)
     setDefaultIndex(found?.value?.toString() || '0')
@@ -151,6 +166,12 @@ export const ContactLead = (props) => {
         break
     }
   }, [lead?.agent_status, level, currentUser?.preset?.use_email, currentUser?.preset?.use_phone_number])
+
+  useEffect(() => {
+    if (level === 'prospective') {
+      handleGetLeadDetails()
+    }
+  }, [level])
 
   return (
     <View style={[styles.screenContainer, { paddingBottom: insets.bottom }]}>
@@ -219,7 +240,7 @@ export const ContactLead = (props) => {
         
         <View style={styles.ToContactContainer}>
           <HStack>
-            <HText style={styles.label} mRight='12'>To:</HText>
+            <HText style={styles.label} mRight='32'>Name:</HText>
             <VStack space='1'>
               <HText style={styles.label}>{lead?.name}</HText>
               {!!lead?.email && lead?.email !== 'None' && (
@@ -237,6 +258,28 @@ export const ContactLead = (props) => {
             </VStack>
           </HStack>
         </View>
+
+        {level === 'prospective' && (
+          <View style={styles.ToContactContainer}>
+            <HStack mt='2'>
+              <HText style={styles.label} mRight='12'>Address:</HText>
+              <VStack space='2'>
+                <HText style={styles.contactInfoText}>{lead?.full_address}</HText>
+                <Pressable
+                  _pressed={{ opacity: 0.7 }}
+                  _disabled={{ opacity: 0.7 }}
+                  disabled={!propertyId}
+                  onPress={() => onNavigationRedirect('PropertyInfo', { propertyId: propertyId })}
+                >
+                  <HStack alignItems='center'>
+                    <HText style={styles.propertyDetailsText}>View Property Info</HText>
+                    <Image source={icons.arrowRight} style={styles.propertyIcon} />
+                  </HStack>
+                </Pressable>
+              </VStack>
+            </HStack>
+          </View>
+        )}
 
         {level !== 'prospective' ? (
           <>

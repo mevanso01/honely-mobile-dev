@@ -107,9 +107,21 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   contactInfoText: {
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: '500',
     color: colors.disabled,
     marginLeft: 6
+  },
+  propertyDetailsText: {
+    color: colors.info,
+    fontSize: 16,
+    fontWeight: '500',
+    marginLeft: 6
+  },
+  propertyIcon: {
+    width: 16,
+    height: 16,
+    resizeMode: 'contain',
+    tintColor: colors.info
   }
 })
