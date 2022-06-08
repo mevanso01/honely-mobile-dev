@@ -197,79 +197,79 @@ export const PropertyInfo = (props) => {
           </Box>
           <View style={styles.innerContainer}>
             <VStack my='8'>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}># of Beds</HText>
                 <HText style={styles.infoValue}>{property?.structure?.beds_count}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}># of Full Baths</HText>
                 <HText style={styles.infoValue}>{property?.structure?.baths}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}># of Partial Baths</HText>
                 <HText style={styles.infoValue}>{property?.structure?.partial_baths_count}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Stories</HText>
                 <HText style={styles.infoValue}>{property?.structure?.stories}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Lot Size</HText>
                 <HText style={styles.infoValue}>{property?.structure?.total_area_sq_ft}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Parking Type</HText>
                 <HText style={styles.infoValue}>{property?.structure?.parking_type}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Parking Spaces Count</HText>
                 <HText style={styles.infoValue}>{property?.structure?.parking_spaces_count}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Pool</HText>
                 <HText style={styles.infoValue}>{property?.structure?.pool_type}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Heating</HText>
                 <HText style={styles.infoValue}>{property?.structure?.heating_type}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Cooling</HText>
                 <HText style={styles.infoValue}>{property?.structure?.air_conditioning_type}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Year Built</HText>
                 <HText style={styles.infoValue}>{property?.structure?.year_built}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Units Count</HText>
                 <HText style={styles.infoValue}>{property?.structure?.units_count}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Architecture Type</HText>
                 <HText style={styles.infoValue}>{property?.structure?.architecture_type}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Contruction</HText>
                 <HText style={styles.infoValue}>{property?.structure?.construction_type}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Exterior Walls</HText>
                 <HText style={styles.infoValue}>{property?.structure?.exterior_wall_type}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Interior Walls</HText>
                 <HText style={styles.infoValue}>{property?.structure?.interior_wall_type}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Flooring</HText>
                 <HText style={styles.infoValue}>{property?.structure?.flooring_types}</HText>
               </HStack>
-              <HStack p='3'>
+              <HStack p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Water Type</HText>
                 <HText style={styles.infoValue}>{property?.structure?.water_type}</HText>
               </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3'>
+              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
                 <HText style={styles.infoName}>Sewer Type</HText>
                 <HText style={styles.infoValue}>{property?.structure?.sewer_type}</HText>
               </HStack>

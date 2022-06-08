@@ -87,9 +87,10 @@ export default StyleSheet.create({
     marginTop: 10
   },
   statusLabel: {
-    fontSize: 18,
+    fontSize: 16,
     color: colors.text01,
-    marginRight: 16
+    marginRight: 16,
+    fontWeight: '500'
   },
   statusWrapper: {
     flexDirection: 'row',
@@ -98,7 +99,6 @@ export default StyleSheet.create({
   },
   ToContactContainer: {
     marginTop: 15,
-    paddingHorizontal: 16,
   },
   contactIcon: {
     tintColor: colors.disabled,

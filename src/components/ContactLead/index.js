@@ -227,20 +227,10 @@ export const ContactLead = (props) => {
             renderDropdownIcon={() => {return <Image source={icons.arrowDown} style={styles.arrowDownIcon} />}}
           />
         </View>
-        <View style={styles.shadowContainer}>
-          <View style={styles.contactCardContainer}>
-            <View style={styles.contactCardInnerContainer}>
-              <HStack>
-                <HText style={styles.label} mRight='12'>From:</HText>
-                <HText style={styles.label}>{currentUser?.first_name} {currentUser?.last_name}</HText>
-              </HStack>
-            </View>
-          </View>
-        </View>
         
         <View style={styles.ToContactContainer}>
           <HStack>
-            <HText style={styles.label} mRight='32'>Name:</HText>
+            <HText style={styles.label} mRight='34'>Name:</HText>
             <VStack space='1'>
               <HText style={styles.label}>{lead?.name}</HText>
               {!!lead?.email && lead?.email !== 'None' && (
@@ -271,7 +261,7 @@ export const ContactLead = (props) => {
                   disabled={!propertyId}
                   onPress={() => onNavigationRedirect('PropertyInfo', { propertyId: propertyId })}
                 >
-                  <HStack alignItems='center'>
+                  <HStack alignItems='center' mt='1'>
                     <HText style={styles.propertyDetailsText}>View Property Info</HText>
                     <Image source={icons.arrowRight} style={styles.propertyIcon} />
                   </HStack>
