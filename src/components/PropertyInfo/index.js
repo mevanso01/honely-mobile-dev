@@ -141,7 +141,7 @@ export const PropertyInfo = (props) => {
           <View style={styles.innerContainer}>
             <HStack>
               <Image source={icons.location} style={styles.addressIcon} />
-              <VStack>
+              <VStack flex='1'>
                 <HText style={styles.basicInfoText}>{property?.address?.full_address}</HText>
                 <HText style={styles.basicInfoText}>{property.structure.beds_count} bds | {property.structure.baths} ba | {property.structure.total_area_sq_ft} sqft</HText>
               </VStack>

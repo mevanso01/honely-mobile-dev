@@ -110,6 +110,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: colors.disabled,
+    lineHeight: 24,
     marginLeft: 6
   },
   propertyDetailsText: {

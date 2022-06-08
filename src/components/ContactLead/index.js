@@ -254,7 +254,7 @@ export const ContactLead = (props) => {
             <HStack mt='2'>
               <HText style={styles.label} mRight='12'>Address:</HText>
               <VStack space='2' flex='1'>
-                <HText style={styles.contactInfoText} numberOfLines={1}>{lead?.full_address}</HText>
+                <HText style={styles.contactInfoText}>{lead?.full_address}</HText>
                 <Pressable
                   _pressed={{ opacity: 0.7 }}
                   _disabled={{ opacity: 0.7 }}
