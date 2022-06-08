@@ -21,6 +21,7 @@ export const PropertyInfo = (props) => {
   const [property, setProperty] = useState({})
   const [forecastPropertyState, setForeCastPropertyState] = useState({ loading: true, property: {} })
   const [mapsImageState, setMapsImageState] = useState({ valid: false, url: null })
+  const [propertyStructure, setPropertyStructure] = useState([])
 
   const formatNumber = (num) => {
     const number = Number(num)
@@ -104,6 +105,69 @@ export const PropertyInfo = (props) => {
       })
     }
   }
+
+  useEffect(() => {
+    if (isLoading) return
+    let _propertyStructure = []
+    if (property?.structure?.beds_count) {
+      _propertyStructure.push({ name: '# of Beds', value: property?.structure?.beds_count })
+    }
+    if (property?.structure?.baths) {
+      _propertyStructure.push({ name: '# of Full Baths', value: property?.structure?.baths })
+    }
+    if (property?.structure?.partial_baths_count) {
+      _propertyStructure.push({ name: '# of Partial Baths', value: property?.structure?.partial_baths_count })
+    }
+    if (property?.structure?.stories) {
+      _propertyStructure.push({ name: 'Stories', value: property?.structure?.stories })
+    }
+    if (property?.structure?.total_area_sq_ft) {
+      _propertyStructure.push({ name: 'Lot Size', value: property?.structure?.total_area_sq_ft })
+    }
+    if (property?.structure?.parking_type) {
+      _propertyStructure.push({ name: 'Parking Type', value: property?.structure?.parking_type })
+    }
+    if (property?.structure?.parking_spaces_count) {
+      _propertyStructure.push({ name: 'Parking Spaces Count', value: property?.structure?.parking_spaces_count })
+    }
+    if (property?.structure?.pool_type) {
+      _propertyStructure.push({ name: 'Pool', value: property?.structure?.pool_type })
+    }
+    if (property?.structure?.heating_type) {
+      _propertyStructure.push({ name: 'Heating', value: property?.structure?.heating_type })
+    }
+    if (property?.structure?.air_conditioning_type) {
+      _propertyStructure.push({ name: 'Cooling', value: property?.structure?.air_conditioning_type })
+    }
+    if (property?.structure?.year_built) {
+      _propertyStructure.push({ name: 'Year Built', value: property?.structure?.year_built })
+    }
+    if (property?.structure?.units_count) {
+      _propertyStructure.push({ name: 'Units Count', value: property?.structure?.units_count })
+    }
+    if (property?.structure?.architecture_type) {
+      _propertyStructure.push({ name: 'Architecture Type', value: property?.structure?.architecture_type })
+    }
+    if (property?.structure?.construction_type) {
+      _propertyStructure.push({ name: 'Contruction', value: property?.structure?.construction_type })
+    }
+    if (property?.structure?.exterior_wall_type) {
+      _propertyStructure.push({ name: 'Exterior Walls', value: property?.structure?.exterior_wall_type })
+    }
+    if (property?.structure?.interior_wall_type) {
+      _propertyStructure.push({ name: 'Interior Walls', value: property?.structure?.interior_wall_type })
+    }
+    if (property?.structure?.flooring_types) {
+      _propertyStructure.push({ name: 'Flooring', value: property?.structure?.flooring_types })
+    }
+    if (property?.structure?.water_type) {
+      _propertyStructure.push({ name: 'Water Type', value: property?.structure?.water_type })
+    }
+    if (property?.structure?.sewer_type) {
+      _propertyStructure.push({ name: 'Sewer Type', value: property?.structure?.sewer_type })
+    }
+    setPropertyStructure(_propertyStructure)
+  }, [isLoading, property])
 
   useEffect(() => {
     if (property?.address?.latitude && property?.address?.longitude) {
@@ -197,82 +261,16 @@ export const PropertyInfo = (props) => {
           </Box>
           <View style={styles.innerContainer}>
             <VStack my='8'>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}># of Beds</HText>
-                <HText style={styles.infoValue}>{property?.structure?.beds_count}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}># of Full Baths</HText>
-                <HText style={styles.infoValue}>{property?.structure?.baths}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}># of Partial Baths</HText>
-                <HText style={styles.infoValue}>{property?.structure?.partial_baths_count}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Stories</HText>
-                <HText style={styles.infoValue}>{property?.structure?.stories}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Lot Size</HText>
-                <HText style={styles.infoValue}>{property?.structure?.total_area_sq_ft}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Parking Type</HText>
-                <HText style={styles.infoValue}>{property?.structure?.parking_type}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Parking Spaces Count</HText>
-                <HText style={styles.infoValue}>{property?.structure?.parking_spaces_count}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Pool</HText>
-                <HText style={styles.infoValue}>{property?.structure?.pool_type}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Heating</HText>
-                <HText style={styles.infoValue}>{property?.structure?.heating_type}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Cooling</HText>
-                <HText style={styles.infoValue}>{property?.structure?.air_conditioning_type}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Year Built</HText>
-                <HText style={styles.infoValue}>{property?.structure?.year_built}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Units Count</HText>
-                <HText style={styles.infoValue}>{property?.structure?.units_count}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Architecture Type</HText>
-                <HText style={styles.infoValue}>{property?.structure?.architecture_type}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Contruction</HText>
-                <HText style={styles.infoValue}>{property?.structure?.construction_type}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Exterior Walls</HText>
-                <HText style={styles.infoValue}>{property?.structure?.exterior_wall_type}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Interior Walls</HText>
-                <HText style={styles.infoValue}>{property?.structure?.interior_wall_type}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Flooring</HText>
-                <HText style={styles.infoValue}>{property?.structure?.flooring_types}</HText>
-              </HStack>
-              <HStack p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Water Type</HText>
-                <HText style={styles.infoValue}>{property?.structure?.water_type}</HText>
-              </HStack>
-              <HStack backgroundColor={colors.lightGray} p='3' alignItems={'center'}>
-                <HText style={styles.infoName}>Sewer Type</HText>
-                <HText style={styles.infoValue}>{property?.structure?.sewer_type}</HText>
-              </HStack>
+              {propertyStructure.map((structure, index) => (
+                <HStack
+                  key={index}
+                  backgroundColor={index % 2 === 0 ? colors.lightGray : colors.white}
+                  p='3' alignItems={'center'}
+                >
+                  <HText style={styles.infoName}>{structure.name}</HText>
+                  <HText style={styles.infoValue}>{structure.value}</HText>
+                </HStack>
+              ))}
             </VStack>
           </View>
         </ScrollView>
