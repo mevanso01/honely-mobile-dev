@@ -8,7 +8,7 @@ import { useToast } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux'
 import { doGet } from './services/http-client'
 import { setUser } from './store/action/setUser'
-import { isServiceProvider } from './utils/helper'
+import { isServiceProvider, compareVersion } from './utils/helper'
 import { setAgentProfile } from './components/EditProfile/store'
 import { HToast } from './components/Shared'
 import { TOAST_LENGTH_SHORT } from './config'
@@ -27,51 +27,40 @@ const AppContainer = () => {
     dispatch(signoutUser())
   }
 
-  const handleCheckAppVersion = async () => {
+  const versionValidation = (currentVersion, newVerion, appURL) => {
+    const valid = compareVersion(currentVersion, newVerion)
+    if (!valid) {
+      Alert.alert(
+        "Alert",
+        "New version of the app is available. Please upgrade to the latest version.",
+        [
+          {
+            text: "Cancel",
+            onPress: () => handleLogout(),
+            style: "cancel"
+          },
+          {
+            text: "OK",
+            onPress: () => {
+              Linking.openURL(appURL)
+              handleLogout()
+            }
+          }
+        ]
+      )
+    }
+  }
+
+  const handleGetAppVersion = async () => {
     try {
       const response = await doGet('dev/mobile/version')
       if (response.result === 'Error.') {
         throw response;
       }
-      if (Platform.OS === 'ios' && parseFloat(IOS_VERSION) < parseFloat(response.data.app_store)) {
-        Alert.alert(
-          "Alert",
-          "New version of the app is available. Please upgrade to the latest version.",
-          [
-            {
-              text: "Cancel",
-              onPress: () => handleLogout(),
-              style: "cancel"
-            },
-            {
-              text: "OK",
-              onPress: () => {
-                Linking.openURL(URL_APP_STORE)
-                handleLogout()
-              }
-            }
-          ]
-        )
-      }
-      if (Platform.OS === 'android' && parseFloat(ANDROID_VERSION) < parseFloat(response.data.google_play)) {
-        Alert.alert(
-          "Alert",
-          "New version of the app is available. Please upgrade to the latest version.",
-          [
-            {
-              text: "Cancel",
-              onPress: () => handleLogout(),
-              style: "cancel"
-            },
-            {
-              text: "OK",
-              onPress: () => {
-                Linking.openURL(URL_GOOGLE_PLAY)
-                handleLogout()
-              }
-            }
-          ]
-        )
+      if (Platform.OS === 'ios') {
+        versionValidation(IOS_VERSION, response.data.app_store, URL_APP_STORE)
+      } else {
+        versionValidation(ANDROID_VERSION, response.data.google_play, URL_GOOGLE_PLAY)
       }
     } catch (error) {
       toast.show({
@@ -114,7 +103,7 @@ const AppContainer = () => {
 
   useEffect(() => {
     if (appState === 'active' && currentUser.isLoggedIn) {
-      handleCheckAppVersion()
+      handleGetAppVersion()
     }
   }, [appState, currentUser.isLoggedIn])
 

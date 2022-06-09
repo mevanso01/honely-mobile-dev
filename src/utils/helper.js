@@ -84,3 +84,16 @@ export const getIconCard = (brand) => {
       )
   }
 }
+
+export const compareVersion = (currentVersion, newVerion) => {
+  currentVersion = currentVersion.split('.')
+  newVerion = newVerion.split('.')
+  const k = Math.min(currentVersion.length, newVerion.length)
+  for (let i = 0; i < k; ++ i) {
+      currentVersion[i] = parseInt(currentVersion[i], 10)
+      newVerion[i] = parseInt(newVerion[i], 10)
+      if (currentVersion[i] > newVerion[i]) return true
+      if (currentVersion[i] < newVerion[i]) return false
+  }
+  return currentVersion.length == newVerion.length ? true: (currentVersion.length < newVerion.length ? false : true)
+}
