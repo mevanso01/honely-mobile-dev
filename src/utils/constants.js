@@ -14,5 +14,5 @@ export const URL_TERMS_SERVICE    = 'https://www.honely.com/terms.html';
 export const URL_GOOGLE_PLAY = 'https://play.google.com/store/apps/details?id=com.honely'
 export const URL_APP_STORE = 'https://apps.apple.com/us/app/honely/id1617107784'
 
-export const IOS_VERSION = '1.2'
-export const ANDROID_VERSION = '1.2'
+export const IOS_VERSION = '1.2.1'
+export const ANDROID_VERSION = '1.2.1'
